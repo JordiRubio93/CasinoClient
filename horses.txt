@@ -1,0 +1,15 @@
+[
+    {"name":"Joey", "color":"RED"},
+    {"name":"Shadowfax", "color":"WHITE"},
+    {"name":"Bree", "color":"BROWN"},
+    {"name":"Spirit", "color":"RED"},
+    {"name":"Bullseye", "color":"BROWN"},
+    {"name":"Rocinante", "color":"GRAY"},
+    {"name":"Tornado", "color":"BLACK"},
+    {"name":"Samson", "color":"WHITE"},
+    {"name":"Bucephalus", "color":"BROWN"},
+    {"name":"Marengo", "color":"WHITE"},
+    {"name":"Artax", "color":"GRAY"},
+    {"name":"Maximus", "color":"WHITE"}
+]
+	
