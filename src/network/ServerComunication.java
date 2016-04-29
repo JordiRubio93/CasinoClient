@@ -13,22 +13,23 @@ public class ServerComunication {
 	private ObjectOutputStream objectOut;
 	
 	public ServerComunication() {
-	}
-	
-	public void enviarTrama(Segment s) {
+		// establim comunicacio amb el servidor
 		try {
-			// establim comunicacio amb el servidor
 			sServer = new Socket("127.0.0.1", 6969);
-			// enviem l'alumne
 			objectOut = new ObjectOutputStream(sServer.getOutputStream());
-			objectOut.writeObject(s);
-			// tanquem la connexio
-			sServer.close();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void enviarTrama(Segment s) throws IOException {
+		objectOut.writeObject(s);	
+	}
+	public void tancarConnexio() throws IOException{
+		objectOut.writeObject(new Disconnect());
+		sServer.close();
+		
 	}
 		
 }
