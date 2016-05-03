@@ -1,78 +1,50 @@
 package view;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.ComparadorABC;
-import model.Constants;
-import model.struct.bet.HorsesBet;
-import model.struct.bet.RouletteBet;
+import controller.listeners.BetButtonController;
 import model.struct.users.PublicUser;
 
 public class GameView extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private static final int HEIGHT = Constants.HEIGHT;
-	private static final int WIDTH = Constants.WIDTH;
-	private JPanel jpFinestra;
-	private JPanel jpTemps;
-	protected Tapet jpTapet;
-	private JLabel jlTemps;
-	private GridLayout ColumnLayout;
-	private JScrollPane jspList;
-	private JPanel jpDades;
-	private JLabel jlAvatar;
-	private JPanel jpCell;
-	private JLabel jlUser;
-	private JPanel jpInfo;
-	private JLabel jlAposta;
-	private JPanel jpList;
-	private JPanel jpAux;
-	private TimerThread timer;
-	private boolean isRuleta;
-	
-	public GameView(){
-		jpFinestra = new JPanel(new BorderLayout());
-		
-		creaTemps();
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
-		
-		jpTapet = new Tapet(WIDTH, HEIGHT, "Resources/tapet.jpg");
-		jpTapet.setLayout(new BorderLayout());
-		jpFinestra.add(jpTapet, BorderLayout.CENTER);
-		
-		creaList();
-		jpFinestra.add(jpDades, BorderLayout.EAST);
-
-		this.getContentPane().add(jpFinestra);
-		propietats();
-		
-		isRuleta = false;
-	}
+	protected JPanel jpFinestra;
+	protected JPanel jpTemps;
+	protected JLabel jlTemps;
+	protected GridLayout columnLayout;
+	protected JScrollPane jspList;
+	protected JPanel jpDades;
+	protected JLabel jlAvatar;
+	protected JPanel jpCell;
+	protected JLabel jlUser;
+	protected JPanel jpInfo;
+	protected JLabel jlAposta;
+	protected JPanel jpList;
+	protected JPanel jpAux;
+	protected TimerThread timer;
+	protected boolean isRuleta;
+	protected JButton jbBet;
+	protected JPanel jpBet;
+	private JLabel jlCount;
 	
 	public void ompleLlista(LinkedList<PublicUser> players){
 		LinkedList<PublicUser> roulettePlayers = new LinkedList<PublicUser>();
 		
-		if(players.get(0).getBets().get(0) instanceof RouletteBet){
-			Collections.sort(players, new ComparadorABC());
-			roulettePlayers = creaLlista(players);
-			ColumnLayout.setRows(roulettePlayers.size());
-			isRuleta = true;
-		}else{
-			ColumnLayout.setRows(players.size());
-		}
+		columnLayout.setRows(players.size());
 		
 		for(int i = 0; i < players.size(); i++){
 			jpCell = new JPanel(new BorderLayout());
@@ -80,12 +52,16 @@ public class GameView extends JFrame {
 			
 			if(isRuleta){
 				jlAvatar = new JLabel(new ImageIcon(roulettePlayers.get(i).getAvatar()));
-				jlUser = new JLabel("   " + roulettePlayers.get(i).getName() + " - " + roulettePlayers.get(i).getBets().get(0).getAmount() + " €   ");
-				jlAposta = new JLabel("   " + ((RouletteBet) (roulettePlayers.get(i).getBets().get(0))).getAposta() + "   ");
+				jlUser = new JLabel("   " + players.get(i).getName() + " - " + 25 + " €   ");
+				jlAposta = new JLabel("   Aposta    ");
+				//jlUser = new JLabel("   " + roulettePlayers.get(i).getName() + " - " + roulettePlayers.get(i).getBets().get(0).getAmount() + " €   ");
+				//jlAposta = new JLabel("   " + ((RouletteBet) (roulettePlayers.get(i).getBets().get(0))).getAposta() + "   ");
 			}else{
 				jlAvatar = new JLabel(new ImageIcon(players.get(i).getAvatar()));
-				jlUser = new JLabel("   " + players.get(i).getName() + " - " + players.get(i).getBets().get(0).getAmount() + " €   ");
-				jlAposta = new JLabel("   " + ((HorsesBet) (players.get(i).getBets().get(0))).getHorse() + "   ");
+				//jlUser = new JLabel("   " + players.get(i).getName() + " - " + players.get(i).getBets().get(0).getAmount() + " €   ");
+				jlUser = new JLabel("   " + players.get(i).getName() + " - " + 25 + " €   ");
+				//jlAposta = new JLabel("   " + ((HorsesBet) (players.get(i).getBets().get(0))).getHorse() + "   ");
+				jlAposta = new JLabel("   Aposta    ");
 			}
 			
 			jpInfo.add(jlUser);
@@ -98,7 +74,7 @@ public class GameView extends JFrame {
 			jpCell.add(jpInfo, BorderLayout.CENTER);
 			
 			jpList.add(jpCell, BorderLayout.CENTER);
-			ColumnLayout.setVgap(10);
+			columnLayout.setVgap(10);
 		}
 	}
 	
@@ -107,6 +83,8 @@ public class GameView extends JFrame {
 		new Thread(timer).start();
 	}
 	
+	
+	@SuppressWarnings("unused")
 	private LinkedList<PublicUser> creaLlista(LinkedList<PublicUser> players){
 		LinkedList<PublicUser> list = new LinkedList<PublicUser>();
 		
@@ -117,15 +95,15 @@ public class GameView extends JFrame {
 			String bet = "";
 			for(int j = 0; j < players.get(i).getBets().size(); j++){
 				amount = amount + players.get(i).getBets().get(j).getAmount();
-				if(((RouletteBet) (players.get(i).getBets().get(j))).isColor()){
+				/*if(((RouletteBet) (players.get(i).getBets().get(j))).isColor()){
 					bet = bet + ", " + ((RouletteBet) (players.get(i).getBets().get(j))).getColor();
 				}else{
 					bet = bet + ", " + String.valueOf(((RouletteBet) (players.get(i).getBets().get(j))).getNum());
-				}
+				}*/
 			}
 			
 			user.getBets().get(0).setAmount(amount);
-			((RouletteBet) user.getBets().get(0)).setAposta(bet);
+			//((RouletteBet) user.getBets().get(0)).setAposta(bet);
 			
 			list.add(user);
 		}
@@ -133,36 +111,70 @@ public class GameView extends JFrame {
 		return list;
 	}
 	
-	private void creaTemps() {
+	protected void creaTemps() {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();
 		
 		jlTemps = new JLabel(dateFormat.format(date));
 		jlTemps.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+		jlTemps.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		
 		jpTemps = new JPanel();
 		jpTemps.setBackground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jpTemps.add(jlTemps);
 	}
 	
-	private void creaList(){
-		ColumnLayout = new GridLayout();
-		jpList = new JPanel(ColumnLayout);
+	protected void creaList(){
+		columnLayout = new GridLayout();
+		jpList = new JPanel(columnLayout);
 		jpAux = new JPanel(new BorderLayout());
 		jpAux.add(jpList, BorderLayout.NORTH);		
 		jspList = new JScrollPane(jpAux);
-		ColumnLayout.setColumns(1);
+		columnLayout.setColumns(1);
+		
+		jbBet = new JButton("Aposta!");
+		jpBet = new JPanel(new BorderLayout());
+		jpBet.add(jbBet, BorderLayout.EAST);
+		jbBet.setBackground(new Color(255,255,255));
+		jbBet.setForeground(new Color(255,128,0));
 		
 		jpDades = new JPanel(new BorderLayout());
 		jpDades.add(jspList, BorderLayout.CENTER);
+		jpDades.add(jpBet, BorderLayout.SOUTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder("Jugadors"));
 	}
 	
-	private void propietats(){
-		this.setSize(WIDTH, HEIGHT);
-		this.setResizable(false);
+	protected void propietats(){
+		this.setResizable(true);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setTitle("JOC");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+	}
+	
+	public void registerController(BetButtonController bbc){
+		jbBet.addActionListener(bbc);
+	}
+	
+	public void acabaPartida(){
+		super.setVisible(false);
+	}
+	
+	public JLabel setCounter(){
+		jlCount = new JLabel("...");
+		jlCount.setHorizontalAlignment(JLabel.CENTER);
+		jlCount.setVerticalAlignment(JLabel.CENTER);
+		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
+		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+		
+		return jlCount;
+	}
+	
+	public void showCounter(boolean show){
+		jlCount.setVisible(show);
+	}
+	
+	public void actualitzaCounter(int num){
+		jlCount.setText(String.valueOf(num));
 	}
 }

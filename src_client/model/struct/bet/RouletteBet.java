@@ -1,47 +1,79 @@
 package model.struct.bet;
 
 public class RouletteBet extends Bet {
-	private String color;
-	private int num;
-	private boolean isColor;
-	private String aposta;
+	private int vermell;
+	private int negre;
+	private int parell;
+	private int senar;
+	private int manca;
+	private int passa;
+	private int primera;
+	private int segona;
+	private int tercera;
+	private int[] numeros;
 	
-	public RouletteBet(float amount, String color, int num, boolean isColor) {
+	public RouletteBet(float amount) {
 		super(amount);
-		
-		if(this.isColor = isColor) this.color = color;
-		else this.num = num;
 	}
-
-	public String getColor() {
-		return color;
+	
+	public int getVermell() {
+		return vermell;
 	}
-
-	public void setColor(String color) {
-		this.color = color;
+	public void setVermell(int vermell) {
+		this.vermell = vermell;
 	}
-
-	public int getNum() {
-		return num;
+	public int getNegre() {
+		return negre;
 	}
-
-	public void setNum(int num) {
-		this.num = num;
+	public void setNegre(int negre) {
+		this.negre = negre;
 	}
-
-	public boolean isColor() {
-		return isColor;
+	public int getParell() {
+		return parell;
 	}
-
-	public void setColor(boolean isColor) {
-		this.isColor = isColor;
+	public void setParell(int parell) {
+		this.parell = parell;
 	}
-
-	public String getAposta() {
-		return aposta;
+	public int getSenar() {
+		return senar;
 	}
-
-	public void setAposta(String aposta) {
-		this.aposta = aposta;
+	public void setSenar(int senar) {
+		this.senar = senar;
+	}
+	public int getManca() {
+		return manca;
+	}
+	public void setManca(int manca) {
+		this.manca = manca;
+	}
+	public int getPassa() {
+		return passa;
+	}
+	public void setPassa(int passa) {
+		this.passa = passa;
+	}
+	public int getPrimera() {
+		return primera;
+	}
+	public void setPrimera(int primera) {
+		this.primera = primera;
+	}
+	public int getSegona() {
+		return segona;
+	}
+	public void setSegona(int segona) {
+		this.segona = segona;
+	}
+	public int getTercera() {
+		return tercera;
+	}
+	public void setTercera(int tercera) {
+		this.tercera = tercera;
+	}
+	public int[] getNumeros() {
+		return numeros;
+	}
+	public void setNumeros(int[] numeros) {
+		this.numeros = numeros;
 	}
 }
