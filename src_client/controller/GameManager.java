@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import controller.horses.HorsesManager;
 import controller.roulette.RouletteManager;
@@ -11,12 +10,15 @@ import network.ServerComunication;
 import network.segment.LoginUser;
 
 public class GameManager {
+	private String type;
 	private static ServerComunication sc;
 	private LinkedList<PublicUser> listUsers;
-	private String joc;
 	
+	public GameManager(String s){
+		type=s;
+	}
 	public void executaSala(){		
-		if(joc.equals("ruleta")){
+		if(type.equals("ruleta")){
 			RouletteManager rm = new RouletteManager(sc);
 			rm.executaPartida(listUsers);
 		}else{
@@ -25,7 +27,6 @@ public class GameManager {
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	public void executaCasino(){
 		sc = new ServerComunication();
 		
@@ -42,11 +43,7 @@ public class GameManager {
 			e1.printStackTrace();
 		}
 		
-		System.out.print("A què vols jugar? (ruleta/cavalls)... ");
-		joc = new Scanner(System.in).nextLine();
-		
-		while(true){
 			executaSala();
-		}
+		
 	}
 }
