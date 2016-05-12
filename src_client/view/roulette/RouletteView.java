@@ -49,6 +49,7 @@ public class RouletteView extends GameView {
 	private AmericanRoulette americanRoulette;
 	
 	public void creaRuleta(){
+	
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());
@@ -220,11 +221,11 @@ public class RouletteView extends GameView {
 
 		jpCentral.add(jpInferior, BorderLayout.SOUTH);
 		
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
+		//jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpFinestra.add(jpCentral, BorderLayout.CENTER);
-		jpFinestra.add(jpDades, BorderLayout.EAST);
+		//jpFinestra.add(jpDades, BorderLayout.EAST);
 		
-		this.getContentPane().add(jpFinestra);
+		getPanel().add(jpFinestra);
 		
 		try {
 			inserirGif();
@@ -238,7 +239,6 @@ public class RouletteView extends GameView {
 	    f = new JFrame("RULETA");
 	   
 	    f.getContentPane().add(label);
-	    f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    f.pack();
 	    f.setLocationRelativeTo(null);
 	    f.setResizable(false);
@@ -246,13 +246,11 @@ public class RouletteView extends GameView {
 	}
 	
 	public RouletteView(){
-		jpFinestra = new JPanel(new BorderLayout());
-		super.creaTemps();
+		/**super.creaTemps();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		super.creaList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
-		this.getContentPane().add(jpFinestra);
-		super.propietats();
+		getPanel().add(jpFinestra);*/
 	}
 	
 	public void acabaPartida(){

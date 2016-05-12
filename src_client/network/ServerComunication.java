@@ -5,23 +5,31 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import network.segment.*;
+import controller.ConfigurationFile;
+import controller.Manager;
+import network.segment.Disconnect;
+import network.segment.NotifyConRoom;
+import network.segment.Segment;
 
-public class ServerComunication {
+public class ServerComunication{
 	private Socket sServer;
 	private ObjectOutputStream objectOut;
 	private ObjectInputStream objectIn;
-	
-	public ServerComunication() {
-		try {
-			sServer = new Socket("127.0.0.1", 6969);
-			objectOut = new ObjectOutputStream(sServer.getOutputStream());
-			objectIn = new ObjectInputStream(sServer.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private Manager manager;
+	private ConfigurationFile cf;
+	private Segment s;
+
+	public ServerComunication(Manager manager, ConfigurationFile cf) {
+		this.manager = manager;
+		this.cf = cf;
 	}
-	
+
+	public void establirConnexio() throws IOException {
+		sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
+		objectOut = new ObjectOutputStream(sServer.getOutputStream());
+		objectIn = new ObjectInputStream(sServer.getInputStream());
+	}
+
 	public synchronized Segment obtenirTrama() {
 		try {
 			return (Segment) objectIn.readObject();
@@ -32,15 +40,27 @@ public class ServerComunication {
 	}
 
 	public synchronized void enviarTrama(Segment s) throws IOException {
-		objectOut.writeObject(s);	
+		objectOut.writeObject(s);
 	}
-	
-	public synchronized void tancarConnexio() throws IOException{
+
+	public synchronized void tancarConnexio() throws IOException {
 		objectOut.writeObject(new Disconnect());
 		sServer.close();
 	}
-	
-	public Socket getSocket(){
+
+	public Socket getSocket() {
 		return sServer;
+	}
+
+	public synchronized String obtenirInstruccio() {
+
+		try {
+			s = (Segment) objectIn.readObject();
+			return (s.getClass().getSimpleName());
+		} catch (ClassNotFoundException | IOException e) {
+	
+		}
+		return null;
+
 	}
 }

@@ -17,11 +17,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import controller.Manager;
 import controller.listeners.BetButtonController;
-import model.struct.users.PublicUser;
+import model.struct.user.User;
 
-public class GameView extends JFrame {
+public class GameView extends BaseJPanel {
+	
+	
 	private static final long serialVersionUID = 1L;
+
+	private BaseJPanel panell;
 	protected JPanel jpFinestra;
 	protected JPanel jpTemps;
 	protected JLabel jlTemps;
@@ -40,9 +45,11 @@ public class GameView extends JFrame {
 	protected JButton jbBet;
 	protected JPanel jpBet;
 	private JLabel jlCount;
+	private Manager manager;
 	
-	public void ompleLlista(LinkedList<PublicUser> players){
-		LinkedList<PublicUser> roulettePlayers = new LinkedList<PublicUser>();
+	public void ompleLlista(LinkedList<User> players){
+	/**
+		LinkedList<User> roulettePlayers = new LinkedList<User>();
 		
 		columnLayout.setRows(players.size());
 		
@@ -52,14 +59,14 @@ public class GameView extends JFrame {
 			
 			if(isRuleta){
 				jlAvatar = new JLabel(new ImageIcon(roulettePlayers.get(i).getAvatar()));
-				jlUser = new JLabel("   " + players.get(i).getName() + " - " + 25 + " €   ");
+				jlUser = new JLabel("   " + players.get(i).getEmail() + " - " + 25 + " €   ");
 				jlAposta = new JLabel("   Aposta    ");
 				//jlUser = new JLabel("   " + roulettePlayers.get(i).getName() + " - " + roulettePlayers.get(i).getBets().get(0).getAmount() + " €   ");
 				//jlAposta = new JLabel("   " + ((RouletteBet) (roulettePlayers.get(i).getBets().get(0))).getAposta() + "   ");
 			}else{
 				jlAvatar = new JLabel(new ImageIcon(players.get(i).getAvatar()));
 				//jlUser = new JLabel("   " + players.get(i).getName() + " - " + players.get(i).getBets().get(0).getAmount() + " €   ");
-				jlUser = new JLabel("   " + players.get(i).getName() + " - " + 25 + " €   ");
+				jlUser = new JLabel("   " + players.get(i).getEmail() + " - " + 25 + " €   ");
 				//jlAposta = new JLabel("   " + ((HorsesBet) (players.get(i).getBets().get(0))).getHorse() + "   ");
 				jlAposta = new JLabel("   Aposta    ");
 			}
@@ -76,7 +83,7 @@ public class GameView extends JFrame {
 			jpList.add(jpCell, BorderLayout.CENTER);
 			columnLayout.setVgap(10);
 		}
-	}
+	}*/}
 	
 	public void actualitzaTemps(){
 		timer = new TimerThread(jlTemps);
@@ -85,27 +92,30 @@ public class GameView extends JFrame {
 	
 	
 	@SuppressWarnings("unused")
-	private LinkedList<PublicUser> creaLlista(LinkedList<PublicUser> players){
-		LinkedList<PublicUser> list = new LinkedList<PublicUser>();
+	private LinkedList<User> creaLlista(LinkedList<User> players){
+		LinkedList<User> list = new LinkedList<User>();
 		
 		for(int i = 0; i < players.size(); i++){
-			PublicUser user = players.get(i);
+			User user = players.get(i);
 			
 			float amount = 0;
 			String bet = "";
+		/*
 			for(int j = 0; j < players.get(i).getBets().size(); j++){
 				amount = amount + players.get(i).getBets().get(j).getAmount();
 				/*if(((RouletteBet) (players.get(i).getBets().get(j))).isColor()){
 					bet = bet + ", " + ((RouletteBet) (players.get(i).getBets().get(j))).getColor();
 				}else{
 					bet = bet + ", " + String.valueOf(((RouletteBet) (players.get(i).getBets().get(j))).getNum());
-				}*/
+				}
 			}
 			
 			user.getBets().get(0).setAmount(amount);
 			//((RouletteBet) user.getBets().get(0)).setAposta(bet);
 			
 			list.add(user);
+		
+			*/
 		}
 		
 		return list;
@@ -124,6 +134,9 @@ public class GameView extends JFrame {
 		jpTemps.add(jlTemps);
 	}
 	
+	public BaseJPanel getPanel(){
+		return panell;
+	}
 	protected void creaList(){
 		columnLayout = new GridLayout();
 		jpList = new JPanel(columnLayout);
@@ -144,14 +157,6 @@ public class GameView extends JFrame {
 		jpDades.setBorder(BorderFactory.createTitledBorder("Jugadors"));
 	}
 	
-	protected void propietats(){
-		this.setResizable(true);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setTitle("JOC");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-	}
-	
 	public void registerController(BetButtonController bbc){
 		jbBet.addActionListener(bbc);
 	}
@@ -160,13 +165,16 @@ public class GameView extends JFrame {
 		super.setVisible(false);
 	}
 	
+	public BaseJPanel getTablero(){
+		return panell;
+	}
+	
 	public JLabel setCounter(){
 		jlCount = new JLabel("...");
 		jlCount.setHorizontalAlignment(JLabel.CENTER);
 		jlCount.setVerticalAlignment(JLabel.CENTER);
 		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
 		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-		
 		return jlCount;
 	}
 	
@@ -176,5 +184,11 @@ public class GameView extends JFrame {
 	
 	public void actualitzaCounter(int num){
 		jlCount.setText(String.valueOf(num));
+	}
+
+	@Override
+	public void setManager(Manager manager) {
+		this.manager = manager;
+		
 	}
 }

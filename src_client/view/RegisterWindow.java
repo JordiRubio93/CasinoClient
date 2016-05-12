@@ -5,19 +5,24 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.time.DayOfWeek;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.github.lgooddatepicker.datepicker.DatePicker;
+import com.github.lgooddatepicker.datepicker.DatePickerSettings;
+
+import controller.Manager;
 import controller.listeners.ButtonListener;
 
-public class RegisterWindow extends JFrame{
+public class RegisterWindow extends BaseJPanel{
 	private static final long serialVersionUID = 1L;
+	private Manager manager;
 	private JLabel mainLabel = new JLabel("Please fill in all the following fields");
 	private JPanel mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	private JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -52,6 +57,8 @@ public class RegisterWindow extends JFrame{
 		mainPanel.add(mainLabel);
 		mainPanel.setBackground(Color.BLACK);
 		
+	
+		
 		nameLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
 		nameLabel.setForeground(Color.WHITE);
 		nameLabel.setBackground(Color.BLACK);
@@ -71,10 +78,13 @@ public class RegisterWindow extends JFrame{
 		ageLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
 		ageLabel.setForeground(Color.WHITE);
 		ageLabel.setBackground(Color.BLACK);
-		ageField.setPreferredSize(new Dimension(420,20));
+		
 		agePanel.setBackground(Color.BLACK);
 		agePanel.add(ageLabel);
-		agePanel.add(ageField);
+		DatePickerSettings dateSettings = new DatePickerSettings();
+	    dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+	    DatePicker datePicker = new DatePicker(dateSettings);		
+		agePanel.add(datePicker);
 		
 		mailLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
 		mailLabel.setForeground(Color.WHITE);
@@ -118,6 +128,12 @@ public class RegisterWindow extends JFrame{
 	
 	public void registerController(ButtonListener listener){
 		registerButton.addActionListener(listener);
+	}
+
+	@Override
+	public void setManager(Manager manager) {
+		this.manager=manager;
+		
 	}
 
 }

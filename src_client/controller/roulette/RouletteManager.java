@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import model.Constants;
-import model.struct.users.PublicUser;
+import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.GameOver;
-import network.segment.Play;
 import view.roulette.RouletteView;
 
 public class RouletteManager {
@@ -16,24 +15,32 @@ public class RouletteManager {
 
 	public RouletteManager(ServerComunication sc) {
 		this.sc = sc;
+		game = new RouletteView();
+		game.creaRuleta();
+		game.setVisible(true);
 	}
 	
-	public void executaPartida(LinkedList<PublicUser> listUsers){
-		game = new RouletteView();
-		game.actualitzaTemps();
-		game.setVisible(true);
+	public void executaPartida(LinkedList<User> listUsers){
+		//game = new RouletteView();
+		//game.actualitzaTemps();
 		
-		game.ompleLlista(listUsers);
+		
+		//game.ompleLlista(listUsers);
 		
 		try {
-			sc.enviarTrama(new Play("roulette"));
-			
 			game.creaRuleta();
-			
 			Thread.sleep(Constants.MINUT);
-			
 			game.acabaPartida();
 			sc.enviarTrama(new GameOver());
 		} catch (IOException | InterruptedException e) {}
 	}
+
+	public RouletteView getGame() {
+		return game;
+	}
+
+	public void setGame(RouletteView game) {
+		this.game = game;
+	}
+	
 }

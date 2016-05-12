@@ -32,7 +32,6 @@ public class HorsesView extends GameView {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
-		
 		super.creaTemps();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
@@ -42,8 +41,7 @@ public class HorsesView extends GameView {
 		super.creaList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
 
-		this.getContentPane().add(jpFinestra);
-		super.propietats();
+		add(jpFinestra);
 	}
 	
 	public void setCursa(LinkedList<String> c) {

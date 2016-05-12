@@ -8,7 +8,7 @@ import model.Calcul;
 import model.Constants;
 import model.Order;
 import model.struct.horses.HorseData;
-import model.struct.users.PublicUser;
+import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.GameOver;
 import network.segment.InitHorses;
@@ -25,8 +25,8 @@ public class HorsesManager {
 	private int sec;
 	private HorsesView game;
 	
-	public void executaCursa(LinkedList<PublicUser> listUsers) {		
-		game = new HorsesView();
+	public void executaCursa(LinkedList<User> listUsers) {		
+		
 		game.actualitzaTemps();
 		game.setVisible(true);
 		
@@ -85,6 +85,17 @@ public class HorsesManager {
 	
 	public HorsesManager(ServerComunication sc){
 		this.sc = sc;
+		game = new HorsesView();
 		sec = 0;
 	}
+
+	public HorsesView getGame() {
+		return game;
+	}
+
+	public void setGame(HorsesView game) {
+		this.game = game;
+	}
+	
+	
 }

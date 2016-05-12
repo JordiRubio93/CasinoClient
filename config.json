@@ -1,0 +1,5 @@
+{ "configuration": {
+	"IP_SBD": "localhost",
+	"PORT_Client": "6969"
+	}
+}
