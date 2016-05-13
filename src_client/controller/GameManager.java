@@ -48,7 +48,7 @@ public class GameManager {
 			//rm.executaPartida(listUsers);
 		}else{
 			HorsesManager hm = new HorsesManager(sc);
-			//hm.executaCursa(listUsers);
+			hm.executaCursa(null);
 		}
 	}
 	

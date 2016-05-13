@@ -56,7 +56,7 @@ public class Manager {
 	}
 
 
-	public ButtonListener getButtonLister() {
+	public ButtonListener getButtonListener() {
 		return controller;
 	}
 	public boolean login(){
@@ -101,29 +101,31 @@ public class Manager {
 		return logged;
 			
 	}
+	
 	public void comenzarJoc(String joc){
 		try {
 			server.enviarTrama(new Play("joc"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		switch (joc) {
 			case ("Play Roulette"):
 				gameManager.executaRuleta();
 			break;
-			case ("Play Horses"):
+		case ("Play Horses"):
 				gameManager.executaHorses();
-				System.out.println("hola!!");
-				break;
-			case ("Play Blackjack"):
-				//game Manager.executaRuleta();
-				break;
-			case ("Stadistics"):
-		
-				break;
+			break;
+		case ("Play Blackjack"):
+			//game Manager.executaRuleta();
+			break;
+		case ("Stadistics"):
+	
+			break;
+	
 		}
 	}
+	
+	
 
 	
 }

@@ -32,6 +32,7 @@ public class HorsesView extends GameView {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
+		
 		super.creaTemps();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);

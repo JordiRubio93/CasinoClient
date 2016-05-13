@@ -45,7 +45,6 @@ public class GameView extends BaseJPanel {
 	protected JButton jbBet;
 	protected JPanel jpBet;
 	private JLabel jlCount;
-	private Manager manager;
 	
 	public void ompleLlista(LinkedList<User> players){
 	/**
@@ -188,7 +187,7 @@ public class GameView extends BaseJPanel {
 
 	@Override
 	public void setManager(Manager manager) {
-		this.manager = manager;
+		// TODO Auto-generated method stub
 		
 	}
 }

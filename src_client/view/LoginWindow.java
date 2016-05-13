@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -27,143 +30,38 @@ import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 import controller.Manager;
 import controller.listeners.ButtonListener;
 import model.struct.user.User;
+import model.Constants;
 
 public class LoginWindow extends BaseJPanel {
+	
+	private final String register = "Register";
+	private final String email = "Email:";
+	private final String password = "Password:";
+	private final String login = "Log in";
+	private final String remember = "Remember?";
+	private final String space = "     ";
 	private static final long serialVersionUID = 1L;
-	private JPanel backgroundPanel = new JPanel(new BorderLayout());
+	
+	private Tapet backgroundPanel;
 	private JPanel northPanel = new JPanel(new BorderLayout());
-	private JLabel southLabel;
 	private JPanel registerPanel = new JPanel(new GridLayout(2,1));
-	private JLabel registerLabel = new JLabel("    Don't have an account?");
-	private JButton registerButton = new JButton("Register");
-	private JPanel loginPanel = new JPanel(new BorderLayout());
-	private JLabel mailLabel = new JLabel("Email:");
+	private JButton registerButton = new JButton(register);
+	private JPanel loginPanel = new JPanel();
+	private JLabel mailLabel = new JLabel(email);
 	private JTextField mailField = new JTextField();
-	private JLabel passwordLabel = new JLabel("Password:");
+	private JLabel passwordLabel = new JLabel(password);
 	private JPasswordField passwordField = new JPasswordField();
 	private JCheckBox checkBox = new JCheckBox();
-	private JButton loginButton = new JButton("Log in");
-	private JLabel rememberPassword = new JLabel("Remember?");
-	private JPanel leftLoginPanel = new JPanel();
-	private JPanel rightLoginPanel = new JPanel(new BorderLayout());
-	private JLabel passwordError = new JLabel("   ");
-	private JLabel emailError = new JLabel("   ");
+	private JButton loginButton = new JButton(login);
+	private JLabel rememberPassword = new JLabel(remember);
+	private JLabel passwordError = new JLabel(space);
+	private JLabel emailError = new JLabel(space);
+	private JLabel spaceLabel = new JLabel(space);
+	private JLabel spaceLabel2 = new JLabel(space);
+	private RegisterPanel rPanel = new RegisterPanel();
 
 	public LoginWindow(){
-		setLayout(new BorderLayout());
-		southLabel = null;
-		JLabel spaceLabel = new JLabel("     ");
-		JLabel spaceLabel2 = new JLabel("     ");
-		JLabel background = null;
-		BufferedImage img = null;
-		BufferedImage img2 = null;
-		try {
-			img = ImageIO.read(new File("resources/casino.jpg"));
-			img2 = ImageIO.read(new File("resources/label.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		 
-		
-		registerButton.setFont(new Font("Calibri", Font.BOLD, 24));
-		registerButton.setBackground(new Color(215, 143, 35));
-		registerButton.setContentAreaFilled(true);
-
-		registerButton.putClientProperty("action", "Register");
-		registerButton.setBorderPainted(false);
-		registerButton.setPreferredSize(new Dimension (200, 50));
-		
-		registerLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		registerLabel.setForeground(Color.WHITE);
-		registerLabel.setBackground(Color.BLACK);
-		
-		registerPanel.setBackground(Color.BLACK);
-		registerPanel.add(registerLabel);
-		registerPanel.add(registerButton);
-		
-		mailLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		mailLabel.setForeground(Color.WHITE);
-		mailLabel.setBackground(Color.BLACK);
-		mailField.setPreferredSize(new Dimension(150, 20));
-		mailField.addKeyListener(new KeyAdapter() {
-	        public void keyReleased(KeyEvent e) {
-	            super.keyReleased(e);
-	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && mailField.getText().length() > 0 )
-		              loginButton.setEnabled(true);
-	            else
-	            	 loginButton.setEnabled(false);
-	        }
-	    });
-		emailError.setPreferredSize(new Dimension (48, 48));
-		emailError.setBackground(Color.BLACK);
-		passwordLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		passwordLabel.setForeground(Color.WHITE);
-		passwordLabel.setBackground(Color.BLACK);
-		passwordField.setPreferredSize(new Dimension(150, 20));
-		passwordField.addKeyListener(new KeyAdapter() {
-	        public void keyReleased(KeyEvent e) {
-	            super.keyReleased(e);
-	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && mailField.getText().length() > 0 )
-	                loginButton.setEnabled(true);
-	            else
-	            	loginButton.setEnabled(false);
-	        }
-	    });
-		loginButton.setFont(new Font("Calibri", Font.BOLD, 24));
-		loginButton.putClientProperty("action", "Log in");
-		loginButton.setBackground(new Color(56, 192, 196));
-		loginButton.setContentAreaFilled(true);
-		loginButton.setBorderPainted(false);
-		loginButton.setPreferredSize(new Dimension (200, 50));
-		
-		
-		
-		
-		JPanel aux = new JPanel();
-		checkBox.setBackground(Color.BLACK);
-		aux.add(checkBox);
-		rememberPassword.setFont(new Font("Calibri", Font.PLAIN, 18));
-		rememberPassword.setForeground(Color.WHITE);
-		rememberPassword.setBackground(Color.BLACK);
-		aux.add(rememberPassword);
-		aux.setBackground(Color.BLACK);
-		
-		leftLoginPanel.setBackground(Color.BLACK);
-		leftLoginPanel.add(mailLabel);
-		leftLoginPanel.add(mailField);
-		leftLoginPanel.add(emailError);
-		leftLoginPanel.add(spaceLabel);
-		leftLoginPanel.add(passwordLabel);
-		leftLoginPanel.add(passwordField);
-		
-		passwordError.setPreferredSize(new Dimension (48, 48));
-		passwordError.setBackground(Color.BLACK);
-		
-		leftLoginPanel.add(passwordError);
-		leftLoginPanel.add(spaceLabel2);
-		leftLoginPanel.add(aux);
-
-		rightLoginPanel.setBackground(Color.BLACK);
-		loginButton.setEnabled(false);
-		rightLoginPanel.add(loginButton, BorderLayout.EAST);
-
-		loginPanel.setBackground(Color.BLACK);
-		loginPanel.add(leftLoginPanel, BorderLayout.CENTER);
-		loginPanel.add(rightLoginPanel, BorderLayout.SOUTH);
-
-		northPanel.setBackground(new Color(0, 0, 0));
-		northPanel.add(loginPanel, BorderLayout.EAST);
-		northPanel.add(registerPanel, BorderLayout.WEST);
-		add(northPanel, BorderLayout.NORTH);
-		
-		southLabel = new JLabel(new ImageIcon(img2));
-		southLabel.setBackground(Color.BLACK);
-		add(southLabel, BorderLayout.SOUTH);
-		
-		background = new JLabel(new ImageIcon(img));		
-		backgroundPanel.add(background, BorderLayout.CENTER);
-		add(backgroundPanel, BorderLayout.CENTER);	
+			initElements();
 	}
 	
 	public void showPasswordError(Boolean b){
@@ -172,7 +70,7 @@ public class LoginWindow extends BaseJPanel {
 			try {
 				img = ImageIO.read(new File("Resources/warning.png"));
 				passwordError.setIcon(new ImageIcon (img));
-				passwordError.setToolTipText("Error en la Password");
+				passwordError.setToolTipText("Error found in password, 6 characters are needed, must include upper cases, numbers and a simbol");
 			} catch (IOException e) {
 				try {
 					img = ImageIO.read(new File("Resources/default-image.jpg"));
@@ -189,13 +87,109 @@ public class LoginWindow extends BaseJPanel {
 		
 	}
 	
+	private void initElements(){
+		setLayout(new BorderLayout());
+		
+		// Crea el panell de fons
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		backgroundPanel = new Tapet(width, height, "resources/casino.jpg");
+
+		
+		// Panell de boto de registre
+		registerPanel.setBackground(Color.BLACK);
+		registerPanel.add(registerButton);
+		
+		// Crea elements per a l'inici de sessio amb mail
+		mailLabel.setFont(Constants.boldFont);
+		mailLabel.setForeground(Color.WHITE);
+		mailLabel.setBackground(Color.BLACK);
+		mailField.setPreferredSize(new Dimension(150, 20));
+		mailField.addKeyListener(new KeyAdapter() {
+	        public void keyReleased(KeyEvent e) {
+	            super.keyReleased(e);
+	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && mailField.getText().length() > 0 )
+		              loginButton.setEnabled(true);
+	            else
+	            	 loginButton.setEnabled(false);
+	        }
+	    });
+		emailError.setPreferredSize(Constants.errorIconDimension);
+		emailError.setBackground(Color.BLACK);
+		
+		// Crea elements per a l'inici de sessio amb mail (part de la contrasenya)
+		passwordLabel.setFont(Constants.boldFont);
+		passwordLabel.setForeground(Color.WHITE);
+		passwordLabel.setBackground(Color.BLACK);
+		passwordField.setPreferredSize(new Dimension(150, 20));
+		passwordField.addKeyListener(new KeyAdapter() {
+	        public void keyReleased(KeyEvent e) {
+	            super.keyReleased(e);
+	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && mailField.getText().length() > 0 )
+	                loginButton.setEnabled(true);
+	            else
+	            	loginButton.setEnabled(false);
+	        }
+	    });
+		
+		// Crea elements per a l'inici de sessio amb mail (boto de logejar)
+		loginButton.setFont(Constants.boldFont);
+		loginButton.putClientProperty("action", "Log in");
+		loginButton.setBackground(Constants.coolBlue);
+		loginButton.setContentAreaFilled(true);
+		loginButton.setBorderPainted(false);
+		loginButton.setPreferredSize(new Dimension (200, 50));		
+		
+		// Crea elements per a l'inici de sessio amb mail (checkbox)
+		JPanel aux = new JPanel();
+		checkBox.setBackground(Color.BLACK);
+		aux.add(checkBox);
+		rememberPassword.setFont(Constants.boldFont);
+		rememberPassword.setForeground(Color.WHITE);
+		rememberPassword.setBackground(Color.BLACK);
+		aux.add(rememberPassword);
+		aux.setBackground(Color.BLACK);
+		
+		// Part esquerra del panell de logejar
+		loginPanel.setBackground(Color.BLACK);
+		loginPanel.add(mailLabel);
+		loginPanel.add(mailField);
+		loginPanel.add(emailError);
+		loginPanel.add(spaceLabel);
+		loginPanel.add(passwordLabel);
+		loginPanel.add(passwordField);
+		
+		passwordError.setPreferredSize(Constants.errorIconDimension);
+		passwordError.setBackground(Color.BLACK);
+		
+		loginPanel.add(passwordError);
+		loginPanel.add(spaceLabel2);
+		loginPanel.add(aux);
+		
+		// Part dreta del panell de logejar
+		loginButton.setEnabled(false);
+		loginButton.setToolTipText("All fields must be filled correctly in order to log in");
+		loginPanel.add(loginButton);
+		
+		// Afegeix el panell de logejar al background
+		northPanel.setBackground(Constants.semiOpaqueBlack);
+		northPanel.add(loginPanel, BorderLayout.CENTER);
+		add(northPanel, BorderLayout.NORTH);
+		
+		backgroundPanel.setLayout(new BorderLayout());
+		backgroundPanel.add(rPanel, BorderLayout.EAST);
+		add(backgroundPanel, BorderLayout.CENTER);
+		
+	}
+	
 	public void showEmailError(Boolean b){
 		if(b){
 			BufferedImage img;
 			try {
 				img = ImageIO.read(new File("Resources/warning.png"));
 				emailError.setIcon(new ImageIcon (img));
-				emailError.setToolTipText("Error del formato Email");
+				emailError.setToolTipText("Error found in e-mail format");
 			} catch (IOException e) {
 				try {
 					img = ImageIO.read(new File("Resources/default-image.jpg"));
@@ -206,7 +200,7 @@ public class LoginWindow extends BaseJPanel {
 			}
 		}else{
 			emailError.setBackground(Color.BLACK);
-			passwordError.setIcon(null);
+			emailError.setIcon(null);
 		}
 			
 	}
@@ -220,13 +214,14 @@ public class LoginWindow extends BaseJPanel {
 	}
 	
 	public void registerController(ButtonListener listener){
-		
+		rPanel.registerController(listener);
 		registerButton.addActionListener(listener);
 		loginButton.addActionListener(listener);
 	}
 
 	@Override
 	public void setManager(Manager manager) {
-		registerController(manager.getButtonLister());
+		rPanel.setManager(manager);
+		registerController(manager.getButtonListener());
 	}	
 }
