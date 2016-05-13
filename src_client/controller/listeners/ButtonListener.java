@@ -2,10 +2,12 @@ package controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 
 import controller.Manager;
+import network.segment.LogOut;
 import view.LoginWindow;
 import view.MainWindow;
 import view.StatisticsWindow;
@@ -48,7 +50,13 @@ public class ButtonListener implements ActionListener {
 			break;
 		
 		case ("Log Out"):
-			manager.setPanel(new LoginWindow());
+			try {
+				manager.getServer().enviarTrama(new LogOut());
+				manager.setPanel(new LoginWindow());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
 			break;	
 			
 		case ("Home"):
