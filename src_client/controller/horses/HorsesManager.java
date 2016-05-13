@@ -2,13 +2,16 @@ package controller.horses;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import controller.Manager;
 import controller.listeners.BetButtonController;
 import model.Calcul;
 import model.Constants;
 import model.Order;
 import model.struct.horses.HorseData;
-import model.struct.user.User;
+import model.struct.user.PublicUser;
 import network.ServerComunication;
 import network.segment.GameOver;
 import network.segment.InitHorses;
@@ -21,54 +24,61 @@ public class HorsesManager {
 	private LinkedList<String> colors;
 	//private HorsesBet aposta;
 	private ServerComunication sc;
+	private Manager manager;
 	private InitHorses initH;
-	private int sec;
+	private int time;
 	private HorsesView game;
 	
-	public void executaCursa(LinkedList<User> listUsers) {		
-		
+	public void executaCursa(LinkedList<PublicUser> listUsers) {
+		game = (HorsesView) manager.getPanel();
 		game.actualitzaTemps();
 		game.setVisible(true);
 		
 		game.ompleLlista(listUsers);
 		
 		try {
+			sc = game.getManager().getServer();
 			sc.enviarTrama(new Play("horses"));
 			initH = (InitHorses) sc.obtenirTrama();
 			end = initH.getList();
 			
-			HorsesIntro hIntro = new HorsesIntro(end);
-			BetButtonController bbc = new BetButtonController(game, hIntro);
+			HorsesIntro hIntro = new HorsesIntro(end, sc);
+			BetButtonController bbc = new BetButtonController(game, hIntro, sc);
 			game.registerController(bbc);
 			
 			sc.enviarTrama(new Seconds(0));
-			sec = ((Seconds) sc.obtenirTrama()).getSegons();
+			time = ((Seconds) sc.obtenirTrama()).getSegons();
 			
-			game.setHorseCounter();
-			
-			do{
-				sec++;
-				Thread.sleep(1000);
-				game.actualitzaCounter(49-sec);
-			}while(sec < 50);
-			
-			game.showCounter(false);
-			game.setCursa(colors);
-			game.initHorses(end);
-			
-			corre();
-		} catch (IOException | InterruptedException e) {
+			game.setCounter();
+
+			new Timer().scheduleAtFixedRate(new TimerTask(){
+				public void run() {
+					if(time < 49){
+						time++;
+						game.actualitzaCounter(49-time);
+					}else{
+						game.showCounter(false);
+						game.setCursa(colors);
+						game.initHorses(end);
+						
+						corre();
+						
+						this.cancel();
+					}
+				}
+			}, 0, 1000);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void corre(){
 		try {
-			sec = 0;
-			while(sec < 30){
-				sec++;
+			time = 0;
+			while(time < 30){
+				time++;
 				for(int i = 0; i < Constants.nHorses; i++){
-					if(sec%2 == 0){
+					if(time%2 == 0){
 						game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
 					}else{
 						game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
@@ -78,24 +88,30 @@ public class HorsesManager {
 				Thread.sleep(Constants.DELAY);
 			}
 		
-			game.acabaPartida(new Order().max(end).getName());
+			String winner = new Order().max(end).getName();
+			
+			for(int i = 0; i < Constants.nHorses; i++){
+				if(end.get(i).getName().equals(winner)){
+					winner = "(" + i + ") " + winner;
+					break;
+				}
+			}
+			
+			game.acabaPartida(winner);
 			sc.enviarTrama(new GameOver());
 		} catch (InterruptedException | IOException e) {}	
 	}
 	
-	public HorsesManager(ServerComunication sc){
-		this.sc = sc;
-		game = new HorsesView();
-		sec = 0;
+	public HorsesManager(Manager manager) {
+		this.manager = manager;
+		time = 0;
 	}
 
 	public HorsesView getGame() {
-		return game;
+		return new HorsesView();
 	}
 
 	public void setGame(HorsesView game) {
 		this.game = game;
 	}
-	
-	
 }

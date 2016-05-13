@@ -10,20 +10,17 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller.Manager;
 import controller.listeners.BetButtonController;
+import model.struct.user.PublicUser;
 import model.struct.user.User;
 
 public class GameView extends BaseJPanel {
-	
-	
 	private static final long serialVersionUID = 1L;
 
 	private BaseJPanel panell;
@@ -44,9 +41,9 @@ public class GameView extends BaseJPanel {
 	protected boolean isRuleta;
 	protected JButton jbBet;
 	protected JPanel jpBet;
-	private JLabel jlCount;
+	protected JLabel jlCount;
 	
-	public void ompleLlista(LinkedList<User> players){
+	public void ompleLlista(LinkedList<PublicUser> listUsers){
 	/**
 		LinkedList<User> roulettePlayers = new LinkedList<User>();
 		
@@ -88,7 +85,6 @@ public class GameView extends BaseJPanel {
 		timer = new TimerThread(jlTemps);
 		new Thread(timer).start();
 	}
-	
 	
 	@SuppressWarnings("unused")
 	private LinkedList<User> creaLlista(LinkedList<User> players){
@@ -136,6 +132,7 @@ public class GameView extends BaseJPanel {
 	public BaseJPanel getPanel(){
 		return panell;
 	}
+	
 	protected void creaList(){
 		columnLayout = new GridLayout();
 		jpList = new JPanel(columnLayout);
@@ -167,27 +164,9 @@ public class GameView extends BaseJPanel {
 	public BaseJPanel getTablero(){
 		return panell;
 	}
-	
-	public JLabel setCounter(){
-		jlCount = new JLabel("...");
-		jlCount.setHorizontalAlignment(JLabel.CENTER);
-		jlCount.setVerticalAlignment(JLabel.CENTER);
-		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
-		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-		return jlCount;
-	}
-	
-	public void showCounter(boolean show){
-		jlCount.setVisible(show);
-	}
-	
-	public void actualitzaCounter(int num){
-		jlCount.setText(String.valueOf(num));
-	}
 
 	@Override
 	public void setManager(Manager manager) {
-		// TODO Auto-generated method stub
-		
+		super.setManager(manager);
 	}
 }

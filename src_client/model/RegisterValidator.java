@@ -3,7 +3,6 @@ package model;
 import java.util.regex.Pattern;
 
 public class RegisterValidator {
-
 	private final Pattern VALID_EMAIL_ADDRESS = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
 

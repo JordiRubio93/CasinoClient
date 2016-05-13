@@ -3,9 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -13,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.DayOfWeek;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,16 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.github.lgooddatepicker.datepicker.DatePicker;
-import com.github.lgooddatepicker.datepicker.DatePickerSettings;
-
 import controller.Manager;
 import controller.listeners.ButtonListener;
 import model.struct.user.User;
 import model.Constants;
 
 public class LoginWindow extends BaseJPanel {
-	
 	private final String register = "Register";
 	private final String email = "Email:";
 	private final String password = "Password:";
@@ -61,12 +53,12 @@ public class LoginWindow extends BaseJPanel {
 	private RegisterPanel rPanel = new RegisterPanel();
 
 	public LoginWindow(){
-			initElements();
+		initElements();
 	}
 	
 	public void showPasswordError(Boolean b){
 		if(b){
-				BufferedImage img;
+			BufferedImage img;
 			try {
 				img = ImageIO.read(new File("Resources/warning.png"));
 				passwordError.setIcon(new ImageIcon (img));
@@ -84,7 +76,6 @@ public class LoginWindow extends BaseJPanel {
 			passwordError.setBackground(Color.BLACK);
 			passwordError.setIcon(null);
 		}
-		
 	}
 	
 	private void initElements(){
@@ -96,7 +87,6 @@ public class LoginWindow extends BaseJPanel {
 		int height = (int) screenSize.getHeight();
 		backgroundPanel = new Tapet(width, height, "resources/casino.jpg");
 
-		
 		// Panell de boto de registre
 		registerPanel.setBackground(Color.BLACK);
 		registerPanel.add(registerButton);
@@ -110,7 +100,7 @@ public class LoginWindow extends BaseJPanel {
 	        public void keyReleased(KeyEvent e) {
 	            super.keyReleased(e);
 	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && mailField.getText().length() > 0 )
-		              loginButton.setEnabled(true);
+		             loginButton.setEnabled(true);
 	            else
 	            	 loginButton.setEnabled(false);
 	        }
@@ -136,6 +126,7 @@ public class LoginWindow extends BaseJPanel {
 		// Crea elements per a l'inici de sessio amb mail (boto de logejar)
 		loginButton.setFont(Constants.boldFont);
 		loginButton.putClientProperty("action", "Log in");
+		loginButton.setForeground(Color.WHITE);
 		loginButton.setBackground(Constants.coolBlue);
 		loginButton.setContentAreaFilled(true);
 		loginButton.setBorderPainted(false);

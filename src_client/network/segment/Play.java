@@ -6,7 +6,7 @@ public class Play extends Segment{
 	private String tipus;
 	
 	
-	public Play( String tipus) {
+	public Play(String tipus) {
 		this.tipus = tipus;
 	
 	}

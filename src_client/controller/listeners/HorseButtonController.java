@@ -2,20 +2,25 @@ package controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 import model.Constants;
 import model.struct.bet.HorsesBet;
+import network.ServerComunication;
+import network.segment.HorseBetting;
 import view.Dialeg;
 import view.cavalls.ChooseHorse;
 
 public class HorseButtonController implements ActionListener{
 	private ChooseHorse window;
+	private ServerComunication sc;
 	private String name;
 	private HorsesBet bet;
 
-	public HorseButtonController(ChooseHorse window){
+	public HorseButtonController(ChooseHorse window, ServerComunication sc){
+		this.sc = sc;
 		this.window = window;
 		this.bet = new HorsesBet(Float.MIN_VALUE);
 	}
@@ -32,6 +37,12 @@ public class HorseButtonController implements ActionListener{
 				name = window.getHorseName();
 				
 				bet = new HorsesBet(Float.parseFloat(window.getAmount()), name);
+				
+				try {
+					sc.enviarTrama(new HorseBetting("David", bet));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				
 				window.setVisible(false);
 				

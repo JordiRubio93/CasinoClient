@@ -1,6 +1,7 @@
 package model.struct.bet;
 
 public class HorsesBet extends Bet {
+	private static final long serialVersionUID = 1L;
 	private String horse;
 
 	public HorsesBet(float amount){

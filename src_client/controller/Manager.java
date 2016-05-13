@@ -14,17 +14,17 @@ import tools.excepcions.FileException;
 import view.BaseJPanel;
 import view.LoginWindow;
 import view.MainWindow;
-import view.PanellPrincipal;
+import view.MainFrame;
 
 public class Manager {
 	private final String rutejson = "config.json";
 	private ServerComunication server;
 	private ButtonListener controller;
-	private PanellPrincipal view;
+	private MainFrame view;
 	private GameManager gameManager;
 	private ConfigurationFile cf;
 
-	public Manager(PanellPrincipal view) {
+	public Manager(MainFrame view) {
 		this.view = view;
 		try {
 			controller = new ButtonListener(this);
@@ -44,21 +44,28 @@ public class Manager {
 			view.showError("Error");
 			System.exit(0);
 		}
-		
 	}
 
 	public void setPanel(BaseJPanel panel) {
 		view.setPanel(panel);
+	}
+	
+	public BaseJPanel getPanel() {
+		return view.getPanel();
 	}
 
 	public ButtonListener getController() {
 		return controller;
 	}
 
-
 	public ButtonListener getButtonListener() {
 		return controller;
 	}
+
+	public ServerComunication getServer() {
+		return server;
+	}
+
 	public boolean login(){
 		LoginWindow p = (LoginWindow) view.getPanel();
 		User u = p.getUser();
@@ -101,31 +108,26 @@ public class Manager {
 		return logged;
 			
 	}
-	
 	public void comenzarJoc(String joc){
 		try {
 			server.enviarTrama(new Play("joc"));
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		switch (joc) {
 			case ("Play Roulette"):
 				gameManager.executaRuleta();
 			break;
-		case ("Play Horses"):
+			case ("Play Horses"):
 				gameManager.executaHorses();
-			break;
-		case ("Play Blackjack"):
-			//game Manager.executaRuleta();
-			break;
-		case ("Stadistics"):
-	
-			break;
-	
+				break;
+			case ("Play Blackjack"):
+				//game Manager.executaRuleta();
+				break;
+			case ("Stadistics"):
+		
+				break;
 		}
 	}
-	
-	
-
-	
 }

@@ -2,19 +2,17 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import controller.Manager;
 import java.awt.CardLayout;
 
-public class PanellPrincipal extends JFrame{
-
+public class MainFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private BaseJPanel panel;
 	private CardLayout cardLayout;
 	private Manager manager;
 	
-	public PanellPrincipal(){
+	public MainFrame(){
 		setTitle("LS Casino");
 		setLocationRelativeTo(null);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -23,7 +21,7 @@ public class PanellPrincipal extends JFrame{
 		getContentPane().setLayout(cardLayout);
 	}
 
-	public JPanel getPanel() {
+	public BaseJPanel getPanel() {
 		return panel;
 	}
 
@@ -33,7 +31,7 @@ public class PanellPrincipal extends JFrame{
 		getContentPane().add(panel, panel.getClass().getName().toString());
 		cardLayout.show(getContentPane(), panel.getClass().getName().toString());
 	}
-
+	
 	public void showError(String string) {
 		JOptionPane.showMessageDialog(this,string,"ERROR", JOptionPane.ERROR_MESSAGE);
 	}

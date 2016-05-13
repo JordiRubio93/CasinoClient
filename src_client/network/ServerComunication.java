@@ -53,7 +53,6 @@ public class ServerComunication{
 	}
 
 	public synchronized String obtenirInstruccio() {
-
 		try {
 			s = (Segment) objectIn.readObject();
 			return (s.getClass().getSimpleName());
@@ -61,6 +60,5 @@ public class ServerComunication{
 	
 		}
 		return null;
-
 	}
 }

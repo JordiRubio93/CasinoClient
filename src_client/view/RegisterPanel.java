@@ -3,8 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -18,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -47,7 +44,7 @@ public class RegisterPanel extends BaseJPanel{
 	private final String guest = "Try as guest";
 	private final String space = "  a  ";
 	private static final long serialVersionUID = 1L;
-		
+	
 	private JLabel mainLabel = new JLabel(main);
 	private JPanel mainPanel = new JPanel(new GridBagLayout());
 	private JLabel nameLabel = new JLabel(name);
@@ -101,7 +98,6 @@ public class RegisterPanel extends BaseJPanel{
 		mainLabel.setBackground(Color.BLACK);
 		mainLabel.setForeground(Constants.coolBlue);
 		add(mainLabel, BorderLayout.NORTH);
-		
 		
 		// Dona valors al name label
 		nameLabel.setFont(Constants.plainFont);
@@ -224,12 +220,12 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 7;
 		
 		mainPanel.add(buttonsPanel, c);
-		
 	
 		// Dona valors al register button
 		registerButton.setEnabled(false);
 		registerButton.setToolTipText("All fields must be filled correctly in order to register");
 		registerButton.setFont(Constants.boldFont);
+		registerButton.setForeground(Color.WHITE);
 		registerButton.setBackground(Constants.coolOrange);
 		registerButton.setContentAreaFilled(true);
 		registerButton.setBorderPainted(false);
@@ -242,6 +238,7 @@ public class RegisterPanel extends BaseJPanel{
 		
 		// Dona valors al guest button
 		guestButton.setFont(Constants.boldFont);
+		guestButton.setForeground(Color.WHITE);
 		guestButton.setBackground(Constants.coolGreen);
 		guestButton.setContentAreaFilled(true);
 		guestButton.setBorderPainted(false);
@@ -253,7 +250,6 @@ public class RegisterPanel extends BaseJPanel{
 		
 		add(mainPanel, BorderLayout.CENTER);
 	}
-	
 	
 	public void showNameError(Boolean b){
 		if(b){
@@ -274,8 +270,8 @@ public class RegisterPanel extends BaseJPanel{
 			errorName.setBackground(Color.BLACK);
 			errorName.setIcon(null);
 		}
-			
 	}
+	
 	public void showSurnameError(Boolean b){
 		if(b){
 			BufferedImage img;
@@ -316,13 +312,12 @@ public class RegisterPanel extends BaseJPanel{
 		}else{
 			errorMail.setBackground(Color.BLACK);
 			errorMail.setIcon(null);
-		}
-			
+		}	
 	}
 	
 	public void showPasswordError(Boolean b){
 		if(b){
-				BufferedImage img;
+			BufferedImage img;
 			try {
 				img = ImageIO.read(new File("Resources/warning.png"));
 				errorPassword.setIcon(new ImageIcon (img));
@@ -335,17 +330,15 @@ public class RegisterPanel extends BaseJPanel{
 					e1.printStackTrace();
 				}
 			}	
-			}
-		else{
+		}else{
 			errorPassword.setBackground(Color.BLACK);
 			errorPassword.setIcon(null);
 		}
-		
 	}
 	
 	public void showPassword2Error(Boolean b){
 		if(b){
-				BufferedImage img;
+			BufferedImage img;
 			try {
 				img = ImageIO.read(new File("Resources/warning.png"));
 				errorPassword2.setIcon(new ImageIcon (img));
@@ -358,12 +351,10 @@ public class RegisterPanel extends BaseJPanel{
 					e1.printStackTrace();
 				}
 			}	
-			}
-		else{
+		}else{
 			errorPassword2.setBackground(Color.BLACK);
 			errorPassword2.setIcon(null);
 		}
-		
 	}
 
 	public void registerController(ButtonListener listener){
@@ -375,5 +366,4 @@ public class RegisterPanel extends BaseJPanel{
 	public void setManager(Manager manager) {
 		registerController(manager.getButtonListener());
 	}
-
 }

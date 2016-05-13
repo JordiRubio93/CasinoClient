@@ -9,23 +9,26 @@ import controller.listeners.LMouseController;
 import controller.listeners.RButtonController;
 import controller.listeners.RMouseController;
 import model.struct.horses.HorseData;
+import network.ServerComunication;
 import view.cavalls.ChooseHorse;
 
 public class HorsesIntro {
 	private ChooseHorse choose;
+	private ServerComunication sc;
 	private LinkedList<HorseData> hdList;
 	private HorseButtonController hb;
 	private boolean active;
 	
-	public HorsesIntro(LinkedList<HorseData> hdList) {
+	public HorsesIntro(LinkedList<HorseData> hdList, ServerComunication sc) {
 		this.hdList = hdList;
+		this.sc = sc;
 		active = false;
 	}
 	
 	private void creaControladors(){
 		RButtonController rb = new RButtonController(choose);
 		LButtonController lb = new LButtonController(choose);
-		hb = new HorseButtonController(choose);
+		hb = new HorseButtonController(choose, sc);
 		CentralMouseController cm = new CentralMouseController(choose);
 		RMouseController rm = new RMouseController(choose);
 		LMouseController lm = new LMouseController(choose);

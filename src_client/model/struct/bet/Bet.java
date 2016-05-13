@@ -1,7 +1,10 @@
 package model.struct.bet;
 
-public class Bet {
-    protected float amount;
+import java.io.Serializable;
+
+public class Bet implements Serializable {
+    private static final long serialVersionUID = 1L;
+	protected float amount;
     
 	public Bet(float amount) {
 		this.amount = amount;

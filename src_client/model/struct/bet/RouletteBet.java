@@ -1,6 +1,7 @@
 package model.struct.bet;
 
 public class RouletteBet extends Bet {
+	private static final long serialVersionUID = 1L;
 	private int vermell;
 	private int negre;
 	private int parell;

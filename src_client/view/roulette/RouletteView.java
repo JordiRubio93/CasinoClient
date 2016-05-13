@@ -49,6 +49,7 @@ public class RouletteView extends GameView {
 	private AmericanRoulette americanRoulette;
 	
 	public void creaRuleta(){
+	
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());

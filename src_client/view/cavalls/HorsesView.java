@@ -42,7 +42,8 @@ public class HorsesView extends GameView {
 		super.creaList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
 
-		add(jpFinestra);
+		this.setLayout(new BorderLayout());
+		this.add(jpFinestra, BorderLayout.CENTER);
 	}
 	
 	public void setCursa(LinkedList<String> c) {
@@ -102,7 +103,25 @@ public class HorsesView extends GameView {
 		super.acabaPartida();
 	}
 	
-	public void setHorseCounter(){
-		jpStadium.add(super.setCounter(), BorderLayout.CENTER);
+	public void setCounter(){
+		jlCount = new JLabel("...");
+		jlCount.setHorizontalAlignment(JLabel.CENTER);
+		jlCount.setVerticalAlignment(JLabel.CENTER);
+		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
+		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+		
+		jpStadium.setDimensions();
+		jpStadium.setImatge(Constants.PATH_TAPET);
+		
+		jpStadium.add(jlCount, BorderLayout.CENTER);
+		jpFinestra.add(jpStadium, BorderLayout.CENTER);
+	}
+	
+	public void showCounter(boolean show){
+		jlCount.setVisible(show);
+	}
+	
+	public void actualitzaCounter(int num){
+		jlCount.setText(String.valueOf(num));
 	}
 }
