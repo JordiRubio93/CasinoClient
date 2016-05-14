@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Manager;
-import controller.listeners.ButtonListener;
+import controller.listeners.MainButtonsController;
 import model.Constants;
 
 public class StatisticsWindow extends BaseJPanel {
@@ -124,22 +123,19 @@ public class StatisticsWindow extends BaseJPanel {
 		background.add(panelTop, BorderLayout.NORTH);
 		background.add(panelCenter, BorderLayout.CENTER);
 		add(background, BorderLayout.CENTER);
-		
 	}
 	
-	public void registerController(ButtonListener listener){
+	public void registerController(MainButtonsController listener){
 		top5RouletteButton.addActionListener(listener);
 		top5BlackjackButton.addActionListener(listener);
 		top5hhorseButton.addActionListener(listener);
 		cashRankingButton.addActionListener(listener);
 		cashEvoButton.addActionListener(listener);
 		backButton.addActionListener(listener);
-		
 	}
 
 	@Override
 	public void setManager(Manager manager) {
 		registerController(manager.getButtonListener());
 	}
-
 }

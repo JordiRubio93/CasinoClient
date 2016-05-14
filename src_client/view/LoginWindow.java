@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -21,18 +21,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.Manager;
-import controller.listeners.ButtonListener;
+import controller.listeners.MainButtonsController;
 import model.struct.user.User;
 import model.Constants;
+import model.Utilities;
 
 public class LoginWindow extends BaseJPanel {
+	private static final long serialVersionUID = 1L;
 	private final String register = "Register";
 	private final String email = "Email:";
 	private final String password = "Password:";
 	private final String login = "Log in";
 	private final String remember = "Remember?";
 	private final String space = "     ";
-	private static final long serialVersionUID = 1L;
 	
 	private Tapet backgroundPanel;
 	private JPanel northPanel = new JPanel(new BorderLayout());
@@ -51,9 +52,15 @@ public class LoginWindow extends BaseJPanel {
 	private JLabel spaceLabel = new JLabel(space);
 	private JLabel spaceLabel2 = new JLabel(space);
 	private RegisterPanel rPanel = new RegisterPanel();
+	
+	private MainFrame window;
 
 	public LoginWindow(){
 		initElements();
+	}
+	
+	public void setWindow(MainFrame window){
+		this.window = window;
 	}
 	
 	public void showPasswordError(Boolean b){
@@ -71,7 +78,7 @@ public class LoginWindow extends BaseJPanel {
 					e1.printStackTrace();
 				}
 			}	
-			}
+		}
 		else{
 			passwordError.setBackground(Color.BLACK);
 			passwordError.setIcon(null);
@@ -82,16 +89,16 @@ public class LoginWindow extends BaseJPanel {
 		setLayout(new BorderLayout());
 		
 		// Crea el panell de fons
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
+		Rectangle rectangle = Utilities.getUsableScreenBounds();
+		int width = (int) rectangle.getWidth();
+		int height = (int) rectangle.getHeight();
 		backgroundPanel = new Tapet(width, height, "resources/casino.jpg");
 
 		// Panell de boto de registre
 		registerPanel.setBackground(Color.BLACK);
 		registerPanel.add(registerButton);
 		
-		// Crea elements per a l'inici de sessio amb mail
+		// Crea elements per a l'inici de sessió amb mail
 		mailLabel.setFont(Constants.boldFont);
 		mailLabel.setForeground(Color.WHITE);
 		mailLabel.setBackground(Color.BLACK);
@@ -108,7 +115,7 @@ public class LoginWindow extends BaseJPanel {
 		emailError.setPreferredSize(Constants.errorIconDimension);
 		emailError.setBackground(Color.BLACK);
 		
-		// Crea elements per a l'inici de sessio amb mail (part de la contrasenya)
+		// Crea elements per a l'inici de sessió amb mail (part de la contrassenya)
 		passwordLabel.setFont(Constants.boldFont);
 		passwordLabel.setForeground(Color.WHITE);
 		passwordLabel.setBackground(Color.BLACK);
@@ -123,7 +130,7 @@ public class LoginWindow extends BaseJPanel {
 	        }
 	    });
 		
-		// Crea elements per a l'inici de sessio amb mail (boto de logejar)
+		// Crea elements per a l'inici de sessió amb mail (botó de logejar)
 		loginButton.setFont(Constants.boldFont);
 		loginButton.putClientProperty("action", "Log in");
 		loginButton.setForeground(Color.WHITE);
@@ -132,7 +139,7 @@ public class LoginWindow extends BaseJPanel {
 		loginButton.setBorderPainted(false);
 		loginButton.setPreferredSize(new Dimension (200, 50));		
 		
-		// Crea elements per a l'inici de sessio amb mail (checkbox)
+		// Crea elements per a l'inici de sessió amb mail (checkbox)
 		JPanel aux = new JPanel();
 		checkBox.setBackground(Color.BLACK);
 		aux.add(checkBox);
@@ -171,7 +178,6 @@ public class LoginWindow extends BaseJPanel {
 		backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.add(rPanel, BorderLayout.EAST);
 		add(backgroundPanel, BorderLayout.CENTER);
-		
 	}
 	
 	public void showEmailError(Boolean b){
@@ -204,7 +210,7 @@ public class LoginWindow extends BaseJPanel {
 		return u;
 	}
 	
-	public void registerController(ButtonListener listener){
+	public void registerController(MainButtonsController listener){
 		rPanel.registerController(listener);
 		registerButton.addActionListener(listener);
 		loginButton.addActionListener(listener);

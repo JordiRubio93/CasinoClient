@@ -13,8 +13,9 @@ public class Constants {
 	public static final int PORT = 6969;
 	public static final String PATH_CARRILS = "Resources/carrils.jpg";
 	public static final String PATH_TAPET = "Resources/tapet.jpg";
+	public static final String PATH_CASINO = "Resources/casino.jpg";
 	public static final int nHorses = 12;
-	public static final int MINUT = 60000;
+	public static final long MINUT = 60000;
 	public static final Color semiOpaqueBlack = new Color(0, 0, 0, 60); 
 	public static final Color coolOrange = new Color(215, 143, 35);
 	public static final Color coolBlue = new Color(56, 192, 196);

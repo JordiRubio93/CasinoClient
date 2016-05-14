@@ -3,12 +3,18 @@ package controller.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import view.roulette.MyButton;
+import view.roulette.PushedButtons;
 
-public class ListenerBotons implements ActionListener{
+public class RouletteButtonsController implements ActionListener{
 	
 	public void actionPerformed(ActionEvent event) {
-		JButton boto = (JButton) event.getSource();
+		MyButton boto = (MyButton) event.getSource();
+		
+		PushedButtons pB = new PushedButtons();
+		
+		if(boto.consultaEstat()) pB.pintaBoto(boto);
+		else pB.despintaBoto(boto);
 		
 		if (boto.getText().equals("0")) {
 			System.out.println("has clicat al 0");

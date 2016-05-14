@@ -86,7 +86,7 @@ public class ChooseHorse extends JFrame {
 	}
 	
 	private void creaEleccio() {
-		JLabel jlIntro = new JLabel(" Diners a apostar : ");
+		JLabel jlIntro = new JLabel(" Money to bet : ");
 		jlIntro.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		jtfAmount = new JTextField();
 		jpEleccio.add(jlIntro, BorderLayout.WEST);
@@ -119,7 +119,7 @@ public class ChooseHorse extends JFrame {
 	}
 	
 	public void obreDialeg(){
-		dialeg.setConfirmText("Segur que vols apostar " + jtfAmount.getText() + " € per aquest cavall?");
+		dialeg.setConfirmText("Are you sure you want to bet " + jtfAmount.getText() + " € for this horse?");
 	}
 	
 	public void pintaBoto(JButton jBoto){

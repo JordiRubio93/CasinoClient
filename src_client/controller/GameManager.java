@@ -36,8 +36,9 @@ public class GameManager {
 	}
 	
 	public void executaRuleta(){
-		RouletteManager rm = new RouletteManager(sc);
+		RouletteManager rm = new RouletteManager(manager);
 		manager.setPanel(rm.getGame());
+		rm.executaPartida(null);
 	}
 	
 	public void executaHorses(){

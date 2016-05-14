@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.net.ConnectException;
 
-import controller.listeners.ButtonListener;
+import controller.listeners.MainButtonsController;
 import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.LoginUser;
@@ -19,7 +19,7 @@ import view.MainFrame;
 public class Manager {
 	private final String rutejson = "config.json";
 	private ServerComunication server;
-	private ButtonListener controller;
+	private MainButtonsController controller;
 	private MainFrame view;
 	private GameManager gameManager;
 	private ConfigurationFile cf;
@@ -27,7 +27,7 @@ public class Manager {
 	public Manager(MainFrame view) {
 		this.view = view;
 		try {
-			controller = new ButtonListener(this);
+			controller = new MainButtonsController(this);
 			view.registerController(this);
 			view.setPanel(new LoginWindow());
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
@@ -35,10 +35,10 @@ public class Manager {
 			server.establirConnexio();
 			gameManager = new GameManager(this);
 		} catch (FileException e) {
-			view.showError("No es troba configuració");
+			view.showError("Configuration file not found");
 			System.exit(0);
 		}  catch (ConnectException e){
-			view.showError("No es troba el servidor");
+			view.showError("Server not found");
 			System.exit(0);
 		}catch (IOException e) {
 			view.showError("Error");
@@ -54,11 +54,11 @@ public class Manager {
 		return view.getPanel();
 	}
 
-	public ButtonListener getController() {
+	public MainButtonsController getController() {
 		return controller;
 	}
 
-	public ButtonListener getButtonListener() {
+	public MainButtonsController getButtonListener() {
 		return controller;
 	}
 
@@ -118,7 +118,7 @@ public class Manager {
 		switch (joc) {
 			case ("Play Roulette"):
 				gameManager.executaRuleta();
-			break;
+				break;
 			case ("Play Horses"):
 				gameManager.executaHorses();
 				break;

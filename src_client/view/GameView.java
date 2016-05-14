@@ -141,7 +141,7 @@ public class GameView extends BaseJPanel {
 		jspList = new JScrollPane(jpAux);
 		columnLayout.setColumns(1);
 		
-		jbBet = new JButton("Aposta!");
+		jbBet = new JButton("Bet!");
 		jpBet = new JPanel(new BorderLayout());
 		jpBet.add(jbBet, BorderLayout.EAST);
 		jbBet.setBackground(new Color(255,255,255));
@@ -150,7 +150,7 @@ public class GameView extends BaseJPanel {
 		jpDades = new JPanel(new BorderLayout());
 		jpDades.add(jspList, BorderLayout.CENTER);
 		jpDades.add(jpBet, BorderLayout.SOUTH);
-		jpDades.setBorder(BorderFactory.createTitledBorder("Jugadors"));
+		jpDades.setBorder(BorderFactory.createTitledBorder("Players"));
 	}
 	
 	public void registerController(BetButtonController bbc){

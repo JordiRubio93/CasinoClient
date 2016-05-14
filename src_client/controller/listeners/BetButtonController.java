@@ -36,13 +36,11 @@ public class BetButtonController implements ActionListener {
 			sc.enviarTrama(new Seconds(0));
 			int sec = ((Seconds) sc.obtenirTrama()).getSegons();
 			
-			if(sec >= 50) new Dialeg().setWarningText("Ja no pots apostar!");
+			if(sec >= 50) new Dialeg().setWarningText("You can no longer bet!");
 			
 			else{
-				if(!Constants.apostaFeta){
-					hIntro.executaIntro();
-				}
-				else new Dialeg().setWarningText("Ja has apostat abans!");
+				if(!Constants.apostaFeta) hIntro.executaIntro();
+				else new Dialeg().setWarningText("You have already bet once!");
 			}
 		}catch (IOException e1) {}
 	}

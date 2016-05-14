@@ -13,8 +13,7 @@ public class User implements Serializable {
 	private Date register;
 	private Date birthday;
 	private double cash;
-
-		
+	
 	public PublicUser getPublicUser(){
 		return new PublicUser(getSurname(),getGender(),getCash());
 	}
@@ -31,8 +30,7 @@ public class User implements Serializable {
 		this.birthday = birthday;
 		this.cash = cash;
 	}
-	
-	
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -85,6 +83,4 @@ public class User implements Serializable {
 	public void setCash(double cash) {
 		this.cash = cash;
 	}
-
-	
 }

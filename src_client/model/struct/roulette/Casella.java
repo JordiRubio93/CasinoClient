@@ -10,7 +10,7 @@ public class Casella {
 		return numero;
 	}
 	public Color getColor() {
-		if (color) return (new Color(139,0,0)); 
+		if (color) return (new Color(139, 0, 0)); 
 		else return (new Color(010, 010, 010)); 
 	}
 	public Casella(int numero, boolean color) {
@@ -38,7 +38,6 @@ public class Casella {
 		return numero>18;
 	}
 	public int Dotzena(){
-		
 		if (numero>0 && numero <= 12) return 1;
 		if (numero>12 && numero <= 24) return 1;
 		if (numero>24 && numero <= 36) return 1;

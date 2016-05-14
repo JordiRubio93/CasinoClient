@@ -27,7 +27,7 @@ import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Manager;
-import controller.listeners.ButtonListener;
+import controller.listeners.MainButtonsController;
 import model.Constants;
 
 public class RegisterPanel extends BaseJPanel{
@@ -42,7 +42,7 @@ public class RegisterPanel extends BaseJPanel{
 	private final String password2 = "    Repeat password:    ";
 	private final String join = "Join us!";
 	private final String guest = "Try as guest";
-	private final String space = "  a  ";
+	private final String space = "     ";
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel mainLabel = new JLabel(main);
@@ -357,7 +357,7 @@ public class RegisterPanel extends BaseJPanel{
 		}
 	}
 
-	public void registerController(ButtonListener listener){
+	public void registerController(MainButtonsController listener){
 		registerButton.addActionListener(listener);
 		guestButton.addActionListener(listener);
 	}

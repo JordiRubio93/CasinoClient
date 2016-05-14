@@ -90,13 +90,6 @@ public class HorsesManager {
 		
 			String winner = new Order().max(end).getName();
 			
-			for(int i = 0; i < Constants.nHorses; i++){
-				if(end.get(i).getName().equals(winner)){
-					winner = "(" + i + ") " + winner;
-					break;
-				}
-			}
-			
 			game.acabaPartida(winner);
 			sc.enviarTrama(new GameOver());
 		} catch (InterruptedException | IOException e) {}	

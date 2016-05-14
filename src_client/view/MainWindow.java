@@ -15,11 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Manager;
-import controller.listeners.ButtonListener;
+import controller.listeners.MainButtonsController;
 import model.Constants;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class MainWindow extends BaseJPanel {
 	private final String logout = "Log Out";
@@ -113,7 +110,7 @@ public class MainWindow extends BaseJPanel {
 		add(background, BorderLayout.CENTER);
 	}
 	
-	public void registerController(ButtonListener listener){
+	public void registerController(MainButtonsController listener){
 		rouletteButton.addActionListener(listener);
 		blackjackButton.addActionListener(listener);
 		horseButton.addActionListener(listener);

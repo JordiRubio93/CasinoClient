@@ -7,9 +7,7 @@ public class PublicUser implements Serializable{
 	private String surname;
 	private Boolean gender; //male true false female
 	private double cash;
-	
-	
-	
+
 	public PublicUser(String surname, Boolean gender, double cash) {
 		super();
 		this.surname = surname;

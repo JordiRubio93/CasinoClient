@@ -1,46 +1,32 @@
 package controller.roulette;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
-import model.Constants;
-import model.struct.user.User;
-import network.ServerComunication;
-import network.segment.GameOver;
+import controller.Manager;
+import model.struct.user.PublicUser;
 import view.roulette.RouletteView;
 
 public class RouletteManager {
-	private ServerComunication sc;
+	private Manager manager;
 	private RouletteView game;
 
-	public RouletteManager(ServerComunication sc) {
-		this.sc = sc;
-		game = new RouletteView();
-		game.creaRuleta();
-		game.setVisible(true);
+	public RouletteManager(Manager manager) {
+		this.manager = manager;
 	}
 	
-	public void executaPartida(LinkedList<User> listUsers){
-		//game = new RouletteView();
-		//game.actualitzaTemps();
+	public void executaPartida(LinkedList<PublicUser> listUsers){
+		game = (RouletteView) manager.getPanel();
+		game.actualitzaTemps();
+		game.setVisible(true);
 		
-		
-		//game.ompleLlista(listUsers);
-		
-		try {
-			game.creaRuleta();
-			Thread.sleep(Constants.MINUT);
-			game.acabaPartida();
-			sc.enviarTrama(new GameOver());
-		} catch (IOException | InterruptedException e) {}
+		game.ompleLlista(listUsers);
 	}
 
 	public RouletteView getGame() {
-		return game;
+		return new RouletteView();
 	}
 
 	public void setGame(RouletteView game) {
 		this.game = game;
 	}
-	
 }

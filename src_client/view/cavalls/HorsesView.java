@@ -98,7 +98,7 @@ public class HorsesView extends GameView {
 	
 	public void acabaPartida(String winner){
 		Dialeg dialeg = new Dialeg();
-		dialeg.setWarningText("El guanyador és...  " + winner.toUpperCase() + " !");
+		dialeg.setWarningText("The winner is...  " + winner.toUpperCase() + " !");
 		
 		super.acabaPartida();
 	}

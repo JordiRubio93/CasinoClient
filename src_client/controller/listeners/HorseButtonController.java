@@ -29,7 +29,7 @@ public class HorseButtonController implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(window.getAmount().isEmpty() || Float.parseFloat(window.getAmount()) <= 0){
 			Dialeg dialeg = new Dialeg();
-			dialeg.setWarningText("Has d'introduir alguna quantitat positiva!");
+			dialeg.setWarningText("You must enter a positive amount!");
 		}else{
 			window.obreDialeg();
 			

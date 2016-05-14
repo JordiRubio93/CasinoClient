@@ -1,6 +1,5 @@
 package controller.roulette;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import model.struct.roulette.Casella;
@@ -17,13 +16,8 @@ public class AmericanRoulette {
 
 	private final int rows = 3;
 	private final int column = 12;
-	private final int totalNumers = (rows * column);
-	private final Color backgroundColor = new Color(76, 145, 65);
+	private final int totalNumbers = (rows * column);
 	private ArrayList<Casella> caselles;
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
 
 	public AmericanRoulette() {
 		setCaselles();
@@ -43,10 +37,11 @@ public class AmericanRoulette {
 
 	public void setCaselles() {
 		caselles = new ArrayList<model.struct.roulette.Casella>();
-		for (int i = 0; i < totalNumers; i++) {
+		for (int i = 0; i < totalNumbers; i++) {
 			caselles.add(new model.struct.roulette.Casella(Integer.parseInt(num_casella[i]), color_caselles[i]));
 		}
 	}
+	
 	public ArrayList<Casella> getCaselles() {
 		return caselles;
 	}

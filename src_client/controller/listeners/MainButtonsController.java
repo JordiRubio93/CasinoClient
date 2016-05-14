@@ -12,9 +12,10 @@ import view.LoginWindow;
 import view.MainWindow;
 import view.StatisticsWindow;
 
-public class ButtonListener implements ActionListener {
+public class MainButtonsController implements ActionListener {
 	private Manager manager;
-	public ButtonListener(Manager manager) {
+	
+	public MainButtonsController(Manager manager) {
 		this.manager = manager;
 	}
 
