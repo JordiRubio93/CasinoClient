@@ -17,6 +17,8 @@ import javax.swing.JScrollPane;
 
 import controller.Manager;
 import controller.listeners.BetButtonController;
+import controller.listeners.ExitButtonController;
+import model.Constants;
 import model.struct.user.PublicUser;
 import model.struct.user.User;
 
@@ -40,8 +42,10 @@ public class GameView extends BaseJPanel {
 	protected TimerThread timer;
 	protected boolean isRuleta;
 	protected JButton jbBet;
-	protected JPanel jpBet;
+	protected JButton jbExit;
+	protected JPanel jpOptions;
 	protected JLabel jlCount;
+	private boolean exit;
 	
 	public void ompleLlista(LinkedList<PublicUser> listUsers){
 	/**
@@ -141,24 +145,40 @@ public class GameView extends BaseJPanel {
 		jspList = new JScrollPane(jpAux);
 		columnLayout.setColumns(1);
 		
+		jbExit = new JButton("Exit");
+		jbExit.setBackground(new Color(255,255,255));
+		jbExit.setForeground(Constants.coolBlue);
+		
 		jbBet = new JButton("Bet!");
-		jpBet = new JPanel(new BorderLayout());
-		jpBet.add(jbBet, BorderLayout.EAST);
 		jbBet.setBackground(new Color(255,255,255));
-		jbBet.setForeground(new Color(255,128,0));
+		jbBet.setForeground(Constants.coolOrange);
+		
+		jpOptions = new JPanel(new GridLayout(1,2));
+		jpOptions.add(jbExit);
+		jpOptions.add(jbBet);
 		
 		jpDades = new JPanel(new BorderLayout());
 		jpDades.add(jspList, BorderLayout.CENTER);
-		jpDades.add(jpBet, BorderLayout.SOUTH);
+		jpDades.add(jpOptions, BorderLayout.SOUTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder("Players"));
 	}
 	
-	public void registerController(BetButtonController bbc){
+	public void registerController(BetButtonController bbc, ExitButtonController ebc){
 		jbBet.addActionListener(bbc);
+		jbExit.addActionListener(ebc);
 	}
 	
 	public void acabaPartida(){
 		super.setVisible(false);
+	}
+	
+	public void exit(){
+		this.exit = true;
+		super.getManager().setPanel(new MainWindow());
+	}
+	
+	public boolean isExit() {
+		return exit;
 	}
 	
 	public BaseJPanel getTablero(){

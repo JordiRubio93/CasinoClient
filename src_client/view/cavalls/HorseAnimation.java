@@ -18,7 +18,7 @@ public class HorseAnimation {
 		index = 1;
 		this.color = color;
 		try{
-			s = "Resources/" + color + String.valueOf(1) + ".png";
+			s = "Resources/horses/" + color + String.valueOf(1) + ".png";
 			File fitxer = new File(s);
 			gif = ImageIO.read(fitxer);
 		}catch(IOException e){
@@ -34,7 +34,7 @@ public class HorseAnimation {
 		try {
 			if(index == 4) index = 1;
 			else index++;
-			s = "Resources/" + color + String.valueOf(index) + ".png";
+			s = "Resources/horses/" + color + String.valueOf(index) + ".png";
 			File fitxer = new File(s);
 			gif = ImageIO.read(fitxer);
 		} catch (IOException e) {

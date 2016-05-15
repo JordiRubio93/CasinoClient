@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import controller.Manager;
 import controller.listeners.BetButtonController;
+import controller.listeners.ExitButtonController;
 import model.Calcul;
 import model.Constants;
 import model.Order;
@@ -38,13 +39,15 @@ public class HorsesManager {
 		
 		try {
 			sc = game.getManager().getServer();
+			
 			sc.enviarTrama(new Play("horses"));
 			initH = (InitHorses) sc.obtenirTrama();
 			end = initH.getList();
 			
 			HorsesIntro hIntro = new HorsesIntro(end, sc);
-			BetButtonController bbc = new BetButtonController(game, hIntro, sc);
-			game.registerController(bbc);
+			BetButtonController bbc = new BetButtonController(game, hIntro, sc, Constants.GAME_HORSES);
+			ExitButtonController ebc = new ExitButtonController(game, sc);
+			game.registerController(bbc, ebc);
 			
 			sc.enviarTrama(new Seconds(0));
 			time = ((Seconds) sc.obtenirTrama()).getSegons();

@@ -12,6 +12,7 @@ public class PushedButtons {
 	public void despintaBoto(MyButton jBoto){
 		jBoto.canviaEstat();
 		jBoto.setBackground(jBoto.getColor());
+		bet = null;
 	}
 	
 	public void pintaBoto(MyButton jBoto){
@@ -27,6 +28,8 @@ public class PushedButtons {
 			bet = new RouletteBet(Float.parseFloat(dialeg.getAmount()));
 		}
 	}
-	
-	
+
+	public RouletteBet getBet() {
+		return bet;
+	}
 }

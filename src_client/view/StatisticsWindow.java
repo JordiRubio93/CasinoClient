@@ -29,8 +29,7 @@ public class StatisticsWindow extends BaseJPanel {
 	private JButton top5BlackjackButton;
 	private JButton top5hhorseButton;
 	private JButton cashEvoButton;
-	private JButton cashRankingButton;
-	private JButton backButton = new JButton(home);
+	private JButton homeButton = new JButton(home);
 	
 	public StatisticsWindow(){
 		initElements();
@@ -47,14 +46,12 @@ public class StatisticsWindow extends BaseJPanel {
 		BufferedImage img2 = null;
 		BufferedImage img3 = null;
 		BufferedImage img4 = null;
-		BufferedImage img5 = null;
 		
 		try {
-			img1 = ImageIO.read(new File("Resources/warning.png"));
-			img2 = ImageIO.read(new File("Resources/warning.png"));
-			img3 = ImageIO.read(new File("Resources/warning.png"));
-			img4 = ImageIO.read(new File("Resources/warning.png"));
-			img5 = ImageIO.read(new File("Resources/warning.png"));
+			img1 = ImageIO.read(new File("Resources/top5Roulette.png"));
+			img2 = ImageIO.read(new File("Resources/top5Blackjack.png"));
+			img3 = ImageIO.read(new File("Resources/top5HorseRace.png"));
+			img4 = ImageIO.read(new File("Resources/cashRanking.png"));
 		} catch (IOException e) {
 			System.err.println("Error al carregar, intentant carregar imatge per defecte");
 			try {
@@ -62,7 +59,6 @@ public class StatisticsWindow extends BaseJPanel {
 				img2 = ImageIO.read(new File("Resources/default-image.jpg"));
 				img3 = ImageIO.read(new File("Resources/default-image.jpg"));
 				img4 = ImageIO.read(new File("Resources/default-image.jpg"));
-				img5 = ImageIO.read(new File("Resources/default-image.jpg"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -92,12 +88,6 @@ public class StatisticsWindow extends BaseJPanel {
 		cashEvoButton.setContentAreaFilled(false);
 		cashEvoButton.setBorderPainted(false);
 		
-		cashRankingButton = new JButton();
-		cashRankingButton.setIcon(new ImageIcon (img5));
-		cashRankingButton.putClientProperty("action", "Cash Ranking");
-		cashRankingButton.setContentAreaFilled(false);
-		cashRankingButton.setBorderPainted(false);
-		
 		panelCenter.setLayout(new GridLayout(1, 5));
 		panelCenter.setOpaque(false);
 		
@@ -105,37 +95,38 @@ public class StatisticsWindow extends BaseJPanel {
 		panelCenter.add(top5BlackjackButton);
 		panelCenter.add(top5hhorseButton);
 		panelCenter.add(cashEvoButton);
-		panelCenter.add(cashRankingButton);
 		
-		backButton.setFont(Constants.boldFont);
-		backButton.setBackground(Constants.coolGreen);
-		backButton.setContentAreaFilled(true);
-		backButton.setBorderPainted(false);
-		backButton.putClientProperty("action", "Home");
-		backButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
+		homeButton.setFont(Constants.boldFont);
+		homeButton.setBackground(Constants.coolGreen);
+		homeButton.setContentAreaFilled(true);
+		homeButton.setBorderPainted(false);
+		homeButton.putClientProperty("action", "Home");
+		homeButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
 		
 		panelTop.setLayout(new FlowLayout());
 		panelTop.setBackground(Constants.semiOpaqueBlack);
-		panelTop.add(backButton, 0);
+		panelTop.add(homeButton, 0);
 		
 		background = new Tapet(width, height, "resources/fondoMain.jpg");
 		background.setLayout(new BorderLayout());
 		background.add(panelTop, BorderLayout.NORTH);
 		background.add(panelCenter, BorderLayout.CENTER);
 		add(background, BorderLayout.CENTER);
+		
 	}
 	
 	public void registerController(MainButtonsController listener){
 		top5RouletteButton.addActionListener(listener);
 		top5BlackjackButton.addActionListener(listener);
 		top5hhorseButton.addActionListener(listener);
-		cashRankingButton.addActionListener(listener);
 		cashEvoButton.addActionListener(listener);
-		backButton.addActionListener(listener);
+		homeButton.addActionListener(listener);
+		
 	}
 
 	@Override
 	public void setManager(Manager manager) {
 		registerController(manager.getButtonListener());
 	}
+
 }

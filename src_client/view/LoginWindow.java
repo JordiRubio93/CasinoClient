@@ -53,14 +53,8 @@ public class LoginWindow extends BaseJPanel {
 	private JLabel spaceLabel2 = new JLabel(space);
 	private RegisterPanel rPanel = new RegisterPanel();
 	
-	private MainFrame window;
-
 	public LoginWindow(){
 		initElements();
-	}
-	
-	public void setWindow(MainFrame window){
-		this.window = window;
 	}
 	
 	public void showPasswordError(Boolean b){

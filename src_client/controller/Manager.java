@@ -71,7 +71,7 @@ public class Manager {
 		User u = p.getUser();
 		Boolean valid = true;
 		Boolean logged = false;
-		//view controll of warning
+		
 		if (!gameManager.comprovaLoginMail(u.getEmail())){
 			valid = false;
 			p.showEmailError(true);
@@ -106,15 +106,14 @@ public class Manager {
 			view.showError("Login Fail");
 		}
 		return logged;
-			
 	}
 	public void comenzarJoc(String joc){
 		try {
 			server.enviarTrama(new Play("joc"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		switch (joc) {
 			case ("Play Roulette"):
 				gameManager.executaRuleta();
@@ -122,11 +121,10 @@ public class Manager {
 			case ("Play Horses"):
 				gameManager.executaHorses();
 				break;
-			case ("Play Blackjack"):
-				//game Manager.executaRuleta();
+			case ("Play BlackJack"):
+				gameManager.executaBlackjack();
 				break;
 			case ("Stadistics"):
-		
 				break;
 		}
 	}

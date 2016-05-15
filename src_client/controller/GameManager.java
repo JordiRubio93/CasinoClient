@@ -1,6 +1,7 @@
 package controller;
 
 import controller.horses.HorsesManager;
+import controller.listeners.BlackjackButtonsController;
 import controller.roulette.RouletteManager;
 import model.LoginValidator;
 import model.struct.user.PublicUser;
@@ -8,7 +9,6 @@ import network.ServerComunication;
 
 public class GameManager {
 	private PublicUser publicUser;
-	private String type;
 	private Manager manager;
 	private ServerComunication sc;
 	private LoginValidator loginValidator;
@@ -19,14 +19,14 @@ public class GameManager {
 		loginValidator = new LoginValidator();
 	}
 
+	public ServerComunication getSc() {
+		return sc;
+	}
+
 	public void setSc(ServerComunication sc) {
 		this.sc = sc;
 	}
 
-	public void setGame(String s){
-		type=s;
-	}
-	
 	public Boolean comprovaLoginPW(String pw){
 		return (loginValidator.validatePasswordFormat(pw));
 	}
@@ -45,6 +45,13 @@ public class GameManager {
 		HorsesManager hm = new HorsesManager(manager);
 		manager.setPanel(hm.getGame());
 		hm.executaCursa(null);
+		
+	}
+	
+	public void executaBlackjack(){
+		BlackjackButtonsController bj = new BlackjackButtonsController();
+		manager.setPanel(bj.getMainView());
+		bj.startGame();
 	}
 	
 	public PublicUser getPublicUser() {

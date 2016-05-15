@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import controller.listeners.RouletteButtonsController;
 import controller.roulette.AmericanRoulette;
+import controller.roulette.RouletteManager;
 import model.struct.roulette.Casella;
 import view.GameView;
 
@@ -44,8 +45,12 @@ public class RouletteView extends GameView {
 	private JPanel jpInferior;
 	
 	private AmericanRoulette americanRoulette;
+	private RouletteButtonsController listener;
+	private RouletteManager rm;
 	
 	private void creaRuleta(){
+		listener = new RouletteButtonsController(rm);
+		
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());
@@ -63,7 +68,7 @@ public class RouletteView extends GameView {
 			button.setBackground(c.getColor());
 			button.setForeground(Color.WHITE);
 			
-			button.addActionListener(new RouletteButtonsController());
+			button.addActionListener(listener);
 			
 			JPanel jpBoto = new JPanel(new BorderLayout());
 			jpBoto.add(button, BorderLayout.CENTER);
@@ -80,7 +85,7 @@ public class RouletteView extends GameView {
 		jbZero.setBackground(new Color(76, 145, 65));
 		jbZero.setForeground(Color.WHITE);
 		
-		jbZero.addActionListener(new RouletteButtonsController());
+		jbZero.addActionListener(listener);
 		
 		jpZero.add(jbZero, BorderLayout.CENTER);
 
@@ -96,21 +101,21 @@ public class RouletteView extends GameView {
 		jbPrimera.setBackground(new Color(76, 145, 65));
 		jbPrimera.setForeground(Color.WHITE);
 		
-		jbPrimera.addActionListener(new RouletteButtonsController());
+		jbPrimera.addActionListener(listener);
 
 		jbSegona = new MyButton("2ND 12", new Color(76, 145, 65));
 		jbSegona.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSegona.setBackground(new Color(76, 145, 65));
 		jbSegona.setForeground(Color.WHITE);
 		
-		jbSegona.addActionListener(new RouletteButtonsController());
+		jbSegona.addActionListener(listener);
 
 		jbTercera = new MyButton("3RD 12", new Color(76, 145, 65));
 		jbTercera.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbTercera.setBackground(new Color(76, 145, 65));
 		jbTercera.setForeground(Color.WHITE);
 		
-		jbTercera.addActionListener(new RouletteButtonsController());
+		jbTercera.addActionListener(listener);
 		
 		jpDotzenes.add(jbPrimera);
 		jpDotzenes.add(jbSegona);
@@ -126,42 +131,42 @@ public class RouletteView extends GameView {
 		jbManca.setBackground(new Color(76, 145, 65));
 		jbManca.setForeground(Color.WHITE);
 
-		jbManca.addActionListener(new RouletteButtonsController());
+		jbManca.addActionListener(listener);
 		
 		jbParell = new MyButton("EVEN", new Color(76, 145, 65));
 		jbParell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbParell.setBackground(new Color(76, 145, 65));
 		jbParell.setForeground(Color.WHITE);
 
-		jbParell.addActionListener(new RouletteButtonsController());
+		jbParell.addActionListener(listener);
 
 		jbVermell = new MyButton("RED", new Color(139, 0, 0));
 		jbVermell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbVermell.setBackground(new Color(139, 0, 0));
 		jbVermell.setForeground(Color.WHITE);
 
-		jbVermell.addActionListener(new RouletteButtonsController());
+		jbVermell.addActionListener(listener);
 
 		jbNegre = new MyButton("BLACK", new Color(010, 010, 010));
 		jbNegre.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbNegre.setBackground(new Color(010, 010, 010));
 		jbNegre.setForeground(Color.WHITE);
 
-		jbNegre.addActionListener(new RouletteButtonsController());
+		jbNegre.addActionListener(listener);
 
 		jbSenar = new MyButton("ODD", new Color(76, 145, 65));
 		jbSenar.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSenar.setBackground(new Color(76, 145, 65));
 		jbSenar.setForeground(Color.WHITE);
 
-		jbSenar.addActionListener(new RouletteButtonsController());		
+		jbSenar.addActionListener(listener);		
 
 		jbPassa = new MyButton("19-36", new Color(76, 145, 65));
 		jbPassa.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPassa.setBackground(new Color(76, 145, 65));
 		jbPassa.setForeground(Color.WHITE);
 
-		jbPassa.addActionListener(new RouletteButtonsController());
+		jbPassa.addActionListener(listener);
 
 		jpDobles.add(jbManca);
 		jpDobles.add(jbParell);
@@ -200,7 +205,9 @@ public class RouletteView extends GameView {
 	    f.setVisible(true);
 	}
 	
-	public RouletteView(){
+	public RouletteView(RouletteManager rm){
+		this.rm = rm;
+		
 		jpFinestra = new JPanel(new BorderLayout());
 		super.creaTemps();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
@@ -214,6 +221,14 @@ public class RouletteView extends GameView {
 	
 	public void acabaPartida(){
 		//f.setVisible(false);
-		super.setVisible(false);
+		super.acabaPartida();
+	}
+
+	public RouletteButtonsController getListener() {
+		return listener;
+	}
+	
+	public RouletteManager getRouletteManager(){
+		return rm;
 	}
 }

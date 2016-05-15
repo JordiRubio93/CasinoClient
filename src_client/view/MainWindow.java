@@ -1,8 +1,8 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Manager;
@@ -29,14 +30,23 @@ public class MainWindow extends BaseJPanel {
 	private JButton blackjackButton;
 	private JButton horseButton;
 	private JButton statisticsButton;
-	private JButton logOutButton = new JButton(logout);
+	private JButton configButton = new JButton(logout);
+	private ConfigPanel c = new ConfigPanel();
+	private JLabel labelUp;
 
 	public MainWindow(){
 		initElements();
 	}
 	
+	public MainWindow(ConfigPanel c){
+		initElements();
+		this.c = c;
+		add(this.c, BorderLayout.EAST);
+	}
+	
 	private void initElements(){
 		setLayout(new BorderLayout());
+		setBackground(Color.GRAY);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
@@ -46,12 +56,14 @@ public class MainWindow extends BaseJPanel {
 		BufferedImage img2 = null;
 		BufferedImage img3 = null;
 		BufferedImage img4 = null;
+		BufferedImage img5 = null;
 		
 		try {
-			img1 = ImageIO.read(new File("Resources/logoRoulette.png"));
-			img2 = ImageIO.read(new File("Resources/logoHorse.png"));
-			img3 = ImageIO.read(new File("Resources/logoBlackjack.png"));
-			img4 = ImageIO.read(new File("Resources/logoStatistics.png"));
+			img1 = ImageIO.read(new File("Resources/roulette.png"));
+			img2 = ImageIO.read(new File("Resources/horses.png"));
+			img3 = ImageIO.read(new File("Resources/blackjack.png"));
+			img4 = ImageIO.read(new File("Resources/statistics.png"));
+			img5 = ImageIO.read(new File("Resources/userConfiguration.png"));
 		} catch (IOException e) {
 			System.err.println("Error al carregar, intentant carregar imatge per defecte");
 			try {
@@ -59,6 +71,7 @@ public class MainWindow extends BaseJPanel {
 				img2 = ImageIO.read(new File("Resources/default-image.jpg"));
 				img3 = ImageIO.read(new File("Resources/default-image.jpg"));
 				img4 = ImageIO.read(new File("Resources/default-image.jpg"));
+				img5 = ImageIO.read(new File("Resources/default-image.jpg"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -76,7 +89,7 @@ public class MainWindow extends BaseJPanel {
 		horseButton.setBorderPainted(false);
 		
 		blackjackButton = new JButton(new ImageIcon (img3));
-		blackjackButton.putClientProperty("action", "Play BlackJac");
+		blackjackButton.putClientProperty("action", "Play BlackJack");
 		blackjackButton.setContentAreaFilled(false);
 		blackjackButton.setBorderPainted(false);
 		
@@ -85,18 +98,19 @@ public class MainWindow extends BaseJPanel {
 		statisticsButton.setContentAreaFilled(false);
 		statisticsButton.setBorderPainted(false);
 		
-		logOutButton.setFont(Constants.boldFont);
-		logOutButton.setBackground(Constants.coolGreen);
-		logOutButton.setContentAreaFilled(true);
-		logOutButton.setBorderPainted(false);
-		logOutButton.putClientProperty("action", "Log Out");
-		logOutButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
+		configButton = new JButton(new ImageIcon (img5));
+		configButton.putClientProperty("action", "Configuration");
+		configButton.setContentAreaFilled(false);
+		configButton.setBorderPainted(false);
 		
-		panelTop.setLayout(new FlowLayout());
-		panelTop.setBackground(Constants.semiOpaqueBlack);
-		panelTop.add(logOutButton, 0);
+		ImageIcon img = new ImageIcon(Constants.LABEL);
+		labelUp = new JLabel(img);
+		panelTop.setLayout(new BorderLayout());
+		panelTop.setBackground(Color.BLACK);
+		panelTop.add(labelUp, BorderLayout.CENTER);
+		panelTop.add(configButton, BorderLayout.EAST);
 		
-		panelCenter.setLayout(new GridLayout(2, 2));
+		panelCenter.setLayout(new GridLayout(1, 4));
 		panelCenter.setOpaque(false);
 		panelCenter.add(rouletteButton);
 		panelCenter.add(horseButton);
@@ -115,12 +129,14 @@ public class MainWindow extends BaseJPanel {
 		blackjackButton.addActionListener(listener);
 		horseButton.addActionListener(listener);
 		statisticsButton.addActionListener(listener);
-		logOutButton.addActionListener(listener);
+		configButton.addActionListener(listener);
+
 	}
 
 	@Override
 	public void setManager(Manager manager) {
 		registerController(manager.getButtonListener());
+		c.registerController(manager.getButtonListener());
 	}
 	
 }

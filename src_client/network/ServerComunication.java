@@ -8,7 +8,6 @@ import java.net.Socket;
 import controller.ConfigurationFile;
 import controller.Manager;
 import network.segment.Disconnect;
-import network.segment.NotifyConRoom;
 import network.segment.Segment;
 
 public class ServerComunication{
@@ -20,7 +19,7 @@ public class ServerComunication{
 	private Segment s;
 
 	public ServerComunication(Manager manager, ConfigurationFile cf) {
-		this.manager = manager;
+		this.setManager(manager);
 		this.cf = cf;
 	}
 
@@ -60,5 +59,13 @@ public class ServerComunication{
 	
 		}
 		return null;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
 	}
 }
