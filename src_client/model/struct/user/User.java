@@ -7,29 +7,64 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String surname;
-	private String email;
 	private String password;
-	private Boolean gender; //male true false female
-	private Date register;
-	private Date birthday;
 	private double cash;
+	private String email;
+	private Date register;
+	private Date lastLogin;
+	private Date birthday;
+	private Boolean gender; //male true false female
 	
+	/**CREATE TABLE IF NOT EXISTS Clients (
+	ID_Client int not null auto_increment PRIMARY KEY,
+    Nom varchar(20),
+    Cognom varchar(20),
+	Contrasenya varchar(40) not null,
+	Saldo float,
+	Data_Registre DATETIME,
+	Data_LastLogin DATETIME,
+    Data_Naixement DATE,
+    email varchar(50) unique,
+	sexe char
+)*/
+		
 	public PublicUser getPublicUser(){
-		return new PublicUser(getSurname(),getGender(),getCash());
+		return new PublicUser(getSurname(),getGender());
 	}
 	
-	public User(String name, String surname, String email, String password, Boolean gender, Date register,
-			Date birthday, double cash) {
+	
+	
+	
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+
+
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+
+
+
+	public User(String name, String surname, String password, double cash, String email, Date register, Date lastLogin,
+			Date birthday, Boolean gender) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.email = email;
 		this.password = password;
-		this.gender = gender;
-		this.register = register;
-		this.birthday = birthday;
 		this.cash = cash;
+		this.email = email;
+		this.register = register;
+		this.lastLogin = lastLogin;
+		this.birthday = birthday;
+		this.gender = gender;
 	}
+
+
+
 
 	public User() {
 		// TODO Auto-generated constructor stub

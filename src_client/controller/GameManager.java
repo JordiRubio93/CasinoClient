@@ -5,10 +5,11 @@ import controller.listeners.BlackjackButtonsController;
 import controller.roulette.RouletteManager;
 import model.LoginValidator;
 import model.struct.user.PublicUser;
+import model.struct.user.User;
 import network.ServerComunication;
 
 public class GameManager {
-	private PublicUser publicUser;
+	private User user;
 	private Manager manager;
 	private ServerComunication sc;
 	private LoginValidator loginValidator;
@@ -54,11 +55,11 @@ public class GameManager {
 		bj.startGame();
 	}
 	
-	public PublicUser getPublicUser() {
-		return publicUser;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setPublicUser(PublicUser publicUser) {
-		this.publicUser = publicUser;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

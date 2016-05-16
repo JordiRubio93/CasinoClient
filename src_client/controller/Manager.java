@@ -89,9 +89,9 @@ public class Manager {
 				server.enviarTrama(new LoginUser(u));
 				Segment s = (Segment) server.obtenirTrama();
 				switch(( s.getClass().getSimpleName()) ){
-				case "NotifyConRoom":
-					NotifyConRoom not = (NotifyConRoom) s;
-					gameManager.setPublicUser(not.getPu());
+				case "LoginUser":
+					LoginUser loginuser = (LoginUser) s;
+					gameManager.setUser(loginuser.getU());
 					setPanel(new MainWindow());
 					break;
 				case "Check":
