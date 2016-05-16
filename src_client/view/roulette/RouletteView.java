@@ -4,24 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.Constants;
 import controller.listeners.RouletteButtonsController;
 import controller.roulette.AmericanRoulette;
 import controller.roulette.RouletteManager;
 import model.struct.roulette.Casella;
+import view.Dialeg;
 import view.GameView;
 
 public class RouletteView extends GameView {
 	private static final long serialVersionUID = 1L;
-	private static JFrame f;
 	private JPanel jpNumeros;
 	private JPanel jpZero;
 	private MyButton jbZero;
@@ -90,7 +89,7 @@ public class RouletteView extends GameView {
 		jpZero.add(jbZero, BorderLayout.CENTER);
 
 		jpEsquerra.add(jpZero, BorderLayout.CENTER);
-		jpFinestra.add(jpEsquerra, BorderLayout.WEST);
+		jpCentral.add(jpEsquerra, BorderLayout.WEST);
 
 		jpDotzenes = new JPanel();
 		jpDotzenes.setLayout(new GridLayout(1, 3));
@@ -186,23 +185,6 @@ public class RouletteView extends GameView {
 		
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
-		
-		/*try {
-			inserirGif();
-		} catch (MalformedURLException e) {}*/
-	}
-	
-	public static void inserirGif() throws MalformedURLException{
-	    Icon icon = new ImageIcon("Resources/ruleta.gif");
-	    JLabel label = new JLabel(icon);
-
-	    f = new JFrame("RULETA");
-	   
-	    f.getContentPane().add(label);
-	    f.pack();
-	    f.setLocationRelativeTo(null);
-	    f.setResizable(false);
-	    f.setVisible(true);
 	}
 	
 	public RouletteView(RouletteManager rm){
@@ -219,8 +201,13 @@ public class RouletteView extends GameView {
 		creaRuleta();
 	}
 	
-	public void acabaPartida(){
-		//f.setVisible(false);
+	public void acabaPartida(int winner, Color c){
+		Dialeg dialeg = new Dialeg();
+		dialeg.setWarningText("The winner number is... " + winner + " !");
+		JPanel jPanel = new JPanel();
+		jPanel.setBackground(c);
+		dialeg.getDialeg().getContentPane().add(jPanel);
+		
 		super.acabaPartida();
 	}
 
@@ -230,5 +217,14 @@ public class RouletteView extends GameView {
 	
 	public RouletteManager getRouletteManager(){
 		return rm;
+	}
+	
+	public void insereixGif(){
+		Icon icon = new ImageIcon(Constants.GIF);
+		JLabel label = new JLabel(icon);
+		label.setOpaque(true);
+		
+		jpCentral.removeAll();
+		jpFinestra.add(label, BorderLayout.CENTER);
 	}
 }

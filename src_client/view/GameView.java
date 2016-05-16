@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.BetButtonController;
 import controller.listeners.ExitButtonController;
-import model.Constants;
 import model.struct.user.PublicUser;
 import model.struct.user.User;
 

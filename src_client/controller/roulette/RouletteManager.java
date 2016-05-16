@@ -2,10 +2,10 @@ package controller.roulette;
 
 import java.util.LinkedList;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.BetButtonController;
 import controller.listeners.ExitButtonController;
-import model.Constants;
 import model.struct.bet.RouletteBet;
 import model.struct.user.PublicUser;
 import view.roulette.RouletteView;

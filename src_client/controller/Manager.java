@@ -8,7 +8,6 @@ import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.LoginUser;
 import network.segment.NotifyConRoom;
-import network.segment.Play;
 import network.segment.Segment;
 import tools.excepcions.FileException;
 import view.BaseJPanel;
@@ -89,9 +88,9 @@ public class Manager {
 				server.enviarTrama(new LoginUser(u));
 				Segment s = (Segment) server.obtenirTrama();
 				switch(( s.getClass().getSimpleName()) ){
-				case "LoginUser":
-					LoginUser loginuser = (LoginUser) s;
-					gameManager.setUser(loginuser.getU());
+				case "NotifyConRoom":
+					NotifyConRoom not = (NotifyConRoom) s;
+					gameManager.setPublicUser(not.getPu());
 					setPanel(new MainWindow());
 					break;
 				case "Check":
@@ -107,13 +106,8 @@ public class Manager {
 		}
 		return logged;
 	}
+	
 	public void comenzarJoc(String joc){
-		try {
-			server.enviarTrama(new Play("joc"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		switch (joc) {
 			case ("Play Roulette"):
 				gameManager.executaRuleta();

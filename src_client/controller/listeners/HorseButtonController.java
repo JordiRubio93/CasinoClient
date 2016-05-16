@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import model.Constants;
+import controller.Constants;
 import model.struct.bet.HorsesBet;
 import network.ServerComunication;
 import network.segment.HorseBetting;

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import controller.Constants;
 import controller.horses.HorsesIntro;
-import model.Constants;
 import network.ServerComunication;
 import network.segment.RouletteBetting;
 import network.segment.Seconds;

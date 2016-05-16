@@ -15,9 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.MainButtonsController;
-import model.Constants;
 
 public class MainWindow extends BaseJPanel {
 	private final String logout = "Log Out";

@@ -26,9 +26,9 @@ import javax.swing.SwingConstants;
 import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.MainButtonsController;
-import model.Constants;
 
 public class RegisterPanel extends BaseJPanel{
 	private final String main = "Don't have an account? Join us!";

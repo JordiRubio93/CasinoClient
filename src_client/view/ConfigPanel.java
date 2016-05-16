@@ -15,9 +15,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.MainButtonsController;
-import model.Constants;
 
 public class ConfigPanel extends BaseJPanel {
 	private static String changePassword = "Change password";

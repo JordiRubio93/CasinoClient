@@ -20,10 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.MainButtonsController;
 import model.struct.user.User;
-import model.Constants;
 import model.Utilities;
 
 public class LoginWindow extends BaseJPanel {

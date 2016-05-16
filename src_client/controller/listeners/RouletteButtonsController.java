@@ -30,6 +30,9 @@ public class RouletteButtonsController implements ActionListener{
 				RouletteBet bet = pB.getBet();
 				bet.setNumeros(estableixLlista());
 				
+				String cad = boto.getText();
+				bet.setCad(cad);
+				
 				rm.afegeixAposta(bet);
 			}
 		}
@@ -38,6 +41,9 @@ public class RouletteButtonsController implements ActionListener{
 			
 			RouletteBet bet = new RouletteBet(0);
 			bet.setNumeros(estableixLlista());
+			
+			String cad = boto.getText();
+			bet.setCad(cad);
 			
 			rm.eliminaAposta(bet);
 		}

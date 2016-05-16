@@ -1,15 +1,17 @@
 package controller;
 
+
 import controller.horses.HorsesManager;
 import controller.listeners.BlackjackButtonsController;
+import controller.roulette.EndingControl;
 import controller.roulette.RouletteManager;
 import model.LoginValidator;
 import model.struct.user.PublicUser;
-import model.struct.user.User;
 import network.ServerComunication;
+import view.roulette.RouletteView;
 
 public class GameManager {
-	private User user;
+	private PublicUser publicUser;
 	private Manager manager;
 	private ServerComunication sc;
 	private LoginValidator loginValidator;
@@ -38,15 +40,18 @@ public class GameManager {
 	
 	public void executaRuleta(){
 		RouletteManager rm = new RouletteManager(manager);
-		manager.setPanel(rm.getGame());
+		RouletteView rv = rm.getGame();
+		manager.setPanel(rv);
 		rm.executaPartida(null);
+		
+		EndingControl gifControl = new EndingControl(manager, rv);
+		new Thread(gifControl).start();
 	}
 	
 	public void executaHorses(){
 		HorsesManager hm = new HorsesManager(manager);
 		manager.setPanel(hm.getGame());
 		hm.executaCursa(null);
-		
 	}
 	
 	public void executaBlackjack(){
@@ -55,11 +60,11 @@ public class GameManager {
 		bj.startGame();
 	}
 	
-	public User getUser() {
-		return user;
+	public PublicUser getPublicUser() {
+		return publicUser;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setPublicUser(PublicUser publicUser) {
+		this.publicUser = publicUser;
 	}
 }

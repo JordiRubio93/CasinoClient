@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.Constants;
 import model.Calcul;
-import model.Constants;
 import model.struct.horses.HorseData;
 import view.Dialeg;
 import view.GameView;
@@ -99,7 +99,7 @@ public class HorsesView extends GameView {
 	public void acabaPartida(String winner){
 		if(winner != null){		
 			Dialeg dialeg = new Dialeg();
-			dialeg.setWarningText("The winner is...  " + winner.toUpperCase() + " !");
+			dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
 		}
 
 		super.acabaPartida();
@@ -111,6 +111,7 @@ public class HorsesView extends GameView {
 		jlCount.setVerticalAlignment(JLabel.CENTER);
 		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
 		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+		jlCount.setBackground(Color.RED);
 		
 		jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_TAPET);
@@ -125,5 +126,9 @@ public class HorsesView extends GameView {
 	
 	public void actualitzaCounter(int num){
 		jlCount.setText(String.valueOf(num));
+	}
+	
+	public void paintRed(boolean flag){
+		jlCount.setOpaque(flag);
 	}
 }

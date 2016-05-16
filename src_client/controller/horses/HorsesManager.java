@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import controller.Constants;
 import controller.Manager;
 import controller.listeners.BetButtonController;
 import controller.listeners.ExitButtonController;
 import model.Calcul;
-import model.Constants;
 import model.Order;
 import model.struct.horses.HorseData;
 import model.struct.user.PublicUser;
@@ -68,6 +68,9 @@ public class HorsesManager {
 						
 						this.cancel();
 					}
+					
+					if((49-time) == 1 || (49-time) == 3 || (49-time) == 5) game.paintRed(true);
+					else if((49-time) < 5) game.paintRed(false);
 				}
 			}, 0, 1000);
 		} catch (IOException e) {

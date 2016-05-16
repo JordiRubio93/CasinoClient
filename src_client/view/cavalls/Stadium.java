@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 
-import model.Constants;
+import controller.Constants;
 import view.Tapet;
 
 public class Stadium extends Tapet {
