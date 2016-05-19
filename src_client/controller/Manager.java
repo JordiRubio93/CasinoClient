@@ -29,7 +29,7 @@ public class Manager {
 		this.view = view;
 		try {
 			fileManager = new FileManager();
-			LoginInfo loginSaved = fileManager.carregarDades();
+			//SLoginInfo loginSaved = fileManager.carregarDades();
 			controller = new MainButtonsController(this);
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
 			server = new ServerComunication(this, cf);
