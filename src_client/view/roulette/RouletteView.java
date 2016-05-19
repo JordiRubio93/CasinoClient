@@ -40,6 +40,7 @@ import view.GameView;
 public class RouletteView extends GameView {
 	private static final long serialVersionUID = 1L;
 	
+	//Atributs de la classe
 	private JPanel jpNumeros;
 	private JPanel jpZero;
 	private MyButton jbZero;
@@ -66,6 +67,10 @@ public class RouletteView extends GameView {
 	private RouletteButtonsController listener;
 	private RouletteManager rm;
 	
+	
+	/**
+     * Constructor per la gràfica de la ruleta
+     */
 	public RouletteView(){
 		jpFinestra = new JPanel(new BorderLayout());
 		super.createTime();
