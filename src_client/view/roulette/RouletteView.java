@@ -69,7 +69,7 @@ public class RouletteView extends GameView {
 	
 	
 	/**
-     * Constructor per la gràfica de la ruleta
+     * Constructor per la gràfica de la ruleta.
      */
 	public RouletteView(){
 		jpFinestra = new JPanel(new BorderLayout());
@@ -81,8 +81,11 @@ public class RouletteView extends GameView {
 		this.add(jpFinestra, BorderLayout.CENTER);
 		
 		initElements();
-	}
+	}//Tancament del constructor
 	
+	/**
+     * Metode que no retorna res i que s'encarrega de inicialitzar els elements.
+     */
 	private void initElements(){
 		listener = new RouletteButtonsController(rm);
 		
@@ -220,8 +223,11 @@ public class RouletteView extends GameView {
 		
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
-	}
+	}//Tancament del metode
 	
+	/**
+     * Metode que no retorna res i que s'encarrega d'inserir el Gif de la ruleta.
+     */
 	public void insereixGif(){
 		Icon icon = new ImageIcon(Constants.GIF);
 		JLabel label = new JLabel(icon);
@@ -229,12 +235,16 @@ public class RouletteView extends GameView {
 		
 		jpCentral.removeAll();
 		jpFinestra.add(label, BorderLayout.CENTER);
-	}
+	}//Tancament del metode
 	
+	
+	/**
+     * Metode que no retorna res i que s'encarrega d'acabar la partida de la ruleta.
+     */
 	public void acabaPartida(int winner, boolean c){
 		Dialeg dialeg = new Dialeg();
 		dialeg.setWarningText("The winner number is... " + winner + " !");
-	}
+	}//Tancament del metode
 	
 	
 }
