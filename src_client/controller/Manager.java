@@ -58,7 +58,6 @@ public class Manager {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
 			gameManager = new GameManager(this);
-		
 		} catch (FileException e) {
 			view.showError("Configuration file not found");
 			System.exit(0);
@@ -66,9 +65,7 @@ public class Manager {
 	}
 	
 	public void startGame(){
-		//view.alwaysontop
-		 view.toFront();
-		 view.repaint();
+		 view.setVisible(true);
 		if (loginSaved == null)	
 			view.showPanel(Constants.LOGIN_VIEW_NAME);
 		else login(loginSaved);
