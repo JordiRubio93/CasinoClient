@@ -23,6 +23,9 @@ public class GameManager {
 		loginValidator = new LoginValidator();
 	}
 
+	public boolean isGuest(){
+		return (getUser().equals("guest"));
+	}
 	public Boolean comprovaLoginPW(String pw){
 		return (loginValidator.validatePasswordFormat(pw));
 	}

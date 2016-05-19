@@ -43,6 +43,7 @@ public class Manager {
 		return gameManager;
 	}
 
+
 	public void startServer() {
 		if (!serverOn) {
 			try {

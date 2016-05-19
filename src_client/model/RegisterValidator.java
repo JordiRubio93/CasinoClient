@@ -2,6 +2,8 @@ package model;
 
 import java.util.regex.Pattern;
 
+import controller.Constants;
+
 public class RegisterValidator {
 	private final Pattern VALID_EMAIL_ADDRESS = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
@@ -15,4 +17,5 @@ public class RegisterValidator {
 	public boolean validatePasswordFormat(String password) {
 		return PASSWORD_PATTERN.matcher(password).find();
 	}
+	//TODO no pot ser Constants.guest
 }

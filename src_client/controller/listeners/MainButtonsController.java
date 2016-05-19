@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import controller.Constants;
 import controller.Manager;
 import model.struct.user.HistoricPartides;
+import model.struct.user.User;
 import network.segment.LogOut;
 import network.segment.Top5;
 import view.Dialeg;
@@ -17,7 +18,6 @@ import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
 	private Manager manager;
-	private boolean guest;
 	
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
@@ -29,18 +29,17 @@ public class MainButtonsController implements ActionListener {
 		switch (((JButton) event.getSource()).getClientProperty("action").toString()) {
 		case ("Log in"):
 			manager.login();
-			guest = false;
 			break;
 		case ("Try as guest"):
+			manager.getGameManager().setUser(Constants.guest);
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
-			guest = true; //TODO new user ("anonim",100.000)
 			break;
 		case ("Register"):
 			manager.register();
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("Play Roulette"):
-			if (guest){
+			if (!manager.getGameManager().isGuest()){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			}else{
 				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
@@ -48,7 +47,7 @@ public class MainButtonsController implements ActionListener {
 			}
 			break;
 		case ("Play Horses"):
-			if (guest){
+			if (!manager.getGameManager().isGuest()){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			}else{
 				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
@@ -77,7 +76,6 @@ public class MainButtonsController implements ActionListener {
 		case ("Log Out"):
 			manager.lateralMainPanel(false);
 			manager.logout();
-			guest = false;
 			try {
 				manager.getServer().enviarTrama(new LogOut());
 				manager.showPanel("LoginWindow");

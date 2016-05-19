@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import model.struct.user.User;
+
 public class Constants {
 	public static final String LOGIN_VIEW_NAME = "LoginWindow";
 	public static final String MAIN_VIEW_NAME = "MainWindow";
@@ -15,6 +17,7 @@ public class Constants {
 	public static final String H_VIEW_NAME = "cavalls.HorsesView";
 	public static final String PROJECT_NAME = "LS Casino";
 	public static final int SPLASH_TIME = 1969;
+	public static final User guest = new User("guest", null, null, 100000, null, null, null, null, null);
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1300;
 	public static final int MIN_BET = 10;
