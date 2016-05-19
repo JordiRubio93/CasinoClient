@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -37,13 +38,12 @@ public class FileManager {
 		try {
 			br = new BufferedReader(new FileReader(ruta));
 			objecte = (gson.fromJson(br, LoginInfo.class));
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (NullPointerException e1) {
-			e1.printStackTrace();
+			
+		} catch (Exception e) {
+			return null;
 		} finally {
 			try {
-				br.close();
+				if (br!=null) br.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -75,20 +75,30 @@ public class FileManager {
 		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt());
 	}
 
-	public void saveLoginInfo(LoginInfo li) throws FileException {
-
-		String json = new Gson().toJson(li);
-		try {
-			fileWriter = new FileWriter(ruta);
-			fileWriter.write(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+	public void saveLoginInfo(LoginInfo li) {
+		if(!li.getEmail().equals("")){
+			String json = new Gson().toJson(li);
 			try {
-				fileWriter.close();
+				fileWriter = new FileWriter(ruta);
+				fileWriter.write(json);
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					fileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+	}
+	public void logout() {
+		try{
+    		File file = new File("client.json");
+      		if(file.delete()) System.out.println(file.getName() + " is deleted!");
+    		else System.out.println("Delete operation is failed.");
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
 	}
 }

@@ -28,6 +28,7 @@ public class MainButtonsController implements ActionListener {
 		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
 		switch (((JButton) event.getSource()).getClientProperty("action").toString()) {
 		case ("Log in"):
+			System.out.println();
 			manager.login();
 			break;
 		case ("Try as guest"):
@@ -69,6 +70,7 @@ public class MainButtonsController implements ActionListener {
 		case ("User Evo"):
 			break;
 		case ("Log Out"):
+			manager.logout();
 			guest = false;
 			try {
 				manager.getServer().enviarTrama(new LogOut());

@@ -191,4 +191,8 @@ public class LoginWindow extends BaseJPanel {
 	public User getUser(){
 		return new User(mailField.getText(), String.copyValueOf(passwordField.getPassword()));
 	}
+
+	public boolean getRemember() {
+		return checkBox.isSelected();
+	}
 }

@@ -1,22 +1,22 @@
 package network.segment;
 
-import model.struct.user.User;
+import model.struct.user.LoginInfo;
 
 public class LoginUser extends Segment{
 
 	private static final long serialVersionUID = 1L;
-	private User u;
-
-	public LoginUser(User u){
+	private LoginInfo u;
+	
+	
+	public LoginUser(LoginInfo u){
 		this.u = u;
-		
 	}
 
-	public User getU() {
+	public LoginInfo getU() {
 		return u;
 	}
 
-	public void setU(User u) {
+	public void setU(LoginInfo u) {
 		this.u = u;
 	}
 	

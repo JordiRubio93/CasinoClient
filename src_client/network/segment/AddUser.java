@@ -1,15 +1,22 @@
 package network.segment;
 
+import model.struct.user.User;
+
 public class AddUser extends Segment{
 	private static final long serialVersionUID = 1L;
-	private int a = 1;
-
-	public AddUser() {
+	private User user;
+	
+	public AddUser(User user) {
+		this.user =user;
 	}
 
-	@Override
-	public String toString() {
-		return "AddUser [a=" + a + "]";
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 }

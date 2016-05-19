@@ -1,14 +1,13 @@
 package controller;
 
 import java.io.IOException;
-import java.net.ConnectException;
 
 import controller.listeners.MainButtonsController;
 import model.struct.user.LoginInfo;
 import model.struct.user.User;
 import network.ServerComunication;
+import network.segment.AddUser;
 import network.segment.LoginUser;
-import network.segment.NotifyConRoom;
 import network.segment.Segment;
 import tools.excepcions.FileException;
 import view.BaseJPanel;
@@ -24,29 +23,53 @@ public class Manager {
 	private GameManager gameManager;
 	private ConfigurationFile cf;
 	private FileManager fileManager;
+	private boolean serverOn;
+	private LoginInfo loginSaved;
 	
-	public Manager(MainFrame view) {
+	public Manager() {
+		serverOn = false;
+		fileManager = new FileManager();
+		loginSaved = fileManager.carregarDades();	
+		controller = new MainButtonsController(this);
+	}
+	
+ 	public LoginInfo getLoginSaved() {
+		return loginSaved;
+	}
+
+	public void startServer() {
+		if (!serverOn) {
+			try {
+				server = new ServerComunication(this, cf);
+				server.establirConnexio();
+			} catch (IOException e) {
+				view.showError("Server not found");
+				System.exit(0);
+			}
+		}
+	}
+
+	public void logout(){
+		fileManager.logout();
+	}
+
+	public void setMainFrame(MainFrame view) {
 		this.view = view;
 		try {
-			fileManager = new FileManager();
-			//SLoginInfo loginSaved = fileManager.carregarDades();
-			controller = new MainButtonsController(this);
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
-			server = new ServerComunication(this, cf);
-			server.establirConnexio();
 			gameManager = new GameManager(this);
-			//TODO REMEMBER ME 			view.showPanel("MainWindow");
-			view.showPanel("LoginWindow");
+		
 		} catch (FileException e) {
 			view.showError("Configuration file not found");
 			System.exit(0);
-		}  catch (ConnectException e){
-			view.showError("Server not found");
-			System.exit(0);
-		}catch (IOException e) {
-			view.showError("Error");
-			System.exit(0);
 		}
+	}
+	
+	public void startGame(){
+		view.setAlwaysOnTop(true);
+		if (loginSaved == null)	
+			view.showPanel(Constants.LOGIN_VIEW_NAME);
+		else login(loginSaved);
 	}
 	
 	public void lateralMainPanel(boolean open){
@@ -65,12 +88,41 @@ public class Manager {
 		return server;
 	}
 
-	public boolean login(){
-		LoginWindow p = (LoginWindow) getPanel("LoginWindow");
+	
+	public void login(LoginInfo loginInfo){
+		executelogin(true, loginInfo);
+	}
+	
+	public void executelogin(boolean valid, LoginInfo loginInfo){
+		startServer();
+		System.out.println("holaaa ");
+		loginInfo.EncryptPassword();
+		if (valid){
+			try {
+				server.enviarTrama(new LoginUser(loginInfo));
+				Segment s = (Segment) server.obtenirTrama();
+				if (s instanceof AddUser){
+					gameManager.setUser(((AddUser) s).getUser());
+					view.showPanel("MainWindow");
+					if (( (LoginWindow) view.getPanel(Constants.LOGIN_VIEW_NAME)).getRemember()) fileManager.saveLoginInfo(loginInfo);
+					else fileManager.saveLoginInfo(new LoginInfo("", "", false));
+				}
+				else{
+					view.showError("Wrong User");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else view.showError("Login Fail");
+		
+	}
+	
+	public void login(){
+		System.out.println("cargando ");
+		LoginWindow p = (LoginWindow) view.getPanel(Constants.LOGIN_VIEW_NAME);
 		User u = p.getUser();
 		Boolean valid = true;
-		Boolean logged = false;
-		
 		if (!gameManager.comprovaLoginMail(u.getEmail())){
 			valid = false;
 			view.showError("Wrong mail");
@@ -84,29 +136,8 @@ public class Manager {
 			p.showPasswordError(true);
 		}
 		else p.showPasswordError(false);
-		u.getLoginInfo().EncryptPassword();
-		if (valid){
-			try {
-				server.enviarTrama(new LoginUser(u));
-				Segment s = (Segment) server.obtenirTrama();
-				switch(( s.getClass().getSimpleName()) ){
-				case "LoginUser":
-					LoginUser not = (LoginUser) s;
-					gameManager.setUser(not.getU());
-					view.showPanel("MainWindow");
-					break;
-				case "Check":
-					view.showError("Wrong User");
-					break;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else{
-			view.showError("Login Fail");
-		}
-		return logged;
+		System.out.println("validado ");
+		executelogin(valid,  p.getUser().getLoginInfo());
 	}
 	
 	public void comenzarJoc(String joc){

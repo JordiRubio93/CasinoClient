@@ -1,11 +1,8 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
+import controller.Manager;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.roulette.RouletteView;
@@ -13,16 +10,14 @@ import view.statistics.Graphics;
 import view.statistics.StatisticsWindow;
 
 public class SplashScreen{
-	private static final long serialVersionUID = 1L;
+
 	private ArrayList<BaseJPanel> panels;
 	private Boolean loaded = Boolean.FALSE;
+	private TranslucentWindow translucentWindow;
 	
-	public SplashScreen(/*manager?*/){
-		//TODO pintar...
-		new Thread( new TranslucentWindow()).start();
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension splashSize = new Dimension(screenSize.width/2, screenSize.height/2);
-
+	public SplashScreen(Manager manager){
+		translucentWindow = new TranslucentWindow(manager);
+		new Thread(translucentWindow).run();
 		panels = new ArrayList<BaseJPanel>();
 		panels.add(new Graphics());
 		panels.add(new RouletteView());
@@ -32,12 +27,19 @@ public class SplashScreen{
 		panels.add(new GameView());		
 		panels.add(new MainWindow(new ConfigPanel()));
 		panels.add(new LoginWindow());
-		
 		loaded = Boolean.TRUE;
 	}
 	
 	public Boolean getLoaded() {
 		return loaded;
+	}
+	
+	public TranslucentWindow getTranslucentWindow() {
+		return translucentWindow;
+	}
+
+	public void setTranslucentWindow(TranslucentWindow translucentWindow) {
+		this.translucentWindow = translucentWindow;
 	}
 
 	public ArrayList<BaseJPanel> getPanels() {

@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.SwingUtilities;
 
 import view.MainFrame;
@@ -10,11 +13,20 @@ public class MainClient {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				SplashScreen splash = new SplashScreen();
+				Manager manager = new Manager();
+				SplashScreen splash = new SplashScreen(manager);
 				MainFrame mainFrame = new MainFrame(splash.getPanels());
-				Manager manager = new Manager(mainFrame);
 				mainFrame.setManager(manager);
-				mainFrame.setVisible(true);
+				manager.setMainFrame(mainFrame);
+				new Timer().schedule(new TimerTask() {
+		            @Override
+			        public void run() {
+						manager.startGame();
+						mainFrame.setVisible(true);
+						splash.getTranslucentWindow().stop();
+						
+			        }
+			    }, Constants.SPLASH_TIME);
 			}
 		});
 	}
