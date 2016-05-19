@@ -1,4 +1,4 @@
-package view;
+package view.statistics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,12 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.Manager;
-import controller.listeners.MainButtonsController;
+import view.BaseJPanel;
+import view.Tapet;
 
 public class StatisticsWindow extends BaseJPanel {
-	private final String home = "Home";
 	private static final long serialVersionUID = 1L;
+	private final String home = "Home";
 	
 	private Tapet background;
 	private JPanel panelTop = new JPanel();
@@ -88,7 +88,7 @@ public class StatisticsWindow extends BaseJPanel {
 		cashEvoButton.setContentAreaFilled(false);
 		cashEvoButton.setBorderPainted(false);
 		
-		panelCenter.setLayout(new GridLayout(1, 5));
+		panelCenter.setLayout(new GridLayout(1, 4));
 		panelCenter.setOpaque(false);
 		
 		panelCenter.add(top5RouletteButton);
@@ -107,27 +107,18 @@ public class StatisticsWindow extends BaseJPanel {
 		panelTop.setBackground(Constants.semiOpaqueBlack);
 		panelTop.add(homeButton, 0);
 		
-		background = new Tapet(width, height, "resources/fondoMain.jpg");
+		background = new Tapet(width, height, Constants.BG);
 		background.setLayout(new BorderLayout());
 		background.add(panelTop, BorderLayout.NORTH);
 		background.add(panelCenter, BorderLayout.CENTER);
 		add(background, BorderLayout.CENTER);
-		
 	}
 	
-	public void registerController(MainButtonsController listener){
-		top5RouletteButton.addActionListener(listener);
-		top5BlackjackButton.addActionListener(listener);
-		top5hhorseButton.addActionListener(listener);
-		cashEvoButton.addActionListener(listener);
-		homeButton.addActionListener(listener);
-		
+	public void registerController(){
+		top5RouletteButton.addActionListener(getManager().getController());
+		top5BlackjackButton.addActionListener(getManager().getController());
+		top5hhorseButton.addActionListener(getManager().getController());
+		cashEvoButton.addActionListener(getManager().getController());
+		homeButton.addActionListener(getManager().getController());
 	}
-
-	@Override
-	public void registerController() {
-		registerController(getManager().getController());
-		
-	}
-
 }

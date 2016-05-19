@@ -6,39 +6,27 @@ import java.io.IOException;
 
 import controller.Constants;
 import controller.horses.HorsesIntro;
-import network.ServerComunication;
+import controller.roulette.RouletteManager;
 import network.segment.RouletteBetting;
 import network.segment.Seconds;
 import view.Dialeg;
-import view.GameView;
-import view.roulette.RouletteView;
 
 public class BetButtonController implements ActionListener {
-	private GameView gV;
 	private HorsesIntro hIntro;
-	private ServerComunication sc;
 	private int game;
+	private RouletteManager rManager;
 
-	public BetButtonController(GameView gv, HorsesIntro hIntro, ServerComunication sc, int game) {
-		this.setGameView(gv);
+	public BetButtonController(RouletteManager rManager, HorsesIntro hIntro, int game) {
 		this.hIntro = hIntro;
-		this.sc = sc;
 		this.game = game;
-	}
-
-	public GameView getGameView() {
-		return gV;
-	}
-
-	public void setGameView(GameView gv) {
-		this.gV = gv;
+		this.rManager = rManager;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {
-			sc.enviarTrama(new Seconds(0));
-			int sec = ((Seconds) sc.obtenirTrama()).getSegons();
+			hIntro.getSc().enviarTrama(new Seconds(0));
+			int sec = ((Seconds) hIntro.getSc().obtenirTrama()).getSegons();
 			
 			if(sec >= 50) new Dialeg().setWarningText("You can no longer bet!");
 			
@@ -46,7 +34,7 @@ public class BetButtonController implements ActionListener {
 				if(!Constants.apostaFeta){
 					if(game == Constants.GAME_HORSES) hIntro.executaIntro();
 					if(game == Constants.GAME_ROULETTE){
-						sc.enviarTrama(new RouletteBetting("David", ((RouletteView)gV).getRouletteManager().getApostesRuleta()));
+						hIntro.getSc().enviarTrama(new RouletteBetting("David", rManager.getApostesRuleta()));
 					}
 				}
 				else new Dialeg().setWarningText("You have already bet once!");

@@ -5,6 +5,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 public class Constants {
+	public static final String LOGIN_VIEW_NAME = "LoginWindow";
+	public static final String MAIN_VIEW_NAME = "MainWindow";
+	public static final String GAME_VIEW_NAME = "Gameview";
+	public static final String STATISTICS_VIEW_NAME = "statistics.StatisticsWindow";
+	public static final String GRAPHICS_VIEW_NAME = "statistics.Graphics";
+	public static final String BJ_VIEW_NAME = "BlackjackView";
+	public static final String R_VIEW_NAME = "RouletteView";
+	public static final String H_VIEW_NAME = "HorsesView";
+	public static final String PROJECT_NAME = "LS Casino";
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1300;
 	public static final int CARD_WIDTH = 101;
@@ -18,7 +27,6 @@ public class Constants {
 	public static final String PATH_CASINO = "Resources/casino.jpg";
 	public static final String PATH_BLACKJACK = "Resources/blackjack.jpg";
 	public static final int nHorses = 12;
-	public static final long MINUT = 60000;
 	public static final Color semiOpaqueBlack = new Color(0, 0, 0, 60);
 	public static final Color coolOrange = new Color(215, 143, 35);
 	public static final Color coolBlue = new Color(56, 192, 196);
@@ -26,12 +34,15 @@ public class Constants {
 	public static final Color coolRed = new Color(176, 26, 26);
 	public static final Color coolGray = new Color(114, 109, 109);
 	public static final Color coolDarkGray = new Color(104, 99, 99);
+	public static final Color coolIndigo = new Color(75, 0, 130);
+	public static final Color coolDarkGreen = new Color(0,100,0);
 	public static final Font boldFont = new Font("Calibri", Font.BOLD, 24);
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
 	public static final Dimension errorIconDimension = new Dimension (48, 48);
 	public static final int GAME_HORSES = 2;
 	public static final int GAME_ROULETTE = 1;
 	public static final int GAME_BLACKJACK = 3;
-	public static final String LABEL = "Resources/labelUp.png";
 	public static final String GIF = "Resources/ruleta.gif";
+	public static final String BG = "Resources/fondoMain.jpg";
+	public static final String CASINO = "Resources/casino.jpg";
 }

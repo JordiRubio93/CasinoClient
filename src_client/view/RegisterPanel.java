@@ -7,14 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.DayOfWeek;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,10 +22,9 @@ import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Constants;
-import controller.Manager;
-import controller.listeners.MainButtonsController;
 
-public class RegisterPanel extends BaseJPanel{
+public class RegisterPanel extends BaseJPanel {
+	private static final long serialVersionUID = 1L;
 	private final String main = "Don't have an account? Join us!";
 	private final String name = "Name:";
 	private final String surname = "Surname:";
@@ -43,7 +37,6 @@ public class RegisterPanel extends BaseJPanel{
 	private final String join = "Join us!";
 	private final String guest = "Try as guest";
 	private final String space = "     ";
-	private static final long serialVersionUID = 1L;
 	
 	private JLabel mainLabel = new JLabel(main);
 	private JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -79,19 +72,16 @@ public class RegisterPanel extends BaseJPanel{
 		setLayout(new BorderLayout());
 		Color back = new Color(0, 0, 0, 80);
 		
-		// Agafa les dimensions de la pantalla
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
 		Dimension preferredSize = new Dimension((int)(width * 0.184), (int)(height * 0.02));
 		setBackground(back);
 		
-		// Crea constraint
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.setOpaque(false);
 		
-		// Dona valors al main label
 		mainLabel.setFont(Constants.boldFont);
 		mainLabel.setPreferredSize(new Dimension((int)(width * 0.184),(int)(height * 0.1)));
 		mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,7 +89,6 @@ public class RegisterPanel extends BaseJPanel{
 		mainLabel.setForeground(Constants.coolBlue);
 		add(mainLabel, BorderLayout.NORTH);
 		
-		// Dona valors al name label
 		nameLabel.setFont(Constants.plainFont);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setForeground(Color.WHITE);
@@ -116,7 +105,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 1;
 		mainPanel.add(errorName, c);
 		
-		// Dona valors al surname label
 		surnameLabel.setFont(Constants.plainFont);
 		surnameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		surnameLabel.setForeground(Color.WHITE);
@@ -132,13 +120,11 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 2;
 		mainPanel.add(errorSurname, c);
 		
-		// Dona valors al age label
 		ageLabel.setFont(Constants.plainFont);
 		ageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ageLabel.setForeground(Color.WHITE);
 		ageLabel.setBackground(back);
 		
-		// Dona valors al date label
 		DatePickerSettings dateSettings = new DatePickerSettings();
 	    dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
 	    DatePicker datePicker = new DatePicker(dateSettings);	
@@ -154,7 +140,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 3;
 		mainPanel.add(errorAge, c);
 		
-		// Dona valors al mail label
 		mailLabel.setFont(Constants.plainFont);
 		mailLabel.setForeground(Color.WHITE);
 		mailLabel.setBackground(back);
@@ -169,7 +154,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 4;
 		mainPanel.add(errorMail, c);
 		
-		// Dona valors al password label
 		passwordLabel.setFont(Constants.plainFont);
 		passwordLabel.setForeground(Color.WHITE);
 		passwordLabel.setBackground(back);
@@ -184,7 +168,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 5;
 		mainPanel.add(errorPassword, c);
 		
-		// Dona valors al repeat password label
 		passwordLabel2.setFont(Constants.plainFont);
 		passwordLabel2.setForeground(Color.WHITE);
 		passwordLabel2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -199,7 +182,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 6;
 		mainPanel.add(errorPassword2, c);
 		
-		//Dona valors als botons male - female
 		maleButton.setOpaque(false);
 		maleButton.setHorizontalAlignment(SwingConstants.CENTER);
 		maleButton.setFont(Constants.plainFont);
@@ -212,7 +194,7 @@ public class RegisterPanel extends BaseJPanel{
 		femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
 		femaleButton.setFont(Constants.plainFont);
 		femaleButton.setForeground(Color.WHITE);
-	
+		
 		bG.add(femaleButton);
 		buttonsPanel.add(femaleButton);
 		c.gridwidth = 2;
@@ -220,8 +202,7 @@ public class RegisterPanel extends BaseJPanel{
 		c.gridy = 7;
 		
 		mainPanel.add(buttonsPanel, c);
-	
-		// Dona valors al register button
+		
 		registerButton.setEnabled(false);
 		registerButton.setToolTipText("All fields must be filled correctly in order to register");
 		registerButton.setFont(Constants.boldFont);
@@ -236,7 +217,6 @@ public class RegisterPanel extends BaseJPanel{
 		c.weighty = 0;
 		mainPanel.add(registerButton, c);
 		
-		// Dona valors al guest button
 		guestButton.setFont(Constants.boldFont);
 		guestButton.setForeground(Color.WHITE);
 		guestButton.setBackground(Constants.coolGreen);
@@ -250,120 +230,11 @@ public class RegisterPanel extends BaseJPanel{
 		
 		add(mainPanel, BorderLayout.CENTER);
 	}
-	
-	public void showNameError(Boolean b){
-		if(b){
-			BufferedImage img;
-			try {
-				img = ImageIO.read(new File("Resources/warning.png"));
-				errorName.setIcon(new ImageIcon (img));
-				errorName.setToolTipText("Error found in e-mail format");
-			} catch (IOException e) {
-				try {
-					img = ImageIO.read(new File("Resources/default-image.jpg"));
-					errorName.setIcon(new ImageIcon (img));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}else{
-			errorName.setBackground(Color.BLACK);
-			errorName.setIcon(null);
-		}
-	}
-	
-	public void showSurnameError(Boolean b){
-		if(b){
-			BufferedImage img;
-			try {
-				img = ImageIO.read(new File("Resources/warning.png"));
-				errorSurname.setIcon(new ImageIcon (img));
-				errorSurname.setToolTipText("Error found in e-mail format");
-			} catch (IOException e) {
-				try {
-					img = ImageIO.read(new File("Resources/default-image.jpg"));
-					errorSurname.setIcon(new ImageIcon (img));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}else{
-			errorSurname.setBackground(Color.BLACK);
-			errorSurname.setIcon(null);
-		}
-			
-	}
-	
-	public void showEmailError(Boolean b){
-		if(b){
-			BufferedImage img;
-			try {
-				img = ImageIO.read(new File("Resources/warning.png"));
-				errorMail.setIcon(new ImageIcon (img));
-				errorMail.setToolTipText("Error found in e-mail format");
-			} catch (IOException e) {
-				try {
-					img = ImageIO.read(new File("Resources/default-image.jpg"));
-					errorMail.setIcon(new ImageIcon (img));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}else{
-			errorMail.setBackground(Color.BLACK);
-			errorMail.setIcon(null);
-		}	
-	}
-	
-	public void showPasswordError(Boolean b){
-		if(b){
-			BufferedImage img;
-			try {
-				img = ImageIO.read(new File("Resources/warning.png"));
-				errorPassword.setIcon(new ImageIcon (img));
-				errorPassword.setToolTipText("Error found in password, 6 characters are needed, must include upper cases, numbers and a simbol");
-			} catch (IOException e) {
-				try {
-					img = ImageIO.read(new File("Resources/default-image.jpg"));
-					errorPassword.setIcon(new ImageIcon (img));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}	
-		}else{
-			errorPassword.setBackground(Color.BLACK);
-			errorPassword.setIcon(null);
-		}
-	}
-	
-	public void showPassword2Error(Boolean b){
-		if(b){
-			BufferedImage img;
-			try {
-				img = ImageIO.read(new File("Resources/warning.png"));
-				errorPassword2.setIcon(new ImageIcon (img));
-				errorPassword2.setToolTipText("Two passwords must match");
-			} catch (IOException e) {
-				try {
-					img = ImageIO.read(new File("Resources/default-image.jpg"));
-					errorPassword2.setIcon(new ImageIcon (img));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}	
-		}else{
-			errorPassword2.setBackground(Color.BLACK);
-			errorPassword2.setIcon(null);
-		}
-	}
 
-	public void registerController(MainButtonsController listener){
-		registerButton.addActionListener(listener);
-		guestButton.addActionListener(listener);
+	@Override
+	public void registerController() {
+		guestButton.addActionListener(getManager().getController());
+		registerButton.addActionListener(getManager().getController());
 	}
 	
-	@Override
-	public void setManager(Manager manager) {
-		registerController(manager.getButtonListener());
-	}
 }

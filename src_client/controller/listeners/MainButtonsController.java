@@ -3,16 +3,17 @@ package controller.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 
+import controller.Constants;
 import controller.Manager;
+import model.struct.user.HistoricPartides;
 import network.segment.LogOut;
-import view.ConfigPanel;
+import network.segment.Top5;
 import view.Dialeg;
-import view.LoginWindow;
-import view.MainWindow;
-import view.StatisticsWindow;
+import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
 	private Manager manager;
@@ -24,36 +25,42 @@ public class MainButtonsController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
 		switch (((JButton) event.getSource()).getClientProperty("action").toString()) {
 		case ("Log in"):
 			manager.login();
 			break;
 		case ("Try as guest"):
-			manager.setPanel(new MainWindow());
-			guest = true;
+			manager.showPanel("MainWindow");
+			guest = true; //TODO new user ("anonim",100.000)
 			break;
 		case ("Register"):
-			manager.setPanel(new MainWindow());
-			break;	
+			manager.register();
+			manager.showPanel("MainWindow");
+			break;
 		case ("Play Roulette"):
-			if(guest) new Dialeg().setWarningText("You can't play, you're a guest.");
-			else manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
+			if (guest)
+				new Dialeg().setWarningText("You can't play, you're a guest.");
+			else
+				manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
 			break;
 		case ("Play Horses"):
-			if(guest) new Dialeg().setWarningText("You can't play, you're a guest.");
-			else manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
+			if (guest)
+				new Dialeg().setWarningText("You can't play, you're a guest.");
+			else
+				manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
 			break;
 		case ("Play BlackJack"):
 			manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
 			break;
 		case ("Statistics"):
-			manager.setPanel(new StatisticsWindow());
+			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			break;
 		case ("Configuration"):
-			manager.setPanel(new MainWindow(new ConfigPanel()));
+			manager.lateralMainPanel(true);
 			break;
 		case ("Minimize Panel"):
-			manager.setPanel(new MainWindow());
+			manager.lateralMainPanel(false);
 			break;
 		case ("Change Password"):
 			break;
@@ -65,19 +72,49 @@ public class MainButtonsController implements ActionListener {
 			guest = false;
 			try {
 				manager.getServer().enviarTrama(new LogOut());
-				manager.setPanel(new LoginWindow());
+				manager.showPanel("LoginWindow");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		case ("Home"):
-			manager.setPanel(new MainWindow());
+			manager.showPanel("MainWindow");
+			break;
+		case ("Back"):
+			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			break;
 		case ("Top 5 Roulette"):
+			try {
+				manager.getServer().enviarTrama(new Top5(null, 1));
+				LinkedList<HistoricPartides> histRuleta = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histRuleta)){
+					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
+					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+				}
+			} catch (IOException e) {
+			}
 			break;
 		case ("Top 5 Blackjack"):
+			try {
+				manager.getServer().enviarTrama(new Top5(null, 3));
+				LinkedList<HistoricPartides> histBJ = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histBJ)){
+					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
+					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+				}
+			} catch (IOException e) {
+			}
 			break;
 		case ("Top 5 Horses"):
+			try {
+				manager.getServer().enviarTrama(new Top5(null, 2));
+				LinkedList<HistoricPartides> histCavalls = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histCavalls)){
+					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
+					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+				}
+			} catch (IOException e) {
+			}
 			break;
 		case ("Cash Evo"):
 			break;

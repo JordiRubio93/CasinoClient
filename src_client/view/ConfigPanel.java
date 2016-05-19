@@ -16,8 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.Manager;
-import controller.listeners.MainButtonsController;
 
 public class ConfigPanel extends BaseJPanel {
 	private static String changePassword = "Change password";
@@ -120,17 +118,11 @@ public class ConfigPanel extends BaseJPanel {
 		this.add(logOutButton, c);
 	}
 	
-	public void registerController(MainButtonsController listener){
-		changePasswordButton.addActionListener(listener);
-		addMoneyButton.addActionListener(listener);
-		seeEvoButton.addActionListener(listener);
-		logOutButton.addActionListener(listener);
-		backButton.addActionListener(listener);
-
-	}
-	
-	@Override
-	public void setManager(Manager manager) {
-		registerController(manager.getButtonListener());
+	public void registerController(){
+		changePasswordButton.addActionListener(getManager().getController());
+		addMoneyButton.addActionListener(getManager().getController());
+		seeEvoButton.addActionListener(getManager().getController());
+		logOutButton.addActionListener(getManager().getController());
+		backButton.addActionListener(getManager().getController());
 	}
 }

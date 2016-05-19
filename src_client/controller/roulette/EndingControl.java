@@ -1,6 +1,5 @@
 package controller.roulette;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import controller.Manager;
@@ -31,7 +30,8 @@ public class EndingControl implements Runnable {
 			}
 			
 			view.insereixGif();
-			manager.setPanel(view);
+			
+			//TODO	manager.setPanel(view);
 
 			manager.getServer().enviarTrama(new Play("roulette"));
 			num = ((InitRoulette)manager.getServer().obtenirTrama()).getNum();
@@ -39,11 +39,9 @@ public class EndingControl implements Runnable {
 			Thread.sleep(10000);
 			
 			AmericanRoulette americanRoulette = new AmericanRoulette();
-			
-			for(int i = 0; i < americanRoulette.getCaselles().size(); i++){
+						for(int i = 0; i < americanRoulette.getCaselles().size(); i++){
 				if(americanRoulette.getCaselles().get(i).getNumero() == num){
-					if(americanRoulette.getColorCaselles()[i]) view.acabaPartida(num, Color.RED);
-					else view.acabaPartida(num, Color.BLACK);
+					view.acabaPartida(num, americanRoulette.getColorCaselles()[i]);
 					break;
 				}
 			}

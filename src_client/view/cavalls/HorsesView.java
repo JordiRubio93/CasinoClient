@@ -20,26 +20,30 @@ import view.GameView;
 
 public class HorsesView extends GameView {
 	private static final long serialVersionUID = 1L;
-	private LinkedList<HorseAnimation> list;
+	private Stadium jpStadium;
 	private GridLayout gridLayout;
 	private JPanel jpCarrils;
-	private Stadium jpStadium;
+	private LinkedList<HorseAnimation> list;
 	private Point[] coord;
 
 	public HorsesView(){
+		initElements();
+	}
+	
+	private void initElements() {
 		jpFinestra = new JPanel(new BorderLayout());
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
 		
-		super.creaTemps();
+		super.createTime();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		jpFinestra.add(jpStadium, BorderLayout.CENTER);
 		
-		super.creaList();
+		super.createList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
 
 		this.setLayout(new BorderLayout());
@@ -92,19 +96,6 @@ public class HorsesView extends GameView {
 		jpStadium.setCoord(x, y, i);
 	}
 	
-	public Stadium getEstadi(){
-		return jpStadium;
-	}
-	
-	public void acabaPartida(String winner){
-		if(winner != null){		
-			Dialeg dialeg = new Dialeg();
-			dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
-		}
-
-		super.acabaPartida();
-	}
-	
 	public void setCounter(){
 		jlCount = new JLabel("...");
 		jlCount.setHorizontalAlignment(JLabel.CENTER);
@@ -130,5 +121,10 @@ public class HorsesView extends GameView {
 	
 	public void paintRed(boolean flag){
 		jlCount.setOpaque(flag);
+	}
+	
+	public void acabaPartida(String winner){
+		Dialeg dialeg = new Dialeg();
+		dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
 	}
 }

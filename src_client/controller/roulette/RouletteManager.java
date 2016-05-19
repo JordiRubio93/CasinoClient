@@ -8,6 +8,7 @@ import controller.listeners.BetButtonController;
 import controller.listeners.ExitButtonController;
 import model.struct.bet.RouletteBet;
 import model.struct.user.PublicUser;
+import view.MainWindow;
 import view.roulette.RouletteView;
 
 public class RouletteManager {
@@ -21,25 +22,25 @@ public class RouletteManager {
 	}
 	
 	public void executaPartida(LinkedList<PublicUser> listUsers){
-		game = (RouletteView) manager.getPanel();
+		game = (RouletteView) manager.getPanel("RouletteView");
 		game.actualitzaTemps();
 		game.setVisible(true);
 		
-		game.ompleLlista(listUsers);
+		//game.ompleLlista(listUsers);
 		
-		BetButtonController bbc = new BetButtonController(game, null, manager.getServer(), Constants.GAME_ROULETTE);
-		ExitButtonController ebc = new ExitButtonController(game, manager.getServer());
-		game.registerController(bbc, ebc);
+		BetButtonController bbc = new BetButtonController(this, null, Constants.GAME_ROULETTE);
+		ExitButtonController ebc = new ExitButtonController(manager.getServer());
+		//game.registerController(bbc, ebc);
 	}
 
-	public RouletteView getGame() {
-		return new RouletteView(this);
+	public RouletteView getGame(MainWindow mW) {
+		return new RouletteView();
 	}
 
 	public void setGame(RouletteView game) {
 		this.game = game;
 	}
-	
+
 	public void afegeixAposta(RouletteBet bet){
 		apostesRuleta.add(bet);
 	}

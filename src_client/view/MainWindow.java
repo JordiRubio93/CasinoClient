@@ -12,16 +12,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import controller.Constants;
-import controller.Manager;
-import controller.listeners.MainButtonsController;
-
 public class MainWindow extends BaseJPanel {
-	private final String logout = "Log Out";
 	private static final long serialVersionUID = 1L;
+	private final String logout = "Log Out";
 	
 	private Tapet background;
 	private JPanel panelTop = new JPanel();
@@ -31,17 +26,13 @@ public class MainWindow extends BaseJPanel {
 	private JButton horseButton;
 	private JButton statisticsButton;
 	private JButton configButton = new JButton(logout);
-	private ConfigPanel c = new ConfigPanel();
-	private JLabel labelUp;
-
-	public MainWindow(){
-		initElements();
-	}
+	private ConfigPanel c;
 	
 	public MainWindow(ConfigPanel c){
 		initElements();
 		this.c = c;
-		add(this.c, BorderLayout.EAST);
+		add(c, BorderLayout.EAST);
+		lateralPanel(false);
 	}
 	
 	private void initElements(){
@@ -103,11 +94,8 @@ public class MainWindow extends BaseJPanel {
 		configButton.setContentAreaFilled(false);
 		configButton.setBorderPainted(false);
 		
-		ImageIcon img = new ImageIcon(Constants.LABEL);
-		labelUp = new JLabel(img);
 		panelTop.setLayout(new BorderLayout());
 		panelTop.setBackground(Color.BLACK);
-		panelTop.add(labelUp, BorderLayout.CENTER);
 		panelTop.add(configButton, BorderLayout.EAST);
 		
 		panelCenter.setLayout(new GridLayout(1, 4));
@@ -124,19 +112,17 @@ public class MainWindow extends BaseJPanel {
 		add(background, BorderLayout.CENTER);
 	}
 	
-	public void registerController(MainButtonsController listener){
-		rouletteButton.addActionListener(listener);
-		blackjackButton.addActionListener(listener);
-		horseButton.addActionListener(listener);
-		statisticsButton.addActionListener(listener);
-		configButton.addActionListener(listener);
-
+	public void registerController(){
+		rouletteButton.addActionListener(getManager().getController());
+		blackjackButton.addActionListener(getManager().getController());
+		horseButton.addActionListener(getManager().getController());
+		statisticsButton.addActionListener(getManager().getController());
+		configButton.addActionListener(getManager().getController());
+		c.setManager(getManager());
+		c.registerController();
 	}
 
-	@Override
-	public void setManager(Manager manager) {
-		registerController(manager.getButtonListener());
-		c.registerController(manager.getButtonListener());
+	public void lateralPanel(boolean open) {
+		c.setVisible(open);
 	}
-	
 }

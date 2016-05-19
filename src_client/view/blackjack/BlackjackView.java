@@ -18,7 +18,7 @@ import model.Utilities;
 import view.BaseJPanel;
 import view.Tapet;
 
-public class BlackjackView extends BaseJPanel{
+public class BlackjackView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton btnHit, btnStand, btnExit, btnBet;
 	private JLabel jlbCash, jlbBet;
@@ -40,10 +40,8 @@ public class BlackjackView extends BaseJPanel{
 		background.setLayout(new BorderLayout());
 		this.setLayout(new BorderLayout());
 		
-		//Creem el menú principal
 		menu = new JPanel(new GridLayout(1, 5));
 		
-		//Creem el display que ens indica els diners i l'aposta
 		display = new JPanel(new BorderLayout());
 		
 		p3 = new JPanel(new GridLayout());
@@ -64,7 +62,6 @@ public class BlackjackView extends BaseJPanel{
 		menu.add(display);
 		background.add(menu, BorderLayout.SOUTH);
 		
-		//Creem, modifiquem i afegim els botons principals al GridLayout del menú
 		btnBet = new JButton ("BET");
 		btnBet.setBackground(new Color(153, 204, 255));
 		btnBet.setOpaque(true);
@@ -99,11 +96,10 @@ public class BlackjackView extends BaseJPanel{
 		central.add(p2, BorderLayout.SOUTH);
 		background.add(central, BorderLayout.CENTER);
 		
-		
 		this.add(background, BorderLayout.CENTER);
 		central.setVisible(true);
 	}
-	
+		
 	public void addActionListeners(BlackjackButtonsController btnController) {
 		btnBet.addActionListener(btnController);
 		btnHit.addActionListener(btnController);
@@ -150,5 +146,11 @@ public class BlackjackView extends BaseJPanel{
 		if(cardImg != null) jlbCard = new JLabel(cardImg);
 		p1.add(jlbCard);
 		setVisible(true);
-	}	
+	}
+
+	@Override
+	public void registerController() {
+		// TODO Auto-generated method stub
+		
+	}
 }

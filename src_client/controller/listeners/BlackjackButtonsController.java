@@ -4,14 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import model.blackjack.Blackjack;
 import network.segment.GameOver;
-
-import javax.swing.JButton;
-
-import view.MainWindow;
 import view.blackjack.BlackjackView;
 
 public class BlackjackButtonsController implements ActionListener {
@@ -23,6 +20,7 @@ public class BlackjackButtonsController implements ActionListener {
 		this.mainView = new BlackjackView();	
 		this.blackjack = new Blackjack();
 		mainView.addActionListeners(this);
+		this.resetTable();
 	}
 	
 	private void resetTable() {
@@ -104,7 +102,7 @@ public class BlackjackButtonsController implements ActionListener {
 			// Funcio que doni al servidor la informacio necesaria (ganancies)
 			
 			try {
-				mainView.getManager().setPanel(new MainWindow());
+				mainView.getManager().showPanel("MainWindow");
 				mainView.getManager().getServer().enviarTrama(new GameOver());
 			} catch (IOException e) {}
 		}

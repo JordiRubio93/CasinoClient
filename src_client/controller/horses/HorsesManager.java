@@ -18,24 +18,29 @@ import network.segment.GameOver;
 import network.segment.InitHorses;
 import network.segment.Play;
 import network.segment.Seconds;
+import view.MainWindow;
 import view.cavalls.HorsesView;
 
 public class HorsesManager {
 	private LinkedList<HorseData> end;
 	private LinkedList<String> colors;
-	//private HorsesBet aposta;
 	private ServerComunication sc;
 	private Manager manager;
 	private InitHorses initH;
 	private int time;
 	private HorsesView game;
 	
+	public HorsesManager(Manager manager) {
+		this.manager = manager;
+		time = 0;
+	}
+	
 	public void executaCursa(LinkedList<PublicUser> listUsers) {
-		game = (HorsesView) manager.getPanel();
+		game = (HorsesView) manager.getPanel("HorsesView");
 		game.actualitzaTemps();
 		game.setVisible(true);
 		
-		game.ompleLlista(listUsers);
+		//game.ompleLlista(listUsers);
 		
 		try {
 			sc = game.getManager().getServer();
@@ -45,9 +50,9 @@ public class HorsesManager {
 			end = initH.getList();
 			
 			HorsesIntro hIntro = new HorsesIntro(end, sc);
-			BetButtonController bbc = new BetButtonController(game, hIntro, sc, Constants.GAME_HORSES);
-			ExitButtonController ebc = new ExitButtonController(game, sc);
-			game.registerController(bbc, ebc);
+			BetButtonController bbc = new BetButtonController(null, hIntro, Constants.GAME_HORSES);
+			ExitButtonController ebc = new ExitButtonController(sc);
+			//game.registerController(bbc, ebc);
 			
 			sc.enviarTrama(new Seconds(0));
 			time = ((Seconds) sc.obtenirTrama()).getSegons();
@@ -100,14 +105,9 @@ public class HorsesManager {
 			sc.enviarTrama(new GameOver());
 		} catch (InterruptedException | IOException e) {}	
 	}
-	
-	public HorsesManager(Manager manager) {
-		this.manager = manager;
-		time = 0;
-	}
 
-	public HorsesView getGame() {
-		return new HorsesView();
+	public HorsesView getGame(MainWindow mW) {
+		return null;
 	}
 
 	public void setGame(HorsesView game) {

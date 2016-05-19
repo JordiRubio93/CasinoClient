@@ -54,4 +54,8 @@ public class HorsesIntro {
 	public ChooseHorse getWindow(){
 		return choose;
 	}
+
+	public ServerComunication getSc() {
+		return sc;
+	}
 }

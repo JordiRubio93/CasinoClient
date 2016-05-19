@@ -21,6 +21,7 @@ import view.GameView;
 
 public class RouletteView extends GameView {
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel jpNumeros;
 	private JPanel jpZero;
 	private MyButton jbZero;
@@ -47,7 +48,19 @@ public class RouletteView extends GameView {
 	private RouletteButtonsController listener;
 	private RouletteManager rm;
 	
-	private void creaRuleta(){
+	public RouletteView(){
+		jpFinestra = new JPanel(new BorderLayout());
+		super.createTime();
+		jpFinestra.add(jpTemps, BorderLayout.NORTH);
+		super.createList();
+		jpFinestra.add(jpDades, BorderLayout.EAST);
+		this.setLayout(new BorderLayout());
+		this.add(jpFinestra, BorderLayout.CENTER);
+		
+		initElements();
+	}
+	
+	private void initElements(){
 		listener = new RouletteButtonsController(rm);
 		
 		americanRoulette = new AmericanRoulette();
@@ -56,7 +69,6 @@ public class RouletteView extends GameView {
 		jpCentral = new JPanel(new BorderLayout());
 		jpInferior = new JPanel(new BorderLayout());
 		jpNumeros = new JPanel(new GridLayout(3, 12));
-		//Border thickBorder = new LineBorder(Color.WHITE, 1);
 		
 		ArrayList<Casella> taula = americanRoulette.getCaselles();
 		for(int i = 0; i < taula.size(); i++){
@@ -187,38 +199,6 @@ public class RouletteView extends GameView {
 		this.add(jpFinestra, BorderLayout.CENTER);
 	}
 	
-	public RouletteView(RouletteManager rm){
-		this.rm = rm;
-		
-		jpFinestra = new JPanel(new BorderLayout());
-		super.creaTemps();
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
-		super.creaList();
-		jpFinestra.add(jpDades, BorderLayout.EAST);
-		this.setLayout(new BorderLayout());
-		this.add(jpFinestra, BorderLayout.CENTER);
-		
-		creaRuleta();
-	}
-	
-	public void acabaPartida(int winner, Color c){
-		Dialeg dialeg = new Dialeg();
-		dialeg.setWarningText("The winner number is... " + winner + " !");
-		JPanel jPanel = new JPanel();
-		jPanel.setBackground(c);
-		dialeg.getDialeg().getContentPane().add(jPanel);
-		
-		super.acabaPartida();
-	}
-
-	public RouletteButtonsController getListener() {
-		return listener;
-	}
-	
-	public RouletteManager getRouletteManager(){
-		return rm;
-	}
-	
 	public void insereixGif(){
 		Icon icon = new ImageIcon(Constants.GIF);
 		JLabel label = new JLabel(icon);
@@ -227,4 +207,11 @@ public class RouletteView extends GameView {
 		jpCentral.removeAll();
 		jpFinestra.add(label, BorderLayout.CENTER);
 	}
+	
+	public void acabaPartida(int winner, boolean c){
+		Dialeg dialeg = new Dialeg();
+		dialeg.setWarningText("The winner number is... " + winner + " !");
+	}
+	
+	
 }

@@ -7,32 +7,42 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String surname;
-	private String email;
-	private String password;
-	private Boolean gender;
-	private Date register;
-	private Date birthday;
+	private LoginInfo loginInfo;
 	private double cash;
-
-	public PublicUser getPublicUser(){
-		return new PublicUser(getSurname(),getGender(),getCash());
-	}
+	private Date register;
+	private Date lastLogin;
+	private Date birthday;
+	private Boolean gender; //male true false female
 	
-	public User(String name, String surname, String email, String password, Boolean gender, Date register,
-			Date birthday, double cash) {
+	/**CREATE TABLE IF NOT EXISTS Clients (
+	ID_Client int not null auto_increment PRIMARY KEY,
+    Nom varchar(20),
+    Cognom varchar(20),
+	Contrasenya varchar(40) not null,
+	Saldo float,
+	Data_Registre DATETIME,
+	Data_LastLogin DATETIME,
+    Data_Naixement DATE,
+    email varchar(50) unique,
+	sexe char
+)*/
+	
+	public User(String name, String surname, String password, double cash, String email, Date register, Date lastLogin,
+			Date birthday, Boolean gender) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.email = email;
-		this.password = password;
-		this.gender = gender;
-		this.register = register;
-		this.birthday = birthday;
+		this.loginInfo = new LoginInfo(email, password);
 		this.cash = cash;
+		this.register = register;
+		this.lastLogin = lastLogin;
+		this.birthday = birthday;
+		this.gender = gender;
 	}
-	
-	
-	public User() {}
+
+	public User(String email,String password) {
+		this.loginInfo = new LoginInfo(email, password);
+	}
 
 	public String getName() {
 		return name;
@@ -47,17 +57,13 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 	public String getEmail() {
-		return email;
+		return this.loginInfo.getEmail();
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+		return this.loginInfo.getPassword();
+	}	
+	
 	public Boolean getGender() {
 		return gender;
 	}
@@ -82,4 +88,33 @@ public class User implements Serializable {
 	public void setCash(double cash) {
 		this.cash = cash;
 	}
+	public PublicUser getPublicUser(){
+		return new PublicUser(getSurname(),getGender());
+	}
+	
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+	public void changePassword(String pw){
+		this.loginInfo.setPassword(pw);
+	}
+	public void changeEmail(String email){
+		this.loginInfo.setEmail(email);
+	}
+	public void EncryptPassword() {
+		loginInfo.EncryptPassword();
+	}
+
+	public LoginInfo getLoginInfo() {
+		return loginInfo;
+	}
+
+	public void setLoginInfo(LoginInfo loginInfo) {
+		this.loginInfo = loginInfo;
+	}
+	
 }
