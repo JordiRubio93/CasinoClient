@@ -36,7 +36,7 @@ public class HorsesManager {
 	}
 	
 	public void executaCursa(LinkedList<PublicUser> listUsers) {
-		game = (HorsesView) manager.getPanel("HorsesView");
+		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 		game.actualitzaTemps();
 		game.setVisible(true);
 		

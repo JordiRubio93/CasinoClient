@@ -28,31 +28,36 @@ public class MainButtonsController implements ActionListener {
 		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
 		switch (((JButton) event.getSource()).getClientProperty("action").toString()) {
 		case ("Log in"):
-			System.out.println();
 			manager.login();
+			guest = false;
 			break;
 		case ("Try as guest"):
-			manager.showPanel("MainWindow");
+			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			guest = true; //TODO new user ("anonim",100.000)
 			break;
 		case ("Register"):
 			manager.register();
-			manager.showPanel("MainWindow");
+			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("Play Roulette"):
-			if (guest)
+			if (guest){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
-			else
-				manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
+			}else{
+				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
+				manager.showPanel(Constants.R_VIEW_NAME);
+			}
 			break;
 		case ("Play Horses"):
-			if (guest)
+			if (guest){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
-			else
-				manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
+			}else{
+				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+				manager.showPanel(Constants.H_VIEW_NAME);
+			}
 			break;
 		case ("Play BlackJack"):
-			manager.comenzarJoc(((JButton) event.getSource()).getClientProperty("action").toString());
+			manager.showPanel(Constants.BJ_VIEW_NAME);
+			manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
 			break;
 		case ("Statistics"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
@@ -123,8 +128,29 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Cash Ranking"):
 			break;
+		case ("EXIT_GAME"):
+			//JOptionPane.showMessageDialog(f, "See you soon!", "* GOOD BYE *", JOptionPane.PLAIN_MESSAGE);
+			// Funcio que doni al servidor la informacio necesaria (ganancies)
+			manager.showPanel(Constants.MAIN_VIEW_NAME);
+			//TODO parar les funcions dels jocs
+			break;
+		case ("BET_BJ"):
+			manager.getGameManager().betBJ();
+			break;
+		case ("HIT_BJ"):
+			manager.getGameManager().hitBJ();
+			break;
+		case ("STAND_BJ"):
+			manager.getGameManager().standBJ();;
+			break;
+			
+			
+			
+			
 		default:
 			System.err.println(((JButton) event.getSource()).getToolTipText());
 		}
+		
+		
 	}
 }

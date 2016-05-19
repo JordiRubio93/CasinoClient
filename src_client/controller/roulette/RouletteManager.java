@@ -4,8 +4,6 @@ import java.util.LinkedList;
 
 import controller.Constants;
 import controller.Manager;
-import controller.listeners.BetButtonController;
-import controller.listeners.ExitButtonController;
 import model.struct.bet.RouletteBet;
 import model.struct.user.PublicUser;
 import view.MainWindow;
@@ -22,14 +20,13 @@ public class RouletteManager {
 	}
 	
 	public void executaPartida(LinkedList<PublicUser> listUsers){
-		game = (RouletteView) manager.getPanel("RouletteView");
+		game = (RouletteView) manager.getPanel(Constants.R_VIEW_NAME);
 		game.actualitzaTemps();
-		game.setVisible(true);
 		
 		//game.ompleLlista(listUsers);
 		
-		BetButtonController bbc = new BetButtonController(this, null, Constants.GAME_ROULETTE);
-		ExitButtonController ebc = new ExitButtonController(manager.getServer());
+		//BetButtonController bbc = new BetButtonController(this, null, Constants.GAME_ROULETTE);
+		//ExitButtonController ebc = new ExitButtonController(manager.getServer());
 		//game.registerController(bbc, ebc);
 	}
 

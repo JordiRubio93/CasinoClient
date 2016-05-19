@@ -14,6 +14,7 @@ import view.BaseJPanel;
 import view.LoginWindow;
 import view.MainFrame;
 import view.MainWindow;
+import view.roulette.RouletteView;
 
 public class Manager {
 	private final String rutejson = "config.json";
@@ -30,11 +31,16 @@ public class Manager {
 		serverOn = false;
 		fileManager = new FileManager();
 		loginSaved = fileManager.carregarDades();	
-		controller = new MainButtonsController(this);
+		gameManager = new GameManager(this);
+		controller = new MainButtonsController(this);	
 	}
 	
  	public LoginInfo getLoginSaved() {
 		return loginSaved;
+	}
+ 	
+	public GameManager getGameManager() {
+		return gameManager;
 	}
 
 	public void startServer() {
@@ -57,7 +63,6 @@ public class Manager {
 		this.view = view;
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
-			gameManager = new GameManager(this);
 		} catch (FileException e) {
 			view.showError("Configuration file not found");
 			System.exit(0);
@@ -94,7 +99,6 @@ public class Manager {
 	
 	public void executelogin(boolean valid, LoginInfo loginInfo){
 		startServer();
-		System.out.println("holaaa ");
 		loginInfo.EncryptPassword();
 		if (valid){
 			try {
@@ -114,11 +118,9 @@ public class Manager {
 			}
 		}
 		else view.showError("Login Fail");
-		
 	}
 	
 	public void login(){
-		System.out.println("cargando ");
 		LoginWindow p = (LoginWindow) view.getPanel(Constants.LOGIN_VIEW_NAME);
 		User u = p.getUser();
 		Boolean valid = true;
@@ -135,14 +137,14 @@ public class Manager {
 			p.showPasswordError(true);
 		}
 		else p.showPasswordError(false);
-		System.out.println("validado ");
+		
 		executelogin(valid,  p.getUser().getLoginInfo());
 	}
 	
-	public void comenzarJoc(String joc){
+	public void comenzarJoc(String joc, BaseJPanel panel){
 		switch (joc) {
 			case ("Play Roulette"):
-				gameManager.executaRuleta();
+				gameManager.executaRuleta((RouletteView) panel);
 				break;
 			case ("Play Horses"):
 				gameManager.executaHorses();
@@ -161,6 +163,5 @@ public class Manager {
 
 	public void register() {
 		// TODO Auto-generated method stub
-		
 	}
 }

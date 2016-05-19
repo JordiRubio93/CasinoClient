@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Constants;
-import controller.listeners.BlackjackButtonsController;
 import model.Utilities;
 import view.BaseJPanel;
 import view.Tapet;
@@ -66,21 +65,28 @@ public class BlackjackView extends BaseJPanel {
 		btnBet.setBackground(new Color(153, 204, 255));
 		btnBet.setOpaque(true);
 		btnBet.setBorderPainted(false);
+		btnBet.putClientProperty("action", "BET_BJ");
+		
 		menu.add(btnBet);
 		btnHit = new JButton ("HIT");
 		btnHit.setBackground(new Color(190, 0, 0));
 		btnHit.setOpaque(true);
 		btnHit.setBorderPainted(false);
+		btnHit.putClientProperty("action", "HIT_BJ");
+		
 		menu.add(btnHit);
 		btnStand = new JButton ("STAND");
 		btnStand.setBackground(new Color(233, 227, 51));
 		btnStand.setOpaque(true);
 		btnStand.setBorderPainted(false);
+		btnStand.putClientProperty("action", "STAND_BJ");
+		
 		menu.add(btnStand);
 		btnExit = new JButton ("EXIT");
 		btnExit.setBackground(Color.LIGHT_GRAY);
 		btnExit.setOpaque(true);
 		btnExit.setBorderPainted(false);
+		btnExit.putClientProperty("action", "EXIT_GAME");
 		menu.add(btnExit);
 		
 		central = new JPanel(new BorderLayout());
@@ -98,13 +104,6 @@ public class BlackjackView extends BaseJPanel {
 		
 		this.add(background, BorderLayout.CENTER);
 		central.setVisible(true);
-	}
-		
-	public void addActionListeners(BlackjackButtonsController btnController) {
-		btnBet.addActionListener(btnController);
-		btnHit.addActionListener(btnController);
-		btnStand.addActionListener(btnController);
-		btnExit.addActionListener(btnController);
 	}
 	
 	public float getBet() {
@@ -125,14 +124,14 @@ public class BlackjackView extends BaseJPanel {
 		setVisible(true);
 	}
 	
-	public void clearTable(float cash) {
+	public void clearTable(double cash) {
 		p1.removeAll();
 		p1.revalidate();
 		p1.repaint();
 		p2.removeAll();
 		p2.revalidate();
 		p2.repaint();
-		jtfCash.setText(Float.toString(cash));
+		jtfCash.setText(Double.toString(cash));
 	}
 	
 	public void standAction() {
@@ -144,13 +143,15 @@ public class BlackjackView extends BaseJPanel {
 	public void dealerCards() {
 		cardImg = new ImageIcon("Resources/cardback.png");
 		if(cardImg != null) jlbCard = new JLabel(cardImg);
+		
 		p1.add(jlbCard);
 		setVisible(true);
 	}
 
-	@Override
-	public void registerController() {
-		// TODO Auto-generated method stub
-		
+	public void registerController(){
+		btnBet.addActionListener(getManager().getController());
+		btnHit.addActionListener(getManager().getController());
+		btnStand.addActionListener(getManager().getController());
+		btnExit.addActionListener(getManager().getController());		
 	}
 }

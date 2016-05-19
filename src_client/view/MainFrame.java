@@ -31,6 +31,7 @@ public class MainFrame extends JFrame{
 
 	public void showPanel(String cad){System.out.println(cad);
 		cardLayout.show(getContentPane(), "view." + cad);
+		revalidate();
 	}
 	
 	public void setManager(Manager manager){
@@ -60,11 +61,11 @@ public class MainFrame extends JFrame{
 			return panels.get(5);
 		case Constants.STATISTICS_VIEW_NAME:
 			return panels.get(4);
-		case "BlackjackView":
+		case Constants.BJ_VIEW_NAME:
 			return panels.get(3);
-		case "HorsesView":
+		case Constants.H_VIEW_NAME:
 			return panels.get(2);
-		case "RouletteView":
+		case Constants.R_VIEW_NAME:
 			return panels.get(1);
 		case Constants.GRAPHICS_VIEW_NAME:
 			return panels.get(0);

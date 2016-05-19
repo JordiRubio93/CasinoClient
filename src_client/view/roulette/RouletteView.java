@@ -66,7 +66,8 @@ public class RouletteView extends GameView {
 	private AmericanRoulette americanRoulette;
 	private RouletteButtonsController listener;
 	private RouletteManager rm;
-	
+	private ArrayList<Casella> taula;
+	private ArrayList<MyButton> butons;
 	
 	/**
      * Constructor per la gràfica de la ruleta.
@@ -95,21 +96,18 @@ public class RouletteView extends GameView {
 		jpCentral = new JPanel(new BorderLayout());
 		jpInferior = new JPanel(new BorderLayout());
 		jpNumeros = new JPanel(new GridLayout(3, 12));
-		
-		ArrayList<Casella> taula = americanRoulette.getCaselles();
+
+		taula = americanRoulette.getCaselles();
+		butons = new ArrayList<MyButton>();
 		for(int i = 0; i < taula.size(); i++){
 			Casella c = taula.get(i);
-			
 			MyButton button = new MyButton(String.valueOf(c.getNumero()), c.getColor());
 			button.setFont(new Font("Cambria", Font.PLAIN, 30));
 			button.setBackground(c.getColor());
 			button.setForeground(Color.WHITE);
-			
-			button.addActionListener(listener);
-			
 			JPanel jpBoto = new JPanel(new BorderLayout());
+			butons.add(button);
 			jpBoto.add(button, BorderLayout.CENTER);
-			
 			jpNumeros.add(jpBoto);
 		}
 		
@@ -122,7 +120,6 @@ public class RouletteView extends GameView {
 		jbZero.setBackground(new Color(76, 145, 65));
 		jbZero.setForeground(Color.WHITE);
 		
-		jbZero.addActionListener(listener);
 		
 		jpZero.add(jbZero, BorderLayout.CENTER);
 
@@ -137,22 +134,17 @@ public class RouletteView extends GameView {
 		jbPrimera.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPrimera.setBackground(new Color(76, 145, 65));
 		jbPrimera.setForeground(Color.WHITE);
-		
-		jbPrimera.addActionListener(listener);
 
 		jbSegona = new MyButton("2ND 12", new Color(76, 145, 65));
 		jbSegona.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSegona.setBackground(new Color(76, 145, 65));
 		jbSegona.setForeground(Color.WHITE);
 		
-		jbSegona.addActionListener(listener);
-
 		jbTercera = new MyButton("3RD 12", new Color(76, 145, 65));
 		jbTercera.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbTercera.setBackground(new Color(76, 145, 65));
 		jbTercera.setForeground(Color.WHITE);
 		
-		jbTercera.addActionListener(listener);
 		
 		jpDotzenes.add(jbPrimera);
 		jpDotzenes.add(jbSegona);
@@ -168,42 +160,37 @@ public class RouletteView extends GameView {
 		jbManca.setBackground(new Color(76, 145, 65));
 		jbManca.setForeground(Color.WHITE);
 
-		jbManca.addActionListener(listener);
+		
 		
 		jbParell = new MyButton("EVEN", new Color(76, 145, 65));
 		jbParell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbParell.setBackground(new Color(76, 145, 65));
 		jbParell.setForeground(Color.WHITE);
 
-		jbParell.addActionListener(listener);
 
 		jbVermell = new MyButton("RED", new Color(139, 0, 0));
 		jbVermell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbVermell.setBackground(new Color(139, 0, 0));
 		jbVermell.setForeground(Color.WHITE);
 
-		jbVermell.addActionListener(listener);
 
 		jbNegre = new MyButton("BLACK", new Color(010, 010, 010));
 		jbNegre.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbNegre.setBackground(new Color(010, 010, 010));
 		jbNegre.setForeground(Color.WHITE);
 
-		jbNegre.addActionListener(listener);
 
 		jbSenar = new MyButton("ODD", new Color(76, 145, 65));
 		jbSenar.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSenar.setBackground(new Color(76, 145, 65));
 		jbSenar.setForeground(Color.WHITE);
-
-		jbSenar.addActionListener(listener);		
+		
 
 		jbPassa = new MyButton("19-36", new Color(76, 145, 65));
 		jbPassa.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPassa.setBackground(new Color(76, 145, 65));
 		jbPassa.setForeground(Color.WHITE);
 
-		jbPassa.addActionListener(listener);
 
 		jpDobles.add(jbManca);
 		jpDobles.add(jbParell);
@@ -247,4 +234,20 @@ public class RouletteView extends GameView {
 	}//Tancament del metode
 	
 	
+	public void registerController(){
+		for(MyButton c: butons){
+			c.addActionListener(getManager().getController());
+		}
+		jbManca.addActionListener(getManager().getController());
+		jbPassa.addActionListener(getManager().getController());
+		jbSenar.addActionListener(getManager().getController());
+		jbSegona.addActionListener(getManager().getController());
+		jbNegre.addActionListener(getManager().getController());
+		jbVermell.addActionListener(getManager().getController());
+		jbTercera.addActionListener(getManager().getController());
+		jbZero.addActionListener(getManager().getController());
+		jbPrimera.addActionListener(getManager().getController());
+		jbParell.addActionListener(getManager().getController());
+		
+	}
 }

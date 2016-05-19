@@ -3,11 +3,11 @@ package model.blackjack;
 import model.struct.bet.Bet;
 
 public class Player {
-	private float cash, initialCash;
+	private double cash, initialCash;
 	private int cardCount;
 	private Bet bet;
 	
-	public Player(int cash) {
+	public Player(double cash) {
 		this.cardCount = 0;
 		this.cash = cash;
 		this.initialCash = cash;
@@ -42,11 +42,11 @@ public class Player {
 		cardCount = cardCount - 10;
 	}
 	
-	public float getCash() {
+	public double getCash() {
 		return cash;
 	}
 	
-	public void setCash(float cash) {
+	public void setCash(double cash) {
 		this.cash = cash;
 	}
 	
@@ -54,15 +54,15 @@ public class Player {
 		this.cardCount = 0;
 	}
 	
-	public void setBet(float bet) {
+	public void setBet(double bet) {
 		this.bet = new Bet(bet);
 	}
 	
-	public float getBet() {
+	public double getBet() {
 		return bet.getAmount();
 	}
 	
-	public float getInitialCash() {
+	public double getInitialCash() {
 		return initialCash;
 	}
 }

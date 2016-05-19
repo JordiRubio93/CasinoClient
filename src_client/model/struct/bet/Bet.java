@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class Bet implements Serializable {
     private static final long serialVersionUID = 1L;
-	protected float amount;
+	protected double amount;
     
-	public Bet(float amount) {
+	public Bet(double amount) {
 		this.amount = amount;
 	}
 
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 }

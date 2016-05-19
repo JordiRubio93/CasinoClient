@@ -16,8 +16,6 @@ import javax.swing.JScrollPane;
 
 import controller.Constants;
 import controller.TimerThread;
-import controller.listeners.BetButtonController;
-import controller.listeners.ExitButtonController;
 
 public class GameView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
@@ -84,10 +82,7 @@ public class GameView extends BaseJPanel {
 		jpDades.setBorder(BorderFactory.createTitledBorder("Players"));
 	}
 	
-	public void registerController(){//BetButtonController bbc, ExitButtonController ebc){
-		//jbBet.addActionListener(bcb);
-		//jbExit.addActionListener(ebc);
-	}
+	public void registerController(){}
 	
 	public void actualitzaTemps(){
 		timer = new TimerThread(jlTemps);
@@ -132,4 +127,5 @@ public class GameView extends BaseJPanel {
 		jpDades.add(jpOptions, BorderLayout.SOUTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder("Players"));
 	}
+	
 }
