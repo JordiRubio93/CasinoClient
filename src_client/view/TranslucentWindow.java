@@ -18,10 +18,6 @@ public class TranslucentWindow extends JWindow implements Runnable{
 
 	@Override
 	public void run() {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ex) {
-            }
             setAlwaysOnTop(true);
             setBackground(new Color(0,0,0,0));
             setContentPane(new TranslucentPane());
