@@ -12,18 +12,17 @@ import view.roulette.RouletteView;
 import view.statistics.Graphics;
 import view.statistics.StatisticsWindow;
 
-public class SplashScreen extends JFrame{
+public class SplashScreen{
 	private static final long serialVersionUID = 1L;
 	private ArrayList<BaseJPanel> panels;
 	private Boolean loaded = Boolean.FALSE;
 	
 	public SplashScreen(/*manager?*/){
 		//TODO pintar...
-		
+		new Thread( new TranslucentWindow()).start();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension splashSize = new Dimension(screenSize.width/2, screenSize.height/2);
-		
-		propietats(splashSize);
+
 		panels = new ArrayList<BaseJPanel>();
 		panels.add(new Graphics());
 		panels.add(new RouletteView());
@@ -39,13 +38,6 @@ public class SplashScreen extends JFrame{
 	
 	public Boolean getLoaded() {
 		return loaded;
-	}
-
-	private void propietats(Dimension splashSize){
-		setSize(splashSize);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setVisible(true);
 	}
 
 	public ArrayList<BaseJPanel> getPanels() {

@@ -45,4 +45,6 @@ public class Constants {
 	public static final String GIF = "Resources/ruleta.gif";
 	public static final String BG = "Resources/fondoMain.jpg";
 	public static final String CASINO = "Resources/casino.jpg";
+	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
+	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
 }

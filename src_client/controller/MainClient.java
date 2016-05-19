@@ -14,7 +14,6 @@ public class MainClient {
 				MainFrame mainFrame = new MainFrame(splash.getPanels());
 				Manager manager = new Manager(mainFrame);
 				mainFrame.setManager(manager);
-				splash.dispose();
 				mainFrame.setVisible(true);
 			}
 		});
