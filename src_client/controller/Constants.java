@@ -14,7 +14,7 @@ public class Constants {
 	public static final String R_VIEW_NAME = "RouletteView";
 	public static final String H_VIEW_NAME = "HorsesView";
 	public static final String PROJECT_NAME = "LS Casino";
-	public static final int SPLASH_TIME = 6969;
+	public static final int SPLASH_TIME = 2969;
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1300;
 	public static final int CARD_WIDTH = 101;

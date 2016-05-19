@@ -66,7 +66,9 @@ public class Manager {
 	}
 	
 	public void startGame(){
-		view.setAlwaysOnTop(true);
+		//view.alwaysontop
+		 view.toFront();
+		 view.repaint();
 		if (loginSaved == null)	
 			view.showPanel(Constants.LOGIN_VIEW_NAME);
 		else login(loginSaved);
