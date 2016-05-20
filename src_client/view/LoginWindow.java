@@ -187,6 +187,9 @@ public class LoginWindow extends BaseJPanel {
 			emailError.setIcon(null);
 		}	
 	}
+	public RegisterPanel getRegisterPanel(){
+		return rPanel;
+	}
 	
 	public User getUser(){
 		return new User(mailField.getText(), String.copyValueOf(passwordField.getPassword()));

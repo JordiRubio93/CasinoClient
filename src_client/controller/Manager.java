@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Date;
 
 import controller.listeners.MainButtonsController;
 import model.struct.user.LoginInfo;
@@ -16,6 +17,7 @@ import view.BaseJPanel;
 import view.LoginWindow;
 import view.MainFrame;
 import view.MainWindow;
+import view.RegisterPanel;
 import view.roulette.RouletteView;
 
 public class Manager {
@@ -169,7 +171,39 @@ public class Manager {
 		return view.getPanel(string);
 	}
 
-	public void register() {
-		// TODO Auto-generated method stub
+	public void register(){
+		RegisterPanel rp = ((LoginWindow) getPanel(Constants.LOGIN_VIEW_NAME)).getRegisterPanel();
+		User registerInfo = new User(rp.getName(), rp.getSurname(), rp.getPassword(), 0.0, rp.getMail(), new Date(),
+					new Date(), rp.getBirthday(), rp.getSex());
+		Boolean valid = true;
+		
+		System.out.println(registerInfo.toString());
+		// Si tenim la informació Guardada...
+		if (!gameManager.comprovaLoginMail(registerInfo.getEmail())) valid = false;
+		if (!gameManager.comprovaLoginPW(registerInfo.getPassword()))valid = false;
+		if (!gameManager.comprovaAge(registerInfo.getBirthday())) valid = false;		
+		if (valid) {
+			try {
+				server.enviarTrama(new AddUser(registerInfo));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else view.showError("Register Fail");
+		
+			/*Segment s = (Segment) server.obtenirTrama();
+			switch ((s.getClass().getSimpleName())) {
+			case "LoginUser":
+				LoginUser login = (LoginUser) s;
+				gameManager.setUser(login.getU());
+				if (p.getRemember()) fileManager.saveLoginInfo(loginInfo);
+				else fileManager.saveLoginInfo(new LoginInfo("", "", false));
+				System.out.println("carregant Menu");
+				setPanel(new MainWindow());
+				break;
+			case "Check":
+				view.showError("Wrong User");
+				break;*/
+			
 	}
 }

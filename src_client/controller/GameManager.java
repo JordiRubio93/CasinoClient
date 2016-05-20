@@ -1,11 +1,14 @@
 package controller;
 
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 import controller.horses.HorsesManager;
 import controller.roulette.EndingControl;
 import controller.roulette.RouletteManager;
 import model.LoginValidator;
+import model.RegisterValidator;
 import model.blackjack.Blackjack;
 import model.struct.user.User;
 import view.blackjack.BlackjackView;
@@ -17,10 +20,12 @@ public class GameManager {
 	private LoginValidator loginValidator;
 	private Blackjack blackjack;
 	private RouletteManager roulette;
+	private RegisterValidator rv;
 	
 	public GameManager(Manager manager){
 		this.manager=manager;
 		loginValidator = new LoginValidator();
+		rv = new RegisterValidator();
 	}
 
 	public boolean isGuest(){
@@ -107,6 +112,16 @@ public class GameManager {
 				}
 			}
 		}else JOptionPane.showMessageDialog(manager.getPanel(Constants.BJ_VIEW_NAME), "You must bet something", "ERROR", JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public Boolean comprovaName(String name){
+		return (rv.validateName(name));
+	}
+	public Boolean comprovaSurname(String name){
+		return (rv.validateName(name));
+	}
+	public Boolean comprovaAge(Date date){
+		return (rv.validateAge(date));
 	}
 	
 	public void standBJ(){

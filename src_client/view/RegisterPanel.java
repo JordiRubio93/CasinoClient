@@ -7,7 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.DayOfWeek;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,8 +26,7 @@ import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Constants;
 
-public class RegisterPanel extends BaseJPanel {
-	private static final long serialVersionUID = 1L;
+public class RegisterPanel extends BaseJPanel{
 	private final String main = "Don't have an account? Join us!";
 	private final String name = "Name:";
 	private final String surname = "Surname:";
@@ -37,6 +39,7 @@ public class RegisterPanel extends BaseJPanel {
 	private final String join = "Join us!";
 	private final String guest = "Try as guest";
 	private final String space = "     ";
+	private static final long serialVersionUID = 1L;
 	
 	private JLabel mainLabel = new JLabel(main);
 	private JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -48,21 +51,16 @@ public class RegisterPanel extends BaseJPanel {
     private JRadioButton femaleButton = new JRadioButton(female);
     private ButtonGroup bG = new ButtonGroup();
 	private JLabel ageLabel = new JLabel(age);
-	private JLabel errorAge = new JLabel(space);
 	private JLabel mailLabel = new JLabel(email);
 	private JTextField mailField = new JTextField();
-	private JLabel errorMail = new JLabel(space);
 	private JLabel passwordLabel = new JLabel(password);
 	private JPasswordField passwordField = new JPasswordField();
-	private JLabel errorPassword = new JLabel(space);
 	private JLabel passwordLabel2 = new JLabel(password2);
 	private JPasswordField passwordField2 = new JPasswordField();
-	private JLabel errorPassword2 = new JLabel(space);
-	private JLabel errorName = new JLabel(space);
-	private JLabel errorSurname = new JLabel(space);
 	private JButton registerButton = new JButton(join);
 	private JButton guestButton = new JButton(guest);
 	private JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
+	private DatePicker datePicker;
 	
 	public RegisterPanel(){
 		initElements();
@@ -72,16 +70,19 @@ public class RegisterPanel extends BaseJPanel {
 		setLayout(new BorderLayout());
 		Color back = new Color(0, 0, 0, 80);
 		
+		// Agafa les dimensions de la pantalla
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
 		Dimension preferredSize = new Dimension((int)(width * 0.184), (int)(height * 0.02));
 		setBackground(back);
 		
+		// Crea constraint
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.setOpaque(false);
 		
+		// Dona valors al main label
 		mainLabel.setFont(Constants.boldFont);
 		mainLabel.setPreferredSize(new Dimension((int)(width * 0.184),(int)(height * 0.1)));
 		mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,6 +90,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainLabel.setForeground(Constants.coolBlue);
 		add(mainLabel, BorderLayout.NORTH);
 		
+		// Dona valors al name label
 		nameLabel.setFont(Constants.plainFont);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setForeground(Color.WHITE);
@@ -101,10 +103,8 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		mainPanel.add(nameField, c);
-		c.gridx = 2;
-		c.gridy = 1;
-		mainPanel.add(errorName, c);
 		
+		// Dona valors al surname label
 		surnameLabel.setFont(Constants.plainFont);
 		surnameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		surnameLabel.setForeground(Color.WHITE);
@@ -116,18 +116,17 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 2;
 		mainPanel.add(surnameField, c);
-		c.gridx = 2;
-		c.gridy = 2;
-		mainPanel.add(errorSurname, c);
 		
+		// Dona valors al age label
 		ageLabel.setFont(Constants.plainFont);
 		ageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ageLabel.setForeground(Color.WHITE);
 		ageLabel.setBackground(back);
 		
+		// Dona valors al date label
 		DatePickerSettings dateSettings = new DatePickerSettings();
 	    dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-	    DatePicker datePicker = new DatePicker(dateSettings);	
+	    datePicker = new DatePicker(dateSettings);	
 	    datePicker.setPreferredSize(preferredSize);
 		c.gridx = 0;
 		c.gridy = 3;
@@ -136,10 +135,8 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 3;
 		mainPanel.add(datePicker, c);
-		c.gridx = 2;
-		c.gridy = 3;
-		mainPanel.add(errorAge, c);
 		
+		// Dona valors al mail label
 		mailLabel.setFont(Constants.plainFont);
 		mailLabel.setForeground(Color.WHITE);
 		mailLabel.setBackground(back);
@@ -150,10 +147,8 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 4;
 		mainPanel.add(mailField, c);
-		c.gridx = 2;
-		c.gridy = 4;
-		mainPanel.add(errorMail, c);
 		
+		// Dona valors al password label
 		passwordLabel.setFont(Constants.plainFont);
 		passwordLabel.setForeground(Color.WHITE);
 		passwordLabel.setBackground(back);
@@ -164,10 +159,8 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 5;
 		mainPanel.add(passwordField, c);
-		c.gridx = 2;
-		c.gridy = 5;
-		mainPanel.add(errorPassword, c);
 		
+		// Dona valors al repeat password label
 		passwordLabel2.setFont(Constants.plainFont);
 		passwordLabel2.setForeground(Color.WHITE);
 		passwordLabel2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -178,10 +171,17 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 6;
 		mainPanel.add(passwordField2, c);
-		c.gridx = 2;
-		c.gridy = 6;
-		mainPanel.add(errorPassword2, c);
+		passwordField2.addKeyListener(new KeyAdapter() {
+	        public void keyReleased(KeyEvent e) {
+	            super.keyReleased(e);
+	            if(String.copyValueOf(passwordField.getPassword()).length() > 5 && getPassword().equals(getPassword2()))
+	                registerButton.setEnabled(true);
+	            else
+	            	registerButton.setEnabled(false);
+	        }
+	    });
 		
+		//Dona valors als botons male - female
 		maleButton.setOpaque(false);
 		maleButton.setHorizontalAlignment(SwingConstants.CENTER);
 		maleButton.setFont(Constants.plainFont);
@@ -194,7 +194,7 @@ public class RegisterPanel extends BaseJPanel {
 		femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
 		femaleButton.setFont(Constants.plainFont);
 		femaleButton.setForeground(Color.WHITE);
-		
+			
 		bG.add(femaleButton);
 		buttonsPanel.add(femaleButton);
 		c.gridwidth = 2;
@@ -202,7 +202,8 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridy = 7;
 		
 		mainPanel.add(buttonsPanel, c);
-		
+	
+		// Dona valors al register button
 		registerButton.setEnabled(false);
 		registerButton.setToolTipText("All fields must be filled correctly in order to register");
 		registerButton.setFont(Constants.boldFont);
@@ -217,6 +218,7 @@ public class RegisterPanel extends BaseJPanel {
 		c.weighty = 0;
 		mainPanel.add(registerButton, c);
 		
+		// Dona valors al guest button
 		guestButton.setFont(Constants.boldFont);
 		guestButton.setForeground(Color.WHITE);
 		guestButton.setBackground(Constants.coolGreen);
@@ -229,6 +231,45 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(guestButton, c);
 		
 		add(mainPanel, BorderLayout.CENTER);
+	}
+
+	public String getName() {
+		return nameField.getText();
+	}
+
+
+	public String getSurname() {
+		return surnameField.getText();
+	}
+
+
+	public Boolean getSex() {
+		return maleButton.isSelected();
+	}
+
+
+	public Boolean isFemaleButtonOn() {
+		return femaleButton.isSelected();
+	}
+
+	
+
+	public String getMail() {
+		return mailField.getText();
+	}
+
+
+	public String getPassword() {
+		return String.copyValueOf(passwordField.getPassword());
+	}
+
+	public String getPassword2() {
+		return String.copyValueOf(passwordField2.getPassword());
+	}
+
+	public Date getBirthday() {
+		System.out.println(datePicker.getDate().toEpochDay());
+		return new Date(datePicker.getDate().toEpochDay());
 	}
 
 	@Override
