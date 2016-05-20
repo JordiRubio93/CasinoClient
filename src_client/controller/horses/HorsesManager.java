@@ -7,65 +7,70 @@ import controller.Constants;
 import controller.Manager;
 import model.Calcul;
 import model.Order;
+import model.Sleeper;
 import model.struct.horses.HorseData;
-import model.struct.user.PublicUser;
 import network.ServerComunication;
 import network.segment.GameOver;
 import network.segment.InitHorses;
-import network.segment.Play;
 import network.segment.Seconds;
 import view.cavalls.HorsesView;
 
 public class HorsesManager {
 	private LinkedList<HorseData> end;
-	private LinkedList<String> colors;
 	private ServerComunication sc;
 	private Manager manager;
 	private InitHorses initH;
 	private int time;
 	private HorsesView game;
 	private HorsesIntro hIntro;
+	private HorsesExecutor horsesExecutor;
 	
-	public HorsesManager(Manager manager) {
+	
+	public HorsesManager(Manager manager, InitHorses initHorses) {
 		this.manager = manager;
+		initH = initHorses;
 		time = 0;
+		executaCursa();
 	}
 	
-	public void executaCursa(LinkedList<PublicUser> listUsers) {
+	public void executaCursa() {
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 		game.actualitzaTemps();
+		hIntro = new HorsesIntro(end, manager);
 		
-		//game.ompleLlista(listUsers);
-		
+		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
 		try {
-			sc = game.getManager().getServer();
+			manager.getServer().enviarTrama(new Seconds(0));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		time = ((Seconds) manager.getServer().obtenirTrama()).getSegons();
+		
+		
+		horsesExecutor.run();
+	}	
 			
-			sc.enviarTrama(new Play("horses"));
-			initH = (InitHorses) sc.obtenirTrama();
-			end = initH.getList();
-			
-			hIntro = new HorsesIntro(end, manager);
-			
-			sc.enviarTrama(new Seconds(0));
+			/*sc.enviarTrama(new Seconds(0));
 			time = ((Seconds) sc.obtenirTrama()).getSegons();
 			
 			game.setCounter();
 
 			do{
 				time++;
-				Thread.sleep(1000);
+				
+				new Sleeper(this, Constants.MINUT).run();
+				
 				game.actualitzaCounter(49-time);
 			}while(time < 50);
 			
 			game.showCounter(false);
-			game.setCursa(colors);
+			game.setCursa();
 			game.initHorses(end);
 			
-			corre();
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+			corre();*/
+		
+	
 	
 	public HorsesIntro getIntro() {
 		return hIntro;
@@ -84,13 +89,13 @@ public class HorsesManager {
 					}
 				}
 				
-				Thread.sleep(Constants.DELAY);
+				new Sleeper(this, Constants.DELAY).run();
 			}
 		
 			String winner = new Order().max(end).getName();
 			
 			game.acabaPartida(winner);
 			sc.enviarTrama(new GameOver());
-		} catch (InterruptedException | IOException e) {}	
+		} catch (IOException e) {}	
 	}
 }

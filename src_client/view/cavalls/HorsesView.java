@@ -52,7 +52,7 @@ public class HorsesView extends GameView {
 		this.add(jpFinestra, BorderLayout.CENTER);
 	}
 	
-	public void setCursa(LinkedList<String> c) {
+	public void setCursa() {
 		jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_CARRILS);
 		
@@ -90,7 +90,6 @@ public class HorsesView extends GameView {
 		jpStadium.setList(list);
 		jpStadium.setCoordList(coord);
 		jpStadium.setReady(true);
-		jpStadium.repaint();
 	}
 	
 	public void runHorses(int i, int x, int y){

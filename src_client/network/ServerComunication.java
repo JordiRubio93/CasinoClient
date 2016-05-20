@@ -68,4 +68,13 @@ public class ServerComunication{
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
+
+	public ObjectInputStream getObjectIn() {
+		return objectIn;
+	}
+
+	public ObjectOutputStream getObjectOut() {
+		// TODO Auto-generated method stub
+		return objectOut;
+	}
 }

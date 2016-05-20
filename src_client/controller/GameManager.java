@@ -14,6 +14,8 @@ import model.blackjack.Blackjack;
 import model.struct.bet.HorsesBet;
 import model.struct.user.User;
 import network.segment.HorseBetting;
+import network.segment.InitHorses;
+import network.segment.Play;
 import view.Dialeg;
 import view.blackjack.BlackjackView;
 import view.roulette.RouletteView;
@@ -60,8 +62,14 @@ public class GameManager {
 	}
 	
 	public void executaHorses(){
-		horses = new HorsesManager(manager);
-		horses.executaCursa(null);
+		try {
+			manager.getServer().enviarTrama(new Play("horses"));
+			horses = new HorsesManager(manager, (InitHorses) manager.getServer().obtenirTrama());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void executaBlackjack(){
