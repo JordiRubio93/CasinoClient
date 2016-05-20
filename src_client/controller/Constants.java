@@ -16,6 +16,7 @@ public class Constants {
 	public static final String R_VIEW_NAME = "roulette.RouletteView";
 	public static final String H_VIEW_NAME = "cavalls.HorsesView";
 	public static final String PROJECT_NAME = "LS Casino";
+	public static final String BET_LABEL = "Bets...";
 	public static final int SPLASH_TIME = 1969;
 	public static final User guest = new User("guest", null, null, 100000, null, null, null, null, null);
 	public static final int HEIGHT = 600;

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
+import controller.Manager;
 import model.Calcul;
 import model.struct.horses.HorseData;
 import view.Dialeg;
@@ -27,27 +28,21 @@ public class HorsesView extends GameView {
 	private Point[] coord;
 
 	public HorsesView(){
+		super();
 		initElements();
-		
-		jbBet.putClientProperty("action", "BET_H");
 	}
 	
 	private void initElements() {
 		jpFinestra = new JPanel(new BorderLayout());
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
 		
-		super.createTime();
+
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		jpFinestra.add(jpStadium, BorderLayout.CENTER);
-		
 		super.createList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
-
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
 	}
@@ -128,4 +123,20 @@ public class HorsesView extends GameView {
 		Dialeg dialeg = new Dialeg();
 		dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
 	}
+
+	@Override
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+	@Override
+	public Manager getManager() {
+		return manager;
+	}
+	@Override
+	public void registerController(){
+		jbBet.putClientProperty("action", "BET_H");
+		jbExit.putClientProperty("action", "EXIT_H");
+		super.registerController();
+	}
+
 }

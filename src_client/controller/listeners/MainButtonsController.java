@@ -10,9 +10,11 @@ import javax.swing.JButton;
 import controller.Constants;
 import controller.Manager;
 import model.struct.user.HistoricPartides;
+import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Top5;
 import view.Dialeg;
+import view.cavalls.HorsesView;
 import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
@@ -48,12 +50,14 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			}else{
 				manager.showPanel(Constants.H_VIEW_NAME);
-				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+				manager.comenzarJoc("Play Horses",
+						manager.getPanel(Constants.H_VIEW_NAME));
 			}
 			break;
 		case ("Play BlackJack"):
 			manager.showPanel(Constants.BJ_VIEW_NAME);
-			manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
+			manager.comenzarJoc("Play BlackJack",
+					manager.getPanel(Constants.BJ_VIEW_NAME));
 			break;
 		case ("Statistics"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
@@ -148,12 +152,31 @@ public class MainButtonsController implements ActionListener {
 			
 			break;
 		case ("BET_H"):
+			manager.getGameManager().getHorses().showPick();
+			/**
 			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
 			else if(!manager.getGameManager().isApostaFeta()){
 				manager.getGameManager().getHorses().getIntro().executaIntro();
 			}else new Dialeg().setWarningText("You have already bet once!");
-			
+			*/
 			break;
+		case ("EXIT_H"):
+			try {
+				manager.getServer().enviarTrama(new GameOver());
+				manager.showPanel(Constants.MAIN_VIEW_NAME);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;	
+		case ("EXIT_R"):
+			try {
+				manager.getServer().enviarTrama(new GameOver());
+				manager.showPanel(Constants.MAIN_VIEW_NAME);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//kill rulete 
+			break;	
 		case ("BET_BJ"):
 			manager.getGameManager().betBJ();
 			break;

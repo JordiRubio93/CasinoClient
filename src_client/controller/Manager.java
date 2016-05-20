@@ -214,7 +214,7 @@ public class Manager {
 	
 	public void sendBet(){
 		try {
-			server.enviarTrama(new RouletteBetting(gameManager.getUser().getEmail(), gameManager.getRoulette().getApostesRuleta()));
+			server.enviarTrama(new RouletteBetting(gameManager.getRoulette().getApostesRuleta()));
 		} catch (IOException e) {}
 	}
 }

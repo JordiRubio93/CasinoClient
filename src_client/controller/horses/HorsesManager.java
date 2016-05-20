@@ -12,43 +12,30 @@ import model.struct.horses.HorseData;
 import network.ServerComunication;
 import network.segment.GameOver;
 import network.segment.InitHorses;
-import network.segment.Seconds;
 import view.cavalls.HorsesView;
 
 public class HorsesManager {
 	private LinkedList<HorseData> end;
 	private ServerComunication sc;
 	private Manager manager;
-	private InitHorses initH;
 	private int time;
 	private HorsesView game;
-	private HorsesIntro hIntro;
+	private PickHorseController hIntro;
 	private HorsesExecutor horsesExecutor;
-	
 	
 	public HorsesManager(Manager manager, InitHorses initHorses) {
 		this.manager = manager;
-		initH = initHorses;
+		this.end = initHorses.getList();
 		time = 0;
-		executaCursa();
+		executaCursa();		
 	}
 	
 	public void executaCursa() {
+		hIntro = new PickHorseController(end, manager);
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-		game.actualitzaTemps();
-		hIntro = new HorsesIntro(end, manager);
-		
+		//fill que gestiona el temps y les apostes externes al client
 		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
-		try {
-			manager.getServer().enviarTrama(new Seconds(0));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		time = ((Seconds) manager.getServer().obtenirTrama()).getSegons();
-		
-		
-		horsesExecutor.run();
+		new Thread(horsesExecutor).start();
 	}	
 			
 			/*sc.enviarTrama(new Seconds(0));
@@ -56,13 +43,6 @@ public class HorsesManager {
 			
 			game.setCounter();
 
-			do{
-				time++;
-				
-				new Sleeper(this, Constants.MINUT).run();
-				
-				game.actualitzaCounter(49-time);
-			}while(time < 50);
 			
 			game.showCounter(false);
 			game.setCursa();
@@ -72,30 +52,15 @@ public class HorsesManager {
 		
 	
 	
-	public HorsesIntro getIntro() {
+	public PickHorseController getIntro() {
 		return hIntro;
 	}
 
-	private void corre(){
-		try {
-			time = 0;
-			while(time < 30){
-				time++;
-				for(int i = 0; i < Constants.nHorses; i++){
-					if(time%2 == 0){
-						game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
-					}else{
-						game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
-					}
-				}
-				
-				new Sleeper(this, Constants.DELAY).run();
-			}
+	
+
+	public void showPick() {
+		getIntro().executaIntro();
+		// TODO Auto-generated method stub
 		
-			String winner = new Order().max(end).getName();
-			
-			game.acabaPartida(winner);
-			sc.enviarTrama(new GameOver());
-		} catch (IOException e) {}	
 	}
 }

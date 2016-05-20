@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.Manager;
 import controller.listeners.MainButtonsController;
 
 public class StatisticsWindow extends BaseJPanel {
@@ -37,10 +35,6 @@ public class StatisticsWindow extends BaseJPanel {
 	
 	private void initElements(){
 		setLayout(new BorderLayout());
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
 		
 		BufferedImage img1 = null;
 		BufferedImage img2 = null;

@@ -3,12 +3,12 @@ package controller.listeners;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import view.cavalls.ChooseHorse;
+import view.cavalls.PickHorseView;
 
 public class RMouseController implements MouseListener{
-	private ChooseHorse window;
+	private PickHorseView window;
 
-	public RMouseController(ChooseHorse window){
+	public RMouseController(PickHorseView window){
 		this.window = window;
 	}
 

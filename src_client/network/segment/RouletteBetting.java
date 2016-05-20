@@ -4,12 +4,11 @@ import java.util.LinkedList;
 
 import model.struct.bet.RouletteBet;
 
-public class RouletteBetting extends Betting {
+public class RouletteBetting extends Segment {
 	private static final long serialVersionUID = 1L;
 	private LinkedList<RouletteBet> bets;
 
-	public RouletteBetting(String userName, LinkedList<RouletteBet> bets) {
-		super(userName);
+	public RouletteBetting(LinkedList<RouletteBet> bets) {
 		this.setBets(bets);
 	}
 

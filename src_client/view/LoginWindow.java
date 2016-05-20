@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -21,7 +20,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.Constants;
-import model.Utilities;
 import model.struct.user.User;
 
 public class LoginWindow extends BaseJPanel {
@@ -55,10 +53,6 @@ public class LoginWindow extends BaseJPanel {
 	
 	private void initElements(){
 		setLayout(new BorderLayout());
-		
-		Rectangle rectangle = Utilities.getUsableScreenBounds();
-		int width = (int) rectangle.getWidth();
-		int height = (int) rectangle.getHeight();
 		backgroundPanel = new Tapet(width, height, Constants.CASINO);
 		
 		registerPanel.setBackground(Color.BLACK);

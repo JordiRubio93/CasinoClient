@@ -2,9 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +36,6 @@ public class MainWindow extends BaseJPanel {
 	private void initElements(){
 		setLayout(new BorderLayout());
 		setBackground(Color.GRAY);
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
 		
 		BufferedImage img1 = null;
 		BufferedImage img2 = null;

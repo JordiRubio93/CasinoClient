@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,11 +34,7 @@ public class ConfigPanel extends BaseJPanel {
 		initElements();
 	}
 	
-	private void initElements(){
-		Dimension window = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) window.getWidth(); 
-		int height = (int) window.getHeight(); 
-	
+	private void initElements(){	
 		setLayout(new GridBagLayout());
 		setBackground(Constants.semiOpaqueBlack);
 		

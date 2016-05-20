@@ -54,10 +54,8 @@ public class MainFrame extends JFrame{
 	public BaseJPanel getPanel(String cad){
 		switch(cad){
 		case "LoginWindow":
-			return panels.get(7);
-		case "MainWindow":
 			return panels.get(6);
-		case "Gameview":
+		case "MainWindow":
 			return panels.get(5);
 		case Constants.STATISTICS_VIEW_NAME:
 			return panels.get(4);

@@ -6,13 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.DayOfWeek;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -74,10 +71,6 @@ public class RegisterPanel extends BaseJPanel {
 		setLayout(new BorderLayout());
 		Color back = new Color(0, 0, 0, 80);
 
-		// Agafa les dimensions de la pantalla
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
 		Dimension preferredSize = new Dimension((int) (width * 0.184), (int) (height * 0.02));
 		setBackground(back);
 

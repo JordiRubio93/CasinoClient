@@ -23,7 +23,7 @@ public class MainClient {
 					new Dialeg().setWarningText("Server Disconected");
 					System.exit(0);
 				}
-				SplashScreen splash = new SplashScreen(manager);
+				SplashScreen splash = new SplashScreen();
 				MainFrame mainFrame = new MainFrame(splash.getPanels());
 				mainFrame.setManager(manager);
 				manager.setMainFrame(mainFrame);

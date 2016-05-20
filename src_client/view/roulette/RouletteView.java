@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
+import controller.Manager;
 import controller.roulette.AmericanRoulette;
 import model.struct.roulette.Casella;
 import view.Dialeg;
@@ -70,16 +71,13 @@ public class RouletteView extends GameView {
      */
 	public RouletteView(){
 		jpFinestra = new JPanel(new BorderLayout());
-		super.createTime();
 		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		super.createList();
 		jpFinestra.add(jpDades, BorderLayout.EAST);
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
-		
 		initElements();
-		
-		jbBet.putClientProperty("action", "BET_R");
+	
 	}//Tancament del constructor
 	
 	/**
@@ -220,12 +218,17 @@ public class RouletteView extends GameView {
 		dialeg.setWarningText("The winner number is... " + winner + " !");
 	}//Tancament del metode
 	
+
+
+
 	
 	public void registerController(){
 		for(MyButton c: butons){
 			c.addActionListener(getManager().getController());
 		}
-		
+		jbBet.putClientProperty("action", "BET_R");
+		jbExit.putClientProperty("action", "EXIT_R");
+		super.registerController();
 		jbManca.addActionListener(getManager().getController());
 		jbPassa.addActionListener(getManager().getController());
 		jbSenar.addActionListener(getManager().getController());
@@ -236,5 +239,13 @@ public class RouletteView extends GameView {
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
 		jbParell.addActionListener(getManager().getController());
+	}
+	@Override
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+	@Override
+	public Manager getManager() {
+		return manager;
 	}
 }

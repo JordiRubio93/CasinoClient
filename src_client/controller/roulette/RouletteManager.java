@@ -20,7 +20,6 @@ public class RouletteManager {
 	
 	public void executaPartida(LinkedList<PublicUser> listUsers){
 		game = (RouletteView) manager.getPanel(Constants.R_VIEW_NAME);
-		game.actualitzaTemps();
 		
 		//game.ompleLlista(listUsers);
 	}

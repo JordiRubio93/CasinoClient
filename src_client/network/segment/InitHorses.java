@@ -7,9 +7,10 @@ import model.struct.horses.HorseData;
 public class InitHorses extends Segment{
 	private static final long serialVersionUID = 1L;
 	private LinkedList<HorseData> dades;
-	private boolean apostable;
+	private double guanys;
 	
-	public InitHorses(LinkedList<HorseData> dades) {
+	public InitHorses(LinkedList<HorseData> dades, double apostable) {
+		this.guanys = apostable;
 		this.dades = dades;
 	}
 
@@ -17,7 +18,7 @@ public class InitHorses extends Segment{
 		return dades;
 	}
 	
-	public boolean isApostable(){
-		return apostable;
+	public double isApostable(){
+		return guanys;
 	}
 }
