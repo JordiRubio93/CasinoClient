@@ -17,12 +17,12 @@ public class CentralMouseController implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		window.pintaBoto(window.getCentral());
+		//window.pintaBoto(window.getCentral());
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		window.despintaBoto(window.getCentral());
+		//window.despintaBoto(window.getCentral());
 	}
 
 	@Override

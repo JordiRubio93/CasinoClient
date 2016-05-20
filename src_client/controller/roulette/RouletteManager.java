@@ -6,7 +6,6 @@ import controller.Constants;
 import controller.Manager;
 import model.struct.bet.RouletteBet;
 import model.struct.user.PublicUser;
-import view.MainWindow;
 import view.roulette.RouletteView;
 
 public class RouletteManager {
@@ -24,20 +23,8 @@ public class RouletteManager {
 		game.actualitzaTemps();
 		
 		//game.ompleLlista(listUsers);
-		
-		//BetButtonController bbc = new BetButtonController(this, null, Constants.GAME_ROULETTE);
-		//ExitButtonController ebc = new ExitButtonController(manager.getServer());
-		//game.registerController(bbc, ebc);
 	}
-
-	public RouletteView getGame(MainWindow mW) {
-		return new RouletteView();
-	}
-
-	public void setGame(RouletteView game) {
-		this.game = game;
-	}
-
+	
 	public void afegeixAposta(RouletteBet bet){
 		apostesRuleta.add(bet);
 	}

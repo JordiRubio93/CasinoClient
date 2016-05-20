@@ -10,6 +10,8 @@ import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.AddUser;
 import network.segment.LoginUser;
+import network.segment.RouletteBetting;
+import network.segment.Seconds;
 import network.segment.Segment;
 import tools.excepcions.FileException;
 import tools.excepcions.TCPException;
@@ -34,7 +36,7 @@ public class Manager {
 	public Manager(){
 		serverOn = false;
 		fileManager = new FileManager();
-		loginSaved = fileManager.carregarDades();	
+		loginSaved = fileManager.carregarDades();
 		gameManager = new GameManager(this);
 		controller = new MainButtonsController(this);			
 	}
@@ -199,7 +201,20 @@ public class Manager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else view.showError("Register Fail");
-		
+		} else view.showError("Register Fail");	
+	}
+	
+	public int seconds(){
+		try {
+			server.enviarTrama(new Seconds(0));
+			return ((Seconds) server.obtenirTrama()).getSegons();
+		} catch (IOException e) {}
+		return -1;
+	}
+	
+	public void sendBet(){
+		try {
+			server.enviarTrama(new RouletteBetting(gameManager.getUser().getEmail(), gameManager.getRoulette().getApostesRuleta()));
+		} catch (IOException e) {}
 	}
 }

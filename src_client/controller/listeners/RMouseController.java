@@ -17,12 +17,12 @@ public class RMouseController implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		window.pintaBoto(window.getR());
+		//window.pintaBoto(window.getR());
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		window.despintaBoto(window.getR());
+		//window.despintaBoto(window.getR());
 	}
 
 	@Override

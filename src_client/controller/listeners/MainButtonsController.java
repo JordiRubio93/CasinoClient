@@ -36,19 +36,19 @@ public class MainButtonsController implements ActionListener {
 			manager.register();
 			break;
 		case ("Play Roulette"):
-			if (!manager.getGameManager().isGuest()){
+			if (manager.getGameManager().isGuest()){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			}else{
-				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 				manager.showPanel(Constants.R_VIEW_NAME);
+				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 			}
 			break;
 		case ("Play Horses"):
-			if (!manager.getGameManager().isGuest()){
+			if (manager.getGameManager().isGuest()){
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			}else{
-				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
 				manager.showPanel(Constants.H_VIEW_NAME);
+				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
 			}
 			break;
 		case ("Play BlackJack"):
@@ -71,15 +71,18 @@ public class MainButtonsController implements ActionListener {
 		case ("User Evo"):
 			break;
 		case ("Log Out"):
-			manager.startServer();
-			manager.lateralMainPanel(false);
-			manager.logout();
-			try {
-				manager.getServer().enviarTrama(new LogOut());
-				manager.showPanel("LoginWindow");
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (!manager.getGameManager().isGuest()){
+				manager.startServer();
+				manager.logout();	
+				try {
+					manager.getServer().enviarTrama(new LogOut());
+				
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+			manager.lateralMainPanel(false);
+			manager.showPanel("LoginWindow");
 			break;
 		case ("Home"):
 			manager.showPanel("MainWindow");
@@ -124,11 +127,32 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Cash Ranking"):
 			break;
+		case ("This Horse"):
+			manager.getGameManager().thisHorse();
+			break;
+		case ("<"):
+			manager.getGameManager().passaEsquerra();
+			break;
+		case (">"):
+			manager.getGameManager().passaDreta();
+			break;
 		case ("EXIT_GAME"):
-			//JOptionPane.showMessageDialog(f, "See you soon!", "* GOOD BYE *", JOptionPane.PLAIN_MESSAGE);
 			// Funcio que doni al servidor la informacio necesaria (ganancies)
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
-			//TODO parar les funcions dels jocs
+			break;
+		case ("BET_R"):
+			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
+			else if(!manager.getGameManager().isApostaFeta()){
+				manager.sendBet();
+			}else new Dialeg().setWarningText("You have already bet once!");
+			
+			break;
+		case ("BET_H"):
+			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
+			else if(!manager.getGameManager().isApostaFeta()){
+				manager.getGameManager().getHorses().getIntro().executaIntro();
+			}else new Dialeg().setWarningText("You have already bet once!");
+			
 			break;
 		case ("BET_BJ"):
 			manager.getGameManager().betBJ();
@@ -139,10 +163,6 @@ public class MainButtonsController implements ActionListener {
 		case ("STAND_BJ"):
 			manager.getGameManager().standBJ();;
 			break;
-			
-			
-			
-			
 		default:
 			System.err.println(((JButton) event.getSource()).getToolTipText());
 		}

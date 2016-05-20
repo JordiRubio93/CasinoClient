@@ -28,6 +28,8 @@ public class HorsesView extends GameView {
 
 	public HorsesView(){
 		initElements();
+		
+		jbBet.putClientProperty("action", "BET_H");
 	}
 	
 	private void initElements() {

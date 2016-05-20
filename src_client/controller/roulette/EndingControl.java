@@ -47,6 +47,7 @@ public class EndingControl implements Runnable {
 			}
 			
 			manager.getServer().enviarTrama(new GameOver());
+			manager.getGameManager().closeRuleta();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

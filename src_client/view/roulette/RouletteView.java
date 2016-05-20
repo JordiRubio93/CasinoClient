@@ -12,9 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.listeners.RouletteButtonsController;
 import controller.roulette.AmericanRoulette;
-import controller.roulette.RouletteManager;
 import model.struct.roulette.Casella;
 import view.Dialeg;
 import view.GameView;
@@ -64,8 +62,6 @@ public class RouletteView extends GameView {
 	private JPanel jpInferior;
 	
 	private AmericanRoulette americanRoulette;
-	private RouletteButtonsController listener;
-	private RouletteManager rm;
 	private ArrayList<Casella> taula;
 	private ArrayList<MyButton> butons;
 	
@@ -82,14 +78,14 @@ public class RouletteView extends GameView {
 		this.add(jpFinestra, BorderLayout.CENTER);
 		
 		initElements();
+		
+		jbBet.putClientProperty("action", "BET_R");
 	}//Tancament del constructor
 	
 	/**
      * Metode que no retorna res i que s'encarrega de inicialitzar els elements.
      */
 	private void initElements(){
-		listener = new RouletteButtonsController(rm);
-		
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());
@@ -120,7 +116,6 @@ public class RouletteView extends GameView {
 		jbZero.setBackground(new Color(76, 145, 65));
 		jbZero.setForeground(Color.WHITE);
 		
-		
 		jpZero.add(jbZero, BorderLayout.CENTER);
 
 		jpEsquerra.add(jpZero, BorderLayout.CENTER);
@@ -145,7 +140,6 @@ public class RouletteView extends GameView {
 		jbTercera.setBackground(new Color(76, 145, 65));
 		jbTercera.setForeground(Color.WHITE);
 		
-		
 		jpDotzenes.add(jbPrimera);
 		jpDotzenes.add(jbSegona);
 		jpDotzenes.add(jbTercera);
@@ -160,37 +154,30 @@ public class RouletteView extends GameView {
 		jbManca.setBackground(new Color(76, 145, 65));
 		jbManca.setForeground(Color.WHITE);
 
-		
-		
 		jbParell = new MyButton("EVEN", new Color(76, 145, 65));
 		jbParell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbParell.setBackground(new Color(76, 145, 65));
 		jbParell.setForeground(Color.WHITE);
-
 
 		jbVermell = new MyButton("RED", new Color(139, 0, 0));
 		jbVermell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbVermell.setBackground(new Color(139, 0, 0));
 		jbVermell.setForeground(Color.WHITE);
 
-
 		jbNegre = new MyButton("BLACK", new Color(010, 010, 010));
 		jbNegre.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbNegre.setBackground(new Color(010, 010, 010));
 		jbNegre.setForeground(Color.WHITE);
-
 
 		jbSenar = new MyButton("ODD", new Color(76, 145, 65));
 		jbSenar.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSenar.setBackground(new Color(76, 145, 65));
 		jbSenar.setForeground(Color.WHITE);
 		
-
 		jbPassa = new MyButton("19-36", new Color(76, 145, 65));
 		jbPassa.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPassa.setBackground(new Color(76, 145, 65));
 		jbPassa.setForeground(Color.WHITE);
-
 
 		jpDobles.add(jbManca);
 		jpDobles.add(jbParell);
@@ -238,6 +225,7 @@ public class RouletteView extends GameView {
 		for(MyButton c: butons){
 			c.addActionListener(getManager().getController());
 		}
+		
 		jbManca.addActionListener(getManager().getController());
 		jbPassa.addActionListener(getManager().getController());
 		jbSenar.addActionListener(getManager().getController());
@@ -248,6 +236,5 @@ public class RouletteView extends GameView {
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
 		jbParell.addActionListener(getManager().getController());
-		
 	}
 }

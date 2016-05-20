@@ -1,4 +1,5 @@
 package view.cavalls;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,12 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.listeners.CentralMouseController;
-import controller.listeners.HorseButtonController;
-import controller.listeners.LButtonController;
-import controller.listeners.LMouseController;
-import controller.listeners.RButtonController;
-import controller.listeners.RMouseController;
+import controller.listeners.MainButtonsController;
 import model.struct.horses.HorseData;
 import view.Dialeg;
 
@@ -49,12 +45,17 @@ public class ChooseHorse extends JFrame {
 		jbCavall.setBorder(BorderFactory.createEmptyBorder());
 		jpCavall = new JPanel(new BorderLayout());
 		jpCavall.add(jbCavall, BorderLayout.CENTER);
+		jbCavall.putClientProperty("action", "This Horse");
 		
 		jpActual = new JPanel(new BorderLayout());
 		jpActual.add(jpCavall);
 		
 		jbDreta = new JButton("  >  ");
+		jbDreta.putClientProperty("action", ">");
+		//TODO mouse
 		jbEsquerra = new JButton("  <  ");
+		jbEsquerra.putClientProperty("action", "<");
+		//TODO mouse
 		
 		jbDreta.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jbDreta.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
@@ -107,6 +108,7 @@ public class ChooseHorse extends JFrame {
 		else index--;
 		actualitzaText();
 	}
+	
 	private void actualitzaText(){
 		jbCavall.setText(opcions[index]);
 		jbCavall.setHorizontalAlignment(JLabel.CENTER);
@@ -132,24 +134,13 @@ public class ChooseHorse extends JFrame {
 		jBoto.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 	
-	public JButton getR(){
-		return jbDreta;
-	}
-	public JButton getL(){
-		return jbEsquerra;
-	}
-	public JButton getCentral(){
-		return jbCavall;
-	}
-	
-	public void registerController(RButtonController rb, LButtonController lb, HorseButtonController hb, CentralMouseController cm,
-			RMouseController rm, LMouseController lm){
-		jbDreta.addActionListener(rb);
-		jbEsquerra.addActionListener(lb);
-		jbCavall.addActionListener(hb);
-		jbCavall.addMouseListener(cm);
-		jbDreta.addMouseListener(rm);
-		jbEsquerra.addMouseListener(lm);
+	public void registerController(MainButtonsController controller){
+		jbDreta.addActionListener(controller);
+		jbEsquerra.addActionListener(controller);
+		jbCavall.addActionListener(controller);
+		/*jbCavall.addMouseListener();
+		jbDreta.addMouseListener();
+		jbEsquerra.addMouseListener();*/
 	}
 	
 	private void propietats(){
