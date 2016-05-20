@@ -116,7 +116,7 @@ public class Manager {
 				Segment s = (Segment) server.obtenirTrama();
 				if (s instanceof AddUser){
 					gameManager.setUser(((AddUser) s).getUser());
-					view.showPanel("MainWindow");
+					view.showPanel(Constants.MAIN_VIEW_NAME);
 					if (( (LoginWindow) view.getPanel(Constants.LOGIN_VIEW_NAME)).getRemember()) fileManager.saveLoginInfo(loginInfo);
 					else fileManager.saveLoginInfo(new LoginInfo("", "", false));
 				}
@@ -176,34 +176,27 @@ public class Manager {
 		User registerInfo = new User(rp.getName(), rp.getSurname(), rp.getPassword(), 0.0, rp.getMail(), new Date(),
 					new Date(), rp.getBirthday(), rp.getSex());
 		Boolean valid = true;
-		
 		System.out.println(registerInfo.toString());
-		// Si tenim la informació Guardada...
+		
+		// comprova que les dades estiguin ok
+		if (!gameManager.comprovaName(registerInfo.getName())) valid = false;
+		if (!gameManager.comprovaSurname(registerInfo.getSurname())) valid = false;
 		if (!gameManager.comprovaLoginMail(registerInfo.getEmail())) valid = false;
 		if (!gameManager.comprovaLoginPW(registerInfo.getPassword()))valid = false;
 		if (!gameManager.comprovaAge(registerInfo.getBirthday())) valid = false;		
 		if (valid) {
+			registerInfo.getLoginInfo().EncryptPassword();
 			try {
 				server.enviarTrama(new AddUser(registerInfo));
+				Segment s = (Segment) server.obtenirTrama();
+				if (s instanceof AddUser){
+					gameManager.setUser(((AddUser) s).getUser());
+					view.showPanel(Constants.MAIN_VIEW_NAME);
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else view.showError("Register Fail");
 		
-			/*Segment s = (Segment) server.obtenirTrama();
-			switch ((s.getClass().getSimpleName())) {
-			case "LoginUser":
-				LoginUser login = (LoginUser) s;
-				gameManager.setUser(login.getU());
-				if (p.getRemember()) fileManager.saveLoginInfo(loginInfo);
-				else fileManager.saveLoginInfo(new LoginInfo("", "", false));
-				System.out.println("carregant Menu");
-				setPanel(new MainWindow());
-				break;
-			case "Check":
-				view.showError("Wrong User");
-				break;*/
-			
 	}
 }

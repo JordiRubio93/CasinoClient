@@ -67,7 +67,6 @@ public class GameManager {
 
 	public void betBJ() {
 		double bet = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).getBet();
-		
 		if(!blackjack.isOkBet() && blackjack.canBet(bet)){
 			blackjack.setOkBet(true);
 			blackjack.addBet(bet);
