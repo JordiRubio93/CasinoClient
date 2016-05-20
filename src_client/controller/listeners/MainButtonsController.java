@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import controller.Constants;
 import controller.Manager;
 import model.struct.user.HistoricPartides;
-import model.struct.user.User;
 import network.segment.LogOut;
 import network.segment.Top5;
 import view.Dialeg;
@@ -21,8 +20,7 @@ public class MainButtonsController implements ActionListener {
 	
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
-	}
-
+	}	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
@@ -36,7 +34,6 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Register"):
 			manager.register();
-			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("Play Roulette"):
 			if (!manager.getGameManager().isGuest()){

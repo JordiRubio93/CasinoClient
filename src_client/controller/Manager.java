@@ -45,7 +45,6 @@ public class Manager {
 			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
 			if(!address.isReachable(5000)) throw new TCPException("Server OFF");
 		} catch (IOException | FileException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -172,6 +171,7 @@ public class Manager {
 	}
 
 	public void register(){
+		startServer();
 		RegisterPanel rp = ((LoginWindow) getPanel(Constants.LOGIN_VIEW_NAME)).getRegisterPanel();
 		User registerInfo = new User(rp.getName(), rp.getSurname(), rp.getPassword(), 0.0, rp.getMail(), new Date(),
 					new Date(), rp.getBirthday(), rp.getSex());
@@ -192,6 +192,9 @@ public class Manager {
 				if (s instanceof AddUser){
 					gameManager.setUser(((AddUser) s).getUser());
 					view.showPanel(Constants.MAIN_VIEW_NAME);
+				}
+				else {
+					view.showError("Failed to Register");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
