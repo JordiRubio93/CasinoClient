@@ -71,6 +71,7 @@ public class MainButtonsController implements ActionListener {
 		case ("User Evo"):
 			break;
 		case ("Log Out"):
+			manager.startServer();
 			manager.lateralMainPanel(false);
 			manager.logout();
 			try {
