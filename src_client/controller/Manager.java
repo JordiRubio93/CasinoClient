@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import controller.listeners.MainButtonsController;
 import model.struct.user.LoginInfo;
@@ -10,6 +11,7 @@ import network.segment.AddUser;
 import network.segment.LoginUser;
 import network.segment.Segment;
 import tools.excepcions.FileException;
+import tools.excepcions.TCPException;
 import view.BaseJPanel;
 import view.LoginWindow;
 import view.MainFrame;
@@ -27,12 +29,23 @@ public class Manager {
 	private boolean serverOn;
 	private LoginInfo loginSaved;
 	
-	public Manager() {
+	public Manager(){
 		serverOn = false;
 		fileManager = new FileManager();
 		loginSaved = fileManager.carregarDades();	
 		gameManager = new GameManager(this);
-		controller = new MainButtonsController(this);	
+		controller = new MainButtonsController(this);			
+	}
+	
+	public void checkServer() throws TCPException{
+		try {
+			cf = (new FileManager()).obtenirConfiguracio(rutejson);
+			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
+			if(!address.isReachable(5000)) throw new TCPException("Server OFF");
+		} catch (IOException | FileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
  	public LoginInfo getLoginSaved() {
@@ -62,12 +75,6 @@ public class Manager {
 
 	public void setMainFrame(MainFrame view) {
 		this.view = view;
-		try {
-			cf = (new FileManager()).obtenirConfiguracio(rutejson);
-		} catch (FileException e) {
-			view.showError("Configuration file not found");
-			System.exit(0);
-		}
 	}
 	
 	public void startGame(){

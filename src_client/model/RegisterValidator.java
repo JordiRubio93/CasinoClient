@@ -1,21 +1,23 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import controller.Constants;
 
-public class RegisterValidator {
-	private final Pattern VALID_EMAIL_ADDRESS = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+public class RegisterValidator extends LoginValidator{
+	private final Pattern VALID_NAME_OR_SURNAME = Pattern.compile("[a-zA-Z]{3,20}",
 			Pattern.CASE_INSENSITIVE);
 
-	private final Pattern PASSWORD_PATTERN = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})");
-
-	public boolean validateEmailFormat(String email) {
-		return VALID_EMAIL_ADDRESS.matcher(email).find();
+	public boolean validateName(String name) {
+		return VALID_NAME_OR_SURNAME.matcher(name).find() && !name.equals(Constants.guest.getName());
 	}
 
-	public boolean validatePasswordFormat(String password) {
-		return PASSWORD_PATTERN.matcher(password).find();
+	public Boolean validateAge(Date date) {	
+		return (Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now())).getYears()>=18 ;
 	}
-	//TODO no pot ser Constants.guest
 }
+
