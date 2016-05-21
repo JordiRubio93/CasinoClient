@@ -5,7 +5,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,6 +33,7 @@ public class HorsesView extends GameView {
 
 	public HorsesView(){
 		initElements();
+		createDaemonTime();
 	}
 	
 	protected void initElements() {
@@ -98,7 +105,8 @@ public class HorsesView extends GameView {
 		Dialeg dialeg = new Dialeg();
 		dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
 	}
-
+	
+	
 
 	@Override
 	public void registerController(){

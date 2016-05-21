@@ -25,7 +25,7 @@ public abstract class GameView extends BaseJPanel {
 	protected BaseJPanel gamePanel;
 	protected JPanel jpFinestra;
 	protected JPanel jpTemps;
-	JLabel jlTemps;
+	protected JLabel jlTemps;
 	protected GridLayout columnLayout;
 	protected JScrollPane jspList;
 	protected JPanel jpDades;
@@ -52,7 +52,7 @@ public abstract class GameView extends BaseJPanel {
 		setLayout(new BorderLayout());
 		
 		//Label temps
-		jlTemps = new JLabel("Time");
+		jlTemps = new JLabel();
 		jlTemps.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jlTemps.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		//panell temps		
@@ -106,27 +106,26 @@ public abstract class GameView extends BaseJPanel {
 	 * Funcio que s'encarrega de actualitzar el rellotje superior
 	 */
 	private void actualitzaTemps(String time){
-		System.out.println("updating " + time);
 		jlTemps.setText(time);
 	
 	}
-	
-	private void createDaemonTime(){
+	protected void createDaemonTime(){
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			@Override
 			public void run() {
 				try{
-					String time = dateFormat.format(Calendar.getInstance().getTime());
-					actualitzaTemps(time);
+					actualitzaTemps(dateFormat.format(Calendar.getInstance().getTime()));
 				}catch (Exception e){
 					e.printStackTrace();
 				}
 			
 			}
-		}, 5000, TimeUnit.SECONDS.toMillis(1));
+		}, Constants.SPLASH_TIME, TimeUnit.SECONDS.toMillis(1));
 	}
+	
+	
 
 	/**
 	 * Crea el panel lateral de apostes
