@@ -9,8 +9,8 @@ public class InitHorses extends Segment{
 	private LinkedList<HorseData> dades;
 	private double guanys;
 	
-	public InitHorses(LinkedList<HorseData> dades, double apostable) {
-		this.guanys = apostable;
+	public InitHorses(LinkedList<HorseData> dades, double guanys) {
+		this.guanys = guanys;
 		this.dades = dades;
 	}
 

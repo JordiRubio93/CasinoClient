@@ -14,7 +14,6 @@ import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Top5;
 import view.Dialeg;
-import view.cavalls.HorsesView;
 import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
@@ -22,7 +21,8 @@ public class MainButtonsController implements ActionListener {
 	
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
-	}	
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
@@ -145,6 +145,9 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("BET_R"):
+			
+			//TODO
+			
 			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
 			else if(!manager.getGameManager().isApostaFeta()){
 				manager.sendBet();
@@ -153,12 +156,6 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("BET_H"):
 			manager.getGameManager().getHorses().showPick();
-			/**
-			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
-			else if(!manager.getGameManager().isApostaFeta()){
-				manager.getGameManager().getHorses().getIntro().executaIntro();
-			}else new Dialeg().setWarningText("You have already bet once!");
-			*/
 			break;
 		case ("EXIT_H"):
 			try {
@@ -189,7 +186,6 @@ public class MainButtonsController implements ActionListener {
 		default:
 			System.err.println(((JButton) event.getSource()).getToolTipText());
 		}
-		
 		
 	}
 }

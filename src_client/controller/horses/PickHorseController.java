@@ -3,6 +3,7 @@ package controller.horses;
 import java.util.LinkedList;
 
 import controller.Manager;
+import model.JsonExecutor;
 import model.struct.horses.HorseData;
 import view.cavalls.PickHorseView;
 
@@ -12,9 +13,9 @@ public class PickHorseController {
 	private boolean active;
 	private Manager manager;
 
-	public PickHorseController(LinkedList<HorseData> hdList, Manager manager) {
+	public PickHorseController(Manager manager) {
 		this.manager = manager;
-		this.hdList = hdList;
+		this.hdList = JsonExecutor.getList();
 		active = false;
 	}
 
@@ -28,6 +29,7 @@ public class PickHorseController {
 		}
 		active = true;
 	}
+	
 	public PickHorseView getWindow() {
 		return choose;
 	}

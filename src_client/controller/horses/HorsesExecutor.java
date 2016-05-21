@@ -3,18 +3,17 @@ package controller.horses;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import controller.Constants;
 import controller.Manager;
 import model.Calcul;
 import model.Order;
-import model.Sleeper;
 import model.struct.horses.HorseData;
 import network.segment.HorseBetting;
 import network.segment.InitHorses;
 import network.segment.Segment;
-import network.segment.StartGame;
 import view.cavalls.HorsesView;
 
 public class HorsesExecutor implements Runnable {
@@ -24,8 +23,9 @@ public class HorsesExecutor implements Runnable {
 	private Segment s;
 	private Manager manager;
 	private HorsesView game;
-	private int time = 0;
+	private int seconds;
 	private LinkedList<HorseData> end;
+	private PickHorseController hIntro;
 
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
@@ -33,28 +33,30 @@ public class HorsesExecutor implements Runnable {
 		active = true;
 		this.manager = manager;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-	
 	}
 
 	@Override
 	public void run() {
-		while (active) {
-			try {
-				if (obtenirInstruccio() instanceof HorseBetting) {
+		try {
+			while (active) {
+				switch (obtenirInstruccio().getClass().getSimpleName()) {
+				case "HorseBetting":System.out.println(1);
 					System.err.println(
-					((HorseBetting) s).gethBet().getHorse() + " aposta " + ((HorseBetting) s).gethBet().getAmount() ); // game.ompleLlista(listUsers);
-				} else if (obtenirInstruccio() instanceof InitHorses) {
-					game.showCounter(false);
+						((HorseBetting) s).gethBet().getHorse() + " aposta " + ((HorseBetting) s).gethBet().getAmount() ); // game.ompleLlista(listUsers);
+					break;
+				case "InitHorses":System.out.println(2);
+					System.err.println("cash bixis " +((InitHorses) s).isApostable());
+					//game.showCounter(false);
 					game.setCursa();
 					game.initHorses(((InitHorses) s).getList());
+					corre(((InitHorses) s).getList());
+					break;
+				default:
+					break;
 				}
-				 else if (obtenirInstruccio() instanceof StartGame){
-					 corre();
-				 }
-			} catch (ClassNotFoundException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -64,30 +66,40 @@ public class HorsesExecutor implements Runnable {
 
 	public synchronized Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
 		s = (Segment) objectIn.readObject();
-		System.out.println(s.toString());
+		System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
 
-	private void corre() {
-		end = manager.getGameManager().getHorses().getIntro().getList();
-		time = 0;
-		while (time < 30) {
-			time++;
-			for (int i = 0; i < Constants.nHorses; i++) {
-				if (time % 2 == 0) {
-					game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
-				} else {
-					game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
+	private void corre(LinkedList<HorseData> end) {
+		Thread thread = new Thread() {
+			public void run() {
+				seconds = 0;
+				while (seconds < 30) {
+					seconds++;
+					for (int i = 0; i < Constants.nHorses; i++) {
+						if (seconds % 2 == 0) {
+							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
+						} else {
+							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
+						}
+					}
+					try {
+						Thread.sleep(Constants.DELAY);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
+				
+				String winner = new Order().max(end).getName();
+				game.acabaPartida(winner);
 			}
-
-			new Sleeper(this, Constants.DELAY).run();
-		}
-
-		String winner = new Order().max(end).getName();
-
-		game.acabaPartida(winner);
+		};
+		thread.start();
+		
 		// get.enviarTrama(new GameOver());
 	}
 
+	public int getSeconds() {
+		return seconds;
+	}
 }
