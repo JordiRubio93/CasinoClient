@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 import controller.Constants;
 import controller.Manager;

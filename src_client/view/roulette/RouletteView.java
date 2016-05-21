@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.Manager;
 import controller.roulette.AmericanRoulette;
 import model.struct.roulette.Casella;
 import view.Dialeg;
@@ -235,13 +234,5 @@ public class RouletteView extends GameView {
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
 		jbParell.addActionListener(getManager().getController());*/
-	}
-	@Override
-	public void setManager(Manager manager) {
-		this.manager = manager;
-	}
-	@Override
-	public Manager getManager() {
-		return manager;
 	}
 }

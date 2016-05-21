@@ -19,15 +19,14 @@ public class SplashScreen{
 		translucentWindow = new TranslucentWindow();
 		new Thread(translucentWindow).run();
 		panels = new ArrayList<BaseJPanel>();
-		panels.add(new Graphics());
-		panels.add(new RouletteView());
-		panels.add(new HorsesView());
-		panels.add(new BlackjackView());
-		panels.add(new StatisticsWindow());
-		//panels.add(null);		
-		panels.add(new MainWindow(new ConfigPanel()));
-		panels.add(new LoginWindow());
-		panels.add(new PickHorseView());
+		panels.add(new Graphics()); //0
+		panels.add(new RouletteView()); //1
+		panels.add(new HorsesView()); //2
+		panels.add(new BlackjackView()); //3
+		panels.add(new StatisticsWindow()); //4	
+		panels.add(new MainWindow(new ConfigPanel())); //5
+		panels.add(new LoginWindow()); //6
+		panels.add(new PickHorseView()); //7
 		loaded = Boolean.TRUE;
 	}
 	

@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller.Constants;
-import controller.Manager;
 
 public abstract class GameView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +25,7 @@ public abstract class GameView extends BaseJPanel {
 	protected BaseJPanel gamePanel;
 	protected JPanel jpFinestra;
 	protected JPanel jpTemps;
-	public JLabel jlTemps;
+	JLabel jlTemps;
 	protected GridLayout columnLayout;
 	protected JScrollPane jspList;
 	protected JPanel jpDades;
@@ -43,18 +42,17 @@ public abstract class GameView extends BaseJPanel {
 	protected JButton jbExit;
 	protected JPanel jpOptions;
 	protected JLabel jlCount;
-	protected Manager manager;
 	
 	public GameView(){
-		this.initElements();
+		initElements();
 		//createDaemonTime();
 	}
 	
 	protected void initElements(){
 		setLayout(new BorderLayout());
-		System.out.println("holaaa");
+		
 		//Label temps
-		jlTemps = new JLabel("");
+		jlTemps = new JLabel("Time");
 		jlTemps.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jlTemps.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		//panell temps		
@@ -91,7 +89,8 @@ public abstract class GameView extends BaseJPanel {
 		jpDades.add(jspList, BorderLayout.CENTER);
 		jpDades.add(jpOptions, BorderLayout.SOUTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder(Constants.BET_LABEL));
-		add(jpDades);
+		add(jpDades, BorderLayout.EAST);
+		System.out.println("holaaa");
 	}
 	
 	public void setGamePanel(BaseJPanel panel){
@@ -99,15 +98,15 @@ public abstract class GameView extends BaseJPanel {
 	}
 	
 	public void registerController(){	
-		jbBet.addActionListener(manager.getController());
-		jbExit.addActionListener(manager.getController());
+		jbBet.addActionListener(getManager().getController());
+		jbExit.addActionListener(getManager().getController());
 	}
 	
 	/**
 	 * Funcio que s'encarrega de actualitzar el rellotje superior
 	 */
 	private void actualitzaTemps(String time){
-		jlTemps = new JLabel("");
+		System.out.println("updating " + time);
 		jlTemps.setText(time);
 	
 	}
@@ -126,7 +125,7 @@ public abstract class GameView extends BaseJPanel {
 				}
 			
 			}
-		}, 0, TimeUnit.SECONDS.toMillis(1));
+		}, 5000, TimeUnit.SECONDS.toMillis(1));
 	}
 
 	/**
@@ -136,10 +135,4 @@ public abstract class GameView extends BaseJPanel {
 
 	
 	}
-	/**
-	 * Managers...
-	 */
-	public abstract Manager getManager();
-	public abstract void setManager(Manager manager);
-	
 }

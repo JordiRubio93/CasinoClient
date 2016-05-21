@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.Manager;
 import model.Calcul;
 import model.struct.horses.HorseData;
 import view.Dialeg;
@@ -32,10 +31,9 @@ public class HorsesView extends GameView {
 	
 	protected void initElements() {
 		super.initElements();
-		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
+		jpStadium = new Stadium(400, 200, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		add(jpStadium, BorderLayout.CENTER);
-		setCounter();
 	}
 	
 	public void setCursa() {
@@ -90,14 +88,7 @@ public class HorsesView extends GameView {
 	public void showCounter(boolean show){
 		jlCount.setVisible(show);
 	}
-	
-	public JLabel getCounter(){
-		return jlCount;
-	}
-	
-	public void actualitzaCounter(int num){
-		jlCount.setText(String.valueOf(num));
-	}
+
 	
 	public void paintRed(boolean flag){
 		jlCount.setOpaque(flag);
@@ -108,14 +99,7 @@ public class HorsesView extends GameView {
 		dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
 	}
 
-	@Override
-	public void setManager(Manager manager) {
-		this.manager = manager;
-	}
-	@Override
-	public Manager getManager() {
-		return manager;
-	}
+
 	@Override
 	public void registerController(){
 		jbBet.putClientProperty("action", "BET_H");

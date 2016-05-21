@@ -1,11 +1,11 @@
 package controller;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import controller.horses.HorsesManager;
 import controller.roulette.EndingControl;
@@ -13,11 +13,8 @@ import controller.roulette.RouletteManager;
 import model.LoginValidator;
 import model.RegisterValidator;
 import model.blackjack.Blackjack;
-import model.struct.bet.HorsesBet;
 import model.struct.horses.HorseData;
 import model.struct.user.User;
-import network.segment.HorseBetting;
-import view.Dialeg;
 import view.blackjack.BlackjackView;
 import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
@@ -185,16 +182,16 @@ public class GameManager {
 	 * Gestiona les apostes de horse
 	 */
 	public void thisHorse() {
+	
 		PickHorseView phv = ((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME));
+		//JFrame frame = new JFrame();
+		phv.revalidate();
+		phv.repaint();
 		JFrame frame = new JFrame();
-		frame.setSize(300, 120);
-		frame.setResizable(false);
-		frame.setTitle("HORSES");
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		manager.getPanel(Constants.PICK_VIEW_NAME);
 		frame.add(phv);
-		if (phv.getAmount().isEmpty() || Float.parseFloat(phv.getAmount()) <= 0) {
+		frame.revalidate();
+		frame.repaint();
+		/*if (phv.getAmount().isEmpty() || Float.parseFloat(phv.getAmount()) <= 0) {
 			Dialeg dialeg = new Dialeg();
 			dialeg.setWarningText("You must enter a positive amount!");
 		} else {
@@ -209,7 +206,7 @@ public class GameManager {
 				((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).clean();
 				frame.dispose();
 			}
-		}
+		}*/
 	}
 
 	public Blackjack getBlackjack() {
