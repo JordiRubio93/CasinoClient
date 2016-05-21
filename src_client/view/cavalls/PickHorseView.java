@@ -6,21 +6,21 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Manager;
-import view.BaseJPanel;
 import view.Dialeg;
 
-public class PickHorseView extends BaseJPanel {
+public class PickHorseView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	//main controler identify label
 	public static final String next = "  >  ";
 	public static final String previous = "  <  ";
 	private final int horses_num = 12;
-	
+	private Manager manager;
 	private String[] opcions;
 	private int index;
 	
@@ -32,12 +32,9 @@ public class PickHorseView extends BaseJPanel {
 	private JPanel jpEleccio;
 	private JTextField jtfAmount;
 		
-	public PickHorseView(){
-		initElements();
-		dialeg = new Dialeg();
-	}
+
 	public PickHorseView(Manager manager){
-		setManager(manager);
+		this.manager =(manager);
 		initElements();
 		registerController();
 		dialeg = new Dialeg();
@@ -97,6 +94,9 @@ public class PickHorseView extends BaseJPanel {
 		add(jbDreta, BorderLayout.EAST);
 		add(jbEsquerra, BorderLayout.WEST);
 		add(jpEleccio, BorderLayout.SOUTH);
+		
+		setSize(600, 300);
+		setVisible(true);
 	}
 	
 	public String getAmount(){
@@ -132,10 +132,10 @@ public class PickHorseView extends BaseJPanel {
 	
 	public void registerController(){
 		//aprofitem per carregar les dades
-		loadInfo(getManager());
-		jbEsquerra.addActionListener(getManager().getController());
-		jbEsquerra.addActionListener(getManager().getController());
-		jbEsquerra.addActionListener(getManager().getController());
+		loadInfo(manager);
+		jbEsquerra.addActionListener(manager.getController());
+		jbEsquerra.addActionListener(manager.getController());
+		jbEsquerra.addActionListener(manager.getController());
 	}
 
 	public void clean() {
