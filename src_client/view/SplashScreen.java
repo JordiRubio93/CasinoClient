@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
+import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
 import view.statistics.Graphics;
 import view.statistics.StatisticsWindow;
@@ -26,6 +27,7 @@ public class SplashScreen{
 		//panels.add(null);		
 		panels.add(new MainWindow(new ConfigPanel()));
 		panels.add(new LoginWindow());
+		panels.add(new PickHorseView());
 		loaded = Boolean.TRUE;
 	}
 	

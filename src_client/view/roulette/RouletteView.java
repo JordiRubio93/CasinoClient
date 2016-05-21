@@ -70,20 +70,17 @@ public class RouletteView extends GameView {
      * Constructor per la gràfica de la ruleta.
      */
 	public RouletteView(){
+	/*	initElements();
 		jpFinestra = new JPanel(new BorderLayout());
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
-		super.createList();
-		jpFinestra.add(jpDades, BorderLayout.EAST);
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
-		initElements();
-	
-	}//Tancament del constructor
+		*/
+	}
 	
 	/**
      * Metode que no retorna res i que s'encarrega de inicialitzar els elements.
      */
-	private void initElements(){
+	protected void initElements(){
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());
@@ -189,9 +186,7 @@ public class RouletteView extends GameView {
 
 		jpCentral.add(jpInferior, BorderLayout.SOUTH);
 
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
 		jpFinestra.add(jpCentral, BorderLayout.CENTER);
-		jpFinestra.add(jpDades, BorderLayout.EAST);
 		
 		this.setLayout(new BorderLayout());
 		this.add(jpFinestra, BorderLayout.CENTER);
@@ -223,6 +218,7 @@ public class RouletteView extends GameView {
 
 	
 	public void registerController(){
+		/*
 		for(MyButton c: butons){
 			c.addActionListener(getManager().getController());
 		}
@@ -238,7 +234,7 @@ public class RouletteView extends GameView {
 		jbTercera.addActionListener(getManager().getController());
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
-		jbParell.addActionListener(getManager().getController());
+		jbParell.addActionListener(getManager().getController());*/
 	}
 	@Override
 	public void setManager(Manager manager) {

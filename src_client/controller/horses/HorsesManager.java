@@ -10,7 +10,6 @@ public class HorsesManager {
 	private Manager manager;
 	private int time;
 	private HorsesView game;
-	private PickHorseController hIntro;
 	private HorsesExecutor horsesExecutor;
 	
 	public HorsesManager(Manager manager) {
@@ -20,7 +19,6 @@ public class HorsesManager {
 	}
 	
 	public void executaCursa() {
-		hIntro = new PickHorseController(manager);
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 		
 		//fil que gestiona el temps y les apostes externes al client
@@ -28,14 +26,7 @@ public class HorsesManager {
 		new Thread(horsesExecutor).start();
 	}
 	
-	public PickHorseController getIntro() {
-		return hIntro;
-	}
 	
-	public void showPick() {
-		getIntro().executaIntro();
-	}
-
 	public HorsesExecutor getHorsesExecutor() {
 		return horsesExecutor;
 	}

@@ -3,95 +3,93 @@ package view.cavalls;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.listeners.MainButtonsController;
-import model.struct.horses.HorseData;
+import controller.Manager;
+import view.BaseJPanel;
 import view.Dialeg;
 
-public class PickHorseView extends JFrame {
+public class PickHorseView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
+	//main controler identify label
+	public static final String next = "  >  ";
+	public static final String previous = "  <  ";
+	private final int horses_num = 12;
+	
 	private String[] opcions;
-	private JPanel jpActual;
-	private JPanel jpFinestra;
+	private int index;
+	
 	private JButton jbDreta;
 	private JButton jbEsquerra;
-	private int index;
 	private JButton jbCavall;
-	private JPanel jpCavall;
+
 	private Dialeg dialeg;
 	private JPanel jpEleccio;
 	private JTextField jtfAmount;
+		
+	public PickHorseView(){
+		initElements();
+		dialeg = new Dialeg();
+	}
 	
-	public PickHorseView(LinkedList<HorseData> hdList) {
-		opcions = new String[12];
-		
-		for(int i = 0; i < 12; i++){
-			opcions[i] = hdList.get(i).getName();
+	public void loadInfo(Manager manager){
+		opcions = new String[horses_num];
+		for(int i = 0; i < opcions.length; i++){
+			opcions[i] =  manager.getGameManager().getHorsesList().get(i).getName();
 		}
+		jbCavall.setText(opcions[index]);
+	}
+	
+	protected void initElements() {
 		
-		jbCavall = new JButton(opcions[index]);
+		setLayout(new BorderLayout());
+
+		//boto principal
+		jbCavall = new JButton();
 		jbCavall.setHorizontalAlignment(JButton.CENTER);
 		jbCavall.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jbCavall.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jbCavall.setFont(new Font("Serif", Font.BOLD, 22));
 		jbCavall.setBorder(BorderFactory.createEmptyBorder());
-		jpCavall = new JPanel(new BorderLayout());
-		jpCavall.add(jbCavall, BorderLayout.CENTER);
 		jbCavall.putClientProperty("action", "This Horse");
 		
-		jpActual = new JPanel(new BorderLayout());
-		jpActual.add(jpCavall);
-		
-		jbDreta = new JButton("  >  ");
-		jbDreta.putClientProperty("action", ">");
-		//TODO mouse
-		jbEsquerra = new JButton("  <  ");
-		jbEsquerra.putClientProperty("action", "<");
-		//TODO mouse
-		
+		//boto dret
+		jbDreta = new JButton(next);
+		jbDreta.putClientProperty("action", next);
 		jbDreta.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jbDreta.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jbDreta.setFont(new Font("Serif", Font.BOLD, 26));
 		jbDreta.setBorder(BorderFactory.createEmptyBorder());
-		
+
+		//boto esquerra
+		jbEsquerra = new JButton(previous);
+		jbEsquerra.putClientProperty("action", previous);
 		jbEsquerra.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jbEsquerra.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jbEsquerra.setFont(new Font("Serif", Font.BOLD, 26));
 		jbEsquerra.setBorder(BorderFactory.createEmptyBorder());
-		
-		jpFinestra = new JPanel(new BorderLayout());
-		
-		jpFinestra.add(jpActual, BorderLayout.CENTER);
-		jpFinestra.add(jbDreta, BorderLayout.EAST);
-		jpFinestra.add(jbEsquerra, BorderLayout.WEST);
-		
+				
+		 //crem un panell per gestionar la quantitat de les apostes
 		jpEleccio = new JPanel(new BorderLayout());
 		jpEleccio.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jpEleccio.setBorder(BorderFactory.createEtchedBorder());
-		creaEleccio();
-		jpFinestra.add(jpEleccio, BorderLayout.SOUTH);
-		
-		this.getContentPane().add(jpFinestra);
-		
-		propietats();
-		
-		dialeg = new Dialeg();
-	}
-	
-	private void creaEleccio() {
 		JLabel jlIntro = new JLabel(" Money to bet : ");
 		jlIntro.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		jtfAmount = new JTextField();
 		jpEleccio.add(jlIntro, BorderLayout.WEST);
 		jpEleccio.add(jtfAmount, BorderLayout.CENTER);
+		
+
+		//agreguem
+		add(jbCavall, BorderLayout.CENTER);
+		add(jbDreta, BorderLayout.EAST);
+		add(jbEsquerra, BorderLayout.WEST);
+		add(jpEleccio, BorderLayout.SOUTH);
 	}
 	
 	public String getAmount(){
@@ -111,51 +109,29 @@ public class PickHorseView extends JFrame {
 	
 	private void actualitzaText(){
 		jbCavall.setText(opcions[index]);
-		jbCavall.setHorizontalAlignment(JLabel.CENTER);
-		jbCavall.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-		jbCavall.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-		jbCavall.setFont(new Font("Serif", Font.BOLD, 22));
-		jbCavall.setBorder(BorderFactory.createEmptyBorder());
-		jpCavall.add(jbCavall, BorderLayout.CENTER);
-		jpActual.add(jpCavall);
 	}
 	
 	public void obreDialeg(){
 		dialeg.setConfirmText("Are you sure you want to bet " + jtfAmount.getText() + " € for this horse?");
 	}
 	
-	public void pintaBoto(JButton jBoto){
-		jBoto.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-		if(jBoto.equals(jbCavall)) jBoto.setBackground(new Color(0.56f, 0.73f, 0.56f, 1.0f));
-		else jBoto.setBackground(new Color(0.43f, 0.57f, 0.85f, 1.0f));
-	}
-	public void despintaBoto(JButton jBoto){
-		jBoto.setForeground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-		jBoto.setBackground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-	}
-	
-	public void registerController(MainButtonsController controller){
-		jbDreta.addActionListener(controller);
-		jbEsquerra.addActionListener(controller);
-		jbCavall.addActionListener(controller);
-		/*jbCavall.addMouseListener();
-		jbDreta.addMouseListener();
-		jbEsquerra.addMouseListener();*/
-	}
-	
-	private void propietats(){
-		this.setSize(300, 120);
-		this.setResizable(false);
-		this.setTitle("HORSES");
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-	}
-
 	public Dialeg getDialeg() {
 		return dialeg;
 	}
 	
 	public String getHorseName(){
 		return jbCavall.getText();
+	}
+	
+	public void registerController(){
+		//aprofitem per carregar les dades
+		loadInfo(getManager());
+		jbEsquerra.addActionListener(getManager().getController());
+		jbEsquerra.addActionListener(getManager().getController());
+		jbEsquerra.addActionListener(getManager().getController());
+	}
+
+	public void clean() {
+		jtfAmount.setText("");
 	}
 }

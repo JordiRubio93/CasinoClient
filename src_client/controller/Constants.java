@@ -53,4 +53,5 @@ public class Constants {
 	public static final String CASINO = "Resources/casino.jpg";
 	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
 	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
+	public static final String PICK_VIEW_NAME = "cavalls.PickHorseView";
 }

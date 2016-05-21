@@ -23,10 +23,11 @@ public class Graphics extends BaseJPanel {
 	private BarChart chart;
 	
 	public Graphics(){
+		super();
 		initElements();
 	}
 	
-	private void initElements() {	
+	protected void initElements() {	
 		setLayout(new BorderLayout());
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

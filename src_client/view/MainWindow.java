@@ -33,7 +33,7 @@ public class MainWindow extends BaseJPanel {
 		lateralPanel(false);
 	}
 	
-	private void initElements(){
+	protected void initElements(){
 		setLayout(new BorderLayout());
 		setBackground(Color.GRAY);
 		

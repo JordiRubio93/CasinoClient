@@ -31,7 +31,7 @@ public class BlackjackView extends BaseJPanel {
 		initElements();
 	}
 	
-	private void initElements(){
+	protected void initElements(){
 		Rectangle rectangle = Utilities.getUsableScreenBounds();
 		int width = (int) rectangle.getWidth();
 		int height = (int) rectangle.getHeight();

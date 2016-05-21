@@ -25,7 +25,6 @@ public class HorsesExecutor implements Runnable {
 	private HorsesView game;
 	private int seconds;
 	private LinkedList<HorseData> end;
-	private PickHorseController hIntro;
 
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
@@ -33,6 +32,7 @@ public class HorsesExecutor implements Runnable {
 		active = true;
 		this.manager = manager;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
+		
 	}
 
 	@Override
@@ -40,11 +40,11 @@ public class HorsesExecutor implements Runnable {
 		try {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
-				case "HorseBetting":System.out.println(1);
+				case "HorseBetting":
 					System.err.println(
 						((HorseBetting) s).gethBet().getHorse() + " aposta " + ((HorseBetting) s).gethBet().getAmount() ); // game.ompleLlista(listUsers);
 					break;
-				case "InitHorses":System.out.println(2);
+				case "InitHorses":
 					System.err.println("cash bixis " +((InitHorses) s).isApostable());
 					//game.showCounter(false);
 					game.setCursa();

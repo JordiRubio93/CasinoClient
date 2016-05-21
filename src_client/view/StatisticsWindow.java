@@ -33,7 +33,7 @@ public class StatisticsWindow extends BaseJPanel {
 		initElements();
 	}
 	
-	private void initElements(){
+	protected void initElements(){
 		setLayout(new BorderLayout());
 		
 		BufferedImage img1 = null;
@@ -115,13 +115,11 @@ public class StatisticsWindow extends BaseJPanel {
 		top5hhorseButton.addActionListener(listener);
 		cashEvoButton.addActionListener(listener);
 		homeButton.addActionListener(listener);
-		
 	}
 
 	@Override
 	public void registerController() {
-		registerController(getManager().getController());
-		
+		registerController(getManager().getController());	
 	}
 
 }

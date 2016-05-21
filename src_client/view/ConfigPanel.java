@@ -34,7 +34,7 @@ public class ConfigPanel extends BaseJPanel {
 		initElements();
 	}
 	
-	private void initElements(){	
+	protected void initElements(){	
 		setLayout(new GridBagLayout());
 		setBackground(Constants.semiOpaqueBlack);
 		

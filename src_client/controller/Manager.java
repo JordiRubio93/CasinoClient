@@ -3,15 +3,16 @@ package controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
+import java.util.LinkedList;
 
 import controller.listeners.MainButtonsController;
+import model.struct.horses.HorseData;
 import model.struct.user.LoginInfo;
 import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.AddUser;
 import network.segment.LoginUser;
 import network.segment.RouletteBetting;
-import network.segment.Seconds;
 import network.segment.Segment;
 import tools.excepcions.FileException;
 import tools.excepcions.TCPException;
@@ -204,17 +205,23 @@ public class Manager {
 		} else view.showError("Register Fail");	
 	}
 	
-	public int seconds(){
-		try {
-			server.enviarTrama(new Seconds(0));
-			return ((Seconds) server.obtenirTrama()).getSegons();
-		} catch (IOException e) {}
-		return -1;
-	}
-	
 	public void sendBet(){
 		try {
 			server.enviarTrama(new RouletteBetting(gameManager.getRoulette().getApostesRuleta()));
 		} catch (IOException e) {}
 	}
+
+	public LinkedList<HorseData> getHorsesList() {
+		return	fileManager.getHorsesList();
+	}
+
+	public FileManager getFileManager() {
+		return fileManager;
+	}
+
+	public void setFileManager(FileManager fileManager) {
+		this.fileManager = fileManager;
+	}
+	
+	
 }

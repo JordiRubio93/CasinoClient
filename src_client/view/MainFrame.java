@@ -23,8 +23,8 @@ public class MainFrame extends JFrame{
 	}
 	
 	private void propietats(){
-		setTitle(Constants.PROJECT_NAME);
 		setLocationRelativeTo(null);
+		setTitle(Constants.PROJECT_NAME);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -53,6 +53,8 @@ public class MainFrame extends JFrame{
 
 	public BaseJPanel getPanel(String cad){
 		switch(cad){
+		case Constants.PICK_VIEW_NAME:
+			return panels.get(7);
 		case "LoginWindow":
 			return panels.get(6);
 		case "MainWindow":

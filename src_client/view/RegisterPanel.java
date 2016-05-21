@@ -39,7 +39,6 @@ public class RegisterPanel extends BaseJPanel {
 	private final String password2 = "    Repeat password:    ";
 	private final String join = "Join us!";
 	private final String guest = "Try as guest";
-	private final String space = "     ";
 	private static final long serialVersionUID = 1L;
 
 	private JLabel mainLabel = new JLabel(main);
@@ -67,7 +66,7 @@ public class RegisterPanel extends BaseJPanel {
 		initElements();
 	}
 
-	private void initElements() {
+	protected void initElements() {
 		setLayout(new BorderLayout());
 		Color back = new Color(0, 0, 0, 80);
 

@@ -59,7 +59,7 @@ public class LoginInfo implements Serializable {
 	}
 	public Boolean getPwhash() {
 		return pwhash;
-	}	
+	}
 	//TODO MOVE
 	public String toSHA1(byte[] convertme) {
 	    MessageDigest md = null;
@@ -77,4 +77,7 @@ public class LoginInfo implements Serializable {
 	    return digestStr.toLowerCase();
 	}
 	
+	public String toString(){
+		return email + "@@" + password + "@@" + pwhash.toString();
+	}
 }

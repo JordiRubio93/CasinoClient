@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -24,11 +23,10 @@ import controller.Manager;
 public abstract class GameView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 
-	protected BaseJPanel panel;
+	protected BaseJPanel gamePanel;
 	protected JPanel jpFinestra;
 	protected JPanel jpTemps;
-	
-	protected JLabel jlTemps;
+	public JLabel jlTemps;
 	protected GridLayout columnLayout;
 	protected JScrollPane jspList;
 	protected JPanel jpDades;
@@ -46,37 +44,33 @@ public abstract class GameView extends BaseJPanel {
 	protected JPanel jpOptions;
 	protected JLabel jlCount;
 	protected Manager manager;
-	private DateFormat dateFormat;
 	
 	public GameView(){
-		initElements();
-		actualitzaTemps();
-		createList();
+		this.initElements();
+		//createDaemonTime();
 	}
 	
-	private void initElements(){
-		dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = new Date();
-		
+	protected void initElements(){
+		setLayout(new BorderLayout());
+		System.out.println("holaaa");
 		//Label temps
-		jlTemps = new JLabel(dateFormat.format(date));
+		jlTemps = new JLabel("");
 		jlTemps.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jlTemps.setFont(new Font("Sans Serif", Font.PLAIN, 14));
-		
 		//panell temps		
 		jpTemps = new JPanel();
 		jpTemps.setBackground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jpTemps.add(jlTemps);
-		add(jpTemps);
+		add(jpTemps, BorderLayout.NORTH);
 		
 		//boton salir
 		jbExit = new JButton("Exit");
-		jbExit.setBackground(new Color(255,255,255));
+		jbExit.setBackground(Color.WHITE);
 		jbExit.setForeground(Constants.coolBlue);
 		
 		//boton Apostar
 		jbBet = new JButton("Bet!");
-		jbBet.setBackground(new Color(255,255,255));
+		jbBet.setBackground(Color.WHITE);
 		jbBet.setForeground(Constants.coolOrange);
 		
 		//barra Inferior (botones)
@@ -84,13 +78,24 @@ public abstract class GameView extends BaseJPanel {
 		jpOptions.add(jbExit);
 		jpOptions.add(jbBet);
 		
-		//tirar apostas cap adalt
+	
+		//panell de apostes
+		jpDades = new JPanel(new BorderLayout());
 		columnLayout = new GridLayout();
+		columnLayout.setColumns(1);
+		//tirar apostas cap adalt	
 		jpList = new JPanel(columnLayout);
 		jpAux = new JPanel(new BorderLayout());
 		jpAux.add(jpList, BorderLayout.NORTH);		
 		jspList = new JScrollPane(jpAux);
-		columnLayout.setColumns(1);
+		jpDades.add(jspList, BorderLayout.CENTER);
+		jpDades.add(jpOptions, BorderLayout.SOUTH);
+		jpDades.setBorder(BorderFactory.createTitledBorder(Constants.BET_LABEL));
+		add(jpDades);
+	}
+	
+	public void setGamePanel(BaseJPanel panel){
+		//add(gamePanel, )
 	}
 	
 	public void registerController(){	
@@ -101,12 +106,25 @@ public abstract class GameView extends BaseJPanel {
 	/**
 	 * Funcio que s'encarrega de actualitzar el rellotje superior
 	 */
-	private void actualitzaTemps(){
+	private void actualitzaTemps(String time){
+		jlTemps = new JLabel("");
+		jlTemps.setText(time);
+	
+	}
+	
+	private void createDaemonTime(){
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			@Override
 			public void run() {
-				jlTemps.setText(dateFormat.format(Calendar.getInstance().getTime()));
+				try{
+					String time = dateFormat.format(Calendar.getInstance().getTime());
+					actualitzaTemps(time);
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+			
 			}
 		}, 0, TimeUnit.SECONDS.toMillis(1));
 	}
@@ -115,10 +133,8 @@ public abstract class GameView extends BaseJPanel {
 	 * Crea el panel lateral de apostes
 	 */
 	protected void createList(){
-		jpDades = new JPanel(new BorderLayout());
-		jpDades.add(jspList, BorderLayout.CENTER);
-		jpDades.add(jpOptions, BorderLayout.SOUTH);
-		jpDades.setBorder(BorderFactory.createTitledBorder(Constants.BET_LABEL));
+
+	
 	}
 	/**
 	 * Managers...

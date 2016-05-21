@@ -18,6 +18,7 @@ import view.Dialeg;
 import view.GameView;
 
 public class HorsesView extends GameView {
+	
 	private static final long serialVersionUID = 1L;
 	private Stadium jpStadium;
 	private GridLayout gridLayout;
@@ -26,32 +27,23 @@ public class HorsesView extends GameView {
 	private Point[] coord;
 
 	public HorsesView(){
-		super();
 		initElements();
 	}
 	
-	private void initElements() {
-		jpFinestra = new JPanel(new BorderLayout());
-		
-		jpFinestra.add(jpTemps, BorderLayout.NORTH);
+	protected void initElements() {
+		super.initElements();
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
-		jpFinestra.add(jpStadium, BorderLayout.CENTER);
-		super.createList();
-		jpFinestra.add(jpDades, BorderLayout.EAST);
-		this.setLayout(new BorderLayout());
-		this.add(jpFinestra, BorderLayout.CENTER);
+		add(jpStadium, BorderLayout.CENTER);
 		setCounter();
 	}
 	
 	public void setCursa() {
 		jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_CARRILS);
-		
 		gridLayout = new GridLayout(Constants.nHorses, 1);
 		gridLayout.setVgap(-80);
 		jpCarrils = new JPanel(gridLayout);
-		
 		for(int i = 0; i < Constants.nHorses; i++){
 			JLabel jlPos = new JLabel("   " + String.valueOf(12 - i) + "  ");
 			jlPos.setHorizontalAlignment(JLabel.LEFT);
@@ -59,13 +51,9 @@ public class HorsesView extends GameView {
 			jlPos.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 			jpCarrils.add(jlPos);
 		}
-		
 		jpCarrils.setBackground(new Color(0,0,0,0));
-		
 		jpStadium.add(jpCarrils, BorderLayout.WEST);
-		jpFinestra.add(jpStadium, BorderLayout.CENTER);
-		revalidate();
-		repaint();
+		add(jpStadium, BorderLayout.CENTER);
 	}
 	
 	public void showCursa(boolean show){
@@ -82,8 +70,6 @@ public class HorsesView extends GameView {
 		jpStadium.setList(list);
 		jpStadium.setCoordList(coord);
 		jpStadium.setReady(true);
-		revalidate();
-		repaint();
 	}
 	
 	public void runHorses(int i, int x, int y){
@@ -98,7 +84,6 @@ public class HorsesView extends GameView {
 		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
 		jlCount.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		jlCount.setBackground(Color.RED);
-		
 		jpStadium.add(jlCount, BorderLayout.CENTER);
 	}
 	
@@ -137,5 +122,4 @@ public class HorsesView extends GameView {
 		jbExit.putClientProperty("action", "EXIT_H");
 		super.registerController();
 	}
-
 }

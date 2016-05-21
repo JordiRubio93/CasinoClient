@@ -1,26 +1,40 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.Base64;
+import java.util.LinkedList;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 
+import model.struct.horses.HorseData;
 import model.struct.user.LoginInfo;
 import tools.excepcions.FileException;
 
 public class FileManager {
+	private static LinkedList<HorseData> hdList;
 	private final String[] param = { "IP_SBD", "PORT_Client" };
-	private final String ruta = "client.json";
+	private final String user = "client.dat";
+	private final String horses = "horses.txt";
 	private Gson gson;
 	private BufferedReader br = null;
 	private JsonObject objecte = null;
 	private ConfigurationFile cf = null;
-	private FileWriter fileWriter;
 
 	public FileManager() {
 		gson = new GsonBuilder().create();
@@ -33,17 +47,25 @@ public class FileManager {
 
 	public LoginInfo carregarDades() {
 		// Obtenemos los datos!
-		BufferedReader br = null;
+		FileInputStream fileIn = null;
+		ObjectInputStream in = null;
 		LoginInfo objecte = null;
 		try {
-			br = new BufferedReader(new FileReader(ruta));
-			objecte = (gson.fromJson(br, LoginInfo.class));
-			
+			fileIn = new FileInputStream(user);
+			in = new ObjectInputStream(fileIn);
+
+			String str = deserialize(in);
+			String[] split = str.split("@@");
+
+			objecte = new LoginInfo(split[0], split[1], true);
 		} catch (Exception e) {
 			return null;
 		} finally {
 			try {
-				if (br!=null) br.close();
+				if (in != null)
+					in.close();
+				if (fileIn != null)
+					fileIn.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -76,29 +98,92 @@ public class FileManager {
 	}
 
 	public void saveLoginInfo(LoginInfo li) {
-		if(!li.getEmail().equals("")){
-			String json = new Gson().toJson(li);
+		if (!li.getEmail().equals("")) {
+			FileOutputStream fileOut = null;
+			ObjectOutputStream out = null;
 			try {
-				fileWriter = new FileWriter(ruta);
-				fileWriter.write(json);
+				fileOut = new FileOutputStream(user);
+				out = new ObjectOutputStream(fileOut);
+				serialize(li.toString(), out);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					fileWriter.close();
+					if (out != null)
+						out.close();
+					if (fileOut != null)
+						fileOut.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
+
 	public void logout() {
-		try{
-    		File file = new File("client.json");
-      		if(file.delete()) System.out.println(file.getName() + " is deleted!");
-    		else System.out.println("Delete operation is failed.");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
+		try {
+			File file = new File(user);
+			if (file.delete())
+				System.out.println(file.getName() + " is deleted!");
+			else
+				System.out.println("Delete operation is failed.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void serialize(String str, OutputStream outputStream) {
+		try {
+			OutputStream wrappedOS = Base64.getEncoder().wrap(outputStream);
+			wrappedOS.write(str.toString().getBytes("utf-8"));
+		} catch (IOException e) {
+		}
+	}
+
+	public static String deserialize(InputStream inputStream) {
+		try {
+
+			InputStream unWrappedIS = Base64.getDecoder().wrap(inputStream);
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+			int nRead;
+			byte[] data = new byte[100];
+
+			while ((nRead = unWrappedIS.read(data, 0, data.length)) != -1) {
+				buffer.write(data, 0, nRead);
+			}
+
+			buffer.flush();
+
+			return new String(buffer.toByteArray(), "utf-8");
+		} catch (IOException e) {
+		}
+		return null;
+	}
+
+	public LinkedList<HorseData> getHorsesList() {
+		JsonReader reader = null;
+		LinkedList<HorseData> hdList = new LinkedList<HorseData>();
+		try {
+			reader = new JsonReader(new FileReader(horses));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		JsonArray array = gson.fromJson(reader, JsonArray.class);
+
+		int index = 1;
+		for (JsonElement element : array) {
+			String name = element.getAsJsonObject().get("name").getAsString();
+			String color = element.getAsJsonObject().get("color").getAsString();
+			HorseData hd = new HorseData(name, color, index); 
+			// TODO treure  aixo de aqui
+			hdList.add(hd);
+			index++;
+		}
+		return hdList;
+	}
+
+	public static LinkedList<HorseData> getList() {
+		return hdList;
 	}
 }

@@ -6,23 +6,26 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 import controller.Constants;
 import controller.Manager;
 import model.struct.user.HistoricPartides;
 import network.segment.GameOver;
 import network.segment.LogOut;
+import network.segment.Play;
 import network.segment.Top5;
 import view.Dialeg;
+import view.cavalls.PickHorseView;
 import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
 	private Manager manager;
-	
+
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
@@ -38,26 +41,29 @@ public class MainButtonsController implements ActionListener {
 			manager.register();
 			break;
 		case ("Play Roulette"):
-			if (manager.getGameManager().isGuest()){
+			if (manager.getGameManager().isGuest()) {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
-			}else{
+			} else {
 				manager.showPanel(Constants.R_VIEW_NAME);
 				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 			}
 			break;
 		case ("Play Horses"):
-			if (manager.getGameManager().isGuest()){
+			if (manager.getGameManager().isGuest()) {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
-			}else{
-				manager.showPanel(Constants.H_VIEW_NAME);
-				manager.comenzarJoc("Play Horses",
-						manager.getPanel(Constants.H_VIEW_NAME));
+			} else {
+				try {
+					manager.getServer().enviarTrama(new Play("horses"));
+					manager.showPanel(Constants.H_VIEW_NAME);
+					manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			break;
 		case ("Play BlackJack"):
 			manager.showPanel(Constants.BJ_VIEW_NAME);
-			manager.comenzarJoc("Play BlackJack",
-					manager.getPanel(Constants.BJ_VIEW_NAME));
+			manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
 			break;
 		case ("Statistics"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
@@ -75,12 +81,12 @@ public class MainButtonsController implements ActionListener {
 		case ("User Evo"):
 			break;
 		case ("Log Out"):
-			if (!manager.getGameManager().isGuest()){
+			if (!manager.getGameManager().isGuest()) {
 				manager.startServer();
-				manager.logout();	
+				manager.logout();
 				try {
 					manager.getServer().enviarTrama(new LogOut());
-				
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -98,9 +104,9 @@ public class MainButtonsController implements ActionListener {
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 1));
 				LinkedList<HistoricPartides> histRuleta = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histRuleta)){
+				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histRuleta)) {
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
 				}
 			} catch (IOException e) {
 			}
@@ -109,9 +115,9 @@ public class MainButtonsController implements ActionListener {
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 3));
 				LinkedList<HistoricPartides> histBJ = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histBJ)){
+				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histBJ)) {
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
 				}
 			} catch (IOException e) {
 			}
@@ -120,9 +126,9 @@ public class MainButtonsController implements ActionListener {
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 2));
 				LinkedList<HistoricPartides> histCavalls = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histCavalls)){
+				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histCavalls)) {
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics)manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
 				}
 			} catch (IOException e) {
 			}
@@ -134,10 +140,10 @@ public class MainButtonsController implements ActionListener {
 		case ("This Horse"):
 			manager.getGameManager().thisHorse();
 			break;
-		case ("<"):
+		case (PickHorseView.previous):
 			manager.getGameManager().passaEsquerra();
 			break;
-		case (">"):
+		case (PickHorseView.next):
 			manager.getGameManager().passaDreta();
 			break;
 		case ("EXIT_GAME"):
@@ -145,17 +151,19 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("BET_R"):
-			
-			//TODO
-			
-			if(manager.seconds() >= 50) new Dialeg().setWarningText("You can no longer bet!");
-			else if(!manager.getGameManager().isApostaFeta()){
+
+			// TODO
+			/*
+			if (manager>= 50)
+				new Dialeg().setWarningText("You can no longer bet!");
+			else if (!manager.getGameManager().isApostaFeta()) {
 				manager.sendBet();
-			}else new Dialeg().setWarningText("You have already bet once!");
-			
+			} else
+				new Dialeg().setWarningText("You have already bet once!");
+			*/
 			break;
 		case ("BET_H"):
-			manager.getGameManager().getHorses().showPick();
+			manager.getGameManager().thisHorse();
 			break;
 		case ("EXIT_H"):
 			try {
@@ -164,7 +172,7 @@ public class MainButtonsController implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;	
+			break;
 		case ("EXIT_R"):
 			try {
 				manager.getServer().enviarTrama(new GameOver());
@@ -172,8 +180,8 @@ public class MainButtonsController implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			//kill rulete 
-			break;	
+			// kill rulete
+			break;
 		case ("BET_BJ"):
 			manager.getGameManager().betBJ();
 			break;
@@ -181,11 +189,12 @@ public class MainButtonsController implements ActionListener {
 			manager.getGameManager().hitBJ();
 			break;
 		case ("STAND_BJ"):
-			manager.getGameManager().standBJ();;
+			manager.getGameManager().standBJ();
+			;
 			break;
 		default:
 			System.err.println(((JButton) event.getSource()).getToolTipText());
 		}
-		
+
 	}
 }

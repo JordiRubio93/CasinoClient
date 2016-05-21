@@ -51,7 +51,7 @@ public class LoginWindow extends BaseJPanel {
 		initElements();
 	}
 	
-	private void initElements(){
+	protected void initElements(){
 		setLayout(new BorderLayout());
 		backgroundPanel = new Tapet(width, height, Constants.CASINO);
 		

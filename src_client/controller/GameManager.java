@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import controller.horses.HorsesManager;
@@ -12,10 +14,12 @@ import model.LoginValidator;
 import model.RegisterValidator;
 import model.blackjack.Blackjack;
 import model.struct.bet.HorsesBet;
+import model.struct.horses.HorseData;
 import model.struct.user.User;
 import network.segment.HorseBetting;
 import view.Dialeg;
 import view.blackjack.BlackjackView;
+import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
 
 public class GameManager {
@@ -177,26 +181,33 @@ public class GameManager {
 					JOptionPane.PLAIN_MESSAGE);
 	}
 
+	/**
+	 * Gestiona les apostes de horse
+	 */
 	public void thisHorse() {
-		if (horses.getIntro().getWindow().getAmount().isEmpty()
-				|| Float.parseFloat(horses.getIntro().getWindow().getAmount()) <= 0) {
+		PickHorseView phv = ((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME));
+		JFrame frame = new JFrame();
+		frame.setSize(300, 120);
+		frame.setResizable(false);
+		frame.setTitle("HORSES");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		manager.getPanel(Constants.PICK_VIEW_NAME);
+		frame.add(phv);
+		if (phv.getAmount().isEmpty() || Float.parseFloat(phv.getAmount()) <= 0) {
 			Dialeg dialeg = new Dialeg();
 			dialeg.setWarningText("You must enter a positive amount!");
 		} else {
-			horses.getIntro().getWindow().obreDialeg();
-
-			if (horses.getIntro().getWindow().getDialeg().getResult() == JOptionPane.OK_OPTION) {
-				String name = horses.getIntro().getWindow().getHorseName();
-				HorsesBet bet = new HorsesBet(Float.parseFloat(horses.getIntro().getWindow().getAmount()), name);
-
+			((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).obreDialeg();
+			if (phv.getDialeg().getResult() == JOptionPane.OK_OPTION) {
 				try {
-					manager.getServer().enviarTrama(new HorseBetting(bet));
-					apostaFeta = true;
+					manager.getServer().enviarTrama(
+							new HorseBetting(new HorsesBet(Float.parseFloat(phv.getAmount()), phv.getHorseName())));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				horses.getIntro().getWindow().dispose();
-				
+				((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).clean();
+				frame.dispose();
 			}
 		}
 	}
@@ -222,10 +233,15 @@ public class GameManager {
 	}
 
 	public void passaEsquerra() {
-		horses.getIntro().getWindow().passaEsquerra();
+		((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).passaEsquerra();
 	}
 
 	public void passaDreta() {
-		horses.getIntro().getWindow().passaDreta();
+		((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).passaDreta();
+	}
+
+	public LinkedList<HorseData> getHorsesList() {
+		return manager.getFileManager().getHorsesList();
+
 	}
 }
