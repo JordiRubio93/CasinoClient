@@ -132,7 +132,7 @@ public class FileManager {
 		}
 	}
 
-	public static void serialize(String str, OutputStream outputStream) {
+	public void serialize(String str, OutputStream outputStream) {
 		try {
 			OutputStream wrappedOS = Base64.getEncoder().wrap(outputStream);
 			wrappedOS.write(str.toString().getBytes("utf-8"));
@@ -140,7 +140,7 @@ public class FileManager {
 		}
 	}
 
-	public static String deserialize(InputStream inputStream) {
+	public String deserialize(InputStream inputStream) {
 		try {
 
 			InputStream unWrappedIS = Base64.getDecoder().wrap(inputStream);
@@ -183,7 +183,8 @@ public class FileManager {
 		return hdList;
 	}
 
-	public static LinkedList<HorseData> getList() {
+	public LinkedList<HorseData> getList() {
+		if (hdList==null) hdList = getHorsesList();
 		return hdList;
 	}
 }

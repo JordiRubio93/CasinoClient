@@ -185,12 +185,11 @@ public class GameManager {
 	
 		PickHorseView phv = ((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME));
 		//JFrame frame = new JFrame();
-		phv.revalidate();
-		phv.repaint();
+		
 		JFrame frame = new JFrame();
-		frame.add(phv);
-		frame.revalidate();
-		frame.repaint();
+		frame.add(new PickHorseView(manager));
+		frame.setSize(600, 300);
+		frame.setVisible(true);
 		/*if (phv.getAmount().isEmpty() || Float.parseFloat(phv.getAmount()) <= 0) {
 			Dialeg dialeg = new Dialeg();
 			dialeg.setWarningText("You must enter a positive amount!");
@@ -238,7 +237,7 @@ public class GameManager {
 	}
 
 	public LinkedList<HorseData> getHorsesList() {
-		return manager.getFileManager().getHorsesList();
+		return manager.getFileManager().getList();
 
 	}
 }

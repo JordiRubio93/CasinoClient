@@ -36,10 +36,18 @@ public class PickHorseView extends BaseJPanel {
 		initElements();
 		dialeg = new Dialeg();
 	}
+	public PickHorseView(Manager manager){
+		setManager(manager);
+		initElements();
+		registerController();
+		dialeg = new Dialeg();
+		
+	}
 	
 	public void loadInfo(Manager manager){
 		opcions = new String[horses_num];
 		for(int i = 0; i < opcions.length; i++){
+			System.out.println(manager.toString());
 			opcions[i] =  manager.getGameManager().getHorsesList().get(i).getName();
 		}
 		jbCavall.setText(opcions[index]);
@@ -84,7 +92,6 @@ public class PickHorseView extends BaseJPanel {
 		jpEleccio.add(jlIntro, BorderLayout.WEST);
 		jpEleccio.add(jtfAmount, BorderLayout.CENTER);
 		
-
 		//agreguem
 		add(jbCavall, BorderLayout.CENTER);
 		add(jbDreta, BorderLayout.EAST);
