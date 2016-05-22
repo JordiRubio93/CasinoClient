@@ -5,12 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -211,19 +208,12 @@ public class RouletteView extends GameView {
 		Icon icon = new ImageIcon(Constants.GIF);
 		JLabel label = new JLabel(icon);
 		label.setOpaque(true);
-		JFrame roulete = new JFrame();
-		roulete.setUndecorated(true);
-		roulete.add(label);
-		roulete.setVisible(true);
-		  Timer timer = new Timer();
-	        timer.schedule(new TimerTask() {
-
-	            @Override
-	            public void run() {
-	            	roulete.dispose();
-	            	cancel();
-	            }
-	        }, 0, 2000);
+		
+		jpCentral.removeAll();
+		jpFinestra.add(label);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {}
 	    
 	}//Tancament del metode
 	

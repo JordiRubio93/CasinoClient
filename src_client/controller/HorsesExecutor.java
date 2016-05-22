@@ -81,7 +81,7 @@ public class HorsesExecutor implements Runnable {
 					game.acabaPartida(winner);
 					manager.showPanel(Constants.MAIN_VIEW_NAME);
 					Dialeg d = new Dialeg();
-					d.setWarningText(winner +" Gracias por Jugar");
+					d.setWarningText(winner +"\nThanks for playing!");
 					manager.getServer().enviarTrama(new Disconnect());
 					System.exit(0);
 					
