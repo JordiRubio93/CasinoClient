@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src_client"/>
 	<classpathentry kind="lib" path="lib/gson-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.38-bin.jar"/>
-	<classpathentry kind="lib" path="lib/guava-19.0.jar"/>
 	<classpathentry kind="lib" path="lib/LGoodDatePicker-7.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/utils.jar"/>
 	<classpathentry kind="output" path="bin"/>

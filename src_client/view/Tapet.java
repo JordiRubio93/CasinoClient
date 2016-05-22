@@ -44,9 +44,4 @@ public class Tapet extends JPanel {
 			this.repaint();
 		}catch (IOException e){}
 	}
-	
-	public void setDimensions(){
-		this.w = this.getWidth();
-		this.h = this.getHeight();
-	}
 }

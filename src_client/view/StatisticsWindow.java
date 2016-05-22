@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.listeners.MainButtonsController;
+import controller.MainButtonsController;
 
 public class StatisticsWindow extends BaseJPanel {
 	private final String home = "Home";

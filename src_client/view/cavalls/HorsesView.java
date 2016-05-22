@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.LinkedList;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,27 +23,31 @@ public class HorsesView extends GameView {
 	private JPanel jpCarrils;
 	private LinkedList<HorseAnimation> list;
 	private Point[] coord;
-
-	public HorsesView(){
+	private PickHorseView phv;
+	
+	
+	public HorsesView(PickHorseView phv){
 		initElements();
 		createDaemonTime();
+		this.phv = phv;
+	
 	}
 	
 	protected void initElements() {
 		super.initElements();
-		jpStadium = new Stadium(400, 200, Constants.PATH_TAPET);
+		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		add(jpStadium, BorderLayout.CENTER);
 	}
 	
 	public void setCursa() {
-		jpStadium.setDimensions();
+		//jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_CARRILS);
 		gridLayout = new GridLayout(Constants.nHorses, 1);
 		gridLayout.setVgap(-80);
 		jpCarrils = new JPanel(gridLayout);
 		for(int i = 0; i < Constants.nHorses; i++){
-			JLabel jlPos = new JLabel("   " + String.valueOf(12 - i) + "  ");
+			JLabel jlPos = new JLabel("   " + String.valueOf(Constants.nHorses - i) + "  ");
 			jlPos.setHorizontalAlignment(JLabel.LEFT);
 			jlPos.setFont(new Font("Serif", Font.BOLD, 34));
 			jlPos.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
@@ -54,11 +56,13 @@ public class HorsesView extends GameView {
 		jpCarrils.setBackground(new Color(0,0,0,0));
 		jpStadium.add(jpCarrils, BorderLayout.WEST);
 		add(jpStadium, BorderLayout.CENTER);
+		jpCarrils.setVisible(true);
+		repaint();
 	}
-	
+	/*
 	public void showCursa(boolean show){
 		jpCarrils.setVisible(show);
-	}
+	}*/
 	
 	public void initHorses(LinkedList<HorseData> dades){
 		list = new LinkedList<HorseAnimation>();
@@ -97,23 +101,33 @@ public class HorsesView extends GameView {
 	}
 	
 	public void acabaPartida(String winner){
-		Dialeg dialeg = new Dialeg();
-		dialeg.setWarningText("The winner horse is... " + winner.toUpperCase() + " !");
+		new Dialeg().setWarningText(winner);
 	}
 	
+	public void showPhv() {
+		phv.clean();
+		phv.setVisible(true);
+	}
 	
+	public PickHorseView getPhv() {
+		return phv;
+	}
 
 	@Override
 	public void registerController(){
+		//registrar el frame
+		phv.setManager(getManager());
 		jbBet.putClientProperty("action", "BET_H");
 		jbExit.putClientProperty("action", "EXIT_H");
 		super.registerController();
 	}
-	public void frameAposta(){
-		JFrame frame = new JFrame();
-		frame.add(new PickHorseView(getManager()));
-		frame.setSize(600, 300);
-		frame.setVisible(true);
+
+	public void enableBet(){
+		jbBet.setEnabled(true);
+	}
+	public void disableBet() {
+		phv.setVisible(false);
+		jbBet.setEnabled(false);
 	}
 
 }

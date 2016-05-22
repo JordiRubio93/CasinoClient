@@ -18,7 +18,7 @@ public class InitHorses extends Segment{
 		return dades;
 	}
 	
-	public double isApostable(){
+	public double getGuanys(){
 		return guanys;
 	}
 }

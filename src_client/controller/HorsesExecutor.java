@@ -1,4 +1,4 @@
-package controller.horses;
+package controller;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,14 +6,12 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-import controller.Constants;
-import controller.Manager;
 import model.Calcul;
-import model.Order;
 import model.struct.horses.HorseData;
-import network.segment.HorseBetting;
+import network.segment.Check;
 import network.segment.InitHorses;
 import network.segment.Segment;
+import view.Dialeg;
 import view.cavalls.HorsesView;
 
 public class HorsesExecutor implements Runnable {
@@ -21,16 +19,13 @@ public class HorsesExecutor implements Runnable {
 	private ObjectOutputStream objectOut;
 	private boolean active;
 	private Segment s;
-	private Manager manager;
 	private HorsesView game;
 	private int seconds;
-	private LinkedList<HorseData> end;
-
+	
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
 		active = true;
-		this.manager = manager;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 		
 	}
@@ -40,18 +35,24 @@ public class HorsesExecutor implements Runnable {
 		try {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
-				case "HorseBetting":
-					System.err.println(
-						((HorseBetting) s).gethBet().getHorse() + " aposta " + ((HorseBetting) s).gethBet().getAmount() ); // game.ompleLlista(listUsers);
+				case "Check":
+					if	  (!((Check) s).isOk()) new Dialeg().setWarningText("Aposta Denegada");
+					else  new Dialeg().setWarningText("Aposta Acceptada");	
+					break;
+					
+				case "HorsesBetting":
+					System.err.println("Apostat");//TODO CARDS
 					break;
 				case "InitHorses":
-					System.err.println("cash bixis " +((InitHorses) s).isApostable());
-					//game.showCounter(false);
 					game.setCursa();
-					game.initHorses(((InitHorses) s).getList());
-					corre(((InitHorses) s).getList());
+					InitHorses ih = ((InitHorses) s);
+					game.initHorses(ih.getList());
+					corre(ih.getList());
+					String winner= "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName() + " !\n" + " Has guanyat" + ih.getGuanys() ;
+					game.acabaPartida(winner);
 					break;
 				default:
+					System.err.println("pero esto que coño es?");
 					break;
 				}
 			}
@@ -70,6 +71,8 @@ public class HorsesExecutor implements Runnable {
 		return s;
 	}
 
+	
+	//TODO DURAR 10 segons per enunciaat!!
 	private void corre(LinkedList<HorseData> end) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -77,11 +80,8 @@ public class HorsesExecutor implements Runnable {
 				while (seconds < 30) {
 					seconds++;
 					for (int i = 0; i < Constants.nHorses; i++) {
-						if (seconds % 2 == 0) {
-							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
-						} else {
-							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
-						}
+						if (seconds % 2 == 0) game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
+						else 				  game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));	
 					}
 					try {
 						Thread.sleep(Constants.DELAY);
@@ -89,16 +89,27 @@ public class HorsesExecutor implements Runnable {
 						e.printStackTrace();
 					}
 				}
-				
-				String winner = new Order().max(end).getName();
-				game.acabaPartida(winner);
 			}
 		};
-		thread.start();
-		
+		thread.start();		
 		// get.enviarTrama(new GameOver());
 	}
-
+	
+	/**
+	 * David idioto no diu si es '>' o <!! se supone que mes petit
+	 * @param ih lista de datos de caballos
+	 * @return index ganador
+	 */
+	public int getWinner(LinkedList<HorseData> ih){
+		int win = 0;
+		int min = Integer.MIN_VALUE;
+		for(int i = 0; i<ih.size(); i++){
+			if ( ih.get(i).getSegons()>min){
+				min = ih.get(i).getSegons();
+				win = i;
+			}
+		}return win;
+	}
 	public int getSeconds() {
 		return seconds;
 	}

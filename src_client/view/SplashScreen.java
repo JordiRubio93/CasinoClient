@@ -21,12 +21,11 @@ public class SplashScreen{
 		panels = new ArrayList<BaseJPanel>();
 		panels.add(new Graphics()); //0
 		panels.add(new RouletteView()); //1
-		panels.add(new HorsesView()); //2
+		panels.add(new HorsesView(new PickHorseView())); //2
 		panels.add(new BlackjackView()); //3
 		panels.add(new StatisticsWindow()); //4	
 		panels.add(new MainWindow(new ConfigPanel())); //5
 		panels.add(new LoginWindow()); //6
-		panels.add(new PickHorseView()); //7
 		loaded = Boolean.TRUE;
 	}
 	

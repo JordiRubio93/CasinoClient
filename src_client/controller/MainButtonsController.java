@@ -1,4 +1,4 @@
-package controller.listeners;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,22 +7,22 @@ import java.util.LinkedList;
 
 import javax.swing.JButton;
 
-import controller.Constants;
-import controller.Manager;
 import model.struct.user.HistoricPartides;
 import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Play;
 import network.segment.Top5;
 import view.Dialeg;
+import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
+import view.roulette.MyButton;
 import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
 	private Manager manager;
-
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
+	
 	}
 
 	@Override
@@ -43,6 +43,13 @@ public class MainButtonsController implements ActionListener {
 			if (manager.getGameManager().isGuest()) {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
+				try {
+				manager.getServer().enviarTrama(new Play("roulette"));
+				manager.showPanel(Constants.H_VIEW_NAME);
+				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				manager.showPanel(Constants.R_VIEW_NAME);
 				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 			}
@@ -96,6 +103,10 @@ public class MainButtonsController implements ActionListener {
 		case ("Home"):
 			manager.showPanel("MainWindow");
 			break;
+		case ("roulette"):
+			MyButton boton = ((MyButton) event.getSource());
+			manager.getGameManager().thisSlot(boton);
+			break;
 		case ("Back"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			break;
@@ -119,6 +130,7 @@ public class MainButtonsController implements ActionListener {
 					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
 				}
 			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			break;
 		case ("Top 5 Horses"):
@@ -140,10 +152,10 @@ public class MainButtonsController implements ActionListener {
 			manager.getGameManager().thisHorse();
 			break;
 		case (PickHorseView.previous):
-			manager.getGameManager().passaEsquerra();
+			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).getPhv().passaEsquerra();
 			break;
 		case (PickHorseView.next):
-			manager.getGameManager().passaDreta();
+			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).getPhv().passaDreta();
 			break;
 		case ("EXIT_GAME"):
 			// Funcio que doni al servidor la informacio necesaria (ganancies)
@@ -162,7 +174,7 @@ public class MainButtonsController implements ActionListener {
 			*/
 			break;
 		case ("BET_H"):
-			manager.getGameManager().thisHorse();
+			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).showPhv();
 			break;
 		case ("EXIT_H"):
 			try {

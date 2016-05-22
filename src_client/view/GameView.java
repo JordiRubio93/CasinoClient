@@ -45,7 +45,6 @@ public abstract class GameView extends BaseJPanel {
 	
 	public GameView(){
 		initElements();
-		//createDaemonTime();
 	}
 	
 	protected void initElements(){
@@ -76,7 +75,6 @@ public abstract class GameView extends BaseJPanel {
 		jpOptions.add(jbExit);
 		jpOptions.add(jbBet);
 		
-	
 		//panell de apostes
 		jpDades = new JPanel(new BorderLayout());
 		columnLayout = new GridLayout();
@@ -90,7 +88,6 @@ public abstract class GameView extends BaseJPanel {
 		jpDades.add(jpOptions, BorderLayout.SOUTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder(Constants.BET_LABEL));
 		add(jpDades, BorderLayout.EAST);
-		System.out.println("holaaa");
 	}
 	
 	public void setGamePanel(BaseJPanel panel){
@@ -123,15 +120,5 @@ public abstract class GameView extends BaseJPanel {
 			
 			}
 		}, Constants.SPLASH_TIME, TimeUnit.SECONDS.toMillis(1));
-	}
-	
-	
-
-	/**
-	 * Crea el panel lateral de apostes
-	 */
-	protected void createList(){
-
-	
 	}
 }

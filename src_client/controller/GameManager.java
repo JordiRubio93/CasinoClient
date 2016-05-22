@@ -4,34 +4,31 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import controller.horses.HorsesManager;
-import controller.roulette.EndingControl;
-import controller.roulette.RouletteManager;
+import model.Bet;
 import model.LoginValidator;
 import model.RegisterValidator;
 import model.blackjack.Blackjack;
-import model.struct.bet.HorsesBet;
 import model.struct.horses.HorseData;
 import model.struct.user.User;
-import network.segment.HorseBetting;
+import network.segment.HorsesBetting;
 import view.Dialeg;
 import view.blackjack.BlackjackView;
-import view.cavalls.PickHorseView;
+import view.cavalls.HorsesView;
+import view.roulette.MyButton;
 import view.roulette.RouletteView;
 
 public class GameManager {
-	private boolean apostaFeta;
 	private User user;
 	private Manager manager;
 	private LoginValidator loginValidator;
 	private Blackjack blackjack;
-	private RouletteManager roulette;
 	private RegisterValidator rv;
-	private HorsesManager horses;
+	private HorsesExecutor horsesExecutor;
+	private RouletteExecutor rouletteExecutor;
 	private Thread fil;
+	private Bet apostaRuleta;
 
 	public GameManager(Manager manager) {
 		this.manager = manager;
@@ -43,43 +40,74 @@ public class GameManager {
 		return (getUser().getName().equals("guest"));
 	}
 
-	public Boolean comprovaLoginPW(String pw) {
-		return (loginValidator.validatePasswordFormat(pw));
-	}
-
-	public Boolean comprovaLoginMail(String email) {
-		return (loginValidator.validateEmailFormat(email));
-	}
-
 	public void closeRuleta() {
 		fil.interrupt();
 	}
 
-	public void executaRuleta(RouletteView rv) {
-		roulette = new RouletteManager(manager);
-		roulette.executaPartida(null);
-		EndingControl gifControl = new EndingControl(manager, rv);
-		fil = new Thread(gifControl);
-		fil.start();
+	public void executaRoulette() {
+		rouletteExecutor = new RouletteExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
+		new Thread(horsesExecutor).start();
 	}
+	
+	public void executaRuleta(RouletteView rv) {
+		manager.showPanel(Constants.R_VIEW_NAME);
+	
+		/*EndingControl gifControl = new EndingControl(manager, rv);
+		fil = new Thread(gifControl);
+		fil.start();*/
+	}
+	public void thisSlot(MyButton boton) {
+		Dialeg dialeg = new Dialeg();
+		dialeg.setInputText("How much money you want to bet?");
+		if(dialeg.getAmount() != null && (dialeg.getAmount().isEmpty() || Float.parseFloat(dialeg.getAmount()) <= 0)){
+			dialeg.setWarningText("Enter a correct amount!");
+				((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
+			}else if (dialeg.getAmount() != null){
+				String slot = boton.getText();
+				Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
+				try {
+					manager.getServer().enviarTrama(new HorsesBetting(bet));					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+	}	
+	
 
 	public void executaHorses() {
-		horses = new HorsesManager(manager);
+		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
+		new Thread(horsesExecutor).start();
 	}
+
+	public void thisHorse(){
+		HorsesView horses = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
+		if (horses.getPhv().getAmount().isEmpty()
+				|| Float.parseFloat(horses.getPhv().getAmount()) <= 0) {
+			 new Dialeg().setWarningText("You must enter a positive amount!");
+		} else {
+			horses.getPhv().obreDialeg();
+
+			if (horses.getPhv().getDialeg().getResult() == JOptionPane.OK_OPTION) {
+				String name = horses.getPhv().getHorseName();
+				Bet bet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
+				try {
+					manager.getServer().enviarTrama(new HorsesBetting(bet));					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				horses.getPhv().dispose();
+			}
+		}
+	}
+	
+	//---------------------------BlackJack-------------------------------
 
 	public void executaBlackjack() {
 		blackjack = new Blackjack(user);
 		resetBJTable();
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+	
 	public void betBJ() {
 		double bet = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).getBet();
 		if (!blackjack.isOkBet() && blackjack.canBet(bet)) {
@@ -92,7 +120,7 @@ public class GameManager {
 					"ERROR", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
-
+	
 	public void startBJ() {
 		BlackjackView blackjackview = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME));
 		blackjack.newGame();
@@ -136,18 +164,6 @@ public class GameManager {
 					JOptionPane.PLAIN_MESSAGE);
 	}
 
-	public Boolean comprovaName(String name) {
-		return (rv.validateName(name));
-	}
-
-	public Boolean comprovaSurname(String name) {
-		return (rv.validateName(name));
-	}
-
-	public Boolean comprovaAge(Date date) {
-		return (rv.validateAge(date));
-	}
-
 	public void standBJ() {
 		if (blackjack.isOkBet()) {
 			((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).standAction();
@@ -181,62 +197,49 @@ public class GameManager {
 					JOptionPane.PLAIN_MESSAGE);
 	}
 
-	/**
-	 * Gestiona les apostes de horse
-	 */	
-	
-	public void thisHorse() {
-		
-	
-		PickHorseView phv = new PickHorseView(manager);
-		
-		/*
-		if (phv.getAmount().isEmpty() || Float.parseFloat(phv.getAmount()) <= 0) {
-			 new Dialeg().setWarningText("You must enter a positive amount!");
-		} else {
-			((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).obreDialeg();
-			if (phv.getDialeg().getResult() == JOptionPane.OK_OPTION) {
-				try {
-					manager.getServer().enviarTrama(
-							new HorseBetting(new HorsesBet(Float.parseFloat(phv.getAmount()), phv.getHorseName())));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).clean();
-			}
-		}*/
-	}
-
 	public Blackjack getBlackjack() {
 		return blackjack;
 	}
 
-	public RouletteManager getRoulette() {
-		return roulette;
-	}
-
-	public HorsesManager getHorses() {
-		return horses;
-	}
-
-	public boolean isApostaFeta() {
-		return apostaFeta;
-	}
-
-	public void setApostaFeta(boolean apostaFeta) {
-		this.apostaFeta = apostaFeta;
-	}
-
-	public void passaEsquerra() {
-		((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).passaEsquerra();
-	}
-
-	public void passaDreta() {
-		((PickHorseView) manager.getPanel(Constants.PICK_VIEW_NAME)).passaDreta();
-	}
 
 	public LinkedList<HorseData> getHorsesList() {
 		return manager.getFileManager().getList();
-
 	}
+	
+	
+	//---------------------------Other-------------------------------
+	
+	public Boolean comprovaName(String name) {
+		return (rv.validateName(name));
+	}
+
+	public Boolean comprovaSurname(String name) {
+		return (rv.validateName(name));
+	}
+
+	public Boolean comprovaAge(Date date) {
+		return (rv.validateAge(date));
+	}
+	
+	public Boolean comprovaLoginPW(String pw) {
+		return (loginValidator.validatePasswordFormat(pw));
+	}
+
+	public Boolean comprovaLoginMail(String email) {
+		return (loginValidator.validateEmailFormat(email));
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Bet getApostaRuleta() {
+		return apostaRuleta;
+	}
+
+
 }

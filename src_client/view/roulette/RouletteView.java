@@ -8,11 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
-import controller.roulette.AmericanRoulette;
+import model.AmericanRoulette;
+import model.Bet;
 import model.struct.roulette.Casella;
 import view.Dialeg;
 import view.GameView;
@@ -37,6 +39,7 @@ import view.GameView;
 
 public class RouletteView extends GameView {
 	private static final long serialVersionUID = 1L;
+	private final Color PUSHED = new Color(255,215,0);
 	
 	//Atributs de la classe
 	private JPanel jpNumeros;
@@ -56,7 +59,7 @@ public class RouletteView extends GameView {
 	private MyButton jbSenar;
 	private MyButton jbPassa;
 
-	private JPanel jpFinestra;
+	//private JPanel jpFinestra;
 	private JPanel jpEsquerra;
 	private JPanel jpCentral;
 	private JPanel jpInferior;
@@ -66,14 +69,17 @@ public class RouletteView extends GameView {
 	private ArrayList<MyButton> butons;
 	
 	/**
-     * Constructor per la gràfica de la ruleta.
+     * Constructor per la grafica de la ruleta.
      */
+	
 	public RouletteView(){
-	/*	initElements();
-		jpFinestra = new JPanel(new BorderLayout());
-		this.setLayout(new BorderLayout());
-		this.add(jpFinestra, BorderLayout.CENTER);
-		*/
+		super.initElements();
+		initElements();
+		createDaemonTime();
+		//jpFinestra = new JPanel(new BorderLayout());
+		//this.setLayout(new BorderLayout());
+		//this.add(jpFinestra, BorderLayout.CENTER);
+		
 	}
 	
 	/**
@@ -86,7 +92,8 @@ public class RouletteView extends GameView {
 		jpCentral = new JPanel(new BorderLayout());
 		jpInferior = new JPanel(new BorderLayout());
 		jpNumeros = new JPanel(new GridLayout(3, 12));
-
+		
+		//numeros
 		taula = americanRoulette.getCaselles();
 		butons = new ArrayList<MyButton>();
 		for(int i = 0; i < taula.size(); i++){
@@ -98,17 +105,18 @@ public class RouletteView extends GameView {
 			JPanel jpBoto = new JPanel(new BorderLayout());
 			butons.add(button);
 			jpBoto.add(button, BorderLayout.CENTER);
+			jpBoto.putClientProperty("action", "");
 			jpNumeros.add(jpBoto);
+			jpNumeros.putClientProperty("action", "roulette");
 		}
-		
 		jpCentral.add(jpNumeros, BorderLayout.CENTER);
-
+		
 		jpZero = new JPanel(new BorderLayout());
-
 		jbZero = new MyButton("0", new Color(76, 145, 65));
 		jbZero.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbZero.setBackground(new Color(76, 145, 65));
 		jbZero.setForeground(Color.WHITE);
+		jbZero.putClientProperty("action", "roulette");
 		
 		jpZero.add(jbZero, BorderLayout.CENTER);
 
@@ -118,21 +126,26 @@ public class RouletteView extends GameView {
 		jpDotzenes = new JPanel();
 		jpDotzenes.setLayout(new GridLayout(1, 3));
 		jpDotzenes.setBackground(new Color(76, 145, 65));
+		jpDotzenes.putClientProperty("action", "roulette");
 		
 		jbPrimera = new MyButton("1ST 12", new Color(76, 145, 65));
 		jbPrimera.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPrimera.setBackground(new Color(76, 145, 65));
 		jbPrimera.setForeground(Color.WHITE);
+		jbPrimera.putClientProperty("action", "roulette");
 
 		jbSegona = new MyButton("2ND 12", new Color(76, 145, 65));
 		jbSegona.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSegona.setBackground(new Color(76, 145, 65));
 		jbSegona.setForeground(Color.WHITE);
+		jbSegona.putClientProperty("action", "roulette");
 		
 		jbTercera = new MyButton("3RD 12", new Color(76, 145, 65));
 		jbTercera.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbTercera.setBackground(new Color(76, 145, 65));
 		jbTercera.setForeground(Color.WHITE);
+		jbTercera.putClientProperty("action", "roulette");
+		
 		
 		jpDotzenes.add(jbPrimera);
 		jpDotzenes.add(jbSegona);
@@ -142,37 +155,43 @@ public class RouletteView extends GameView {
 		
 		jpDobles.setLayout(new GridLayout(1, 6));
 		jpDobles.setBackground(new Color(76, 145, 65));
-
+		jpDobles.putClientProperty("action", "roulette");
 		jbManca = new MyButton("1-18", new Color(76, 145, 65));
 		jbManca.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbManca.setBackground(new Color(76, 145, 65));
 		jbManca.setForeground(Color.WHITE);
-
+		jbManca.putClientProperty("action", "roulette");
 		jbParell = new MyButton("EVEN", new Color(76, 145, 65));
 		jbParell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbParell.setBackground(new Color(76, 145, 65));
 		jbParell.setForeground(Color.WHITE);
-
+		jbParell.putClientProperty("action", "roulette");
+		
 		jbVermell = new MyButton("RED", new Color(139, 0, 0));
 		jbVermell.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbVermell.setBackground(new Color(139, 0, 0));
 		jbVermell.setForeground(Color.WHITE);
+		jbVermell.putClientProperty("action", "roulette");
+		
 
 		jbNegre = new MyButton("BLACK", new Color(010, 010, 010));
 		jbNegre.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbNegre.setBackground(new Color(010, 010, 010));
 		jbNegre.setForeground(Color.WHITE);
-
+		jbNegre.putClientProperty("action", "roulette");
+		
 		jbSenar = new MyButton("ODD", new Color(76, 145, 65));
 		jbSenar.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbSenar.setBackground(new Color(76, 145, 65));
 		jbSenar.setForeground(Color.WHITE);
+		jbSenar.putClientProperty("action", "roulette");
 		
 		jbPassa = new MyButton("19-36", new Color(76, 145, 65));
 		jbPassa.setFont(new Font("Cambria", Font.PLAIN, 30));
 		jbPassa.setBackground(new Color(76, 145, 65));
 		jbPassa.setForeground(Color.WHITE);
-
+		jbPassa.putClientProperty("action", "roulette");
+		
 		jpDobles.add(jbManca);
 		jpDobles.add(jbParell);
 		jpDobles.add(jbVermell);
@@ -182,13 +201,11 @@ public class RouletteView extends GameView {
 		
 		jpInferior.add(jpDotzenes, BorderLayout.NORTH);
 		jpInferior.add(jpDobles, BorderLayout.SOUTH);
-
 		jpCentral.add(jpInferior, BorderLayout.SOUTH);
-
 		jpFinestra.add(jpCentral, BorderLayout.CENTER);
-		
-		this.setLayout(new BorderLayout());
+
 		this.add(jpFinestra, BorderLayout.CENTER);
+		
 	}//Tancament del metode
 	
 	/**
@@ -198,7 +215,6 @@ public class RouletteView extends GameView {
 		Icon icon = new ImageIcon(Constants.GIF);
 		JLabel label = new JLabel(icon);
 		label.setOpaque(true);
-		
 		jpCentral.removeAll();
 		jpFinestra.add(label, BorderLayout.CENTER);
 	}//Tancament del metode
@@ -213,17 +229,25 @@ public class RouletteView extends GameView {
 	}//Tancament del metode
 	
 
+	public void enableBet(){
+		jbBet.setEnabled(true);
+	}
+	public void disableBet() {
+		jbBet.setEnabled(false);
+	}
 
+	public void pintaBoto(MyButton jBoto) {
+		pintaBoto(jBoto);
+		jBoto.canviaEstat();
+		jBoto.setBackground(PUSHED);
 
+	}
 	
 	public void registerController(){
-		/*
+		super.registerController();
 		for(MyButton c: butons){
 			c.addActionListener(getManager().getController());
 		}
-		jbBet.putClientProperty("action", "BET_R");
-		jbExit.putClientProperty("action", "EXIT_R");
-		super.registerController();
 		jbManca.addActionListener(getManager().getController());
 		jbPassa.addActionListener(getManager().getController());
 		jbSenar.addActionListener(getManager().getController());
@@ -233,6 +257,6 @@ public class RouletteView extends GameView {
 		jbTercera.addActionListener(getManager().getController());
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
-		jbParell.addActionListener(getManager().getController());*/
+		jbParell.addActionListener(getManager().getController());
 	}
 }

@@ -22,8 +22,7 @@ public class PickHorseView extends JFrame {
 	private final int horses_num = 12;
 	private Manager manager;
 	private String[] opcions;
-	private int index;
-	
+	private int index = 0;
 	private JButton jbDreta;
 	private JButton jbEsquerra;
 	private JButton jbCavall;
@@ -33,21 +32,25 @@ public class PickHorseView extends JFrame {
 	private JTextField jtfAmount;
 		
 
+	public PickHorseView(){
+		initElements();
+		dialeg = new Dialeg();
+		propietats();		
+	}
+	
 	public PickHorseView(Manager manager){
 		this.manager =(manager);
 		initElements();
 		registerController();
 		dialeg = new Dialeg();
-		
+		propietats();		
 	}
 	
 	public void loadInfo(Manager manager){
 		opcions = new String[horses_num];
 		for(int i = 0; i < opcions.length; i++){
-			System.out.println(manager.toString());
 			opcions[i] =  manager.getGameManager().getHorsesList().get(i).getName();
 		}
-		jbCavall.setText(opcions[index]);
 	}
 	
 	protected void initElements() {
@@ -94,9 +97,13 @@ public class PickHorseView extends JFrame {
 		add(jbDreta, BorderLayout.EAST);
 		add(jbEsquerra, BorderLayout.WEST);
 		add(jpEleccio, BorderLayout.SOUTH);
-		
-		setSize(600, 300);
-		setVisible(true);
+	}
+	
+	public void propietats(){
+		setSize(300,150);
+		setUndecorated(true);
+		setResizable(false);
+		setLocationRelativeTo(null);
 	}
 	
 	public String getAmount(){
@@ -130,15 +137,22 @@ public class PickHorseView extends JFrame {
 		return jbCavall.getText();
 	}
 	
+	public void setManager(Manager manager){
+		this.manager = manager;
+		registerController();
+		
+	}
 	public void registerController(){
 		//aprofitem per carregar les dades
 		loadInfo(manager);
 		jbEsquerra.addActionListener(manager.getController());
-		jbEsquerra.addActionListener(manager.getController());
-		jbEsquerra.addActionListener(manager.getController());
+		jbDreta.addActionListener(manager.getController());
+		jbCavall.addActionListener(manager.getController());
 	}
 
 	public void clean() {
-		jtfAmount.setText("");
+		index = 0;
+		jbCavall.setText(opcions[index]);
+		jtfAmount.setText(new String());
 	}
 }

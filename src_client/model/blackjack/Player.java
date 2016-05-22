@@ -1,6 +1,6 @@
 package model.blackjack;
 
-import model.struct.bet.Bet;
+import model.Bet;
 
 public class Player {
 	private double cash, initialCash;
@@ -11,7 +11,7 @@ public class Player {
 		this.cardCount = 0;
 		this.cash = cash;
 		this.initialCash = cash;
-		bet = new Bet(0);
+		bet = new Bet(0, "blackjack");
 	}
 	
 	public void addValue(int nCard) {
@@ -55,7 +55,7 @@ public class Player {
 	}
 	
 	public void setBet(double bet) {
-		this.bet = new Bet(bet);
+		this.bet = new Bet(bet, "blackjack");
 	}
 	
 	public double getBet() {
