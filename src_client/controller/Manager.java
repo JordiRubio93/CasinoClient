@@ -46,31 +46,13 @@ public class Manager {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
 			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
-			if (!address.isReachable(5000) || !isPortInUse(cf.getIP_SDB(), cf.getPORT_Client()))
+			if (!address.isReachable(5000))
 				throw new TCPException("Server OFF");
 		} catch (IOException | FileException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private boolean isPortInUse(String hostName, int portNumber) throws IOException {
-        boolean result;
-        Socket s = null;
-        
-        try {
-            s = new Socket(hostName, portNumber);
-            s.close();
-            result = true;
-        }
-        catch(Exception e) {
-            result = false;
-        }
-        finally{
-        	if(s!=null) s.close();
-        }
-
-        return(result);
-	}
 
 	public LoginInfo getLoginSaved() {
 		return loginSaved;
@@ -142,8 +124,11 @@ public class Manager {
 						fileManager.saveLoginInfo(loginInfo);
 					else
 						fileManager.saveLoginInfo(new LoginInfo("", "", false));
-				} else
+				} else {
+					view.showError("Login Fail");
 					showPanel(Constants.LOGIN_VIEW_NAME);
+				}
+					
 
 			} catch (IOException e) {
 				e.printStackTrace();
