@@ -7,7 +7,7 @@ public class Blackjack {
 	private Deck deck;
 	private Player player;
 	private Dealer dealer;
-	private boolean cardAce;
+	private int cardAce;
 	private boolean okBet;
 
 	public Blackjack(User u) {
@@ -33,22 +33,22 @@ public class Blackjack {
 	public int giveCard(int destination) {
 		int cardValue = deck.nextCard();
 		if (destination == 2) {
-			cardAce = false;
+			cardAce = 0;
 		}
 		if (cardValue == 1 || cardValue == 14 || cardValue == 27 || cardValue == 40) {
-			cardAce = true;
+			cardAce = cardAce+1;
 		}
 		if (destination == 1) {
 			player.addValue(cardValue);
-			if (player.getCardCount() > 21 && cardAce) {
+			if (player.getCardCount() > 21 && cardAce != 0) {
 				player.adjustCardCount();
-				cardAce = false;
+				cardAce = cardAce-1;
 			}
 		} else {
 			dealer.addValue(cardValue);
-			if (dealer.getCardCount() > 21 && cardAce) {
+			if (dealer.getCardCount() > 21 && cardAce != 0) {
 				dealer.adjustCardCount();
-				cardAce = false;
+				cardAce = cardAce-1 ;
 			}
 		}
 		return cardValue;
