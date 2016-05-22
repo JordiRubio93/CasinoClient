@@ -5,16 +5,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
 import model.AmericanRoulette;
-import model.Bet;
 import model.struct.roulette.Casella;
 import view.Dialeg;
 import view.GameView;
@@ -107,7 +108,6 @@ public class RouletteView extends GameView {
 			jpBoto.add(button, BorderLayout.CENTER);
 			jpBoto.putClientProperty("action", "");
 			jpNumeros.add(jpBoto);
-			jpNumeros.putClientProperty("action", "roulette");
 		}
 		jpCentral.add(jpNumeros, BorderLayout.CENTER);
 		
@@ -215,8 +215,20 @@ public class RouletteView extends GameView {
 		Icon icon = new ImageIcon(Constants.GIF);
 		JLabel label = new JLabel(icon);
 		label.setOpaque(true);
-		jpCentral.removeAll();
-		jpFinestra.add(label, BorderLayout.CENTER);
+		JFrame roulete = new JFrame();
+		roulete.setUndecorated(true);
+		roulete.add(label);
+		roulete.setVisible(true);
+		  Timer timer = new Timer();
+	        timer.schedule(new TimerTask() {
+
+	            @Override
+	            public void run() {
+	            	roulete.dispose();
+	            	cancel();
+	            }
+	        }, 2000, 0);
+	    
 	}//Tancament del metode
 	
 	
@@ -246,8 +258,11 @@ public class RouletteView extends GameView {
 	public void registerController(){
 		super.registerController();
 		for(MyButton c: butons){
-			c.addActionListener(getManager().getController());
+			c.putClientProperty("action", "roulette");
+			c.addActionListener(getManager().getController());	
 		}
+		jbBet.putClientProperty("action", "BET_R");
+		jbExit.putClientProperty("action", "EXIT_R");
 		jbManca.addActionListener(getManager().getController());
 		jbPassa.addActionListener(getManager().getController());
 		jbSenar.addActionListener(getManager().getController());

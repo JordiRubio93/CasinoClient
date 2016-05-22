@@ -10,6 +10,7 @@ import model.Calcul;
 import model.struct.horses.HorseData;
 import network.segment.Check;
 import network.segment.InitHorses;
+import network.segment.NotifyBet;
 import network.segment.Segment;
 import view.Dialeg;
 import view.cavalls.HorsesView;
@@ -21,13 +22,13 @@ public class HorsesExecutor implements Runnable {
 	private Segment s;
 	private HorsesView game;
 	private int seconds;
-	
+
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
 		active = true;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-		
+
 	}
 
 	@Override
@@ -36,19 +37,24 @@ public class HorsesExecutor implements Runnable {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
-					if	  (!((Check) s).isOk()) new Dialeg().setWarningText("Aposta Denegada");
-					else  new Dialeg().setWarningText("Aposta Acceptada");	
+					if (!((Check) s).isOk())
+						new Dialeg().setWarningText("Aposta Denegada");
+					else
+						new Dialeg().setWarningText("Aposta Acceptada");
 					break;
-					
-				case "HorsesBetting":
-					System.err.println("Apostat");//TODO CARDS
+				case "NotifyBet":
+					NotifyBet aposta = ((NotifyBet) s);
+					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
+							+ " ha apostat " + aposta.getAposta().getAmount() + " a " + aposta.getAposta().getAmount());// TODO
+																														// CARDS
 					break;
 				case "InitHorses":
 					game.setCursa();
 					InitHorses ih = ((InitHorses) s);
 					game.initHorses(ih.getList());
 					corre(ih.getList());
-					String winner= "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName() + " !\n" + " Has guanyat" + ih.getGuanys() ;
+					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName()
+							+ " !\n" + " Has guanyat" + ih.getGuanys();
 					game.acabaPartida(winner);
 					break;
 				default:
@@ -71,8 +77,7 @@ public class HorsesExecutor implements Runnable {
 		return s;
 	}
 
-	
-	//TODO DURAR 10 segons per enunciaat!!
+	// TODO DURAR 10 segons per enunciaat!!
 	private void corre(LinkedList<HorseData> end) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -80,8 +85,10 @@ public class HorsesExecutor implements Runnable {
 				while (seconds < 30) {
 					seconds++;
 					for (int i = 0; i < Constants.nHorses; i++) {
-						if (seconds % 2 == 0) game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
-						else 				  game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));	
+						if (seconds % 2 == 0)
+							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
+						else
+							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
 					}
 					try {
 						Thread.sleep(Constants.DELAY);
@@ -91,25 +98,29 @@ public class HorsesExecutor implements Runnable {
 				}
 			}
 		};
-		thread.start();		
+		thread.start();
 		// get.enviarTrama(new GameOver());
 	}
-	
+
 	/**
 	 * David idioto no diu si es '>' o <!! se supone que mes petit
-	 * @param ih lista de datos de caballos
+	 * 
+	 * @param ih
+	 *            lista de datos de caballos
 	 * @return index ganador
 	 */
-	public int getWinner(LinkedList<HorseData> ih){
+	public int getWinner(LinkedList<HorseData> ih) {
 		int win = 0;
 		int min = Integer.MIN_VALUE;
-		for(int i = 0; i<ih.size(); i++){
-			if ( ih.get(i).getSegons()>min){
+		for (int i = 0; i < ih.size(); i++) {
+			if (ih.get(i).getSegons() > min) {
 				min = ih.get(i).getSegons();
 				win = i;
 			}
-		}return win;
+		}
+		return win;
 	}
+
 	public int getSeconds() {
 		return seconds;
 	}

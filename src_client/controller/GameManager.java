@@ -12,7 +12,7 @@ import model.RegisterValidator;
 import model.blackjack.Blackjack;
 import model.struct.horses.HorseData;
 import model.struct.user.User;
-import network.segment.HorsesBetting;
+import network.segment.Betting;
 import view.Dialeg;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
@@ -40,14 +40,7 @@ public class GameManager {
 		return (getUser().getName().equals("guest"));
 	}
 
-	public void closeRuleta() {
-		fil.interrupt();
-	}
-
-	public void executaRoulette() {
-		rouletteExecutor = new RouletteExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
-		new Thread(horsesExecutor).start();
-	}
+	
 	
 	public void executaRuleta(RouletteView rv) {
 		manager.showPanel(Constants.R_VIEW_NAME);
@@ -56,25 +49,48 @@ public class GameManager {
 		fil = new Thread(gifControl);
 		fil.start();*/
 	}
+	
+	//---------------------------Roulette-------------------------------
+
+	public void executaRoulette() {
+		System.out.println("executan el thread roulette");
+		rouletteExecutor = new RouletteExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
+		new Thread(rouletteExecutor).start();
+	}
+	
 	public void thisSlot(MyButton boton) {
 		Dialeg dialeg = new Dialeg();
 		dialeg.setInputText("How much money you want to bet?");
-		if(dialeg.getAmount() != null && (dialeg.getAmount().isEmpty() || Float.parseFloat(dialeg.getAmount()) <= 0)){
+		if (dialeg.getAmount() != null && (dialeg.getAmount().isEmpty() || Float.parseFloat(dialeg.getAmount()) <= 0)) {
 			dialeg.setWarningText("Enter a correct amount!");
-				((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
-			}else if (dialeg.getAmount() != null){
-				String slot = boton.getText();
-				Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
-				try {
-					manager.getServer().enviarTrama(new HorsesBetting(bet));					
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-	}	
-	
+			((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
+		} else if (dialeg.getAmount() != null) {
+			String slot = boton.getText();
+			Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
+			rouletteExecutor.setAposta(bet);
+		}
+	}
+		
+	public void closeRuleta() {
+		fil.interrupt();
+	}
 
+	public void sendRouletteBet() {
+		if (rouletteExecutor.getAposta() == null) new Dialeg().setWarningText("Tens que apostar! ");
+		else{
+			try {
+				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 					
+		}
+	}
+			
+	
+	//---------------------------Horses-------------------------------
+
+	
+	
 	public void executaHorses() {
 		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
 		new Thread(horsesExecutor).start();
@@ -92,13 +108,17 @@ public class GameManager {
 				String name = horses.getPhv().getHorseName();
 				Bet bet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
 				try {
-					manager.getServer().enviarTrama(new HorsesBetting(bet));					
+					manager.getServer().enviarTrama(new Betting(bet));					
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				horses.getPhv().dispose();
 			}
 		}
+	}
+
+	public LinkedList<HorseData> getHorsesList() {
+		return manager.getFileManager().getList();
 	}
 	
 	//---------------------------BlackJack-------------------------------
@@ -202,10 +222,6 @@ public class GameManager {
 	}
 
 
-	public LinkedList<HorseData> getHorsesList() {
-		return manager.getFileManager().getList();
-	}
-	
 	
 	//---------------------------Other-------------------------------
 	

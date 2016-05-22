@@ -12,7 +12,9 @@ import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Play;
 import network.segment.Top5;
+import view.AddMoneyFrame;
 import view.Dialeg;
+import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
@@ -20,9 +22,11 @@ import view.statistics.Graphics;
 
 public class MainButtonsController implements ActionListener {
 	private Manager manager;
+	private PasswordFrame pf;
+	private AddMoneyFrame af;
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
-	
+
 	}
 
 	@Override
@@ -44,14 +48,12 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
 				try {
-				manager.getServer().enviarTrama(new Play("roulette"));
-				manager.showPanel(Constants.H_VIEW_NAME);
-				manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+					manager.getServer().enviarTrama(new Play("roulette"));
+					manager.showPanel(Constants.R_VIEW_NAME);
+					manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				manager.showPanel(Constants.R_VIEW_NAME);
-				manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 			}
 			break;
 		case ("Play Horses"):
@@ -81,8 +83,21 @@ public class MainButtonsController implements ActionListener {
 			manager.lateralMainPanel(false);
 			break;
 		case ("Change Password"):
+			pf = new PasswordFrame(manager);
+			pf.setVisible(true);
 			break;
-		case ("Add money"):
+		case ("Go Change Password"):
+			pf.setVisible(false);
+			pf.dispose();
+			break;
+		case ("Add Money"):
+			System.out.println("in");
+			af = new AddMoneyFrame(manager);
+			af.setVisible(true);
+			break;
+		case ("Go Add Money"):
+			af.setVisible(false);
+			af.dispose();
 			break;
 		case ("User Evo"):
 			break;
@@ -162,20 +177,13 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			break;
 		case ("BET_R"):
-
-			// TODO
-			/*
-			if (manager>= 50)
-				new Dialeg().setWarningText("You can no longer bet!");
-			else if (!manager.getGameManager().isApostaFeta()) {
-				manager.sendBet();
-			} else
-				new Dialeg().setWarningText("You have already bet once!");
-			*/
+			manager.getGameManager().sendRouletteBet();
 			break;
 		case ("BET_H"):
 			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).showPhv();
 			break;
+		
+			
 		case ("EXIT_H"):
 			try {
 				manager.getServer().enviarTrama(new GameOver());

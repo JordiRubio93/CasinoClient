@@ -1,17 +1,18 @@
 package network.segment;
 
+import model.Bet;
 import model.struct.user.PublicUser;
 
 public class NotifyBet extends Segment{
 
 	private static final long serialVersionUID = 1L;
 	private PublicUser publicUser;
-	private double amount;
+	private Bet aposta;
 	
-	public NotifyBet(PublicUser publicUser, double amount) {
+	public NotifyBet(PublicUser publicUser, Bet aposta) {
 		super();
 		this.publicUser = publicUser;
-		this.amount = amount;
+		this.aposta = aposta;
 	}
 	public PublicUser getPublicUser() {
 		return publicUser;
@@ -19,10 +20,10 @@ public class NotifyBet extends Segment{
 	public void setPublicUser(PublicUser publicUser) {
 		this.publicUser = publicUser;
 	}
-	public double getAmount() {
-		return amount;
+	public Bet getAposta() {
+		return aposta;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
+	public void setAposta(Bet aposta) {
+		this.aposta = aposta;
+	} 
 }

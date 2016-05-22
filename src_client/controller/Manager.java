@@ -155,11 +155,11 @@ public class Manager {
 		Check c;
 		switch (joc) {
 		case ("Play Roulette"):
-			System.out.println();
 			c = ((Check) server.obtenirTrama());
 			if (c instanceof Check && (c.isOk())) gameManager.executaRoulette();
 			else new Dialeg().setConfirmText("denegat");
 			break;
+			
 		case ("Play Horses"):
 			System.out.println();
 			c = ((Check) server.obtenirTrama());
@@ -215,14 +215,7 @@ public class Manager {
 			}
 		} else
 			view.showError("Register Fail");
-	}
-
-	public void sendBet() {
-	/*	try {
-			server.enviarTrama(new RouletteBetting(gameManager.getApostesRuleta()));
-		} catch (IOException e) {
-		}*/
-	}
+	}	
 
 	public LinkedList<HorseData> getHorsesList() {
 		return fileManager.getHorsesList();
