@@ -10,6 +10,7 @@ import model.struct.user.LoginInfo;
 import model.struct.user.User;
 import network.ServerComunication;
 import network.segment.AddUser;
+import network.segment.ChangePassword;
 import network.segment.Check;
 import network.segment.LoginUser;
 import network.segment.Segment;
@@ -230,5 +231,24 @@ public class Manager {
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
 	}
+
+	public void changePW(String password) {
+		try {
+			User user = getGameManager().getUser();
+			user.setLoginInfo(new LoginInfo(user.getEmail(), password));
+			user.EncryptPassword();
+			server.enviarTrama(new ChangePassword(user.getPassword()));
+			Segment s = (Segment) server.obtenirTrama();
+			if (s instanceof Check) {
+				if (((Check) s).isOk()) {
+					new Dialeg().setWarningText("PW Canviada correctament");
+					getGameManager().setUser(user);
+				} else
+					new Dialeg().setWarningText("ERROR al actualitzar la PW");
+			}
+		} catch (IOException e){ e.printStackTrace();}
+	}
+
+
 
 }

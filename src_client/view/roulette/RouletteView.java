@@ -76,11 +76,7 @@ public class RouletteView extends GameView {
 	public RouletteView(){
 		super.initElements();
 		initElements();
-		createDaemonTime();
-		//jpFinestra = new JPanel(new BorderLayout());
-		//this.setLayout(new BorderLayout());
-		//this.add(jpFinestra, BorderLayout.CENTER);
-		
+		createDaemonTime();	
 	}
 	
 	/**
@@ -227,10 +223,9 @@ public class RouletteView extends GameView {
 	            	roulete.dispose();
 	            	cancel();
 	            }
-	        }, 2000, 0);
+	        }, 0, 2000);
 	    
 	}//Tancament del metode
-	
 	
 	/**
      * Metode que no retorna res i que s'encarrega d'acabar la partida de la ruleta.
@@ -239,11 +234,11 @@ public class RouletteView extends GameView {
 		Dialeg dialeg = new Dialeg();
 		dialeg.setWarningText("The winner number is... " + winner + " !");
 	}//Tancament del metode
-	
 
 	public void enableBet(){
 		jbBet.setEnabled(true);
 	}
+	
 	public void disableBet() {
 		jbBet.setEnabled(false);
 	}
@@ -252,7 +247,6 @@ public class RouletteView extends GameView {
 		pintaBoto(jBoto);
 		jBoto.canviaEstat();
 		jBoto.setBackground(PUSHED);
-
 	}
 	
 	public void registerController(){

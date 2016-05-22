@@ -38,12 +38,11 @@ public class RouletteExecutor implements Runnable {
 					if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
 					else  new Dialeg().setWarningText("Bet accepted");	
 					break;	
-				case "NotifyBet":System.out.println("1111");
+				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
 					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
-							+ " ha apostat" + aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());																									// CARDS
+							+ " ha apostat" + aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());			
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
-					
 					break;
 				case "InitRoulette":
 					InitRoulette resultat = ((InitRoulette) s);

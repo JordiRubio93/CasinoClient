@@ -42,14 +42,6 @@ public class GameManager {
 		return (getUser().getName().equals("guest"));
 	}
 
-	public void executaRuleta(RouletteView rv) {
-		manager.showPanel(Constants.R_VIEW_NAME);
-	
-		/*EndingControl gifControl = new EndingControl(manager, rv);
-		fil = new Thread(gifControl);
-		fil.start();*/
-	}
-	
 	//---------------------------Roulette-------------------------------
 
 	public void executaRoulette() {
@@ -67,6 +59,8 @@ public class GameManager {
 		} else if (dialeg.getAmount() != null) {
 			String slot = boton.getText();
 			Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
+			System.out.println(rouletteExecutor.toString());
+			
 			rouletteExecutor.setAposta(bet);
 		}
 	}

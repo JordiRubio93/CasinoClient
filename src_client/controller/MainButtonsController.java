@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import javax.swing.JButton;
 
+import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
 import network.segment.GameOver;
 import network.segment.LogOut;
@@ -86,10 +87,17 @@ public class MainButtonsController implements ActionListener {
 		case ("Change Password"):
 			pf = new PasswordFrame(manager);
 			pf.setVisible(true);
+
 			break;
 		case ("Go Change Password"):
-			pf.setVisible(false);
-			pf.dispose();
+			RegisterValidator rv = new RegisterValidator();
+			if (!pf.getPassword().equals(pf.getPassword()) || !rv.validatePasswordFormat(pf.getPassword())) {
+				new Dialeg().setWarningText("wrong password");
+			} else {
+				pf.setVisible(false);
+				pf.dispose();
+				manager.changePW(pf.getPassword());
+			}			
 			break;
 		case ("Add Money"):
 			System.out.println("in");

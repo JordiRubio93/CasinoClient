@@ -92,7 +92,6 @@ public class HorsesView extends GameView {
 	public void showCounter(boolean show){
 		jlCount.setVisible(show);
 	}
-
 	
 	public void paintRed(boolean flag){
 		jlCount.setOpaque(flag);
@@ -123,6 +122,7 @@ public class HorsesView extends GameView {
 	public void enableBet(){
 		jbBet.setEnabled(true);
 	}
+	
 	public void disableBet() {
 		phv.setVisible(false);
 		jbBet.setEnabled(false);
