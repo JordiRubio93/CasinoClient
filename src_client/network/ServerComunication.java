@@ -74,7 +74,6 @@ public class ServerComunication{
 	}
 
 	public ObjectOutputStream getObjectOut() {
-		// TODO Auto-generated method stub
 		return objectOut;
 	}
 }

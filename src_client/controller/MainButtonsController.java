@@ -25,6 +25,7 @@ public class MainButtonsController implements ActionListener {
 	private Manager manager;
 	private PasswordFrame pf;
 	private AddMoneyFrame af;
+	private boolean guest;
 	
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
@@ -72,8 +73,14 @@ public class MainButtonsController implements ActionListener {
 			}
 			break;
 		case ("Play BlackJack"):
-			manager.showPanel(Constants.BJ_VIEW_NAME);
-			manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
+			if (manager.getGameManager().isGuest())  guest = true;
+				try {
+					manager.getServer().enviarTrama(new Play("blackjack"));
+					manager.showPanel(Constants.BJ_VIEW_NAME);
+					manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			break;
 		case ("Statistics"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
@@ -213,7 +220,7 @@ public class MainButtonsController implements ActionListener {
 			// kill rulete
 			break;
 		case ("BET_BJ"):
-			manager.getGameManager().betBJ();
+			manager.getGameManager().betBJ(guest);
 			break;
 		case ("HIT_BJ"):
 			manager.getGameManager().hitBJ();

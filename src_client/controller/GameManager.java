@@ -13,6 +13,8 @@ import model.blackjack.Blackjack;
 import model.struct.horses.HorseData;
 import model.struct.user.User;
 import network.segment.Betting;
+import network.segment.Check;
+import network.segment.Segment;
 import view.Dialeg;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
@@ -97,7 +99,6 @@ public class GameManager {
 			 new Dialeg().setWarningText("You must enter a positive amount!");
 		} else {
 			horses.getPhv().obreDialeg();
-
 			if (horses.getPhv().getDialeg().getResult() == JOptionPane.OK_OPTION) {
 				String name = horses.getPhv().getHorseName();
 				Bet bet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
@@ -122,12 +123,28 @@ public class GameManager {
 		resetBJTable();
 	}
 	
-	public void betBJ() {
+	public void betBJ(boolean guest) {
 		double bet = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).getBet();
 		if (!blackjack.isOkBet() && blackjack.canBet(bet)) {
+	
+			if(guest){
+				blackjack.addBet(bet);
+				startBJ();
+			}
 			blackjack.setOkBet(true);
-			blackjack.addBet(bet);
-			startBJ();
+			Bet aposta = new Bet(bet, "blackJack");
+			try {
+				manager.getServer().enviarTrama(new Betting(aposta));	
+				Segment s = manager.getServer().obtenirTrama();
+				if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
+				else{  new Dialeg().setWarningText("Bet accepted");			
+				blackjack.addBet(bet);
+				startBJ();
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 		} else {
 			JOptionPane.showMessageDialog((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME),
 					"There has been an error with the bet:\n The minimum bet is 10, or\n You have not enough funds",

@@ -1,7 +1,13 @@
 package model.blackjack;
 
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import controller.Constants;
+import model.Bet;
 import model.struct.user.User;
+import network.segment.NotifyBet;
 
 public class Blackjack {
 	private Deck deck;
