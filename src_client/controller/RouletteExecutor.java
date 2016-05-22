@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import model.Bet;
 import network.segment.Check;
@@ -46,11 +44,9 @@ public class RouletteExecutor implements Runnable {
 							+ " ha apostat" + aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());// TODO																									// CARDS
 					break;
 				case "InitRoulette":
-					System.out.println("tenim guanyador");
 					InitRoulette resultat = ((InitRoulette) s);
 					mostragif();
-					String winner = "The winner is... " + resultat.getWinner() + " !\n" + " Has guanyat"
-							+ resultat.getGuanys();
+					String winner = "The winner number is... " + resultat.getWinner() + " !";
 					mostragif();
 					new Dialeg().setWarningText(winner);
 					break;

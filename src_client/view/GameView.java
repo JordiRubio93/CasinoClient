@@ -79,6 +79,7 @@ public abstract class GameView extends BaseJPanel {
 		jpDades = new JPanel(new BorderLayout());
 		columnLayout = new GridLayout();
 		columnLayout.setColumns(1);
+		
 		//tirar apostas cap adalt	
 		jpList = new JPanel(columnLayout);
 		jpAux = new JPanel(new BorderLayout());

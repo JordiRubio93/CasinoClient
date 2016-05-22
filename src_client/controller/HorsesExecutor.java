@@ -28,7 +28,6 @@ public class HorsesExecutor implements Runnable {
 		this.objectOut = objectOut;
 		active = true;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-
 	}
 
 	@Override
@@ -53,8 +52,7 @@ public class HorsesExecutor implements Runnable {
 					InitHorses ih = ((InitHorses) s);
 					game.initHorses(ih.getList());
 					corre(ih.getList());
-					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName()
-							+ " !\n" + " Has guanyat" + ih.getGuanys();
+					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName().toUpperCase()	+ " !";
 					game.acabaPartida(winner);
 					break;
 				default:
@@ -79,26 +77,21 @@ public class HorsesExecutor implements Runnable {
 
 	// TODO DURAR 10 segons per enunciaat!!
 	private void corre(LinkedList<HorseData> end) {
-		Thread thread = new Thread() {
-			public void run() {
-				seconds = 0;
-				while (seconds < 30) {
-					seconds++;
-					for (int i = 0; i < Constants.nHorses; i++) {
-						if (seconds % 2 == 0)
-							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
-						else
-							game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
-					}
-					try {
-						Thread.sleep(Constants.DELAY);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+		seconds = 0;
+		while (seconds < 30) {
+			seconds++;
+			for (int i = 0; i < Constants.nHorses; i++) {
+				if (seconds % 2 == 0)
+					game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), true), Calcul.calculaY(i));
+				else
+					game.runHorses(i, Calcul.calculaX(end.get(i).getSegons(), false), Calcul.calculaY(i));
 			}
-		};
-		thread.start();
+			try {
+				Thread.sleep(Constants.DELAY);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		// get.enviarTrama(new GameOver());
 	}
 

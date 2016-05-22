@@ -25,12 +25,10 @@ public class HorsesView extends GameView {
 	private Point[] coord;
 	private PickHorseView phv;
 	
-	
 	public HorsesView(PickHorseView phv){
 		initElements();
 		createDaemonTime();
 		this.phv = phv;
-	
 	}
 	
 	protected void initElements() {
@@ -56,13 +54,12 @@ public class HorsesView extends GameView {
 		jpCarrils.setBackground(new Color(0,0,0,0));
 		jpStadium.add(jpCarrils, BorderLayout.WEST);
 		add(jpStadium, BorderLayout.CENTER);
-		jpCarrils.setVisible(true);
-		repaint();
+		showCursa(true);
 	}
-	/*
+	
 	public void showCursa(boolean show){
 		jpCarrils.setVisible(show);
-	}*/
+	}
 	
 	public void initHorses(LinkedList<HorseData> dades){
 		list = new LinkedList<HorseAnimation>();
@@ -74,6 +71,7 @@ public class HorsesView extends GameView {
 		jpStadium.setList(list);
 		jpStadium.setCoordList(coord);
 		jpStadium.setReady(true);
+		jpStadium.repaint();
 	}
 	
 	public void runHorses(int i, int x, int y){
@@ -82,7 +80,7 @@ public class HorsesView extends GameView {
 	}
 	
 	public void setCounter(){
-		jlCount = new JLabel("BET!!!");
+		jlCount = new JLabel("...");
 		jlCount.setHorizontalAlignment(JLabel.CENTER);
 		jlCount.setVerticalAlignment(JLabel.CENTER);
 		jlCount.setFont(new Font("Serif", Font.BOLD, 70));
