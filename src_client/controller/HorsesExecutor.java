@@ -44,8 +44,9 @@ public class HorsesExecutor implements Runnable {
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
 					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
-							+ " ha apostat " + aposta.getAposta().getAmount() + " a " + aposta.getAposta().getAmount());// TODO
-																														// CARDS
+							+ " ha apostat " + aposta.getAposta().getAmount() + " a " + aposta.getAposta().getAmount());
+					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
+					
 					break;
 				case "InitHorses":
 					game.setCursa();
@@ -75,7 +76,6 @@ public class HorsesExecutor implements Runnable {
 		return s;
 	}
 
-	// TODO DURAR 10 segons per enunciaat!!
 	private void corre(LinkedList<HorseData> end) {
 		seconds = 0;
 		while (seconds < 30) {

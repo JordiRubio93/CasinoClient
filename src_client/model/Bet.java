@@ -6,7 +6,6 @@ public class Bet implements Serializable {
     private static final long serialVersionUID = 1L;
 	private double amount;
 	private String slot;
-
 	
 	public Bet(double amount, String slot) {
 		this.amount = amount;
@@ -24,7 +23,6 @@ public class Bet implements Serializable {
 	public void setSlot(String slot) {
 		this.slot = slot;
 	}
-	
 	
 }
 

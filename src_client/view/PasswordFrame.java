@@ -41,6 +41,7 @@ public class PasswordFrame extends JFrame {
 			setBackground(Color.BLACK);
 			setSize(new Dimension(700, 200));
 			setLocationRelativeTo(null);
+			setTitle("CHANGE PASSWORD");
 			
 			passLabel.setOpaque(false);
 			passLabel.setFont(Constants.plainFont);
@@ -73,7 +74,6 @@ public class PasswordFrame extends JFrame {
 			p2.setBackground(Color.BLACK);
 			p2.add(pass2Label);
 			p2.add(pass2Field);
-			
 			
 			goButton.setEnabled(false);
 			goButton.setToolTipText("All fields must be filled correctly in order to change your password");

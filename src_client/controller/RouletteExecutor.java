@@ -35,13 +35,15 @@ public class RouletteExecutor implements Runnable {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
-					if(!((Check) s).isOk()) new Dialeg().setWarningText("Aposta Denegada");
-					else  new Dialeg().setWarningText("Aposta Acceptada");	
+					if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
+					else  new Dialeg().setWarningText("Bet accepted");	
 					break;	
-				case "NotifyBet":
+				case "NotifyBet":System.out.println("1111");
 					NotifyBet aposta = ((NotifyBet) s);
 					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
-							+ " ha apostat" + aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());// TODO																									// CARDS
+							+ " ha apostat" + aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());																									// CARDS
+					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
+					
 					break;
 				case "InitRoulette":
 					InitRoulette resultat = ((InitRoulette) s);

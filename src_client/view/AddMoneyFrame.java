@@ -42,6 +42,7 @@ public class AddMoneyFrame extends JFrame {
 		setBackground(Color.BLACK);
 		setSize(new Dimension(700, 200));
 		setLocationRelativeTo(null);
+		setTitle("ADD MONEY");
 		
 		passLabel.setOpaque(false);
 		passLabel.setFont(Constants.plainFont);

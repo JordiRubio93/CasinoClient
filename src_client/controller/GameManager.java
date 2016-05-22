@@ -76,7 +76,7 @@ public class GameManager {
 	}
 
 	public void sendRouletteBet() {
-		if (rouletteExecutor.getAposta() == null) new Dialeg().setWarningText("Tens que apostar! ");
+		if (rouletteExecutor.getAposta() == null) new Dialeg().setWarningText("You must bet!");
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));

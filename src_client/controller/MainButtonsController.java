@@ -187,8 +187,6 @@ public class MainButtonsController implements ActionListener {
 		case ("BET_H"):
 			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).showPhv();
 			break;
-		
-			
 		case ("EXIT_H"):
 			try {
 				manager.getServer().enviarTrama(new GameOver());

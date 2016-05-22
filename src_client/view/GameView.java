@@ -12,12 +12,15 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller.Constants;
+import model.Bet;
+import model.struct.user.PublicUser;
 
 public abstract class GameView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
@@ -29,11 +32,6 @@ public abstract class GameView extends BaseJPanel {
 	protected GridLayout columnLayout;
 	protected JScrollPane jspList;
 	protected JPanel jpDades;
-	protected JLabel jlAvatar;
-	protected JPanel jpCell;
-	protected JLabel jlUser;
-	protected JPanel jpInfo;
-	protected JLabel jlAposta;
 	protected JPanel jpList;
 	protected JPanel jpAux;
 	protected TimerThread timer;
@@ -79,6 +77,7 @@ public abstract class GameView extends BaseJPanel {
 		jpDades = new JPanel(new BorderLayout());
 		columnLayout = new GridLayout();
 		columnLayout.setColumns(1);
+		columnLayout.setVgap(10);
 		
 		//tirar apostas cap adalt	
 		jpList = new JPanel(columnLayout);
@@ -121,5 +120,26 @@ public abstract class GameView extends BaseJPanel {
 			
 			}
 		}, Constants.SPLASH_TIME, TimeUnit.SECONDS.toMillis(1));
+	}
+	
+	public void addAtList(PublicUser user, Bet bet){
+		columnLayout.setRows(columnLayout.getRows() + 1);
+		
+		JPanel jpCell = new JPanel(new BorderLayout());
+		JPanel jpInfo = new JPanel(new GridLayout(2,1));
+		JLabel jlAvatar = new JLabel(new ImageIcon(Constants.AVATAR));
+		JLabel jlUser = new JLabel("   " + user.getSurname() + " - " + bet.getAmount() + " €   ");
+		JLabel jlAposta = new JLabel("   " + bet.getSlot() + "   ");
+		
+		jpInfo.add(jlUser);
+		jpInfo.add(jlAposta);
+		
+		jlUser.setFont(new Font("Serif", Font.BOLD, 20));
+		jlAposta.setFont(new Font("Serif", Font.PLAIN, 18));
+		
+		jpCell.add(jlAvatar, BorderLayout.WEST);
+		jpCell.add(jpInfo, BorderLayout.CENTER);
+		
+		jpList.add(jpCell, BorderLayout.CENTER);
 	}
 }
