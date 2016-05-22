@@ -52,7 +52,7 @@ public class Graphics extends BaseJPanel {
 	public boolean createChart(LinkedList<HistoricPartides> hist){
 		ArrayList<Bar> bars = new ArrayList<Bar>();
 		
-		if(hist.isEmpty()){
+		if(hist.isEmpty() || hist.getFirst().getGuanys() == 0){
 			new Dialeg().setWarningText("We're sorry.\nThere's no available information about this game.");
 			return false;
 		}

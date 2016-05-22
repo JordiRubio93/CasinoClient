@@ -249,6 +249,4 @@ public class Manager {
 		} catch (IOException e){ e.printStackTrace();}
 	}
 
-
-
 }
