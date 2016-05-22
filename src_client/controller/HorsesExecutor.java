@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import model.Calcul;
 import model.struct.horses.HorseData;
 import network.segment.Check;
+import network.segment.Disconnect;
 import network.segment.InitHorses;
 import network.segment.NotifyBet;
 import network.segment.Segment;
@@ -22,10 +23,12 @@ public class HorsesExecutor implements Runnable {
 	private Segment s;
 	private HorsesView game;
 	private int seconds;
+	private Manager manager;
 
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
+		this.manager = manager;
 		active = true;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 	}
@@ -55,6 +58,12 @@ public class HorsesExecutor implements Runnable {
 					corre(ih.getList());
 					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName().toUpperCase()	+ " !";
 					game.acabaPartida(winner);
+					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					Dialeg d = new Dialeg();
+					d.setWarningText(winner +" Gracias por Jugar");
+					manager.getServer().enviarTrama(new Disconnect());
+					System.exit(0);
+					
 					break;
 				default:
 					System.err.println("pero esto que coño es?");

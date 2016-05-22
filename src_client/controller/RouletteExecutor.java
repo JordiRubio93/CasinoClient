@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 import model.Bet;
 import network.segment.Check;
+import network.segment.Disconnect;
 import network.segment.InitRoulette;
 import network.segment.NotifyBet;
 import network.segment.Segment;
@@ -20,10 +21,12 @@ public class RouletteExecutor implements Runnable {
 	private Segment s;
 	private RouletteView game;
 	private Bet aposta;
+	private Manager manager;
 	
 	public RouletteExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
+		this.manager = manager;
 		active = true;
 		game = (RouletteView) manager.getPanel(Constants.R_VIEW_NAME);
 		System.out.println("ready");
@@ -48,8 +51,11 @@ public class RouletteExecutor implements Runnable {
 					InitRoulette resultat = ((InitRoulette) s);
 					mostragif();
 					String winner = "The winner number is... " + resultat.getWinner() + " !";
-					mostragif();
-					new Dialeg().setWarningText(winner);
+					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					Dialeg d = new Dialeg();
+					d.setWarningText(winner +" Gracias por Jugar");
+					manager.getServer().enviarTrama(new Disconnect());
+					System.exit(0);
 					break;
 				default:
 					System.err.println("no se que ma arribat");
