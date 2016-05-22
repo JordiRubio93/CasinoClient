@@ -39,17 +39,10 @@ public class RouletteExecutor implements Runnable {
 					System.err.println("Apostat");//TODO CARDS
 					break;
 				case "xxxx":
-					/*game.setCursa();
-					InitHorses ih = ((InitHorses) s);
-					game.initHorses(ih.getList());
-					corre(ih.getList());
-					String winner= "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName() + " !\n" + " Has guanyat" + ih.getGuanys() ;
-					game.acabaPartida(winner);*/
 					mostragif();
-					//game.acabaPartida(/*winner*/);
 					break;
 				default:
-					System.err.println("pero esto que coño es?");
+					System.out.println("");
 					break;
 				}
 			}
