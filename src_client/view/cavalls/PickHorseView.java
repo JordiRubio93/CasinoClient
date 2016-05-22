@@ -100,7 +100,7 @@ public class PickHorseView extends JFrame {
 	}
 	
 	public void propietats(){
-		setSize(300,150);
+		setSize(300,100);
 		setUndecorated(true);
 		setResizable(false);
 		setLocationRelativeTo(null);

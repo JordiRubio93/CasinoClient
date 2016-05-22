@@ -1,6 +1,7 @@
 package view.statistics;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -104,7 +105,7 @@ public class StatisticsWindow extends BaseJPanel {
 		homeButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
 		
 		panelTop.setLayout(new FlowLayout());
-		panelTop.setBackground(Constants.semiOpaqueBlack);
+		panelTop.setBackground(Color.BLACK);
 		panelTop.add(homeButton, 0);
 		
 		background = new Tapet(width, height, Constants.BG);

@@ -38,9 +38,9 @@ public class HorsesExecutor implements Runnable {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
 					if (!((Check) s).isOk())
-						new Dialeg().setWarningText("Aposta Denegada");
+						new Dialeg().setWarningText("Bet refused");
 					else
-						new Dialeg().setWarningText("Aposta Acceptada");
+						new Dialeg().setWarningText("Bet accepted");
 					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);

@@ -5,17 +5,22 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import controller.Constants;
 import model.Sleeper;
 import model.Utilities;
-import view.Tapet;
 
-public class BarChart extends Tapet implements Runnable {
+public class BarChart extends JPanel implements Runnable {
     private static final long serialVersionUID = 1L;
     
 	//offsets (padding of actual chart to its border)
@@ -55,11 +60,11 @@ public class BarChart extends Tapet implements Runnable {
 	private int pointDistance;
 	private int[] currentBarHeight;
 	private int[] y;
+
+	private Sleeper sleep;
  
-    public BarChart(ArrayList<Bar> bars, Axis yAxis, String game, int w, int h) {
-    	super(w, h, Constants.BG);
-    	
-        this.bars = bars;
+    public BarChart(ArrayList<Bar> bars, Axis yAxis, String game) {
+    	this.bars = bars;
         this.yAxis = yAxis;
         
         Rectangle r = Utilities.getUsableScreenBounds();
@@ -73,9 +78,12 @@ public class BarChart extends Tapet implements Runnable {
         for(int i = 0; i < 5; i++) y[i] = topOffset + height - (topOffset + bottomOffset);
     }
 
-    @Override
     public void paintComponent(Graphics g) {
-    	super.paintComponent(g);
+    	try {
+			File fitxer = new File(Constants.BG);
+			Image imatge = ImageIO.read(fitxer);
+			g.drawImage(imatge, 0, 0, width, height, null);
+		} catch (IOException e) {}
     	
     	Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -215,6 +223,7 @@ public class BarChart extends Tapet implements Runnable {
     public void redrawBars(){
     	int[] scaledBarHeight = new int[5];
     	int heightChart = height - (topOffset + bottomOffset);
+    	sleep = new Sleeper(this, 50);
     	
     	for (int i = 0; i < bars.size() && i < 5; i++) {
     		Bar bar = bars.get(i);
@@ -225,24 +234,26 @@ public class BarChart extends Tapet implements Runnable {
     		
             int amount = 10;
             
-            Sleeper sleep = new Sleeper(this, 50);
-            
             currentBarHeight[i] = 0;
-    		while(currentBarHeight[i] < scaledBarHeight[i]){
+    		while(currentBarHeight[i] < scaledBarHeight[i] && !sleep.isInterrupted()){
 				y[i] -= amount;
 				currentBarHeight[i] += amount;
-				repaint();
+				
 				sleep.run();
+				revalidate();
+				repaint();
 			}
     	}
     }
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		redrawBars();
 	}
 	
-	public void stop(){
-		this.stop();
+	public synchronized void stop(){
+		bars.clear();
+		bars = null;
+		sleep.interrupt();
 	}
 }

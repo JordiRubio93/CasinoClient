@@ -24,6 +24,7 @@ public class MainButtonsController implements ActionListener {
 	private Manager manager;
 	private PasswordFrame pf;
 	private AddMoneyFrame af;
+	
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
 
@@ -124,25 +125,28 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Back"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
+			manager.getGameManager().executaGrafics(false);
 			break;
 		case ("Top 5 Roulette"):
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 1));
 				LinkedList<HistoricPartides> histRuleta = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histRuleta)) {
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histRuleta)){
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					manager.getGameManager().executaGrafics(true);
 				}
+				
 			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			break;
 		case ("Top 5 Blackjack"):
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 3));
 				LinkedList<HistoricPartides> histBJ = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histBJ)) {
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histBJ)){
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					manager.getGameManager().executaGrafics(true);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -152,11 +156,12 @@ public class MainButtonsController implements ActionListener {
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 2));
 				LinkedList<HistoricPartides> histCavalls = ((Top5) manager.getServer().obtenirTrama()).getHistoric();
-				if (((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histCavalls)) {
+				if(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).createChart(histCavalls)){
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
-					new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart()).start();
+					manager.getGameManager().executaGrafics(true);
 				}
 			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			break;
 		case ("Cash Evo"):

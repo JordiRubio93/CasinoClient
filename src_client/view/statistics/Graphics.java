@@ -41,10 +41,12 @@ public class Graphics extends BaseJPanel {
 		backButton.putClientProperty("action", "Back");
 		backButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
 		
-		panelTop.setBackground(Constants.semiOpaqueBlack);
+		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
 		add(panelTop, BorderLayout.NORTH);
+		
+		repaint();
 	}
 	
 	public boolean createChart(LinkedList<HistoricPartides> hist){
@@ -81,11 +83,7 @@ public class Graphics extends BaseJPanel {
 		
 		Axis axis = new Axis(max, 0, 50, 10, 5, "Gains");
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
-		
-		chart = new BarChart(bars, axis, cad, width, height);
+		chart = new BarChart(bars, axis, cad);
 		add(chart, BorderLayout.CENTER);
 		
 		return true;

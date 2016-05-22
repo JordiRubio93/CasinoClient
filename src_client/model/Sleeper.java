@@ -15,6 +15,8 @@ public class Sleeper extends Thread {
 				obj.wait(time);
 				obj.notify();
 			}
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+			this.interrupt();
+		}
 	}
 }

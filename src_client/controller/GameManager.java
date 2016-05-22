@@ -18,6 +18,7 @@ import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.roulette.MyButton;
 import view.roulette.RouletteView;
+import view.statistics.Graphics;
 
 public class GameManager {
 	private User user;
@@ -27,8 +28,9 @@ public class GameManager {
 	private RegisterValidator rv;
 	private HorsesExecutor horsesExecutor;
 	private RouletteExecutor rouletteExecutor;
-	private Thread fil;
+	private Thread filGif;
 	private Bet apostaRuleta;
+	private Thread filGrafics;
 
 	public GameManager(Manager manager) {
 		this.manager = manager;
@@ -40,8 +42,6 @@ public class GameManager {
 		return (getUser().getName().equals("guest"));
 	}
 
-	
-	
 	public void executaRuleta(RouletteView rv) {
 		manager.showPanel(Constants.R_VIEW_NAME);
 	
@@ -72,7 +72,7 @@ public class GameManager {
 	}
 		
 	public void closeRuleta() {
-		fil.interrupt();
+		filGif.interrupt();
 	}
 
 	public void sendRouletteBet() {
@@ -257,5 +257,16 @@ public class GameManager {
 		return apostaRuleta;
 	}
 
-
+	public void executaGrafics(boolean pinta){
+		if(pinta){
+			filGrafics = new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart());
+			filGrafics.start();
+		}else{
+			if(filGrafics.isAlive()){
+				filGrafics.interrupt();
+				((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart().stop();
+			}
+			
+		}
+	}
 }

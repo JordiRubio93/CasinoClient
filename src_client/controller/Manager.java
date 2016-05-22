@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -45,11 +46,30 @@ public class Manager {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
 			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
-			if (!address.isReachable(5000))
+			if (!address.isReachable(5000) || !isPortInUse(cf.getIP_SDB(), cf.getPORT_Client()))
 				throw new TCPException("Server OFF");
 		} catch (IOException | FileException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean isPortInUse(String hostName, int portNumber) throws IOException {
+        boolean result;
+        Socket s = null;
+        
+        try {
+            s = new Socket(hostName, portNumber);
+            s.close();
+            result = true;
+        }
+        catch(Exception e) {
+            result = false;
+        }
+        finally{
+        	if(s!=null) s.close();
+        }
+
+        return(result);
 	}
 
 	public LoginInfo getLoginSaved() {
@@ -157,16 +177,15 @@ public class Manager {
 		case ("Play Roulette"):
 			c = ((Check) server.obtenirTrama());
 			if (c instanceof Check && (c.isOk())) gameManager.executaRoulette();
-			else new Dialeg().setConfirmText("denegat");
+			else new Dialeg().setConfirmText("You can't bet");
 			break;
-			
 		case ("Play Horses"):
 			System.out.println();
 			c = ((Check) server.obtenirTrama());
 			if (c instanceof Check && (c.isOk()))
 				gameManager.executaHorses();
 			else
-				new Dialeg().setConfirmText("denegat");
+				new Dialeg().setConfirmText("You can't bet");
 			break;
 		case ("Play BlackJack"):
 			gameManager.executaBlackjack();
