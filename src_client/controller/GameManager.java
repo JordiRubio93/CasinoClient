@@ -22,7 +22,25 @@ import view.roulette.MyButton;
 import view.roulette.RouletteView;
 import view.statistics.Graphics;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: GameManager </b> <br/>
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class GameManager {
+	
+	//Atributs de la classe
 	private User user;
 	private Manager manager;
 	private LoginValidator loginValidator;
@@ -34,24 +52,38 @@ public class GameManager {
 	private Bet apostaRuleta;
 	private Thread filGrafics;
 
+	/**
+	 * Constructor per la grafica de la ruleta.
+	 */
 	public GameManager(Manager manager) {
 		this.manager = manager;
 		loginValidator = new LoginValidator();
 		rv = new RegisterValidator();
-	}
+	}//Tancament del constructor
 
+	/**
+	 * Metode que retorna un boolean indicant si l'usuari es usuari convidat o no.
+	 * @return (getUser().getName().equals("guest")).
+	 */
 	public boolean isGuest() {
 		return (getUser().getName().equals("guest"));
-	}
+	}//Tancament del metode
 
 	//---------------------------Roulette-------------------------------
 
+	/**
+	 * Metode encarregat d'executar la ruleta.
+	 */
 	public void executaRoulette() {
 		System.out.println("executan el thread roulette");
 		rouletteExecutor = new RouletteExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
 		new Thread(rouletteExecutor).start();
-	}
+	}//Tancament del metode
 	
+	/**
+	 * Metode que no retorna res, rep un MyButton i s'encarrega de tractar l'aposta.
+	 * @param boton (boto al qual s'ha clicat per apostar)
+	 */
 	public void thisSlot(MyButton boton) {
 		Dialeg dialeg = new Dialeg();
 		dialeg.setInputText("How much money you want to bet?");
@@ -65,12 +97,18 @@ public class GameManager {
 			
 			rouletteExecutor.setAposta(bet);
 		}
-	}
-		
+	}//Tancament del metode
+	
+	/**
+	 * Metode que no retorna res i que s'encarrega de tancar el gif de la ruleta.
+	 */
 	public void closeRuleta() {
 		filGif.interrupt();
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que no retorna res i que s'encarrega d'enviar l'aposta que s'ha fet.
+	 */
 	public void sendRouletteBet() {
 		if (rouletteExecutor.getAposta() == null) new Dialeg().setWarningText("You must bet!");
 		else{
@@ -80,18 +118,23 @@ public class GameManager {
 				e.printStackTrace();
 			} 					
 		}
-	}
+	}//Tancament del metode
 			
 	
 	//---------------------------Horses-------------------------------
 
 	
-	
+	/**
+	 * Metode encarregat d'executar la cursa de cavalls.
+	 */
 	public void executaHorses() {
 		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
 		new Thread(horsesExecutor).start();
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que s'encarrega de tractar l'aposta al cavall que es vol.
+	 */
 	public void thisHorse(){
 		HorsesView horses = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 		if (horses.getPhv().getAmount().isEmpty()
@@ -110,19 +153,29 @@ public class GameManager {
 				horses.getPhv().dispose();
 			}
 		}
-	}
+	}//Tancament del metode
 
+	/**
+	 * Getter de HorsesList.
+	 */
 	public LinkedList<HorseData> getHorsesList() {
 		return manager.getFileManager().getList();
-	}
+	}//Tancament del getter
 	
 	//---------------------------BlackJack-------------------------------
 
+	/**
+	 * Metode encarregat d'executar el blackjack.
+	 */
 	public void executaBlackjack() {
 		blackjack = new Blackjack(user);
 		resetBJTable();
-	}
+	}//Tancament del metode
 	
+	/**
+	 * Metode que no retorna res, rep un boolean i s'encarrega de tractar les apostes del blackjack.
+	 * @param guest (Boolean que indica si l'usuari es o no un usuari convidat)
+	 */
 	public void betBJ(boolean guest) {
 		double bet = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).getBet();
 		if (!blackjack.isOkBet() && blackjack.canBet(bet)) {
@@ -150,8 +203,11 @@ public class GameManager {
 					"There has been an error with the bet:\n The minimum bet is 10, or\n You have not enough funds",
 					"ERROR", JOptionPane.PLAIN_MESSAGE);
 		}
-	}
+	}//Tancament del metode
 	
+	/**
+	 * Metode que no retorna res i que s'encarrega de fer començar el blackjack.
+	 */
 	public void startBJ() {
 		BlackjackView blackjackview = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME));
 		blackjack.newGame();
@@ -167,8 +223,11 @@ public class GameManager {
 			blackjack.playerBlackjack();
 			resetBJTable();
 		}
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de resetejar el blackjack.
+	 */
 	public void resetBJTable() {
 		((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).clearTable(blackjack.getCashAmount());
 		if (blackjack.getCashAmount() <= 0) {
@@ -177,8 +236,11 @@ public class GameManager {
 					"** NO MONEY **", JOptionPane.PLAIN_MESSAGE);
 		}
 		blackjack.setOkBet(false);
-	}
-
+	}//Tancament del metode
+	
+	/**
+	 * Metode que no retorna res i que s'encarrega de tractar els hits al blackjack.
+	 */
 	public void hitBJ() {
 		if (blackjack.isOkBet()) {
 			if (blackjack.getCount(1, false, 21)) {
@@ -193,8 +255,11 @@ public class GameManager {
 		} else
 			JOptionPane.showMessageDialog(manager.getPanel(Constants.BJ_VIEW_NAME), "You must bet something", "ERROR",
 					JOptionPane.PLAIN_MESSAGE);
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de tractar els stands al blackjack.
+	 */
 	public void standBJ() {
 		if (blackjack.isOkBet()) {
 			((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).standAction();
@@ -226,48 +291,86 @@ public class GameManager {
 		} else
 			JOptionPane.showMessageDialog(manager.getPanel(Constants.BJ_VIEW_NAME), "You must bet something", "ERROR",
 					JOptionPane.PLAIN_MESSAGE);
-	}
+	}//Tancament del metode
 
+	/**
+	 * Getter de Blackjack.
+	 */
 	public Blackjack getBlackjack() {
 		return blackjack;
-	}
+	}//Tancament del getter
 
 
 	
 	//---------------------------Other-------------------------------
 	
+	/**
+	 * Metode que retorna un boolean, rep un String i que s'encarrega de comprovar el nom de l'usuari.
+	 * @return (rv.validateName(name))
+	 * @param name (nom a comprovar)
+	 */
 	public Boolean comprovaName(String name) {
 		return (rv.validateName(name));
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que retorna un boolean, rep un String i que s'encarrega de comprovar el cognom de l'usuari.
+	 * @return (rv.validateName(name))
+	 * @param name (nom a comprovar)
+	 */
 	public Boolean comprovaSurname(String name) {
 		return (rv.validateName(name));
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que retorna un boolean, rep un String i que s'encarrega de comprovar l'edat de l'usuari.
+	 * @return (rv.validateAge(date))
+	 * @param date (data a comprovar)
+	 */
 	public Boolean comprovaAge(Date date) {
 		return (rv.validateAge(date));
-	}
+	}//Tancament del metode
 	
+	/**
+	 * Metode que retorna un boolean, rep un String i que s'encarrega de comprovar el password de l'usuari.
+	 * @return (loginValidator.validatePasswordFormat(pw))
+	 * @param pw (password a comprovar)
+	 */
 	public Boolean comprovaLoginPW(String pw) {
 		return (loginValidator.validatePasswordFormat(pw));
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que retorna un boolean, rep un String i que s'encarrega de comprovar el mail de l'usuari.
+	 * @return (loginValidator.validateEmailFormat(email))
+	 * @param email (mail a comprovar)
+	 */
 	public Boolean comprovaLoginMail(String email) {
 		return (loginValidator.validateEmailFormat(email));
-	}
+	}//Tancament del metode
 	
+	/**
+	 * Getter de User.
+	 */
 	public User getUser() {
 		return user;
-	}
+	}//Tancament del getter
 
+	/**
+	 * Setter de User.
+	 */
 	public void setUser(User user) {
 		this.user = user;
-	}
+	}//Tancament del setter
 
 	public Bet getApostaRuleta() {
 		return apostaRuleta;
-	}
+	}//Tancament del getter
 
+	/**
+	 * Metode que no retorna res, rep un Boolean i s'encarrega d'executar els grafics.
+	 * @param pinta (Boolean que indica si volem pintar o no)
+	 */
 	public void executaGrafics(boolean pinta){
 		if(pinta){
 			filGrafics = new Thread(((Graphics) manager.getPanel(Constants.GRAPHICS_VIEW_NAME)).getChart());
@@ -279,5 +382,5 @@ public class GameManager {
 			}
 			
 		}
-	}
-}
+	}//Tancament del metode
+}//Tancament de la classe

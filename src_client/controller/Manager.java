@@ -23,7 +23,25 @@ import view.MainFrame;
 import view.MainWindow;
 import view.RegisterPanel;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: Manager </b> <br/>
+ * Implementa el manager del client.
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class Manager {
+	//Atributs de la classe
 	private final String rutejson = "config.json";
 	private ServerComunication server;
 	private MainButtonsController controller;
@@ -34,14 +52,20 @@ public class Manager {
 	private boolean serverOn;
 	private LoginInfo loginSaved;
 
+	/**
+	 * Constructor del Manager.
+	 */
 	public Manager() {
 		serverOn = false;
 		fileManager = new FileManager();
 		loginSaved = fileManager.carregarDades();
 		gameManager = new GameManager(this);
 		controller = new MainButtonsController(this);
-	}
+	}//Tancament del constructor
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de checkejar el server.
+	 */
 	public void checkServer() throws TCPException {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
@@ -51,16 +75,25 @@ public class Manager {
 		} catch (IOException | FileException e) {
 			e.printStackTrace();
 		}
-	}
+	}//Tancament del metode
 
+	/**
+	 * Getter de LoginSaved.
+	 */
 	public LoginInfo getLoginSaved() {
 		return loginSaved;
-	}
+	}//Tancament del getter
 
+	/**
+	 * Getter de GameManager.
+	 */
 	public GameManager getGameManager() {
 		return gameManager;
-	}
+	}//Tancament del getter
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de conectar amb el server.
+	 */
 	public void startServer() {
 		if (!serverOn) {
 			try {
@@ -71,16 +104,23 @@ public class Manager {
 				System.exit(0);
 			}
 		}
-	}
+	}//Tancament del metode
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de fer el logout.
+	 */
 	public void logout() {
 		fileManager.logout();
-	}
+	}//Tancament del metode
 
+	/**
+	 * Setter de MainFrame.
+	 */
 	public void setMainFrame(MainFrame view) {
 		this.view = view;
-	}
+	}//Tancament del setter
 
+	
 	public void startGame() {
 		view.setVisible(true);
 		if (loginSaved == null)
@@ -224,14 +264,23 @@ public class Manager {
 		return fileManager.getHorsesList();
 	}
 
+	/**
+	 * Getter de FileManager.
+	 */
 	public FileManager getFileManager() {
 		return fileManager;
 	}
-
+	/**
+	 * Setter de FileManager.
+	 */
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
 	}
 
+	/**
+	 * Metode que no retorna res, rep un String i s'encarrega de canviar el password de l'usuari.
+	 * @param password
+	 */
 	public void changePW(String password) {
 		try {
 			User user = getGameManager().getUser();
@@ -247,6 +296,6 @@ public class Manager {
 					new Dialeg().setWarningText("ERROR al actualitzar la PW");
 			}
 		} catch (IOException e){ e.printStackTrace();}
-	}
+	}//Tancament del metode
 
-}
+}//Tancament de la classe

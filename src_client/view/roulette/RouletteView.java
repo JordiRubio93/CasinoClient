@@ -235,20 +235,31 @@ public class RouletteView extends GameView {
 		dialeg.setWarningText("The winner number is... " + winner + " !");
 	}//Tancament del metode
 
+	/**
+     * Metode que no retorna res i que tracta el boto de "enable" de la ruleta.
+     */
 	public void enableBet(){
 		jbBet.setEnabled(true);
-	}
+	}//Tancament del metode
 	
 	public void disableBet() {
 		jbBet.setEnabled(false);
-	}
-
+	}//Tancament del metode
+	
+	/**
+     * Metode que no retorna res, rep un MyButton i s'encarrega de pintar un botó.
+     * @param jBoto (Boto que es vol pintar)
+     * 
+     */
 	public void pintaBoto(MyButton jBoto) {
 		pintaBoto(jBoto);
 		jBoto.canviaEstat();
 		jBoto.setBackground(PUSHED);
-	}
+	}//Tancament del metode
 	
+	/**
+     * Metode que no retorna res i que s'encarrega de tractar els registres dels controladors.
+     */
 	public void registerController(){
 		super.registerController();
 		for(MyButton c: butons){
@@ -267,5 +278,5 @@ public class RouletteView extends GameView {
 		jbZero.addActionListener(getManager().getController());
 		jbPrimera.addActionListener(getManager().getController());
 		jbParell.addActionListener(getManager().getController());
-	}
-}
+	}//Tancament del metode
+}//Tancament de la classe

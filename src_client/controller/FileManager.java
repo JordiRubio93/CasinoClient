@@ -26,7 +26,25 @@ import model.struct.horses.HorseData;
 import model.struct.user.LoginInfo;
 import tools.excepcions.FileException;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: FileManager </b> <br/>
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class FileManager {
+	
+	//Atributs de la classe
 	private static LinkedList<HorseData> hdList;
 	private final String[] param = { "IP_SBD", "PORT_Client" };
 	private final String user = "client.dat";
@@ -36,10 +54,14 @@ public class FileManager {
 	private JsonObject objecte = null;
 	private ConfigurationFile cf = null;
 
+	/**
+	 * Constructor per la grafica de la ruleta.
+	 */
 	public FileManager() {
 		gson = new GsonBuilder().create();
-	}
+	}//Tancament del metode
 
+	
 	public ConfigurationFile obtenirConfiguracio(String rute) throws FileException {
 		validarConfiguracio(cf = carregarConfiguracio(rute));
 		return cf;
@@ -160,7 +182,11 @@ public class FileManager {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Metode que retorna una LinkedList de HorseData.
+	 * @return hdList (Llista de HorseData)
+	 */
 	public LinkedList<HorseData> getHorsesList() {
 		JsonReader reader = null;
 		LinkedList<HorseData> hdList = new LinkedList<HorseData>();
@@ -181,7 +207,7 @@ public class FileManager {
 			index++;
 		}
 		return hdList;
-	}
+	}//Tancament del metode
 
 	public LinkedList<HorseData> getList() {
 		if (hdList==null) hdList = getHorsesList();

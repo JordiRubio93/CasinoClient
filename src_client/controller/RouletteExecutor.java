@@ -14,7 +14,24 @@ import network.segment.Segment;
 import view.Dialeg;
 import view.roulette.RouletteView;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: RouletteExecutor </b> <br/>
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class RouletteExecutor implements Runnable {
+	//Atributs de la classe
 	private ObjectInputStream objectIn;
 	private ObjectOutputStream objectOut;
 	private boolean active;
@@ -23,6 +40,9 @@ public class RouletteExecutor implements Runnable {
 	private Bet aposta;
 	private Manager manager;
 	
+	/**
+	 * Constructor del RouletteExecutor.
+	 */
 	public RouletteExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
@@ -30,7 +50,7 @@ public class RouletteExecutor implements Runnable {
 		active = true;
 		game = (RouletteView) manager.getPanel(Constants.R_VIEW_NAME);
 		System.out.println("ready");
-	}
+	}//Tancament del constructor
 
 	@Override
 	public void run() {
@@ -67,10 +87,16 @@ public class RouletteExecutor implements Runnable {
 		}
 	}
 	
+	/**
+	 * Getter de Aposta.
+	 */
 	public Bet getAposta() {
 		return aposta;
 	}
 
+	/**
+	 * Setter de Aposta.
+	 */
 	public void setAposta(Bet aposta) {
 		this.aposta = aposta;
 	}
@@ -85,8 +111,11 @@ public class RouletteExecutor implements Runnable {
 		return s;
 	}
 
+	/**
+	 * Metode que no retorna res i que s'encarrega de mostrar el gif.
+	 */
 	private void mostragif() {
 		game.insereixGif();
 		// get.enviarTrama(new GameOver());
-	}
-}
+	}//Tancament del metode
+}//Tancament de la classe

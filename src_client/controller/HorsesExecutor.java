@@ -16,7 +16,24 @@ import network.segment.Segment;
 import view.Dialeg;
 import view.cavalls.HorsesView;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: HorsesExecutor </b> <br/>
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class HorsesExecutor implements Runnable {
+	//Atributs de la classe
 	private ObjectInputStream objectIn;
 	private ObjectOutputStream objectOut;
 	private boolean active;
@@ -25,13 +42,16 @@ public class HorsesExecutor implements Runnable {
 	private int seconds;
 	private Manager manager;
 
+	/**
+	 * Constructor pel HorsesExecutor.
+	 */
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;
 		this.objectOut = objectOut;
 		this.manager = manager;
 		active = true;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-	}
+	}//Tancament del constructor
 
 	@Override
 	public void run() {
@@ -66,7 +86,7 @@ public class HorsesExecutor implements Runnable {
 					
 					break;
 				default:
-					System.err.println("pero esto que co�o es?");
+					System.err.println("pero esto que co�o es?");
 					break;
 				}
 			}
@@ -75,16 +95,24 @@ public class HorsesExecutor implements Runnable {
 		}
 	}
 
+	/**
+	 * Metode que no retorna res i que s'encarrega d'aturar l'executor.
+	 */
 	public void close() {
 		active = false;
-	}
+	}//Tancament del metode
 
+	
 	public synchronized Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
 		s = (Segment) objectIn.readObject();
 		System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
-
+	
+	/**
+	 * Metode que no retorna res, rep una LinkedList<HorseData> i s'encarrega de tractar el moviment de correr dels cavalls.
+	 * @param end (Llista de HorseData)
+	 */
 	private void corre(LinkedList<HorseData> end) {
 		seconds = 0;
 		while (seconds < 30) {
@@ -102,14 +130,13 @@ public class HorsesExecutor implements Runnable {
 			}
 		}
 		// get.enviarTrama(new GameOver());
-	}
+	}//Tancament del metode
 
 	/**
-	 * David idioto no diu si es '>' o <!! se supone que mes petit
+	 * Metode que retorna un int, rep una LinkedList<HorseData> i s'encarrega de retornar el guanyador.
 	 * 
-	 * @param ih
-	 *            lista de datos de caballos
-	 * @return index ganador
+	 * @param ih (lista de datos de caballos)
+	 * @return win (index ganador)
 	 */
 	public int getWinner(LinkedList<HorseData> ih) {
 		int win = 0;
@@ -123,7 +150,10 @@ public class HorsesExecutor implements Runnable {
 		return win;
 	}
 
+	/**
+	 * Getter de Seconds.
+	 */
 	public int getSeconds() {
 		return seconds;
-	}
-}
+	}//Tancament del Getter
+}//Tancament de la classe
