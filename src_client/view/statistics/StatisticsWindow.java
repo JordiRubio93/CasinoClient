@@ -1,5 +1,18 @@
 package view.statistics;
 
+/**
+ * Panell per escollir el TOP5 a mostrar
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -47,6 +60,8 @@ public class StatisticsWindow extends BaseJPanel {
 		BufferedImage img2 = null;
 		BufferedImage img3 = null;
 		BufferedImage img4 = null;
+		
+		//Carrega les imatges
 		
 		try {
 			img1 = ImageIO.read(new File("Resources/top5Roulette.png"));
@@ -114,7 +129,10 @@ public class StatisticsWindow extends BaseJPanel {
 		background.add(panelCenter, BorderLayout.CENTER);
 		add(background, BorderLayout.CENTER);
 	}
-	
+
+	/**
+	 * Controlador pels botons
+	 */
 	public void registerController(){
 		top5RouletteButton.addActionListener(getManager().getController());
 		top5BlackjackButton.addActionListener(getManager().getController());

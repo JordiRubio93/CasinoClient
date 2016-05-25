@@ -16,17 +16,37 @@ import model.struct.user.HistoricPartides;
 import view.BaseJPanel;
 import view.Dialeg;
 
+/**
+ * Panell de la GUI referent als gràfics de barres
+ *
+ * @version 1.0 19/05/2016
+ * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaciÃ³ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ */
+
+
 public class Graphics extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton backButton = new JButton("Back");
 	private JPanel panelTop = new JPanel(new FlowLayout());
 	private BarChart chart;
 	
+	/**
+	 * Constructor
+	 */
 	public Graphics(){
 		super();
 		initElements();
 	}
-	
+
+	/**
+	 * Inicialitza els elements de la vista
+	 */
 	protected void initElements() {	
 		setLayout(new BorderLayout());
 		
@@ -49,6 +69,11 @@ public class Graphics extends BaseJPanel {
 		repaint();
 	}
 	
+	/**
+	 * Crea tota la gràfica
+	 * @param hist: llista on hi ha les dades a mostrar
+	 * @return retorna fals si no hi havia dades a mostrar, i cert si tot ha anat bé
+	 */
 	public boolean createChart(LinkedList<HistoricPartides> hist){
 		ArrayList<Bar> bars = new ArrayList<Bar>();
 		
@@ -59,7 +84,8 @@ public class Graphics extends BaseJPanel {
 		
 		String cad = null;
 		Color color = null;
-		
+
+		//Estableix el color i la cadena de caràcters per després
 		switch(hist.getFirst().getJoc()){
 		case 1: color = Constants.coolOrange;
 			cad = "ROULETTE";
@@ -89,6 +115,9 @@ public class Graphics extends BaseJPanel {
 		return true;
 	}
 
+	/**
+	 * Controlador pel botó "Back"
+	 */
 	@Override
 	public void registerController() {
 		backButton.addActionListener(getManager().getController());

@@ -15,29 +15,52 @@ import model.struct.horses.HorseData;
 import view.Dialeg;
 import view.GameView;
 
+/**
+ * Classe que hereta de GameView, com RouletteView
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaciÃ³ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ */
+
 public class HorsesView extends GameView {
 	
 	private static final long serialVersionUID = 1L;
-	private Stadium jpStadium;
+	private Stadium jpStadium; //Hereta de Tapet
 	private GridLayout gridLayout;
 	private JPanel jpCarrils;
-	private LinkedList<HorseAnimation> list;
-	private Point[] coord;
-	private PickHorseView phv;
+	private LinkedList<HorseAnimation> list; //Animacions per l'sprite
+	private Point[] coord; //Coordenades xy segons el cavall corresponent
+	private PickHorseView phv; //Vista per escollir el cavall pel qual apostes
 	
+	/**
+	 * Constructor
+	 * @param phv: Vista per escollir el cavall pel qual apostes
+	 */
 	public HorsesView(PickHorseView phv){
 		initElements();
-		createDaemonTime();
+		createDaemonTime(); //Crea el control de temps per la cursa
 		this.phv = phv;
 	}
-	
+
+	/**
+	 * Inicialitza la vista, incloent GameView (super)
+	 */
 	protected void initElements() {
 		super.initElements();
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		add(jpStadium, BorderLayout.CENTER);
 	}
-	
+
+	/**
+	 * Col·loca els carrils
+	 */
 	public void setCursa() {
 		//jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_CARRILS);
@@ -61,9 +84,14 @@ public class HorsesView extends GameView {
 		jpCarrils.setVisible(show);
 	}
 	
+	/**
+	 * Inicialitza els cavalls
+	 * @param dades: llista de HorseData, que són les dades lògiques/oficials/no-gràfiques/no-visuals/internes dels cavalls
+	 */
 	public void initHorses(LinkedList<HorseData> dades){
 		list = new LinkedList<HorseAnimation>();
 		coord = new Point[12];
+		//A partir de les dades requerides, calcula la nova posició
 		for(int i = 0; i < Constants.nHorses; i++){
 			list.add(new HorseAnimation(dades.get(i).getColor(), i));
 			coord[i] = new Point(Calcul.calculaX(dades.get(i).getSegons(), true), Calcul.calculaY(i));
@@ -74,9 +102,15 @@ public class HorsesView extends GameView {
 		jpStadium.repaint();
 	}
 	
+	/**
+	 * Fa córrer els cavalls
+	 * @param i: índex pel cavall
+	 * @param x: coordenada x pel cavall en qüestió
+	 * @param y: coordenada y pel cavall en qüestió
+	 */
 	public void runHorses(int i, int x, int y){
-		jpStadium.getList().get(i).run();
-		jpStadium.setCoord(x, y, i);
+		jpStadium.getList().get(i).run(); //Mou els cavalls en sí, les seves potes, els anima
+		jpStadium.setCoord(x, y, i); //Trasllada els cavalls de posició perquè avancin
 	}
 	
 	public void setCounter(){
@@ -97,6 +131,10 @@ public class HorsesView extends GameView {
 		jlCount.setOpaque(flag);
 	}
 	
+	/**
+	 * Mostra el JDialog amb el guanyador
+	 * @param winner
+	 */
 	public void acabaPartida(String winner){
 		new Dialeg().setWarningText(winner);
 	}
@@ -110,6 +148,9 @@ public class HorsesView extends GameView {
 		return phv;
 	}
 
+	/**
+	 * Assigna els controladors pels botons
+	 */
 	@Override
 	public void registerController(){
 		//registrar el frame

@@ -6,6 +6,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaciÃ³ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ */
+
 public class HorseAnimation {
 	private String color;
 	private Image gif;
@@ -13,9 +25,14 @@ public class HorseAnimation {
 	private String s;
 	private int flag;
 	
+	/**
+	 * Constructor
+	 * @param color
+	 * @param flag
+	 */
 	public HorseAnimation(String color, int flag){
 		this.flag = flag;
-		index = 1;
+		index = 1; //Inicialitzem l'índex al primer frame del sprite
 		this.color = color;
 		try{
 			s = "Resources/horses/" + color + String.valueOf(1) + ".png";
@@ -30,6 +47,11 @@ public class HorseAnimation {
 		return flag;
 	}
 
+	/**
+	 * Procediment per anar movent el cavall.
+	 * No és cap bucle, simplement avança el cavall al següent frame i prou (si està al 4, retorna al 1)
+	 * Finalment, a través del color i l'índex agafa el recurs que correspon, ja que tenen el nom corresponent.
+	 */
 	public void run() {
 		try {
 			if(index == 4) index = 1;

@@ -7,12 +7,31 @@ import java.util.LinkedList;
 import controller.Constants;
 import view.Tapet;
 
+/**
+ * Hereta de Tapet
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaciÃ³ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ */
+
 public class Stadium extends Tapet {
 	private static final long serialVersionUID = 1L;
 	private LinkedList<HorseAnimation> list;
 	private Point[] coord;
 	private boolean ready;
 
+	/**
+	 * Constructor
+	 * @param w: amplada
+	 * @param h: alçada
+	 * @param ruta: adreça de la imatge de fons
+	 */
 	public Stadium(int w, int h, String ruta) {
 		super(w, h, ruta);
 	}
@@ -25,6 +44,9 @@ public class Stadium extends Tapet {
 		return list;
 	}
 
+	/**
+	 * Pinta els cavalls a lloc
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
@@ -36,14 +58,28 @@ public class Stadium extends Tapet {
 		}
 	}
 	
+	/**
+	 * Per indicar quan els cavalls es poden començar a moure
+	 * @param ready
+	 */
 	public void setReady(boolean ready){
 		this.ready = ready;
 	}
-	
+
+	/**
+	 * 
+	 * @param cList: la llista de coordenades completa
+	 */
 	public void setCoordList(Point[] cList){
 		this.coord = cList;
 	}
 	
+	/**
+	 * 
+	 * @param x: una coordenada x determinada
+	 * @param y: una coordenada y determinada
+	 * @param i: l'índex del cavall
+	 */
 	public void setCoord(int x, int y, int i){
 		coord[i].setLocation(coord[i].getX() + x, y);
 	}
