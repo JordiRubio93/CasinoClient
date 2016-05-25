@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
 /**
  * 
  * @version 1.0 19/05/2016
