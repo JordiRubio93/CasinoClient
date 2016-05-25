@@ -2,8 +2,8 @@ package tools.excepcions;
 /**
  * 
  * <p>
- * <b> Classe: BaseException </b> <br/>
- * Clase abstracte per gestionar les nostres Excepcions en el codi
+ * <b> Classe: CasinoException </b> <br/>
+ * Clase per gestionar les nostres Excepcions en el casino
  * </p>
  * 
  * @version 1.0 19/05/2016
@@ -16,10 +16,10 @@ package tools.excepcions;
  *         La Salle - Universitat Ramon Llull. <br/>
  * 
  */
-public class BaseException extends Exception {
+public class CasinoException extends BaseException {
 	private static final long serialVersionUID = 1L;
 	
-    public BaseException(String msg) {
+	public CasinoException(String msg) {
     	super(msg);
     }
 

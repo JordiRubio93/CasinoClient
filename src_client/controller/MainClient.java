@@ -28,7 +28,7 @@ import view.SplashScreen;
  */
 public class MainClient {
 	/**
-	 * Main del nostre servidor.
+	 * Main del nostre client
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
