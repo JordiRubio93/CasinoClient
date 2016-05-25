@@ -1,5 +1,6 @@
 package view.statistics;
 
+
 /**
  * Pels eixos d'abscisses i ordenades (bàsicament Y)
  * 

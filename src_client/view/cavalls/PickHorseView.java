@@ -15,6 +15,7 @@ import controller.Constants;
 import controller.Manager;
 import view.Dialeg;
 
+
 /**
  * 
  * @version 1.0 19/05/2016
@@ -26,6 +27,7 @@ import view.Dialeg;
  * 			Disseny i programació orientats a objectes. <br/>
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
+
 
 public class PickHorseView extends JFrame {
 	private static final long serialVersionUID = 1L;

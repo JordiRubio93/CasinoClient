@@ -16,6 +16,7 @@ import view.Dialeg;
 import view.GameView;
 
 /**
+ * 
  * Classe que hereta de GameView, com RouletteView
  * 
  * @version 1.0 19/05/2016

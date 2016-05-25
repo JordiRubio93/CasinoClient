@@ -2,6 +2,7 @@ package view.statistics;
 
 import java.awt.Color;
 
+
 /**
  * 
  * @version 1.0 19/05/2016
