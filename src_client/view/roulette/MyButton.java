@@ -8,7 +8,7 @@ import javax.swing.JButton;
  * 
  * <p>
  * <b> Classe: MyButton </b> <br/>
- * Implementa la classe MyButton la qual utilitzarem per tenir els nostres propis botons.
+ * Implementa la classe MyButton, que utilitzarem per tenir els nostres propis botons.
  * </p>
  * 
  * @version 1.0 19/05/2016
