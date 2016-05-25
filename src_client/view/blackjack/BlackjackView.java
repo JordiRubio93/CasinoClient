@@ -17,6 +17,23 @@ import model.Utilities;
 import view.BaseJPanel;
 import view.Tapet;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: BlackjackView </b> <br/>
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
+
 public class BlackjackView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton btnHit, btnStand, btnExit, btnBet;
@@ -27,9 +44,17 @@ public class BlackjackView extends BaseJPanel {
 	private ImageIcon cardImg;
 	private JLabel jlbCard;
 	
+	/**
+	 * Constructor de la view del blackjack.
+	 */
+	
 	public BlackjackView() {
 		initElements();
 	}
+	
+	/**
+	 * Funcio que s'encarrega d'inicialitzar i organitzar correctament els elements gràfics del Blackjack.
+	 */
 	
 	protected void initElements(){
 		Rectangle rectangle = Utilities.getUsableScreenBounds();
@@ -106,10 +131,21 @@ public class BlackjackView extends BaseJPanel {
 		central.setVisible(true);
 	}
 	
+	/**
+	 * Funcio que s'encarrega de agafar la cantitat de l'aposta realitzada pel player.
+	 * @return Retorna el valor de l'aposta realitzada pel player.
+	 */
+	
 	public float getBet() {
 		if(jtfBet.getText().isEmpty()) return 0;
 		else return Float.valueOf(jtfBet.getText());
 	}
+	
+	/**
+	 * Funcio que s'encarrega de afegir una carta al taulell (gràfica).
+	 * @param idCard Numero identificador de la carta per trobar la imatge corresponent.
+	 * @param destination Destinacio de la carta (player(1) o dealer(2)).
+	 */
 	
 	public void addCard(int idCard, int destination) {
 		cardImg = new ImageIcon("Resources/cards/"+ String.valueOf(idCard) +".png");
@@ -124,6 +160,11 @@ public class BlackjackView extends BaseJPanel {
 		setVisible(true);
 	}
 	
+	/**
+	 * Metode que s'encarrega de borrar de la taula totes les cartes, preparant-la per un altre partida.
+	 * @param cash Element que indica el capital disponible del player per mostrar-ho per pantalla.
+	 */
+	
 	public void clearTable(double cash) {
 		p1.removeAll();
 		p1.revalidate();
@@ -134,11 +175,19 @@ public class BlackjackView extends BaseJPanel {
 		jtfCash.setText(Double.toString(cash));
 	}
 	
+	/**
+	 * Metode encarregada de borrar la imatge de cardBack de la taula.
+	 */
+	
 	public void standAction() {
 		p1.removeAll();
 		p1.revalidate();
 		p1.repaint();
 	}
+	
+	/**
+	 * Metode que s'encarrega d'afegir una carta del reves a la zona del dealer.
+	 */
 	
 	public void dealerCards() {
 		cardImg = new ImageIcon("Resources/cardback.png");
@@ -147,6 +196,10 @@ public class BlackjackView extends BaseJPanel {
 		p1.add(jlbCard);
 		setVisible(true);
 	}
+	
+	/**
+	 * Metode que afegeix els action listeners als botons.
+	 */
 
 	public void registerController(){
 		btnBet.addActionListener(getManager().getController());
