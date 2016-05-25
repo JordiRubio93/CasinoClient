@@ -8,7 +8,24 @@ import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
 import view.statistics.Graphics;
 import view.statistics.StatisticsWindow;
-
+/**
+ * 
+ * <p>
+ * <b> Classe: SplashScreen </b> <br/>
+ * </p>
+ * 
+ * Finestra de Splash que es fa servir mentre es carreguen els panells
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class SplashScreen{
 
 	private ArrayList<BaseJPanel> panels;

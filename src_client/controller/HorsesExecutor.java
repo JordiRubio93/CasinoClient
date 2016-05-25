@@ -44,6 +44,7 @@ public class HorsesExecutor implements Runnable {
 
 	/**
 	 * Constructor pel HorsesExecutor.
+	 * @param objectIn, objectOut, manager (respectivament, l'objecte d'entrada, el de sortida i el manager que els controla)
 	 */
 	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
 		this.objectIn = objectIn;

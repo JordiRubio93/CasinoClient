@@ -8,7 +8,23 @@ import javax.swing.JOptionPane;
 
 import controller.Constants;
 import controller.Manager;
-
+/**
+ * 
+ * <p>
+ * <b> Classe: MainFrame </b> <br/>
+ * </p>
+ * Finestra principal que contindr‡ tots els panells de l'aplicaciÛ
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaci√≥ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class MainFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private CardLayout cardLayout;

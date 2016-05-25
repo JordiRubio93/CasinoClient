@@ -26,7 +26,24 @@ import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Constants;
-
+/**
+ * 
+ * <p>
+ * <b> Classe: RegisterPanel </b> <br/>
+ * </p>
+ * 
+ * Panell lateral de dintre del panell de logueig, contÈ la informaciÛ del registre
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaci√≥ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class RegisterPanel extends BaseJPanel {
 	private final String main = "Don't have an account? Join us!";
 	private final String name = "Name:";

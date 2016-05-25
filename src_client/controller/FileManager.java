@@ -61,12 +61,15 @@ public class FileManager {
 		gson = new GsonBuilder().create();
 	}//Tancament del metode
 
-	
 	public ConfigurationFile obtenirConfiguracio(String rute) throws FileException {
 		validarConfiguracio(cf = carregarConfiguracio(rute));
 		return cf;
 	}
 
+	/**
+	 * Carrega les dades de l'usuari recordat al fitxer.
+	 * @return objecte LoginInfo
+	 */
 	public LoginInfo carregarDades() {
 		// Obtenemos los datos!
 		FileInputStream fileIn = null;
@@ -119,6 +122,10 @@ public class FileManager {
 		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt());
 	}
 
+	/**
+	 * Guarda les dades de l'usuari que decideix que el programa recordi.
+	 * @param li (Objecte LoginInfo)
+	 */
 	public void saveLoginInfo(LoginInfo li) {
 		if (!li.getEmail().equals("")) {
 			FileOutputStream fileOut = null;
@@ -142,6 +149,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Esborra el logueig de l'usuari de la memòria quan aquest decideix fer log out.
+	 */
 	public void logout() {
 		try {
 			File file = new File(user);

@@ -1,14 +1,26 @@
 package model.blackjack;
 
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 import controller.Constants;
-import model.Bet;
 import model.struct.user.User;
-import network.segment.NotifyBet;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: Blackjack </b> <br/>
+ * Implementa la logica del blackjack.
+ * </p>
+ * 
+ * @version 1.0 19/05/2016
+ * @author  Pol Valés - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi Rubió - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programació orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class Blackjack {
 	private Deck deck;
 	private Player player;
@@ -23,11 +35,19 @@ public class Blackjack {
 		player = new Player(u.getCash());
 		dealer = new Dealer();
 	}
-
+	
+	/**
+	 * Indica si l'usuari pot o no apostar.
+	 * @param bet, objecte de la clase Bet
+	 * @return boole� indicant si pot o no apostar
+	 */
 	public boolean canBet(double bet) {
 		return (bet >= Constants.MIN_BET && bet <= getCashAmount());
 	}
-
+	
+	/**
+	 * Prepara un joc nou
+	 */
 	public void newGame() {
 		// Barallem la baralla i tornem a posar els comptadors de player i
 		// dealer a 0
@@ -35,6 +55,7 @@ public class Blackjack {
 		player.resetPlayer();
 		dealer.resetDealer();
 	}
+	
 
 	public int giveCard(int destination) {
 		int cardValue = deck.nextCard();
@@ -59,7 +80,7 @@ public class Blackjack {
 		}
 		return cardValue;
 	}
-
+	
 	public boolean getCount(int player, boolean more, int num) {
 		if (more)
 			return ((getCardCount(player) > num));
@@ -73,7 +94,11 @@ public class Blackjack {
 	public void setOkBet(boolean okBet) {
 		this.okBet = okBet;
 	}
-
+	
+	/**
+	 * Es para la partida
+	 * @param win, indica si l'usuari ha guanyat o no
+	 */
 	public void stand(boolean win) {
 		if (win)
 			playerWins();
@@ -88,7 +113,7 @@ public class Blackjack {
 			return dealer.getCardCount();
 		}
 	}
-
+	
 	public double getCashAmount() {
 		return player.getCash();
 	}

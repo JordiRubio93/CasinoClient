@@ -10,6 +10,22 @@ import controller.Manager;
 import network.segment.Disconnect;
 import network.segment.Segment;
 
+/**
+ * 
+ * <p>
+ * <b> Classe: ServerComunication </b> <br/>
+ * </p>
+ * Classe encarregada d'establir i gestionar la comunicació amb el servidor
+ * @version 1.0 19/05/2016
+ * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
+ * 			Diego Bellino - ls30741@salleurl.edu <br/>
+ * 			Enric Marin - ls31308@salleurl.edu <br/>
+ * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
+ * 			David Estepa - ls30622@salleurl.edu <br/>
+ * 			Disseny i programaciÃ³ orientats a objectes. <br/>
+ * 			La Salle - Universitat Ramon Llull. <br/>
+ * 
+ */
 public class ServerComunication{
 	private Socket sServer;
 	private ObjectOutputStream objectOut;
@@ -22,13 +38,20 @@ public class ServerComunication{
 		this.setManager(manager);
 		this.cf = cf;
 	}
-
+	/**
+	 * Estableix connexió amb el servidor
+	 * @throws IOException
+	 */
 	public void establirConnexio() throws IOException {
 		sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
 		objectOut = new ObjectOutputStream(sServer.getOutputStream());
 		objectIn = new ObjectInputStream(sServer.getInputStream());
 	}
-
+	
+	/**
+	 * Obte objecte llegit
+	 * @return objectIn.readObject()
+	 */
 	public synchronized Segment obtenirTrama() {
 		try {
 			return (Segment) objectIn.readObject();
@@ -38,10 +61,17 @@ public class ServerComunication{
 		return null;
 	}
 
+	/**
+	 * envia un objecte
+	 */
 	public synchronized void enviarTrama(Segment s) throws IOException {
 		objectOut.writeObject(s);
 	}
 
+	/**
+	 * Tanca la connexió amb el servidor
+	 * @throws IOException
+	 */
 	public synchronized void tancarConnexio() throws IOException {
 		objectOut.writeObject(new Disconnect());
 		sServer.close();

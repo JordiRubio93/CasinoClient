@@ -5,7 +5,7 @@ import java.io.Serializable;
  * 
  * <p>
  * <b> Classe: Segment </b> <br/>
- * Clase abstrante per enviar informacio
+ * Classe abstrante per enviar informacio
  * </p>
  * 
  * @version 1.0 19/05/2016
