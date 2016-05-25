@@ -13,6 +13,7 @@ package view.statistics;
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

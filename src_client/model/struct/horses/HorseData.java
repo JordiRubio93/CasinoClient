@@ -12,6 +12,7 @@ import java.io.Serializable;
  * 			Disseny i programació orientats a objectes. <br/>
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
+
 public class HorseData implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String name;

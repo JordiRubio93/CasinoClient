@@ -16,6 +16,7 @@ import model.struct.user.HistoricPartides;
 import view.BaseJPanel;
 import view.Dialeg;
 
+
 /**
  * Panell de la GUI referent als gràfics de barres
  *

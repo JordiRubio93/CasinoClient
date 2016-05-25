@@ -28,6 +28,7 @@ import view.Dialeg;
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
 
+
 public class PickHorseView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	//main controler identify label
