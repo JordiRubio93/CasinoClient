@@ -201,7 +201,7 @@ public class Manager {
 		case ("Play Roulette"):
 			c = ((Check) server.obtenirTrama());
 			if (c instanceof Check && (c.isOk())) gameManager.executaRoulette();
-			else new Dialeg().setConfirmText("You can't bet");
+			else new Dialeg().setWarningText("You can't bet");
 			break;
 		case ("Play Horses"):
 			System.out.println();
@@ -209,7 +209,7 @@ public class Manager {
 			if (c instanceof Check && (c.isOk()))
 				gameManager.executaHorses();
 			else
-				new Dialeg().setConfirmText("You can't bet");
+				new Dialeg().setWarningText("You can't bet");
 			break;
 		case ("Play BlackJack"):
 			gameManager.executaBlackjack();

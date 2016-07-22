@@ -16,6 +16,7 @@ import network.segment.Betting;
 import network.segment.Check;
 import network.segment.Segment;
 import view.Dialeg;
+import view.GameView;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.roulette.MyButton;
@@ -114,6 +115,7 @@ public class GameManager {
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
+				((GameView) manager.getPanel(Constants.R_VIEW_NAME)).actualitzaLabelApostaPropia(rouletteExecutor.getAposta().getSlot());
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 					
@@ -146,7 +148,8 @@ public class GameManager {
 				String name = horses.getPhv().getHorseName();
 				Bet bet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
 				try {
-					manager.getServer().enviarTrama(new Betting(bet));					
+					manager.getServer().enviarTrama(new Betting(bet));
+					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).actualitzaLabelApostaPropia(name);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

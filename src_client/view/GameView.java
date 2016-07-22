@@ -42,6 +42,7 @@ import model.struct.user.PublicUser;
  */
 public abstract class GameView extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
+	private static final String text = "You've bet to: ";
 
 	protected BaseJPanel gamePanel;
 	protected JPanel jpFinestra;
@@ -58,6 +59,8 @@ public abstract class GameView extends BaseJPanel {
 	protected JButton jbExit;
 	protected JPanel jpOptions;
 	protected JLabel jlCount;
+	protected JPanel jpApostaPropia;
+	protected JLabel jlApostaPropia;
 	
 	public GameView(){
 		initElements();
@@ -92,7 +95,11 @@ public abstract class GameView extends BaseJPanel {
 		jpOptions.add(jbBet);
 		
 		//label aposta
-		
+		jlApostaPropia = new JLabel(text + "...");
+		jpApostaPropia = new JPanel();
+		jpApostaPropia.setBackground(Color.WHITE);
+		jpApostaPropia.setBorder(BorderFactory.createEtchedBorder());
+		jpApostaPropia.add(jlApostaPropia);
 		
 		//panell de apostes
 		jpDades = new JPanel(new BorderLayout());
@@ -107,8 +114,13 @@ public abstract class GameView extends BaseJPanel {
 		jspList = new JScrollPane(jpAux);
 		jpDades.add(jspList, BorderLayout.CENTER);
 		jpDades.add(jpOptions, BorderLayout.SOUTH);
+		jpDades.add(jpApostaPropia, BorderLayout.NORTH);
 		jpDades.setBorder(BorderFactory.createTitledBorder(Constants.BET_LABEL));
 		add(jpDades, BorderLayout.EAST);
+	}
+	
+	public void actualitzaLabelApostaPropia(String slot){
+		jlApostaPropia.setText(text + slot);
 	}
 	
 	public void setGamePanel(BaseJPanel panel){
