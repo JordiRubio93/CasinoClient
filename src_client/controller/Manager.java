@@ -297,5 +297,5 @@ public class Manager {
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode
-
+ 
 }//Tancament de la classe

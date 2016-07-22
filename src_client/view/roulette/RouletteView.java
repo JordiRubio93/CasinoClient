@@ -93,7 +93,7 @@ public class RouletteView extends GameView {
 		for(int i = 0; i < taula.size(); i++){
 			Casella c = taula.get(i);
 			MyButton button = new MyButton(String.valueOf(c.getNumero()), c.getColor());
-			button.setFont(new Font("Cambria", Font.PLAIN, 30));
+			button.setFont(new Font("Serif", Font.PLAIN, 30));
 			button.setBackground(c.getColor());
 			button.setForeground(Color.WHITE);
 			JPanel jpBoto = new JPanel(new BorderLayout());
@@ -106,7 +106,7 @@ public class RouletteView extends GameView {
 		
 		jpZero = new JPanel(new BorderLayout());
 		jbZero = new MyButton("0", new Color(76, 145, 65));
-		jbZero.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbZero.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbZero.setBackground(new Color(76, 145, 65));
 		jbZero.setForeground(Color.WHITE);
 		jbZero.putClientProperty("action", "roulette");
@@ -122,19 +122,19 @@ public class RouletteView extends GameView {
 		jpDotzenes.putClientProperty("action", "roulette");
 		
 		jbPrimera = new MyButton("1ST 12", new Color(76, 145, 65));
-		jbPrimera.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbPrimera.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbPrimera.setBackground(new Color(76, 145, 65));
 		jbPrimera.setForeground(Color.WHITE);
 		jbPrimera.putClientProperty("action", "roulette");
 
 		jbSegona = new MyButton("2ND 12", new Color(76, 145, 65));
-		jbSegona.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbSegona.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbSegona.setBackground(new Color(76, 145, 65));
 		jbSegona.setForeground(Color.WHITE);
 		jbSegona.putClientProperty("action", "roulette");
 		
 		jbTercera = new MyButton("3RD 12", new Color(76, 145, 65));
-		jbTercera.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbTercera.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbTercera.setBackground(new Color(76, 145, 65));
 		jbTercera.setForeground(Color.WHITE);
 		jbTercera.putClientProperty("action", "roulette");
@@ -150,37 +150,37 @@ public class RouletteView extends GameView {
 		jpDobles.setBackground(new Color(76, 145, 65));
 		jpDobles.putClientProperty("action", "roulette");
 		jbManca = new MyButton("1-18", new Color(76, 145, 65));
-		jbManca.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbManca.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbManca.setBackground(new Color(76, 145, 65));
 		jbManca.setForeground(Color.WHITE);
 		jbManca.putClientProperty("action", "roulette");
 		jbParell = new MyButton("EVEN", new Color(76, 145, 65));
-		jbParell.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbParell.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbParell.setBackground(new Color(76, 145, 65));
 		jbParell.setForeground(Color.WHITE);
 		jbParell.putClientProperty("action", "roulette");
 		
 		jbVermell = new MyButton("RED", new Color(139, 0, 0));
-		jbVermell.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbVermell.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbVermell.setBackground(new Color(139, 0, 0));
 		jbVermell.setForeground(Color.WHITE);
 		jbVermell.putClientProperty("action", "roulette");
 		
 
 		jbNegre = new MyButton("BLACK", new Color(010, 010, 010));
-		jbNegre.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbNegre.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbNegre.setBackground(new Color(010, 010, 010));
 		jbNegre.setForeground(Color.WHITE);
 		jbNegre.putClientProperty("action", "roulette");
 		
 		jbSenar = new MyButton("ODD", new Color(76, 145, 65));
-		jbSenar.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbSenar.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbSenar.setBackground(new Color(76, 145, 65));
 		jbSenar.setForeground(Color.WHITE);
 		jbSenar.putClientProperty("action", "roulette");
 		
 		jbPassa = new MyButton("19-36", new Color(76, 145, 65));
-		jbPassa.setFont(new Font("Cambria", Font.PLAIN, 30));
+		jbPassa.setFont(new Font("Serif", Font.PLAIN, 30));
 		jbPassa.setBackground(new Color(76, 145, 65));
 		jbPassa.setForeground(Color.WHITE);
 		jbPassa.putClientProperty("action", "roulette");

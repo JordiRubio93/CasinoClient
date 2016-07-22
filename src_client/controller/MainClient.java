@@ -26,6 +26,7 @@ import view.SplashScreen;
  * 			La Salle - Universitat Ramon Llull. <br/>
  * 
  */
+
 public class MainClient {
 	/**
 	 * Main del nostre client
@@ -34,6 +35,8 @@ public class MainClient {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				new Thread(new MyMusic()).start();
+				
 				Manager manager = new Manager();
 				//Si el servidor no hi es, no carrega y finilitza
 				try {

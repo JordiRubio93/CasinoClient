@@ -91,6 +91,9 @@ public abstract class GameView extends BaseJPanel {
 		jpOptions.add(jbExit);
 		jpOptions.add(jbBet);
 		
+		//label aposta
+		
+		
 		//panell de apostes
 		jpDades = new JPanel(new BorderLayout());
 		columnLayout = new GridLayout();

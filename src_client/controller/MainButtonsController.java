@@ -133,7 +133,13 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Go Add Money"):
 			af.setVisible(false);
-			af.dispose();
+			if (!(af.getCash() > 0) ) {
+				new Dialeg().setWarningText("wrong Amount");
+			} else {
+				af.setVisible(false);
+				af.dispose();
+				new Dialeg().setWarningText("Operation not implemented");
+			}
 			break;
 		case ("User Evo"):
 			break;
