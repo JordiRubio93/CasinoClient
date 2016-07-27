@@ -16,11 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
-import controller.Constants;
 import model.Bet;
 import model.struct.user.PublicUser;
+import controller.Constants;
 
 /**
  * 
@@ -61,6 +62,9 @@ public abstract class GameView extends BaseJPanel {
 	protected JLabel jlCount;
 	protected JPanel jpApostaPropia;
 	protected JLabel jlApostaPropia;
+	protected JPanel jpSuperior;
+	protected JProgressBar jpbTime;
+	private int offset;
 	
 	public GameView(){
 		initElements();
@@ -77,7 +81,14 @@ public abstract class GameView extends BaseJPanel {
 		jpTemps = new JPanel();
 		jpTemps.setBackground(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 		jpTemps.add(jlTemps);
-		add(jpTemps, BorderLayout.NORTH);
+		jpSuperior = new JPanel(new BorderLayout());
+		jpSuperior.add(jpTemps, BorderLayout.NORTH);
+		
+		//ProgressBar
+		jpbTime = new JProgressBar();
+		jpbTime.setMinimum(0);
+		jpSuperior.add(jpbTime, BorderLayout.SOUTH);
+		add(jpSuperior, BorderLayout.NORTH);
 		
 		//boton salir
 		jbExit = new JButton("Exit");
@@ -121,6 +132,15 @@ public abstract class GameView extends BaseJPanel {
 	
 	public void actualitzaLabelApostaPropia(String slot){
 		jlApostaPropia.setText(jlApostaPropia.getText() + slot + " ");
+	}
+	
+	public void actualitzaProgressBar(int sec){
+		jpbTime.setValue(sec - offset);
+	}
+	
+	public void setActual(int max){
+		this.offset = max;
+		jpbTime.setMaximum(45 - max);
 	}
 	
 	public void disableBet(){

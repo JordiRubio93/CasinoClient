@@ -15,7 +15,6 @@ import network.segment.Play;
 import network.segment.Top5;
 import view.AddMoneyFrame;
 import view.Dialeg;
-import view.GameView;
 import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;

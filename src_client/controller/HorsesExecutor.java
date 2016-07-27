@@ -94,12 +94,14 @@ public class HorsesExecutor implements Runnable {
 					sec = ((Seconds) s).getSegons();
 					if(sec <= 45 && sec >= 0){
 						game.setCounter();
+						game.setActual(sec);
 						
 						new Timer().scheduleAtFixedRate(new TimerTask(){
 							public void run() {
 								if(sec < 45){
 									sec++;
 									game.actualitzaCounter(45-sec);
+									game.actualitzaProgressBar(sec);
 								}else{
 									game.showCounter(false);
 									this.cancel();

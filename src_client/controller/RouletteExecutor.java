@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.Bet;
 import network.segment.Check;
 import network.segment.Disconnect;
 import network.segment.InitRoulette;
 import network.segment.NotifyBet;
+import network.segment.Seconds;
 import network.segment.Segment;
 import view.Dialeg;
 import view.roulette.RouletteView;
@@ -39,6 +42,7 @@ public class RouletteExecutor implements Runnable {
 	private RouletteView game;
 	private Bet aposta;
 	private Manager manager;
+	private int sec;
 	
 	/**
 	 * Constructor del RouletteExecutor.
@@ -76,6 +80,23 @@ public class RouletteExecutor implements Runnable {
 					d.setWarningText(winner +"\nThanks for playing!");
 					manager.getServer().enviarTrama(new Disconnect());
 					System.exit(0);
+					break;
+				case "Seconds":
+					sec = ((Seconds) s).getSegons();
+					if(sec <= 45 && sec >= 0){	
+						game.setActual(sec);
+						new Timer().scheduleAtFixedRate(new TimerTask(){
+							public void run() {
+								if(sec < 45){
+									sec++;
+									game.actualitzaProgressBar(sec);
+								}else{
+									this.cancel();
+								}
+							}
+						}, 0, 1000);
+					}
+					
 					break;
 				default:
 					System.err.println("no se que ma arribat");

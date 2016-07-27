@@ -206,10 +206,8 @@ public class Manager {
 		case ("Play Horses"):
 			System.out.println();
 			c = ((Check) server.obtenirTrama());
-			if (c instanceof Check && (c.isOk()))
-				gameManager.executaHorses();
-			else
-				new Dialeg().setWarningText("You can't bet");
+			if (c instanceof Check && (c.isOk())) gameManager.executaHorses();
+			else new Dialeg().setWarningText("You can't bet");
 			break;
 		case ("Play BlackJack"):
 			gameManager.executaBlackjack();
