@@ -150,6 +150,7 @@ public class GameManager {
 				try {
 					manager.getServer().enviarTrama(new Betting(bet));
 					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).actualitzaLabelApostaPropia(name);
+					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).disableBet();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

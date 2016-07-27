@@ -95,7 +95,7 @@ public abstract class GameView extends BaseJPanel {
 		jpOptions.add(jbBet);
 		
 		//label aposta
-		jlApostaPropia = new JLabel(text + "...");
+		jlApostaPropia = new JLabel(text);
 		jpApostaPropia = new JPanel();
 		jpApostaPropia.setBackground(Color.WHITE);
 		jpApostaPropia.setBorder(BorderFactory.createEtchedBorder());
@@ -120,14 +120,14 @@ public abstract class GameView extends BaseJPanel {
 	}
 	
 	public void actualitzaLabelApostaPropia(String slot){
-		jlApostaPropia.setText(text + slot);
+		jlApostaPropia.setText(jlApostaPropia.getText() + slot + " ");
 	}
 	
-	public void setGamePanel(BaseJPanel panel){
-		//add(gamePanel, )
+	public void disableBet(){
+		jbBet.setEnabled(false);
 	}
 	
-	public void registerController(){	
+	public void registerController(){
 		jbBet.addActionListener(getManager().getController());
 		jbExit.addActionListener(getManager().getController());
 	}

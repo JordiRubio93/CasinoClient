@@ -127,6 +127,10 @@ public class HorsesView extends GameView {
 		jlCount.setVisible(show);
 	}
 	
+	public void actualitzaCounter(int num){
+		jlCount.setText(String.valueOf(num));
+	}
+	
 	public void paintRed(boolean flag){
 		jlCount.setOpaque(flag);
 	}

@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.Calcul;
 import model.struct.horses.HorseData;
@@ -12,6 +14,7 @@ import network.segment.Check;
 import network.segment.Disconnect;
 import network.segment.InitHorses;
 import network.segment.NotifyBet;
+import network.segment.Seconds;
 import network.segment.Segment;
 import view.Dialeg;
 import view.cavalls.HorsesView;
@@ -41,6 +44,7 @@ public class HorsesExecutor implements Runnable {
 	private HorsesView game;
 	private int seconds;
 	private Manager manager;
+	private int sec;
 
 	/**
 	 * Constructor pel HorsesExecutor.
@@ -84,6 +88,28 @@ public class HorsesExecutor implements Runnable {
 					d.setWarningText(winner +"\nThanks for playing!");
 					manager.getServer().enviarTrama(new Disconnect());
 					System.exit(0);
+					
+					break;
+				case "Seconds":
+					sec = ((Seconds) s).getSegons();
+					if(sec <= 45 && sec >= 0){
+						game.setCounter();
+						
+						new Timer().scheduleAtFixedRate(new TimerTask(){
+							public void run() {
+								if(sec < 45){
+									sec++;
+									game.actualitzaCounter(45-sec);
+								}else{
+									game.showCounter(false);
+									this.cancel();
+								}
+								
+								if((45-sec) == 1 || (45-sec) == 3 || (45-sec) == 5) game.paintRed(true);
+								else if((45-sec) < 5) game.paintRed(false);
+							}
+						}, 0, 1000);
+					}
 					
 					break;
 				default:
