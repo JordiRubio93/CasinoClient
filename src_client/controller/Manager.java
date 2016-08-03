@@ -9,6 +9,7 @@ import model.struct.horses.HorseData;
 import model.struct.user.LoginInfo;
 import model.struct.user.User;
 import network.ServerComunication;
+import network.segment.AddCash;
 import network.segment.AddUser;
 import network.segment.ChangePassword;
 import network.segment.Check;
@@ -292,6 +293,23 @@ public class Manager {
 					getGameManager().setUser(user);
 				} else
 					new Dialeg().setWarningText("ERROR al actualitzar la PW");
+			}
+		} catch (IOException e){ e.printStackTrace();}
+	}//Tancament del metode
+	public void addCash(float cash, String password) {
+		try {
+			/**encriptem la password abans de enviarla**/
+			User user = new User(getGameManager().getUser().getName(), password);
+			user.setLoginInfo(new LoginInfo(user.getEmail(), password));
+			user.EncryptPassword();
+			server.enviarTrama(new AddCash(cash, user.getPassword()));
+			Segment s = (Segment) server.obtenirTrama();
+			if (s instanceof Check) {
+				if (((Check) s).isOk()) {
+					new Dialeg().setWarningText("Saldo Agregat correctament");
+					getGameManager().getUser().addCash(cash);
+				} else
+					new Dialeg().setWarningText("ERROR al agregar la PW");
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode

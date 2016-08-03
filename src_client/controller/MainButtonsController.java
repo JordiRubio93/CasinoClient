@@ -127,7 +127,6 @@ public class MainButtonsController implements ActionListener {
 			}			
 			break;
 		case ("Add Money"):
-			System.out.println("in");
 			af = new AddMoneyFrame(manager);
 			af.setVisible(true);
 			break;
@@ -138,7 +137,7 @@ public class MainButtonsController implements ActionListener {
 			} else {
 				af.setVisible(false);
 				af.dispose();
-				new Dialeg().setWarningText("Operation not implemented");
+				manager.addCash(af.getCash(),af.getPassword());
 			}
 			break;
 		case ("User Evo"):

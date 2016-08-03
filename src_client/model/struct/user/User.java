@@ -88,6 +88,9 @@ public class User implements Serializable {
 	public void setCash(double cash) {
 		this.cash = cash;
 	}
+	public void addCash(double c) {
+		cash = cash + c;
+	}
 	public PublicUser getPublicUser(){
 		return new PublicUser(getSurname(),getGender());
 	}
