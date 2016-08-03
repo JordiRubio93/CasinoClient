@@ -14,11 +14,11 @@ package view.statistics;
  */
 
 public class Axis {
-	private int primaryIncrements; //Separació entre guionets 1
-	private int secondaryIncrements; //Separació entre guionets 2
-	private int tertiaryIncrements; //Separació entre guionets 3
-	private	int maxValue; //Valor màxim per l'alçada de l'eix de les Y
-	private int minValue; //Generalment serà 0
+	private int primaryIncrements = 0; //Separació entre guionets 1
+	private int secondaryIncrements = 0; //Separació entre guionets 2
+	private int tertiaryIncrements = 0; //Separació entre guionets 3
+	private	int maxValue = 100; //Valor màxim per l'alçada de l'eix de les Y
+	private int minValue = 0; //Generalment serà 0
 	private String yLabel; //Nom de l'eix
  
 	public Axis(String name) {
