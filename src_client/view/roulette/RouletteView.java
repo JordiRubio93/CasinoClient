@@ -189,7 +189,7 @@ public class RouletteView extends GameView {
 		jpDobles.add(jbParell);
 		jpDobles.add(jbVermell);
 		jpDobles.add(jbNegre);
-		jpDobles.add(jbSenar);
+ 		jpDobles.add(jbSenar);
 		jpDobles.add(jbPassa);
 		
 		jpInferior.add(jpDotzenes, BorderLayout.NORTH);
