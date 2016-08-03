@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +31,7 @@ import model.Utilities;
  *         La Salle - Universitat Ramon Llull. <br/>
  */
 
-public class BarChart extends JPanel{
+public class BarChart extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	// offsets (dels eixos a les vores de la pantalla)
@@ -52,14 +51,13 @@ public class BarChart extends JPanel{
 	private int majorTickWidth = 10;
 	private int secTickWidth = 5;
 	private int minorTickWidth = 2;
-	
-	//Dimensions de la pantalla / 10
-	private int width = Toolkit.getDefaultToolkit().getScreenSize().width - Toolkit.getDefaultToolkit().getScreenSize().width/10;
-	private int height = Toolkit.getDefaultToolkit().getScreenSize().height - Toolkit.getDefaultToolkit().getScreenSize().height/10;
+
+	private int width;
+	private int height;
 
 	private Color backgroundColor = new Color(0, 0, 0, 0);
 
-	// Fonts
+	// Fonts/tipografies
 	private Font yFont = new Font("Cambria", Font.PLAIN, 12);
 	private Font xFont = new Font("Cambria", Font.BOLD, 12);
 	private Font titleFont = new Font("Cambria", Font.BOLD, 30);
@@ -69,23 +67,41 @@ public class BarChart extends JPanel{
 	// Referències a altres classes
 	private ArrayList<Bar> bars;
 	private Axis yAxis;
-	private int barWidth = 50;
-	
-	/*
+	private int barWidth = 100;
+
 	private int pointDistance; // Variable auxiliar
 	private int[] currentBarHeight; // Valors de l'alçada en píxels de les
 									// barres
 	private int[] y; // Valors y reals de les barres
-	*/
 
+	// Per l'animació de quan creixen
+	private Sleeper sleep;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param bars
+	 * @param yAxis
+	 * @param game
+	 */
 	public BarChart(ArrayList<Bar> bars, Axis yAxis, String game) {
 		this.bars = bars;
 		this.yAxis = yAxis;
 
+		// Agafem la mida usable de la pantalla (sense barres d'Inicio ni altres
+		// elements foranis al programa)
+		Rectangle r = Utilities.getUsableScreenBounds();
+		width = (int) r.getWidth();
+		height = (int) r.getHeight() - 100;
+
 		title = title + " - " + game;
+
+		currentBarHeight = new int[5];
+		y = new int[5];
+		for (int i = 0; i < 5; i++)
+			y[i] = topOffset + height - (topOffset + bottomOffset);
 	}
 
-	@Override
 	public void paintComponent(Graphics g) {
 		try {
 			File fitxer = new File(Constants.BG);
@@ -111,15 +127,12 @@ public class BarChart extends JPanel{
 		// inferior (eix X)
 		g.drawLine(leftOffset, heightChart + topOffset, leftOffset + widthChart, heightChart + topOffset);
 
-		if (this.yAxis.getPrimaryIncrements() != 0){
+		if (this.yAxis.getPrimaryIncrements() != 0)
 			drawTick(heightChart, this.yAxis.getPrimaryIncrements(), g, Color.WHITE, majorTickWidth);
-		}
-		if (this.yAxis.getSecondaryIncrements() != 0){
+		if (this.yAxis.getSecondaryIncrements() != 0)
 			drawTick(heightChart, this.yAxis.getSecondaryIncrements(), g, Color.WHITE, secTickWidth);
-		}
-		if (this.yAxis.getTertiaryIncrements() != 0){
+		if (this.yAxis.getTertiaryIncrements() != 0)
 			drawTick(heightChart, this.yAxis.getTertiaryIncrements(), g, Color.WHITE, minorTickWidth);
-		}
 		
 		//Dibuixa allò corresponent
 		
@@ -186,7 +199,7 @@ public class BarChart extends JPanel{
 	}
 
 	/**
-	 * Dibuixa les barres. 
+	 * Dibuixa les barres. En realitat les inicialitza, ja que les dibuixa amb alçada 0, perquè després creixin
 	 * @param heightChart
 	 * @param widthChart
 	 * @param g
@@ -194,20 +207,14 @@ public class BarChart extends JPanel{
 	private void drawBars(int heightChart, int widthChart, Graphics g) {
 		int i = 0;
 		int barNumber = bars.size();
-		
-		int pointDistance = (int) (widthChart/(barNumber + 1));
-		
+
+		pointDistance = (int) (widthChart / (barNumber + 1));
+
 		for (Bar bar : bars) {
 			i++;
-			
-			double factor = ((double) heightChart/ (double)yAxis.getMaxValue());
-			
-			int scaledBarHeight = (int)(bar.getValue() * factor);
-			
-			int j = topOffset + heightChart - scaledBarHeight;
 
 			g.setColor(bar.getColor());
-			g.fillRect(leftOffset + (i * pointDistance) - (barWidth / 2), j, barWidth, scaledBarHeight);
+			g.fillRect(leftOffset + (i * pointDistance) - (barWidth / 2), y[i - 1], barWidth, currentBarHeight[i - 1]);
 
 			// draw tick
 			g.drawLine(leftOffset + (i * pointDistance), topOffset + heightChart, leftOffset + (i * pointDistance),
@@ -255,4 +262,51 @@ public class BarChart extends JPanel{
 		g2d.drawString(title, titleX, titleY);
 	}
 
+	/**
+	 * Dibuixa les barres animades creixent
+	 */
+	public void redrawBars() {
+		int[] scaledBarHeight = new int[5];
+		int heightChart = height - (topOffset + bottomOffset);
+		sleep = new Sleeper(this, 50);
+
+		//Per cada barra (5 o menys):
+		for (int i = 0; i < bars.size() && i < 5; i++) {
+			Bar bar = bars.get(i);
+
+			double factor = ((double) heightChart / (double) yAxis.getMaxValue());
+
+			scaledBarHeight[i] = (int) (bar.getValue() * factor);
+
+			int amount = 10;
+
+			currentBarHeight[i] = 0;
+			//Fa que creixi:
+			while (currentBarHeight[i] < scaledBarHeight[i] && !sleep.isInterrupted()) {
+				y[i] -= amount;
+				currentBarHeight[i] += amount;
+
+				sleep.run();
+				revalidate();
+				repaint();
+			}
+		}
+	}
+
+	/**
+	 * Executa la classe com a Runnable per poder pintar les barres correctament
+	 */
+	@Override
+	public synchronized void run() {
+		redrawBars();
+	}
+
+	/**
+	 * Atura el pintatge de les barres, suprimint tot allò que pugui interferir negativament
+	 */
+	public synchronized void stop() {
+		bars.clear();
+		bars = null;
+		sleep.interrupt();
+	}
 }
