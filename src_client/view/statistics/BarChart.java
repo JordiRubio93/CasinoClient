@@ -36,21 +36,19 @@ public class BarChart extends JPanel implements Runnable {
 
 	// offsets (dels eixos a les vores de la pantalla)
 	private int leftOffset = 140;
-	private int topOffset = 120;
+	private int topOffset = 100;
 	private int bottomOffset = 100;
-	private int rightOffset = 15;
+	private int rightOffset = 140;
 
 	// alçada de les labels de les X
 	private int xLabelOffset = 40;
 	// amplada de les labels de les Y
-	private int yLabelOffset = 40;
+	private int yLabelOffset = 100;
 
 	private String title = "TOP 5";
 
 	// amplada de les línies
 	private int majorTickWidth = 10;
-	private int secTickWidth = 5;
-	private int minorTickWidth = 2;
 
 	private int width;
 	private int height;
@@ -94,6 +92,7 @@ public class BarChart extends JPanel implements Runnable {
 		width = (int) r.getWidth();
 		height = (int) r.getHeight() - 100;
 
+
 		title = title + " - " + game;
 
 		currentBarHeight = new int[5];
@@ -128,12 +127,7 @@ public class BarChart extends JPanel implements Runnable {
 		g.drawLine(leftOffset, heightChart + topOffset, leftOffset + widthChart, heightChart + topOffset);
 
 		if (this.yAxis.getPrimaryIncrements() != 0)
-			drawTick(heightChart, this.yAxis.getPrimaryIncrements(), g, Color.WHITE, majorTickWidth);
-		if (this.yAxis.getSecondaryIncrements() != 0)
-			drawTick(heightChart, this.yAxis.getSecondaryIncrements(), g, Color.WHITE, secTickWidth);
-		if (this.yAxis.getTertiaryIncrements() != 0)
-			drawTick(heightChart, this.yAxis.getTertiaryIncrements(), g, Color.WHITE, minorTickWidth);
-		
+			drawTick(heightChart, 100, g, Color.WHITE, majorTickWidth);		
 		//Dibuixa allò corresponent
 		
 		drawYLabels(heightChart, this.yAxis.getPrimaryIncrements(), g, Color.WHITE);
@@ -153,11 +147,11 @@ public class BarChart extends JPanel implements Runnable {
 	 */
 	
 	private void drawTick(int heightChart, int increment, Graphics g, Color c, int tickWidth) {
-		int incrementNo = yAxis.getMaxValue() / increment;
+		int incrementNo = 11;
 
-		double factor = ((double) heightChart / (double) yAxis.getMaxValue());
-
-		double incrementInPixel = (double) (increment * factor);
+		double factor = (heightChart - 50) / highestValue(bars);
+		
+		int incrementInPixel = (int) ((highestValue(bars)/10) * factor);
 
 		g.setColor(c);
 
@@ -175,11 +169,13 @@ public class BarChart extends JPanel implements Runnable {
 	 * @param c
 	 */
 	private void drawYLabels(int heightChart, int increment, Graphics g, Color c) {
-		int incrementNo = yAxis.getMaxValue() / increment;
+		//Sempre sortiran 10 labels
+		int incrementNo = 11;
 
-		double factor = ((double) heightChart / (double) yAxis.getMaxValue());
+		double factor = (heightChart - 50) / highestValue(bars);
+		
 
-		int incrementInPixel = (int) (increment * factor);
+		int incrementInPixel = (int) ((highestValue(bars)/10) * factor);
 
 		g.setColor(c);
 		FontMetrics fm = getFontMetrics(yCatFont);
@@ -187,7 +183,7 @@ public class BarChart extends JPanel implements Runnable {
 		for (int i = 0; i < incrementNo; i++) {
 			int fromTop = heightChart + topOffset - (i * incrementInPixel);
 
-			String yLabel = "" + (i * increment);
+			String yLabel = "" + (i * highestValue(bars)/10);
 
 			int widthStr = fm.stringWidth(yLabel);
 			int heightStr = fm.getHeight();
@@ -196,6 +192,21 @@ public class BarChart extends JPanel implements Runnable {
 			g.drawString(yLabel, (leftOffset - yLabelOffset) + (yLabelOffset / 2 - widthStr / 2),
 					fromTop + (heightStr / 2));
 		}
+	}
+	
+	/**
+	 * Troba el valor màxim de l'array bars
+	 * @param bars
+	 * @return el màxim valor de l'array bars
+	 */
+	private double highestValue(ArrayList<Bar> bars){
+		double max = 0;
+		for(int i = 0; i < bars.size(); i++){
+			if(bars.get(i).getValue() > max){
+				max = bars.get(i).getValue();
+			}
+		}
+		return max;
 	}
 
 	/**
@@ -267,14 +278,14 @@ public class BarChart extends JPanel implements Runnable {
 	 */
 	public void redrawBars() {
 		int[] scaledBarHeight = new int[5];
-		int heightChart = height - (topOffset + bottomOffset);
+		int heightChart = (height - (topOffset + bottomOffset));
 		sleep = new Sleeper(this, 50);
 
 		//Per cada barra (5 o menys):
-		for (int i = 0; i < bars.size() && i < 5; i++) {
+		for (int i = 0; i < bars.size() && i <= 5; i++) {
 			Bar bar = bars.get(i);
 
-			double factor = ((double) heightChart / (double) yAxis.getMaxValue());
+			double factor = (heightChart - 50) / highestValue(bars);
 
 			scaledBarHeight[i] = (int) (bar.getValue() * factor);
 
@@ -290,6 +301,7 @@ public class BarChart extends JPanel implements Runnable {
 				revalidate();
 				repaint();
 			}
+			repaint();
 		}
 	}
 
