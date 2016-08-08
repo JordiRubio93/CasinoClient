@@ -48,9 +48,9 @@ public class PasswordFrame extends JFrame {
 		}
 		
 		private void initElements(){
-			passLabel = new JLabel("password:           ");
+			passLabel = new JLabel("PASSWORD:           ");
 			passField = new JPasswordField();
-			pass2Label = new JLabel("repeat password: ");
+			pass2Label = new JLabel("REPEAT PASSWORD: ");
 			pass2Field = new JPasswordField();
 			goButton = new JButton("Change it!");
 			

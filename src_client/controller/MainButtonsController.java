@@ -132,7 +132,7 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Go Add Money"):
 			af.setVisible(false);
-			if (!(af.getCash() > 0) ) {
+			if (!(af.getCash() > 0)) {
 				new Dialeg().setWarningText("wrong Amount");
 			} else {
 				af.setVisible(false);
