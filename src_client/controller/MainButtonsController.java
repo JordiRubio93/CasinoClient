@@ -241,6 +241,7 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("BET_H"):
 			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).showPhv();
+
 			break;
 		case ("EXIT_H"):
 			try {
