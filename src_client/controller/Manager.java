@@ -289,10 +289,10 @@ public class Manager {
 			Segment s = (Segment) server.obtenirTrama();
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
-					new Dialeg().setWarningText("PW Canviada correctament");
+					new Dialeg().setWarningText("PW accepted");
 					getGameManager().setUser(user);
 				} else
-					new Dialeg().setWarningText("ERROR al actualitzar la PW");
+					new Dialeg().setWarningText("ERROR with PW");
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode
@@ -306,10 +306,10 @@ public class Manager {
 			Segment s = (Segment) server.obtenirTrama();
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
-					new Dialeg().setWarningText("Saldo Agregat correctament");
+					new Dialeg().setWarningText("Money accepted!");
 					getGameManager().getUser().addCash(cash);
 				} else
-					new Dialeg().setWarningText("ERROR al agregar la PW");
+					new Dialeg().setWarningText("ERROR with PW");
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode

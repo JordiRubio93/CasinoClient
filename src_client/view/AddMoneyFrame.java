@@ -49,9 +49,9 @@ public class AddMoneyFrame extends JFrame {
 	}
 	
 	private void initElements(){
-		passLabel = new JLabel("password:     ");
+		passLabel = new JLabel("PASSWORD:     ");
 		passField = new JPasswordField();
-		cashLabel = new JLabel("money to add: ");
+		cashLabel = new JLabel("MONEY TO ADD: ");
 		cashField = new JTextField();
 		goButton = new JButton("Add money!");
 		
