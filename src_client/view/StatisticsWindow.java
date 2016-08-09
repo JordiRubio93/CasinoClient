@@ -95,7 +95,7 @@ public class StatisticsWindow extends BaseJPanel {
 		
 		cashEvoButton = new JButton();
 		cashEvoButton.setIcon(new ImageIcon (img4));
-		cashEvoButton.putClientProperty("action", "Cash Evo");
+		cashEvoButton.putClientProperty("action", "Cash Ranking");
 		cashEvoButton.setContentAreaFilled(false);
 		cashEvoButton.setBorderPainted(false);
 		

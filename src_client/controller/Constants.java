@@ -28,6 +28,7 @@ public class Constants {
 	public static final String MAIN_VIEW_NAME = "MainWindow";
 	public static final String GAME_VIEW_NAME = "Gameview";
 	public static final String STATISTICS_VIEW_NAME = "statistics.StatisticsWindow";
+	public static final String CASH_RANKING_VIEW_NAME = "statistics.CashRankingWindow";
 	public static final String GRAPHICS_VIEW_NAME = "statistics.Graphics";
 	public static final String BJ_VIEW_NAME = "blackjack.BlackjackView";
 	public static final String R_VIEW_NAME = "roulette.RouletteView";
@@ -71,4 +72,5 @@ public class Constants {
 	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
 	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
 	public static final String AVATAR = "Resources/avatar.png";
+	public static final String[] TABLE_COLUMN_NAMES = {"First Name", "Last Name", "Money in account"};
 }

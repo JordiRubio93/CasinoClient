@@ -9,6 +9,7 @@ import javax.swing.JButton;
 
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
+import network.segment.CashRanking;
 import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Play;
@@ -19,6 +20,9 @@ import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
+import java.util.ArrayList;
+
+import view.statistics.CashRankingWindow;
 import view.statistics.Graphics;
 
 /**
@@ -207,6 +211,17 @@ public class MainButtonsController implements ActionListener {
 		case ("Cash Evo"):
 			break;
 		case ("Cash Ranking"):
+			try {
+				manager.getServer().enviarTrama(new CashRanking(null));
+				ArrayList<Object[]> data = ((CashRanking) manager.getServer().obtenirTrama()).getData();
+				CashRankingWindow cR = new CashRankingWindow();
+				cR.setData(data);
+				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).add(cR);
+				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).repaint();
+				manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}	
 			break;
 		case ("This Horse"):
 			manager.getGameManager().thisHorse();

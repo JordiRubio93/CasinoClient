@@ -69,6 +69,8 @@ public class MainFrame extends JFrame{
 
 	public BaseJPanel getPanel(String cad){
 		switch(cad){
+		case Constants.CASH_RANKING_VIEW_NAME:
+			return panels.get(7);
 		case "LoginWindow":
 			return panels.get(6);
 		case "MainWindow":

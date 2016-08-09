@@ -99,7 +99,7 @@ public class RouletteExecutor implements Runnable {
 					
 					break;
 				default:
-					System.err.println("no se que ma arribat");
+					System.err.println("no se que m'ha arribat");
 					break;
 				}
 			}

@@ -42,7 +42,7 @@ public class StatisticsWindow extends BaseJPanel {
 	private JButton top5RouletteButton;
 	private JButton top5BlackjackButton;
 	private JButton top5hhorseButton;
-	private JButton cashEvoButton;
+	private JButton cashRankingButton;
 	private JButton homeButton = new JButton(home);
 	
 	public StatisticsWindow(){
@@ -98,11 +98,11 @@ public class StatisticsWindow extends BaseJPanel {
 		top5hhorseButton.setContentAreaFilled(false);
 		top5hhorseButton.setBorderPainted(false);
 		
-		cashEvoButton = new JButton();
-		cashEvoButton.setIcon(new ImageIcon (img4));
-		cashEvoButton.putClientProperty("action", "Cash Evo");
-		cashEvoButton.setContentAreaFilled(false);
-		cashEvoButton.setBorderPainted(false);
+		cashRankingButton = new JButton();
+		cashRankingButton.setIcon(new ImageIcon (img4));
+		cashRankingButton.putClientProperty("action", "Cash Ranking");
+		cashRankingButton.setContentAreaFilled(false);
+		cashRankingButton.setBorderPainted(false);
 		
 		panelCenter.setLayout(new GridLayout(1, 4));
 		panelCenter.setOpaque(false);
@@ -110,7 +110,7 @@ public class StatisticsWindow extends BaseJPanel {
 		panelCenter.add(top5RouletteButton);
 		panelCenter.add(top5BlackjackButton);
 		panelCenter.add(top5hhorseButton);
-		panelCenter.add(cashEvoButton);
+		panelCenter.add(cashRankingButton);
 		
 		homeButton.setFont(Constants.boldFont);
 		homeButton.setBackground(Constants.coolGreen);
@@ -137,7 +137,7 @@ public class StatisticsWindow extends BaseJPanel {
 		top5RouletteButton.addActionListener(getManager().getController());
 		top5BlackjackButton.addActionListener(getManager().getController());
 		top5hhorseButton.addActionListener(getManager().getController());
-		cashEvoButton.addActionListener(getManager().getController());
+		cashRankingButton.addActionListener(getManager().getController());
 		homeButton.addActionListener(getManager().getController());
 	}
 }

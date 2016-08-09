@@ -6,6 +6,7 @@ import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
+import view.statistics.CashRankingWindow;
 import view.statistics.Graphics;
 import view.statistics.StatisticsWindow;
 /**
@@ -43,6 +44,7 @@ public class SplashScreen{
 		panels.add(new StatisticsWindow()); //4	
 		panels.add(new MainWindow(new ConfigPanel())); //5
 		panels.add(new LoginWindow()); //6
+		panels.add(new CashRankingWindow()); //7
 		loaded = Boolean.TRUE;
 	}
 	
