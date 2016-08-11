@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -45,8 +46,14 @@ public class CashRankingWindow extends BaseJPanel{
 		initElements();
 	}
 	
-	public void setData(ArrayList<Object[]> data){
+	public CashRankingWindow(ArrayList<Object[]> data){
+		super();
 		this.data = data;
+		initElements();
+	}
+	
+	public JScrollPane getSPane(){
+		return scrollPane;
 	}
 	
 	@Override
@@ -63,8 +70,7 @@ public class CashRankingWindow extends BaseJPanel{
 		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
 		
 		table = new JTable(model);
-		table.setBackground(Color.BLACK);
-		table.setForeground(Color.WHITE);
+
 		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
 		
 		scrollPane = new JScrollPane(table);
@@ -90,6 +96,24 @@ public class CashRankingWindow extends BaseJPanel{
 
 		add(panel, BorderLayout.CENTER);
 		
+	}
+	
+	public JTable configTable (JTable table){
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		
+		table.getTableHeader().setBackground(Color.BLACK);
+		table.getTableHeader().setForeground(Color.WHITE);
+		table.getTableHeader().setFont(Constants.boldFont);
+		table.setBackground(new Color(20, 20, 20));
+		table.setForeground(Color.WHITE);
+		table.setRowHeight(30);
+		table.setFont(Constants.plainFont);
+		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
+		
+		return table;
 	}
 
 }

@@ -1,11 +1,16 @@
 package controller;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
@@ -22,8 +27,8 @@ import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
 import java.util.ArrayList;
 
-import view.statistics.CashRankingWindow;
 import view.statistics.Graphics;
+import view.statistics.MyTableModel;
 
 /**
  * 
@@ -47,6 +52,7 @@ public class MainButtonsController implements ActionListener {
 	private PasswordFrame pf;
 	private AddMoneyFrame af;
 	private boolean guest;
+
 	
 	/**
 	 * Constructor del MainButtonsController.
@@ -212,11 +218,18 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Cash Ranking"):
 			try {
+				// Envia peticio
 				manager.getServer().enviarTrama(new CashRanking(null));
+				// Rep les dades
 				ArrayList<Object[]> data = ((CashRanking) manager.getServer().obtenirTrama()).getData();
-				CashRankingWindow cR = new CashRankingWindow();
-				cR.setData(data);
-				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).add(cR);
+				// Crea el component per a substituir amb les dades noves
+				MyTableModel model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
+				JTable table = new JTable(model);	
+				table = configTable(table);
+				JScrollPane sP = new JScrollPane(table);
+				// Substitueix el component antic pel nou
+				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).add(sP, 1);
+				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).revalidate();
 				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).repaint();
 				manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
 			} catch (IOException e1) {
@@ -258,7 +271,7 @@ public class MainButtonsController implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// kill rulete
+			// kill roullette
 			break;
 		case ("BET_BJ"):
 			manager.getGameManager().betBJ(guest);
@@ -275,4 +288,23 @@ public class MainButtonsController implements ActionListener {
 		}
 
 	}//Tancament del metode
+	
+	public JTable configTable (JTable table){
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		
+		table.getTableHeader().setBackground(Color.BLACK);
+		table.getTableHeader().setForeground(Color.WHITE);
+		table.getTableHeader().setFont(Constants.boldFont);
+		table.setBackground(new Color(20, 20, 20));
+		table.setForeground(Color.WHITE);
+		table.setRowHeight(30);
+		table.setFont(Constants.plainFont);
+		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
+		
+		return table;
+	}
+	
 }//Tancament de la classe
