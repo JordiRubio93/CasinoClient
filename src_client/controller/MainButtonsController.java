@@ -185,7 +185,6 @@ public class MainButtonsController implements ActionListener {
 					manager.showPanel(Constants.GRAPHICS_VIEW_NAME);
 					manager.getGameManager().executaGrafics(true);
 				}
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

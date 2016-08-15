@@ -82,6 +82,18 @@ public class Graphics extends BaseJPanel {
 			return false;
 		}
 		
+		boolean zero = true;
+		for(int i = 0; i < hist.size(); i++){
+			if(hist.get(i).getGuanys() > 0){
+				zero = false;
+				break;
+			}
+		}
+		if(zero){
+			new Dialeg().setWarningText("We're sorry.\nThere's no available information about this game.");
+			return false;
+		}
+		
 		String cad = null;
 		Color color = null;
 
