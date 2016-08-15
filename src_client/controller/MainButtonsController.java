@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JTable;
 
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
+import network.segment.BJEnd;
 import network.segment.CashRanking;
 import network.segment.GameOver;
 import network.segment.LogOut;
@@ -25,8 +27,6 @@ import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
-import java.util.ArrayList;
-
 import view.statistics.Graphics;
 import view.statistics.MyTableModel;
 
@@ -52,7 +52,7 @@ public class MainButtonsController implements ActionListener {
 	private PasswordFrame pf;
 	private AddMoneyFrame af;
 	private boolean guest;
-
+	private double initBJMoney;
 	
 	/**
 	 * Constructor del MainButtonsController.
@@ -103,11 +103,12 @@ public class MainButtonsController implements ActionListener {
 			}
 			break;
 		case ("Play BlackJack"):
-			if (manager.getGameManager().isGuest())  guest = true;
+			if (manager.getGameManager().isGuest()) guest = true;
 				try {
 					manager.getServer().enviarTrama(new Play("blackjack"));
 					manager.showPanel(Constants.BJ_VIEW_NAME);
 					manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
+					initBJMoney = manager.getGameManager().getBlackjack().getCashAmount();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -245,8 +246,15 @@ public class MainButtonsController implements ActionListener {
 			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).getPhv().passaDreta();
 			break;
 		case ("EXIT_GAME"):
-			// Funcio que doni al servidor la informacio necesaria (ganancies)
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
+		
+			double diners = manager.getGameManager().getBlackjack().getCashAmount();
+			double guanys = 0;
+			if (diners > initBJMoney) guanys = diners - initBJMoney;
+			
+			try {
+				manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
+			} catch (IOException e1) {e1.printStackTrace();}
 			break;
 		case ("BET_R"):
 			manager.getGameManager().sendRouletteBet();
@@ -266,7 +274,7 @@ public class MainButtonsController implements ActionListener {
 		case ("EXIT_R"):
 			try {
 				manager.getServer().enviarTrama(new GameOver());
-				manager.showPanel(Constants.MAIN_VIEW_NAME);
+				manager.showPanel(Constants.MAIN_VIEW_NAME);				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
