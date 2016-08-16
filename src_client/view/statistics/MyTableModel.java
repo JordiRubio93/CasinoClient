@@ -14,7 +14,6 @@ public class MyTableModel extends AbstractTableModel {
 		this.data = data;
 	}
 	
-
 	@Override
 	public int getColumnCount() {
 		return columnNames.length;
@@ -34,16 +33,4 @@ public class MyTableModel extends AbstractTableModel {
 	public String getColumnName(int col) {
 	    return columnNames[col];
 	}
-	/*
-	@Override
-	public void addRow(Object[] dates) {
-	    data.add(dates);
-	    int row = data.indexOf(dates);
-	    for(int column = 0; column < dates.length; column++) {
-	        fireTableCellUpdated(row, column);
-	    }
-	    fireTableRowsInserted(row, row);
-	}
-	*/
-
 }

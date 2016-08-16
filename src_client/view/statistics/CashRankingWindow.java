@@ -18,7 +18,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -27,8 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import controller.Constants;
 import view.BaseJPanel;
+import view.Tapet;
+import controller.Constants;
 
 public class CashRankingWindow extends BaseJPanel{
 	private static final long serialVersionUID = 1L;
@@ -37,7 +37,7 @@ public class CashRankingWindow extends BaseJPanel{
 	private MyTableModel model;
 	private JTable table;
 	private JScrollPane scrollPane;
-	private JPanel panel;
+	private Tapet panel;
 	
 	private ArrayList<Object[]> data = new ArrayList<Object[]>();
 	
@@ -47,7 +47,6 @@ public class CashRankingWindow extends BaseJPanel{
 	}
 	
 	public CashRankingWindow(ArrayList<Object[]> data){
-		super();
 		this.data = data;
 		initElements();
 	}
@@ -61,25 +60,14 @@ public class CashRankingWindow extends BaseJPanel{
 		backButton.addActionListener(getManager().getController());
 	}
 
+	public void setData(ArrayList<Object[]> data){
+		this.data = data;
+		initTable();
+		configTable();
+	}
+	
 	@Override
-	protected void initElements() {		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
-		
-		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
-		
-		table = new JTable(model);
-
-		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
-		
-		scrollPane = new JScrollPane(table);
-		scrollPane.setBackground(Color.BLACK);
-		
-		panel = new JPanel();
-		panel.setBackground(Color.BLACK);
-		panel.add(scrollPane);
-
+	protected void initElements() {
 		setLayout(new BorderLayout());
 		
 		backButton.setFont(Constants.boldFont);
@@ -93,27 +81,39 @@ public class CashRankingWindow extends BaseJPanel{
 		panelTop.add(backButton, 0);
 
 		add(panelTop, BorderLayout.NORTH);
-
-		add(panel, BorderLayout.CENTER);
-		
 	}
 	
-	public JTable configTable (JTable table){
+	public void initTable(){
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = (int) dim.getWidth();
+		int h = (int) dim.getHeight();
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
+		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
 		
-		table.getTableHeader().setBackground(Color.BLACK);
-		table.getTableHeader().setForeground(Color.WHITE);
-		table.getTableHeader().setFont(Constants.boldFont);
-		table.setBackground(new Color(20, 20, 20));
-		table.setForeground(Color.WHITE);
-		table.setRowHeight(30);
-		table.setFont(Constants.plainFont);
-		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
+		table = new JTable(model);
 		
-		return table;
+		scrollPane = new JScrollPane(table);
+		
+		panel = new Tapet(w, h, Constants.PATH_METAL);
+		panel.setLayout(new BorderLayout());
+		panel.add(scrollPane, BorderLayout.NORTH);
+		
+		add(panel, BorderLayout.CENTER);
 	}
-
+	
+	public void configTable (){
+		table.getTableHeader().setFont(Constants.boldFont);
+		table.setFont(Constants.plainFont);
+		table.setRowHeight(30);		
+		
+		ColorRenderer renderer = new ColorRenderer();
+		
+		for(int i = 0; i < data.size(); i++){
+			for(int j = 0; j < 3; j++){
+				table.setDefaultRenderer(Object.class, renderer);
+			}
+		}
+		
+		table.setPreferredScrollableViewportSize(table.getPreferredSize());
+	}
 }

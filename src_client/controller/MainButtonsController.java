@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import model.RegisterValidator;
@@ -27,8 +26,8 @@ import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
+import view.statistics.CashRankingWindow;
 import view.statistics.Graphics;
-import view.statistics.MyTableModel;
 
 /**
  * 
@@ -222,19 +221,11 @@ public class MainButtonsController implements ActionListener {
 				manager.getServer().enviarTrama(new CashRanking(null));
 				// Rep les dades
 				ArrayList<Object[]> data = ((CashRanking) manager.getServer().obtenirTrama()).getData();
-				// Crea el component per a substituir amb les dades noves
-				MyTableModel model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
-				JTable table = new JTable(model);	
-				table = configTable(table);
-				JScrollPane sP = new JScrollPane(table);
-				// Substitueix el component antic pel nou
-				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).add(sP, 1);
-				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).revalidate();
-				manager.getPanel(Constants.CASH_RANKING_VIEW_NAME).repaint();
+				((CashRankingWindow) manager.getPanel(Constants.CASH_RANKING_VIEW_NAME)).setData(data);
 				manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			}	
+			}
 			break;
 		case ("This Horse"):
 			manager.getGameManager().thisHorse();

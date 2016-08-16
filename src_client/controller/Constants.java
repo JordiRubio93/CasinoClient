@@ -50,6 +50,7 @@ public class Constants {
 	public static final String PATH_TAPET = "Resources/tapet.jpg";
 	public static final String PATH_CASINO = "Resources/casino.jpg";
 	public static final String PATH_BLACKJACK = "Resources/blackjack.jpg";
+	public static final String PATH_METAL = "Resources/metal_texture.jpg";
 	public static final int nHorses = 12;
 	public static final Color semiOpaqueBlack = new Color(0, 0, 0, 60);
 	public static final Color coolOrange = new Color(215, 143, 35);
@@ -60,8 +61,12 @@ public class Constants {
 	public static final Color coolDarkGray = new Color(104, 99, 99);
 	public static final Color coolIndigo = new Color(75, 0, 130);
 	public static final Color coolDarkGreen = new Color(0,100,0);
+	public static final Color coolSeaGreen = new Color(60,179,113);
+	public static final Color coolAquaGreen = new Color(102,205,170);
 	public static final Font boldFont = new Font("Calibri", Font.BOLD, 24);
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
+	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
+	public static final Font italicFont = new Font("Calibri", Font.ITALIC, 20);
 	public static final Dimension errorIconDimension = new Dimension (48, 48);
 	public static final int GAME_HORSES = 2;
 	public static final int GAME_ROULETTE = 1;
@@ -72,5 +77,5 @@ public class Constants {
 	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
 	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
 	public static final String AVATAR = "Resources/avatar.png";
-	public static final String[] TABLE_COLUMN_NAMES = {"First Name", "Last Name", "Money in account"};
+	public static final String[] TABLE_COLUMN_NAMES = {"First name", "Last name", "Money in account"};
 }
