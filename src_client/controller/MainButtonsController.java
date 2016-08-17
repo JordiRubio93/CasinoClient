@@ -121,7 +121,6 @@ public class MainButtonsController implements ActionListener {
 		case ("Change Password"):
 			pf = new PasswordFrame(manager);
 			pf.setVisible(true);
-
 			break;
 		case ("Go Change Password"):
 			RegisterValidator rv = new RegisterValidator();
@@ -155,7 +154,6 @@ public class MainButtonsController implements ActionListener {
 				manager.logout();
 				try {
 					manager.getServer().enviarTrama(new LogOut());
-
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -214,6 +212,7 @@ public class MainButtonsController implements ActionListener {
 			}
 			break;
 		case ("Cash Evo"):
+			//...
 			break;
 		case ("Cash Ranking"):
 			try {

@@ -15,6 +15,12 @@ public class CashEvo extends Segment {
 		this.joc = joc;
 	}
 
+	public CashEvo(String id, int joc, LinkedList<HistoricSaldo> historic) {
+		this.id = id;
+		this.joc = joc;
+		this.historic = historic;
+	}
+
 	public String getId() {
 		return id;
 	}
