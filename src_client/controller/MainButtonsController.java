@@ -1,8 +1,5 @@
 package controller;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -10,7 +7,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
-import javax.swing.JTable;
 
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
@@ -45,6 +41,7 @@ import view.statistics.Graphics;
  * 			La Salle - Universitat Ramon Llull. <br/>
  * 
  */
+
 public class MainButtonsController implements ActionListener {
 	//Atributs de la classe
 	private Manager manager;
@@ -177,6 +174,9 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			manager.getGameManager().executaGrafics(false);
 			break;
+		case ("Back Cash Evo"):
+			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
+			break;
 		case ("Top 5 Roulette"):
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 1));
@@ -221,7 +221,19 @@ public class MainButtonsController implements ActionListener {
 				manager.getServer().enviarTrama(new CashRanking(null));
 				// Rep les dades
 				ArrayList<Object[]> data = ((CashRanking) manager.getServer().obtenirTrama()).getData();
-				((CashRankingWindow) manager.getPanel(Constants.CASH_RANKING_VIEW_NAME)).setData(data);
+				// Envia el conjunt de dades complet (amb ID)
+				manager.getRowListener().setData(data);
+				// Crea l'array públic, les dades del qual es mostraran
+				ArrayList<Object[]> publicData = new ArrayList<Object[]>();
+				// Filtra les dades
+				for(int i = 0; i < data.size(); i++){
+					Object[] row = new Object[3];
+					System.arraycopy(data.get(i), 1, row, 0, 3);
+					publicData.add(row);
+				}
+				// Passa les dades públiques
+				((CashRankingWindow) manager.getPanel(Constants.CASH_RANKING_VIEW_NAME)).setData(publicData);
+				// Mostra el panell
 				manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -286,23 +298,5 @@ public class MainButtonsController implements ActionListener {
 		}
 
 	}//Tancament del metode
-	
-	public JTable configTable (JTable table){
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int) screenSize.getWidth();
-		int height = (int) screenSize.getHeight();
-		
-		table.getTableHeader().setBackground(Color.BLACK);
-		table.getTableHeader().setForeground(Color.WHITE);
-		table.getTableHeader().setFont(Constants.boldFont);
-		table.setBackground(new Color(20, 20, 20));
-		table.setForeground(Color.WHITE);
-		table.setRowHeight(30);
-		table.setFont(Constants.plainFont);
-		table.setPreferredScrollableViewportSize(new Dimension((int)(width * 0.8), (int)(height * 0.9)));
-		
-		return table;
-	}
 	
 }//Tancament de la classe

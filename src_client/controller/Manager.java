@@ -46,6 +46,7 @@ public class Manager {
 	private final String rutejson = "config.json";
 	private ServerComunication server;
 	private MainButtonsController controller;
+	private RowSelectionListener rowListener;
 	private MainFrame view;
 	private GameManager gameManager;
 	private ConfigurationFile cf;
@@ -62,6 +63,7 @@ public class Manager {
 		loginSaved = fileManager.carregarDades();
 		gameManager = new GameManager(this);
 		controller = new MainButtonsController(this);
+		rowListener = new RowSelectionListener(this);
 	}//Tancament del constructor
 
 	/**
@@ -296,6 +298,7 @@ public class Manager {
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode
+
 	public void addCash(float cash, String password) {
 		try {
 			/**encriptem la password abans de enviarla**/
@@ -313,5 +316,9 @@ public class Manager {
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode
- 
+	
+	public RowSelectionListener getRowListener(){
+		return rowListener;
+	}
+	
 }//Tancament de la classe

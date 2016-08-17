@@ -11,7 +11,6 @@
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
 
-
 package view.statistics;
 
 import java.awt.BorderLayout;
@@ -58,40 +57,37 @@ public class CashRankingWindow extends BaseJPanel{
 	@Override
 	public void registerController() {
 		backButton.addActionListener(getManager().getController());
+		table.getSelectionModel().addListSelectionListener(getManager().getRowListener());
 	}
 
 	public void setData(ArrayList<Object[]> data){
 		this.data = data;
 		initTable();
 		configTable();
+		repaint();
 	}
 	
 	@Override
 	protected void initElements() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = (int) dim.getWidth();
+		int h = (int) dim.getHeight();
+		
 		setLayout(new BorderLayout());
 		
 		backButton.setFont(Constants.boldFont);
 		backButton.setBackground(Constants.coolGreen);
 		backButton.setContentAreaFilled(true);
 		backButton.setBorderPainted(false);
-		backButton.putClientProperty("action", "Back");
+		backButton.putClientProperty("action", "Back Cash Evo");
 		backButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
 		
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
 		add(panelTop, BorderLayout.NORTH);
-	}
-	
-	public void initTable(){
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		int w = (int) dim.getWidth();
-		int h = (int) dim.getHeight();
 		
-		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
-		
-		table = new JTable(model);
-		
+		table = new JTable();
 		scrollPane = new JScrollPane(table);
 		
 		panel = new Tapet(w, h, Constants.PATH_METAL);
@@ -99,6 +95,12 @@ public class CashRankingWindow extends BaseJPanel{
 		panel.add(scrollPane, BorderLayout.NORTH);
 		
 		add(panel, BorderLayout.CENTER);
+	}
+	
+	public void initTable(){
+		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
+		
+		table.setModel(model);
 	}
 	
 	public void configTable (){
@@ -115,5 +117,10 @@ public class CashRankingWindow extends BaseJPanel{
 		}
 		
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
+	}
+	
+	public int getSelectedData(){
+		if(table.getSelectionModel().getValueIsAdjusting()) return table.getSelectedRow();
+		else return -1;
 	}
 }
