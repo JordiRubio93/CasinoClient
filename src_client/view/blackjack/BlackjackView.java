@@ -69,7 +69,7 @@ public class BlackjackView extends BaseJPanel {
 		display = new JPanel(new BorderLayout());
 		
 		p3 = new JPanel(new GridLayout());
-		jlbCash = new JLabel("CASH: ");
+		jlbCash = new JLabel("     CASH: ");
 		jtfCash = new JTextField();
 		jtfCash.setHorizontalAlignment(JTextField.CENTER);
 		jtfCash.setEditable(false);
@@ -77,7 +77,7 @@ public class BlackjackView extends BaseJPanel {
 		p3.add(jtfCash);
 		display.add(p3,BorderLayout.NORTH);
 		p4 = new JPanel(new GridLayout());
-		jlbBet = new JLabel("BET: ");
+		jlbBet = new JLabel("     BET: ");
 		jtfBet = new JTextField();
 		jtfBet.setHorizontalAlignment(JTextField.CENTER);
 		p4.add(jlbBet);

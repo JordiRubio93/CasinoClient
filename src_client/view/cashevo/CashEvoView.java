@@ -16,7 +16,7 @@ public class CashEvoView extends BaseJPanel {
 	private JButton backButton = new JButton("Back");
 	private JPanel panelTop = new JPanel();
 	private JPanel panel = new JPanel(new BorderLayout());
-	private GlobalLineChart chart;
+	private LineChart chart;
 
 	public CashEvoView(){
 		initElements();
@@ -45,7 +45,7 @@ public class CashEvoView extends BaseJPanel {
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
-		chart = new GlobalLineChart(width, height, Constants.PATH_WALL);
+		chart = new LineChart(width, height, Constants.PATH_WALL);
 		chart.setLayout(new BorderLayout());
 		panel.add(chart, BorderLayout.CENTER);
 		

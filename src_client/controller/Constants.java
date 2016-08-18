@@ -60,7 +60,7 @@ public class Constants {
 	public static final Color coolRed = new Color(176, 26, 26);
 	public static final Color coolGray = new Color(114, 109, 109);
 	public static final Color coolDarkGray = new Color(104, 99, 99);
-	public static final Color coolIndigo = new Color(75, 0, 130);
+	public static final Color coolIndigo = new Color(72,61,139);
 	public static final Color coolDarkGreen = new Color(0,100,0);
 	public static final Color coolSeaGreen = new Color(60,179,113);
 	public static final Color coolAquaGreen = new Color(102,205,170);

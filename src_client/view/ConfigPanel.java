@@ -137,4 +137,12 @@ public class ConfigPanel extends BaseJPanel {
 		logOutButton.addActionListener(getManager().getController());
 		backButton.addActionListener(getManager().getController());
 	}
+	
+	public void setGuest(boolean guest){
+		if(guest){
+			changePasswordButton.setEnabled(false);
+			addMoneyButton.setEnabled(false);
+			seeEvoButton.setEnabled(false);
+		}
+	}
 }

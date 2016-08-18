@@ -136,4 +136,8 @@ public class MainWindow extends BaseJPanel {
 	public void lateralPanel(boolean open) {
 		c.setVisible(open);
 	}
+	
+	public ConfigPanel getLateralPanel(){
+		return c;
+	}
 }

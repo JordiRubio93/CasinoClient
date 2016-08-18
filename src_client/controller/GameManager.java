@@ -183,20 +183,23 @@ public class GameManager {
 	public void betBJ(boolean guest) {
 		double bet = ((BlackjackView) manager.getPanel(Constants.BJ_VIEW_NAME)).getBet();
 		if (!blackjack.isOkBet() && blackjack.canBet(bet)) {
-	
+			
+			blackjack.setOkBet(true);
 			if(guest){
 				blackjack.addBet(bet);
 				startBJ();
+				return;
 			}
-			blackjack.setOkBet(true);
+			
 			Bet aposta = new Bet(bet, "blackJack");
 			try {
 				manager.getServer().enviarTrama(new Betting(aposta));	
 				Segment s = manager.getServer().obtenirTrama();
 				if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
-				else{  new Dialeg().setWarningText("Bet accepted");			
-				blackjack.addBet(bet);
-				startBJ();
+				else{ 
+					new Dialeg().setWarningText("Bet accepted");			
+					blackjack.addBet(bet);
+					startBJ();
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();

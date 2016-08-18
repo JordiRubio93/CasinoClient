@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import view.Tapet;
 import controller.Constants;
 
-public class GlobalLineChart extends Tapet {	
+public class LineChart extends Tapet {	
 	private static final long serialVersionUID = 1L;
 	private LinkedList<Point> punts = new LinkedList<Point>();
 	private LinkedList<Point> ruleta = new LinkedList<Point>();
@@ -20,7 +20,7 @@ public class GlobalLineChart extends Tapet {
 	private boolean lines;
 	private String name;
 
-	public GlobalLineChart(int width, int height, String path) {
+	public LineChart(int width, int height, String path) {
 		super(width, height, path);
 	}
 

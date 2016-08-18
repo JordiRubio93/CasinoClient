@@ -18,6 +18,7 @@ import network.segment.Play;
 import network.segment.Top5;
 import view.AddMoneyFrame;
 import view.Dialeg;
+import view.MainWindow;
 import view.PasswordFrame;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
@@ -66,8 +67,10 @@ public class MainButtonsController implements ActionListener {
 			manager.login();
 			break;
 		case ("Try as guest"):
+			manager.startServer();
 			manager.getGameManager().setUser(Constants.guest);
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
+			((MainWindow) manager.getPanel("MainWindow")).getLateralPanel().setGuest(true);
 			break;
 		case ("Register"):
 			manager.register();
@@ -258,7 +261,7 @@ public class MainButtonsController implements ActionListener {
 			if (diners > initBJMoney) guanys = diners - initBJMoney;
 			
 			try {
-				manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
+				if(!guest) manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
 			} catch (IOException e1) {e1.printStackTrace();}
 			break;
 		case ("BET_R"):
