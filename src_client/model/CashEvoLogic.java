@@ -49,7 +49,7 @@ public class CashEvoLogic {
 	public float findMax(){
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		int h = (int) dim.getHeight();
-		return max = altura - h/16;
+		return max = altura - h/12;
 	}
 	
 	public float findFactor(float oldPos){

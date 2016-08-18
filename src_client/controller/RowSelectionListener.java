@@ -75,23 +75,28 @@ public class RowSelectionListener implements ListSelectionListener {
 			float y = logic.findPixel(hist.get(index).getDiners());
 			if(logic.isFlag()){
 				((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).removeAllPoints(num);
-				((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,num);
+				((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,false,num);
 				LinkedList<Float> anteriors = logic.getAnteriors();
 				for(int i = anteriors.size() - 2; i >= 0; i--){
 					x = logic.getAmplada() * i - (i == 0? 0 : 15);
 					y = logic.findNewPosition(anteriors.get(i));
-					((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,num);
+					((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,true,num);
 					logic.updateList(i,y);
 				}
 				logic.setFlag(false);
 			}else{
-				((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,num);
+				((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addPoint(x,y,false,num);
 			}
 			index++;
 		}
 		
-		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 0);
+		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 4);
 		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setUserName(data.get(row)[1] + " " + data.get(row)[2]);
+		
+		for(int j = 0; j < hist.size(); j++){
+			String cad = hist.get(j).getMoment() + " - " + hist.get(j).getDiners() + "€";
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).addString(cad, num);
+		}
 	}
 	
 	public ArrayList<Object[]> getData() {

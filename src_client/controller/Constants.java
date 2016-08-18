@@ -59,6 +59,7 @@ public class Constants {
 	public static final Color coolGreen = new Color(17, 129, 58);
 	public static final Color coolRed = new Color(176, 26, 26);
 	public static final Color coolGray = new Color(114, 109, 109);
+	public static final Color coolSilver = new Color(192,192,192);
 	public static final Color coolDarkGray = new Color(104, 99, 99);
 	public static final Color coolIndigo = new Color(72,61,139);
 	public static final Color coolDarkGreen = new Color(0,100,0);
@@ -68,7 +69,6 @@ public class Constants {
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
 	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
 	public static final Font italicFont = new Font("Calibri", Font.ITALIC, 20);
-	public static final Font buttonFont = new Font("Calibri", Font.PLAIN, 18);	
 	public static final Dimension errorIconDimension = new Dimension (48, 48);
 	public static final int GAME_HORSES = 2;
 	public static final int GAME_ROULETTE = 1;

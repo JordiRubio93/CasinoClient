@@ -19,6 +19,7 @@ public class CashEvoView extends BaseJPanel {
 	private JPanel panel = new JPanel(new BorderLayout());
 	private LineChart chart;
 	private JPanel panelBottom = new JPanel(new GridLayout());
+	private JButton jbAll = new JButton("All");
 	private JButton jbGlobal = new JButton("Global");
 	private JButton jbRoulette = new JButton("Roulette");
 	private JButton jbHorses = new JButton("Horse race");
@@ -31,6 +32,7 @@ public class CashEvoView extends BaseJPanel {
 	@Override
 	public void registerController() {
 		backButton.addActionListener(getManager().getController());
+		jbAll.addActionListener(getManager().getController());
 		jbGlobal.addActionListener(getManager().getController());
 		jbRoulette.addActionListener(getManager().getController());
 		jbHorses.addActionListener(getManager().getController());
@@ -55,6 +57,9 @@ public class CashEvoView extends BaseJPanel {
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
+		jbAll.setBackground(Color.WHITE);
+		jbAll.setForeground(Color.BLACK);
+		jbAll.putClientProperty("action", "ALL BUTTON");
 		jbGlobal.setBackground(Constants.coolRed);
 		jbGlobal.setForeground(Color.WHITE);
 		jbGlobal.putClientProperty("action", "GLOBAL BUTTON");
@@ -68,6 +73,7 @@ public class CashEvoView extends BaseJPanel {
 		jbBJ.setForeground(Color.WHITE);
 		jbBJ.putClientProperty("action", "BJ BUTTON");
 		
+		panelBottom.add(jbAll);
 		panelBottom.add(jbGlobal);
 		panelBottom.add(jbRoulette);
 		panelBottom.add(jbHorses);
@@ -82,8 +88,12 @@ public class CashEvoView extends BaseJPanel {
 		add(panelBottom, BorderLayout.SOUTH);
 	}
 	
-	public void addPoint(float x, float y, int joc){
-		chart.addPoint(x,y,joc);
+	public void addPoint(float x, float y, boolean first, int joc){
+		chart.addPoint(x,y,first,joc);
+	}
+	
+	public void addString(String s, int joc){
+		chart.addString(s, joc);
 	}
 	
 	public void removeAllPoints(int joc){
