@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import model.struct.user.HistoricPartides;
 import view.BaseJPanel;
 import view.Dialeg;
+import controller.Constants;
 
 /**
  * Panell de la GUI referent als gràfics de barres

@@ -6,14 +6,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.LinkedList;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import model.Calcul;
 import model.struct.horses.HorseData;
-import view.Dialeg;
 import view.GameView;
+import controller.Constants;
 
 /**
  * Classe que hereta de GameView, com RouletteView
@@ -133,14 +133,6 @@ public class HorsesView extends GameView {
 	
 	public void paintRed(boolean flag){
 		jlCount.setOpaque(flag);
-	}
-	
-	/**
-	 * Mostra el JDialog amb el guanyador
-	 * @param winner
-	 */
-	public void acabaPartida(String winner){
-		new Dialeg().setWarningText(winner);
 	}
 	
 	public void showPhv() {

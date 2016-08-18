@@ -12,10 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.Constants;
 import model.Utilities;
 import view.BaseJPanel;
 import view.Tapet;
+import controller.Constants;
 
 /**
  * 

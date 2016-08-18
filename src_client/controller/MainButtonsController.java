@@ -175,6 +175,9 @@ public class MainButtonsController implements ActionListener {
 		case ("Back Cash Evo"):
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			break;
+		case ("Back To Cash Evo"):
+			manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
+			break;
 		case ("Top 5 Roulette"):
 			try {
 				manager.getServer().enviarTrama(new Top5(null, 1));

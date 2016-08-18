@@ -1,8 +1,8 @@
 package model.blackjack;
 
 
-import controller.Constants;
 import model.struct.user.User;
+import controller.Constants;
 
 /**
  * 

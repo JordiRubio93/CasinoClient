@@ -11,11 +11,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import model.AmericanRoulette;
 import model.struct.roulette.Casella;
-import view.Dialeg;
 import view.GameView;
+import controller.Constants;
 
 /**
  * 
@@ -217,14 +216,6 @@ public class RouletteView extends GameView {
 	    
 	}//Tancament del metode
 	
-	/**
-     * Metode que no retorna res i que s'encarrega d'acabar la partida de la ruleta.
-     */
-	public void acabaPartida(int winner, boolean c){
-		Dialeg dialeg = new Dialeg();
-		dialeg.setWarningText("The winner number is... " + winner + " !");
-	}//Tancament del metode
-
 	/**
      * Metode que no retorna res i que tracta el boto de "enable" de la ruleta.
      */

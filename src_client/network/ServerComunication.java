@@ -5,10 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import controller.ConfigurationFile;
-import controller.Manager;
 import network.segment.Disconnect;
 import network.segment.Segment;
+import controller.ConfigurationFile;
+import controller.Manager;
 
 /**
  * 

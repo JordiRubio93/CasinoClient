@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import model.Sleeper;
 import model.Utilities;
+import controller.Constants;
 
 /**
  * @version 1.0 19/05/2016

@@ -32,6 +32,7 @@ public class Tapet extends JPanel {
 	private int w;
 	private int h;
 	
+	
 	public Tapet(LayoutManager layout){
 		setLayout(layout);
 	}
@@ -43,7 +44,9 @@ public class Tapet extends JPanel {
 		try{
 			File fitxer = new File(ruta);
 			imatge = ImageIO.read(fitxer);
-		}catch(IOException e){}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void paintComponent(Graphics g){
@@ -59,6 +62,8 @@ public class Tapet extends JPanel {
 			File fitxer = new File(ruta);
 			imatge = ImageIO.read(fitxer);
 			this.repaint();
-		}catch (IOException e){}
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 }

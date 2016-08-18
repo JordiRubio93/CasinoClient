@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
-import controller.Manager;
 import model.Utilities;
+import controller.Manager;
 /**
  * 
  * <p>

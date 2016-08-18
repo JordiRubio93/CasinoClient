@@ -33,6 +33,7 @@ public class Constants {
 	public static final String BJ_VIEW_NAME = "blackjack.BlackjackView";
 	public static final String R_VIEW_NAME = "roulette.RouletteView";
 	public static final String H_VIEW_NAME = "cavalls.HorsesView";
+	public static final String CASH_EVO_VIEW_NAME = "cashevo.CashEvoView";
 	public static final String PROJECT_NAME = "LS Casino";
 	public static final String BET_LABEL = "Bets...";
 	public static final int SPLASH_TIME = 1969;
@@ -50,7 +51,7 @@ public class Constants {
 	public static final String PATH_TAPET = "Resources/tapet.jpg";
 	public static final String PATH_CASINO = "Resources/casino.jpg";
 	public static final String PATH_BLACKJACK = "Resources/blackjack.jpg";
-	public static final String PATH_METAL = "Resources/metal_texture.jpg";
+	public static final String PATH_WALL = "Resources/metal_texture.jpg";
 	public static final int nHorses = 12;
 	public static final Color semiOpaqueBlack = new Color(0, 0, 0, 60);
 	public static final Color coolOrange = new Color(215, 143, 35);
@@ -67,6 +68,7 @@ public class Constants {
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
 	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
 	public static final Font italicFont = new Font("Calibri", Font.ITALIC, 20);
+	public static final Font buttonFont = new Font("Calibri", Font.PLAIN, 18);	
 	public static final Dimension errorIconDimension = new Dimension (48, 48);
 	public static final int GAME_HORSES = 2;
 	public static final int GAME_ROULETTE = 1;

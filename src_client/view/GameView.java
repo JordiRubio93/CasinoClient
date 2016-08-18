@@ -92,11 +92,13 @@ public abstract class GameView extends BaseJPanel {
 		
 		//boton salir
 		jbExit = new JButton("Exit");
+		jbExit.setFont(Constants.buttonFont);
 		jbExit.setBackground(Color.WHITE);
 		jbExit.setForeground(Constants.coolBlue);
 		
 		//boton Apostar
 		jbBet = new JButton("Bet!");
+		jbBet.setFont(Constants.buttonFont);
 		jbBet.setBackground(Color.WHITE);
 		jbBet.setForeground(Constants.coolOrange);
 		

@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.Constants;
 import model.struct.user.User;
+import controller.Constants;
 /**
  * 
  * <p>

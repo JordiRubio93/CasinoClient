@@ -15,16 +15,16 @@ import java.io.OutputStream;
 import java.util.Base64;
 import java.util.LinkedList;
 
+import model.struct.horses.HorseData;
+import model.struct.user.LoginInfo;
+import tools.excepcions.FileException;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-
-import model.struct.horses.HorseData;
-import model.struct.user.LoginInfo;
-import tools.excepcions.FileException;
 
 /**
  * 

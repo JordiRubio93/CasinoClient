@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 
-import controller.Constants;
 import view.Tapet;
+import controller.Constants;
 
 /**
  * Hereta de Tapet

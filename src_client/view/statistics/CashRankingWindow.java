@@ -16,7 +16,6 @@ package view.statistics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ import controller.Constants;
 public class CashRankingWindow extends BaseJPanel{
 	private static final long serialVersionUID = 1L;
 	private JButton backButton = new JButton("Back");
-	private JPanel panelTop = new JPanel(new FlowLayout());
+	private JPanel panelTop = new JPanel();
 	private MyTableModel model;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -90,7 +89,7 @@ public class CashRankingWindow extends BaseJPanel{
 		table = new JTable();
 		scrollPane = new JScrollPane(table);
 		
-		panel = new Tapet(w, h, Constants.PATH_METAL);
+		panel = new Tapet(w, h, Constants.PATH_WALL);
 		panel.setLayout(new BorderLayout());
 		panel.add(scrollPane, BorderLayout.NORTH);
 		

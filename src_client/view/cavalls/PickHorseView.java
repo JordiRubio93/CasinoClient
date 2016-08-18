@@ -11,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import view.Dialeg;
 import controller.Constants;
 import controller.Manager;
-import view.Dialeg;
 
 
 /**

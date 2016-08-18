@@ -82,7 +82,6 @@ public class HorsesExecutor implements Runnable {
 					game.initHorses(ih.getList());
 					corre(ih.getList());
 					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName().toUpperCase()	+ " !";
-					game.acabaPartida(winner);
 					manager.showPanel(Constants.MAIN_VIEW_NAME);
 					Dialeg d = new Dialeg();
 					d.setWarningText(winner +"\nThanks for playing!");

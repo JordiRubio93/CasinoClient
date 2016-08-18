@@ -28,9 +28,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import view.BaseJPanel;
 import view.Tapet;
+import controller.Constants;
 
 public class StatisticsWindow extends BaseJPanel {
 	private static final long serialVersionUID = 1L;

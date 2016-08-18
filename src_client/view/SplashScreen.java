@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 
 import view.blackjack.BlackjackView;
+import view.cashevo.CashEvoView;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.RouletteView;
@@ -45,6 +46,7 @@ public class SplashScreen{
 		panels.add(new MainWindow(new ConfigPanel())); //5
 		panels.add(new LoginWindow()); //6
 		panels.add(new CashRankingWindow()); //7
+		panels.add(new CashEvoView());//8
 		loaded = Boolean.TRUE;
 	}
 	
