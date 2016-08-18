@@ -28,10 +28,9 @@ import javax.swing.JPanel;
  */
 public class Tapet extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private Image imatge;
-	private int w;
-	private int h;
-	
+	protected Image imatge;
+	protected int w;
+	protected int h;
 	
 	public Tapet(LayoutManager layout){
 		setLayout(layout);

@@ -62,8 +62,8 @@ public class HorsesView extends GameView {
 	 * Col·loca els carrils
 	 */
 	public void setCursa() {
-		//jpStadium.setDimensions();
 		jpStadium.setImatge(Constants.PATH_CARRILS);
+		jpStadium.setDimensions();
 		gridLayout = new GridLayout(Constants.nHorses, 1);
 		gridLayout.setVgap(-80);
 		jpCarrils = new JPanel(gridLayout);

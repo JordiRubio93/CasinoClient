@@ -83,4 +83,9 @@ public class Stadium extends Tapet {
 	public void setCoord(int x, int y, int i){
 		coord[i].setLocation(coord[i].getX() + x, y);
 	}
+	
+	public void setDimensions(){
+		super.w = this.getWidth();
+		super.h = this.getHeight();
+	}
 }
