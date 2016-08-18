@@ -67,7 +67,7 @@ public class RowSelectionListener implements ListSelectionListener {
 	private void creaGrafic(LinkedList<HistoricSaldo> hist){
 		CashEvoLogic logic = new CashEvoLogic();
 		int index = 0;
-		logic.setAltura(915);
+		logic.setAltura(888);
 		logic.findWidth(hist.size());
 		logic.findMax();
 		while(index < hist.size()){
@@ -90,7 +90,7 @@ public class RowSelectionListener implements ListSelectionListener {
 			index++;
 		}
 		
-		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines();
+		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 0);
 		((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setUserName(data.get(row)[1] + " " + data.get(row)[2]);
 	}
 	

@@ -20,6 +20,7 @@ import view.AddMoneyFrame;
 import view.Dialeg;
 import view.MainWindow;
 import view.PasswordFrame;
+import view.cashevo.CashEvoView;
 import view.cavalls.HorsesView;
 import view.cavalls.PickHorseView;
 import view.roulette.MyButton;
@@ -216,6 +217,30 @@ public class MainButtonsController implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			break;
+		case ("GLOBAL BUTTON"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 1);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 2);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 3);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 0);
+			break;
+		case ("ROULETTE BUTTON"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 0);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 2);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 3);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 1);
+			break;
+		case ("HORSES BUTTON"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 0);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 1);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 3);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 2);
+			break;
+		case ("BJ BUTTON"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 0);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 1);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 2);
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 3);
 			break;
 		case ("Cash Evo"):
 			//...

@@ -3,6 +3,7 @@ package view.cashevo;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -17,6 +18,11 @@ public class CashEvoView extends BaseJPanel {
 	private JPanel panelTop = new JPanel();
 	private JPanel panel = new JPanel(new BorderLayout());
 	private LineChart chart;
+	private JPanel panelBottom = new JPanel(new GridLayout());
+	private JButton jbGlobal = new JButton("Global");
+	private JButton jbRoulette = new JButton("Roulette");
+	private JButton jbHorses = new JButton("Horse race");
+	private JButton jbBJ = new JButton("Blackjack");
 
 	public CashEvoView(){
 		initElements();
@@ -25,6 +31,10 @@ public class CashEvoView extends BaseJPanel {
 	@Override
 	public void registerController() {
 		backButton.addActionListener(getManager().getController());
+		jbGlobal.addActionListener(getManager().getController());
+		jbRoulette.addActionListener(getManager().getController());
+		jbHorses.addActionListener(getManager().getController());
+		jbBJ.addActionListener(getManager().getController());
 	}
 
 	@Override
@@ -45,12 +55,31 @@ public class CashEvoView extends BaseJPanel {
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
+		jbGlobal.setBackground(Constants.coolRed);
+		jbGlobal.setForeground(Color.WHITE);
+		jbGlobal.putClientProperty("action", "GLOBAL BUTTON");
+		jbRoulette.setBackground(Constants.coolOrange);
+		jbRoulette.setForeground(Color.WHITE);
+		jbRoulette.putClientProperty("action", "ROULETTE BUTTON");
+		jbHorses.setBackground(Constants.coolDarkGreen);
+		jbHorses.setForeground(Color.WHITE);
+		jbHorses.putClientProperty("action", "HORSES BUTTON");
+		jbBJ.setBackground(Constants.coolIndigo);
+		jbBJ.setForeground(Color.WHITE);
+		jbBJ.putClientProperty("action", "BJ BUTTON");
+		
+		panelBottom.add(jbGlobal);
+		panelBottom.add(jbRoulette);
+		panelBottom.add(jbHorses);
+		panelBottom.add(jbBJ);
+		
 		chart = new LineChart(width, height, Constants.PATH_WALL);
 		chart.setLayout(new BorderLayout());
 		panel.add(chart, BorderLayout.CENTER);
 		
 		add(panelTop, BorderLayout.NORTH);
 		add(panel, BorderLayout.CENTER);
+		add(panelBottom, BorderLayout.SOUTH);
 	}
 	
 	public void addPoint(float x, float y, int joc){
@@ -65,8 +94,8 @@ public class CashEvoView extends BaseJPanel {
 		return panel.getHeight();
 	}
 	
-	public void setLines(){
-		chart.addLines(true);
+	public void setLines(boolean show, int joc){
+		chart.addLines(show, joc);
 	}
 	
 	public void setUserName(String name){

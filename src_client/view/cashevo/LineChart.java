@@ -17,11 +17,13 @@ public class LineChart extends Tapet {
 	private LinkedList<Point> ruleta = new LinkedList<Point>();
 	private LinkedList<Point> cavalls = new LinkedList<Point>();
 	private LinkedList<Point> blackjack = new LinkedList<Point>();
-	private boolean lines;
+	private boolean[] lines;
 	private String name;
 
 	public LineChart(int width, int height, String path) {
 		super(width, height, path);
+		lines = new boolean[4];
+		lines[0] = true;
 	}
 
 	public void paintComponent(Graphics g){
@@ -44,42 +46,46 @@ public class LineChart extends Tapet {
 		g.setColor(Constants.coolIndigo);
 		g.drawString("Blackjack", 10, 155);
 		
-		if(lines){
-			g2.setStroke(new BasicStroke(3));
-			
+		g2.setStroke(new BasicStroke(3));	
+		if(lines[0] || lines[1]){
 			g.setColor(Constants.coolOrange);
 			for(int i = 0; i < ruleta.size() - 1; i++){
 				g2.drawLine((int) ruleta.get(i).getX()+5, (int) ruleta.get(i).getY()+5, (int) ruleta.get(i+1).getX()+5, (int) ruleta.get(i+1).getY()+5);
 			}
-			
+			g.setColor(Constants.coolGray);
+			for(int i = 0; i < ruleta.size(); i++){
+				g.fillOval((int)ruleta.get(i).getX(), (int)ruleta.get(i).getY(), 10, 10);
+			}
+		}	
+		if(lines[0] || lines[2]){
 			g.setColor(Constants.coolDarkGreen);
 			for(int i = 0; i < cavalls.size() - 1; i++){
 				g2.drawLine((int) cavalls.get(i).getX()+5, (int) cavalls.get(i).getY()+5, (int) cavalls.get(i+1).getX()+5, (int) cavalls.get(i+1).getY()+5);
 			}
-			
+			g.setColor(Constants.coolGray);
+			for(int i = 0; i < cavalls.size(); i++){
+				g.fillOval((int)cavalls.get(i).getX(), (int)cavalls.get(i).getY(), 10, 10);
+			}
+		}
+		if(lines[0] || lines[3]){
 			g.setColor(Constants.coolIndigo);
 			for(int i = 0; i < blackjack.size() - 1; i++){
 				g2.drawLine((int) blackjack.get(i).getX()+5, (int) blackjack.get(i).getY()+5, (int) blackjack.get(i+1).getX()+5, (int) blackjack.get(i+1).getY()+5);
 			}
-			
+			g.setColor(Constants.coolGray);
+			for(int i = 0; i < blackjack.size(); i++){
+				g.fillOval((int)blackjack.get(i).getX(), (int)blackjack.get(i).getY(), 10, 10);
+			}
+		}
+		if(lines[0]){
 			g.setColor(Constants.coolRed);
 			for(int i = 0; i < punts.size() - 1; i++){
 				g2.drawLine((int) punts.get(i).getX()+5, (int) punts.get(i).getY()+5, (int) punts.get(i+1).getX()+5, (int) punts.get(i+1).getY()+5);
 			}
-		}
-		
-		g.setColor(Constants.coolGray);
-		for(int i = 0; i < punts.size(); i++){
-			g.fillOval((int)punts.get(i).getX(), (int)punts.get(i).getY(), 10, 10);
-		}
-		for(int i = 0; i < ruleta.size(); i++){
-			g.fillOval((int)ruleta.get(i).getX(), (int)ruleta.get(i).getY(), 10, 10);
-		}
-		for(int i = 0; i < cavalls.size(); i++){
-			g.fillOval((int)cavalls.get(i).getX(), (int)cavalls.get(i).getY(), 10, 10);
-		}
-		for(int i = 0; i < blackjack.size(); i++){
-			g.fillOval((int)blackjack.get(i).getX(), (int)blackjack.get(i).getY(), 10, 10);
+			g.setColor(Constants.coolGray);
+			for(int i = 0; i < punts.size(); i++){
+				g.fillOval((int)punts.get(i).getX(), (int)punts.get(i).getY(), 10, 10);
+			}
 		}
 	}
 	
@@ -94,8 +100,9 @@ public class LineChart extends Tapet {
 		}
 	}
 	
-	public void addLines(boolean b){
-		this.lines = b;
+	public void addLines(boolean b, int joc){System.out.println(lines[0]);
+		this.lines[joc] = b;
+		repaint();
 	}
 	
 	public void removeAllPoints(int joc){
