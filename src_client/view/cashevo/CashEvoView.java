@@ -51,7 +51,6 @@ public class CashEvoView extends BaseJPanel {
 		backButton.setBackground(Constants.coolGreen);
 		backButton.setContentAreaFilled(true);
 		backButton.setBorderPainted(false);
-		backButton.putClientProperty("action", "Back To Cash Evo");
 		backButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
 		
 		panelTop.setBackground(Color.BLACK);
@@ -110,5 +109,10 @@ public class CashEvoView extends BaseJPanel {
 	
 	public void setUserName(String name){
 		chart.setUserName(name);
+	}
+	
+	public void setBack(boolean ranking){
+		if(ranking) backButton.putClientProperty("action", "Back To Cash Evo");
+		else backButton.putClientProperty("action", "Home");
 	}
 }

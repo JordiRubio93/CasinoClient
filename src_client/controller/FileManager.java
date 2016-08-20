@@ -45,7 +45,7 @@ import com.google.gson.stream.JsonReader;
 public class FileManager {
 	
 	//Atributs de la classe
-	private static LinkedList<HorseData> hdList;
+	private LinkedList<HorseData> hdList;
 	private final String[] param = { "IP_SBD", "PORT_Client" };
 	private final String user = "client.dat";
 	private final String horses = "horses.txt";

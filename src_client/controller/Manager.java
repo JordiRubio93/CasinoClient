@@ -3,9 +3,7 @@ package controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
-import java.util.LinkedList;
 
-import model.struct.horses.HorseData;
 import model.struct.user.LoginInfo;
 import model.struct.user.User;
 import network.ServerComunication;
@@ -199,18 +197,12 @@ public class Manager {
 	}
 
 	public void comenzarJoc(String joc, BaseJPanel panel) {
-		Check c;
 		switch (joc) {
 		case ("Play Roulette"):
-			c = ((Check) server.obtenirTrama());
-			if (c instanceof Check && (c.isOk())) gameManager.executaRoulette();
-			else new Dialeg().setWarningText("You can't bet");
+			gameManager.executaRoulette();
 			break;
 		case ("Play Horses"):
-			System.out.println();
-			c = ((Check) server.obtenirTrama());
-			if (c instanceof Check && (c.isOk())) gameManager.executaHorses();
-			else new Dialeg().setWarningText("You can't bet");
+			gameManager.executaHorses();
 			break;
 		case ("Play BlackJack"):
 			gameManager.executaBlackjack();
@@ -259,10 +251,6 @@ public class Manager {
 			}
 		} else
 			view.showError("Register Fail");
-	}	
-
-	public LinkedList<HorseData> getHorsesList() {
-		return fileManager.getHorsesList();
 	}
 
 	/**
@@ -313,8 +301,12 @@ public class Manager {
 					getGameManager().getUser().addCash(cash);
 				} else
 					new Dialeg().setWarningText("ERROR with PW");
+			}else{
+				System.err.println(s.getClass());
 			}
-		} catch (IOException e){ e.printStackTrace();}
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 	}//Tancament del metode
 	
 	public RowSelectionListener getRowListener(){

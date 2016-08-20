@@ -8,11 +8,11 @@ import java.util.LinkedList;
 
 import javax.swing.JButton;
 
+import model.Prediction;
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
 import network.segment.BJEnd;
 import network.segment.CashRanking;
-import network.segment.GameOver;
 import network.segment.LogOut;
 import network.segment.Play;
 import network.segment.Top5;
@@ -81,8 +81,8 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
 				try {
-					manager.getServer().enviarTrama(new Play("roulette"));
 					manager.showPanel(Constants.R_VIEW_NAME);
+					manager.getServer().enviarTrama(new Play("roulette"));
 					manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -94,8 +94,8 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
 				try {
-					manager.getServer().enviarTrama(new Play("horses"));
 					manager.showPanel(Constants.H_VIEW_NAME);
+					manager.getServer().enviarTrama(new Play("horses"));
 					manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -141,9 +141,8 @@ public class MainButtonsController implements ActionListener {
 			af.setVisible(true);
 			break;
 		case ("Go Add Money"):
-			af.setVisible(false);
 			if (!(af.getCash() > 0)) {
-				new Dialeg().setWarningText("wrong Amount");
+				new Dialeg().setWarningText("Wrong Amount");
 			} else {
 				af.setVisible(false);
 				af.dispose();
@@ -151,6 +150,13 @@ public class MainButtonsController implements ActionListener {
 			}
 			break;
 		case ("User Evo"):
+			try {
+				CashEvoExecutor ce = new CashEvoExecutor();
+				ce.executaGrafic(manager, manager.getGameManager().getUser().getEmail(), manager.getGameManager().getUser().getName(), manager.getGameManager().getUser().getSurname());
+				ce.setBack(false);
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
 			break;
 		case ("Log Out"):
 			if (!manager.getGameManager().isGuest()) {
@@ -253,9 +259,6 @@ public class MainButtonsController implements ActionListener {
 			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(false, 2);
 			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).setLines(true, 3);
 			break;
-		case ("Cash Evo"):
-			//...
-			break;
 		case ("Cash Ranking"):
 			try {
 				// Envia peticio
@@ -305,24 +308,14 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("BET_H"):
 			((HorsesView) manager.getPanel(Constants.H_VIEW_NAME)).showPhv();
-
 			break;
-		case ("EXIT_H"):
-			try {
-				manager.getServer().enviarTrama(new GameOver());
-				manager.showPanel(Constants.MAIN_VIEW_NAME);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		case ("EXIT_H")://Predict
+			String cadCavalls = new Prediction(manager.getGameManager().getHorsesExecutor()).predictWinnerHorse();
+			new Dialeg().setWarningText(cadCavalls);
 			break;
-		case ("EXIT_R"):
-			try {
-				manager.getServer().enviarTrama(new GameOver());
-				manager.showPanel(Constants.MAIN_VIEW_NAME);				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			// kill roullette
+		case ("EXIT_R")://Predict
+			String cadRuleta = new Prediction(manager.getGameManager().getRouletteExecutor()).predictWinnerNumber();
+			new Dialeg().setWarningText(cadRuleta);
 			break;
 		case ("BET_BJ"):
 			manager.getGameManager().betBJ(guest);

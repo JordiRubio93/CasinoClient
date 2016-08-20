@@ -65,7 +65,7 @@ public class LineChart extends Tapet {
 			if(!lines[4]){
 				g.setColor(Color.WHITE);
 				int x, y;
-				for(int i = 0; i < sGlobal.size(); i++){
+				for(int i = 0; i < punts.size(); i++){
 					if(i == sGlobal.size()-1) x = (int)punts.get(i).getX() - sGlobal.get(i).length() * 8 - 3;
 					else x = (int)punts.get(i).getX() + 3;
 					y = (int)punts.get(i).getY() - 7;
@@ -86,14 +86,14 @@ public class LineChart extends Tapet {
 			if(!lines[4]){
 				g.setColor(Color.WHITE);
 				int x, y;
-				for(int i = 0; i < sRuleta.size(); i++){
+				for(int i = 0; i < ruleta.size(); i++){
 					if(i == sRuleta.size()-1) x = (int)ruleta.get(i).getX() - sRuleta.get(i).length() * 8 - 3;
 					else x = (int)ruleta.get(i).getX() + 3;
 					y = (int)ruleta.get(i).getY() - 7;
 					g.drawString(sRuleta.get(i), x, y);
 				}
 			}
-		}	
+		}
 		if(lines[4] || lines[2]){
 			g.setColor(Constants.coolDarkGreen);
 			for(int i = 0; i < cavalls.size() - 1; i++){
@@ -107,7 +107,7 @@ public class LineChart extends Tapet {
 			if(!lines[4]){
 				g.setColor(Color.WHITE);
 				int x, y;
-				for(int i = 0; i < sCavalls.size(); i++){
+				for(int i = 0; i < cavalls.size(); i++){
 					if(i == sCavalls.size()-1) x = (int)cavalls.get(i).getX() - sCavalls.get(i).length() * 8 - 3;
 					else x = (int)cavalls.get(i).getX() + 3;
 					y = (int)cavalls.get(i).getY() - 7;
@@ -128,7 +128,7 @@ public class LineChart extends Tapet {
 			if(!lines[4]){
 				g.setColor(Color.WHITE);
 				int x, y;
-				for(int i = 0; i < sBJ.size(); i++){
+				for(int i = 0; i < blackjack.size(); i++){
 					if(i == sBJ.size()-1) x = (int)blackjack.get(i).getX() - sBJ.get(i).length() * 8 - 3;
 					else x = (int)blackjack.get(i).getX() + 3;
 					y = (int)blackjack.get(i).getY() - 7;

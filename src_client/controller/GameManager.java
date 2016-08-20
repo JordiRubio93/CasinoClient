@@ -72,12 +72,15 @@ public class GameManager {
 
 	//---------------------------Roulette-------------------------------
 
+	public RouletteExecutor getRouletteExecutor(){
+		return rouletteExecutor;
+	}
+	
 	/**
 	 * Metode encarregat d'executar la ruleta.
 	 */
 	public void executaRoulette() {
-		System.out.println("executan el thread roulette");
-		rouletteExecutor = new RouletteExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
+		rouletteExecutor = new RouletteExecutor(manager);
 		new Thread(rouletteExecutor).start();
 	}//Tancament del metode
 	
@@ -125,12 +128,15 @@ public class GameManager {
 	
 	//---------------------------Horses-------------------------------
 
+	public HorsesExecutor getHorsesExecutor(){
+		return horsesExecutor;
+	}
 	
 	/**
 	 * Metode encarregat d'executar la cursa de cavalls.
 	 */
 	public void executaHorses() {
-		horsesExecutor = new HorsesExecutor(manager.getServer().getObjectIn(), manager.getServer().getObjectOut(), manager);
+		horsesExecutor = new HorsesExecutor(manager);
 		new Thread(horsesExecutor).start();
 	}//Tancament del metode
 
@@ -390,4 +396,5 @@ public class GameManager {
 			
 		}
 	}//Tancament del metode
+	
 }//Tancament de la classe

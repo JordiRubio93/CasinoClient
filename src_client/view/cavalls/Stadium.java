@@ -85,7 +85,7 @@ public class Stadium extends Tapet {
 	}
 	
 	public void setDimensions(){
-		super.w = this.getWidth();
-		super.h = this.getHeight();
+		super.setW(this.getWidth());
+		super.setH(this.getHeight());
 	}
 }

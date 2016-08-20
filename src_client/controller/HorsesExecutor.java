@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Timer;
@@ -11,7 +9,7 @@ import java.util.TimerTask;
 import model.Calcul;
 import model.struct.horses.HorseData;
 import network.segment.Check;
-import network.segment.Disconnect;
+import network.segment.GameOver;
 import network.segment.InitHorses;
 import network.segment.NotifyBet;
 import network.segment.Seconds;
@@ -37,35 +35,32 @@ import view.cavalls.HorsesView;
  */
 public class HorsesExecutor implements Runnable {
 	//Atributs de la classe
-	private ObjectInputStream objectIn;
-	private ObjectOutputStream objectOut;
 	private boolean active;
 	private Segment s;
 	private HorsesView game;
 	private int seconds;
 	private Manager manager;
 	private int sec;
+	private String horse;
 
 	/**
 	 * Constructor pel HorsesExecutor.
 	 * @param objectIn, objectOut, manager (respectivament, l'objecte d'entrada, el de sortida i el manager que els controla)
 	 */
-	public HorsesExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
-		this.objectIn = objectIn;
-		this.objectOut = objectOut;
+	public HorsesExecutor(Manager manager) {
 		this.manager = manager;
 		active = true;
 		game = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
 	}//Tancament del constructor
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		try {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
 					if (!((Check) s).isOk())
-						new Dialeg().setWarningText("Bet refused");
+						new Dialeg().setWarningText("Previous bet refused");
 					else
 						new Dialeg().setWarningText("Bet accepted");
 					break;
@@ -74,21 +69,21 @@ public class HorsesExecutor implements Runnable {
 					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
 							+ " ha apostat " + aposta.getAposta().getAmount() + " a " + aposta.getAposta().getAmount());
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
-					
 					break;
 				case "InitHorses":
 					game.setCursa();
 					InitHorses ih = ((InitHorses) s);
-					game.initHorses(ih.getList());
-					corre(ih.getList());
-					String winner = "The winner horse is... " + ih.getList().get(getWinner(ih.getList())).getName().toUpperCase()	+ " !";
-					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					horse = ih.getDades().get(getWinner(ih.getDades())).getName();
+					game.initHorses(ih.getDades());
+					corre(ih.getDades());
+					String winner = "The winner horse is... " + horse.toUpperCase() + " !";
 					Dialeg d = new Dialeg();
 					d.setWarningText(winner +"\nThanks for playing!");
-					manager.getServer().enviarTrama(new Disconnect());
-					System.exit(0);
-					
-					break;
+					manager.getServer().enviarTrama(new GameOver(2));
+					game.reset();
+					ih.getDades().clear();
+					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					return;
 				case "Seconds":
 					sec = ((Seconds) s).getSegons();
 					if(sec <= 45 && sec >= 0){
@@ -111,7 +106,6 @@ public class HorsesExecutor implements Runnable {
 							}
 						}, 0, 1000);
 					}
-					
 					break;
 				default:
 					System.err.println("pero esto que co�o es?");
@@ -123,16 +117,8 @@ public class HorsesExecutor implements Runnable {
 		}
 	}
 
-	/**
-	 * Metode que no retorna res i que s'encarrega d'aturar l'executor.
-	 */
-	public void close() {
-		active = false;
-	}//Tancament del metode
-
-	
-	public synchronized Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
-		s = (Segment) objectIn.readObject();
+	public Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
+		s = (Segment) manager.getServer().obtenirTrama();
 		System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
@@ -178,10 +164,22 @@ public class HorsesExecutor implements Runnable {
 		return win;
 	}
 
+	public String getHorse() {
+		return horse;
+	}
+
 	/**
 	 * Getter de Seconds.
 	 */
 	public int getSeconds() {
 		return seconds;
 	}//Tancament del Getter
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public boolean isActive(){
+		return active;
+	}
+
 }//Tancament de la classe

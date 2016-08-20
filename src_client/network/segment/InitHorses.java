@@ -31,11 +31,19 @@ public class InitHorses extends Segment{
 		this.dades = dades;
 	}
 
-	public LinkedList<HorseData> getList(){
-		return dades;
-	}
-	
 	public double getGuanys(){
 		return guanys;
+	}
+
+	public LinkedList<HorseData> getDades() {
+		return dades;
+	}
+
+	public void setDades(LinkedList<HorseData> dades) {
+		this.dades = dades;
+	}
+
+	public void setGuanys(double guanys) {
+		this.guanys = guanys;
 	}
 }

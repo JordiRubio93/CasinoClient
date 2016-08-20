@@ -52,7 +52,7 @@ public class ServerComunication{
 	 * Obte objecte llegit
 	 * @return objectIn.readObject()
 	 */
-	public synchronized Segment obtenirTrama() {
+	public Segment obtenirTrama() {
 		try {
 			return (Segment) objectIn.readObject();
 		} catch (ClassNotFoundException | IOException e) {
@@ -64,7 +64,7 @@ public class ServerComunication{
 	/**
 	 * envia un objecte
 	 */
-	public synchronized void enviarTrama(Segment s) throws IOException {
+	public void enviarTrama(Segment s) throws IOException {
 		objectOut.writeObject(s);
 	}
 
@@ -72,7 +72,7 @@ public class ServerComunication{
 	 * Tanca la connexió amb el servidor
 	 * @throws IOException
 	 */
-	public synchronized void tancarConnexio() throws IOException {
+	public void tancarConnexio() throws IOException {
 		objectOut.writeObject(new Disconnect());
 		sServer.close();
 	}
@@ -81,7 +81,7 @@ public class ServerComunication{
 		return sServer;
 	}
 
-	public synchronized String obtenirInstruccio() {
+	public String obtenirInstruccio() {
 		try {
 			s = (Segment) objectIn.readObject();
 			return (s.getClass().getSimpleName());

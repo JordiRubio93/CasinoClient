@@ -139,10 +139,12 @@ public class ConfigPanel extends BaseJPanel {
 	}
 	
 	public void setGuest(boolean guest){
-		if(guest){
-			changePasswordButton.setEnabled(false);
-			addMoneyButton.setEnabled(false);
-			seeEvoButton.setEnabled(false);
-		}
+		if(guest) setButtonsEnabled(false);
+	}
+	
+	public void setButtonsEnabled(boolean enabled){
+		changePasswordButton.setEnabled(enabled);
+		addMoneyButton.setEnabled(enabled);
+		seeEvoButton.setEnabled(enabled);
 	}
 }

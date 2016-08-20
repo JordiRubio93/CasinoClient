@@ -1,15 +1,13 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import model.Bet;
 import network.segment.Check;
-import network.segment.Disconnect;
+import network.segment.GameOver;
 import network.segment.InitRoulette;
 import network.segment.NotifyBet;
 import network.segment.Seconds;
@@ -35,36 +33,32 @@ import view.roulette.RouletteView;
  */
 public class RouletteExecutor implements Runnable {
 	//Atributs de la classe
-	private ObjectInputStream objectIn;
-	private ObjectOutputStream objectOut;
 	private boolean active;
 	private Segment s;
 	private RouletteView game;
 	private Bet aposta;
 	private Manager manager;
 	private int sec;
+	private String number;
 	
 	/**
 	 * Constructor del RouletteExecutor.
 	 */
-	public RouletteExecutor(ObjectInputStream objectIn, ObjectOutputStream objectOut, Manager manager) {
-		this.objectIn = objectIn;
-		this.objectOut = objectOut;
+	public RouletteExecutor(Manager manager) {
 		this.manager = manager;
 		active = true;
 		game = (RouletteView) manager.getPanel(Constants.R_VIEW_NAME);
-		System.out.println("ready");
 	}//Tancament del constructor
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		try {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
-					if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
+					if(!((Check) s).isOk()) new Dialeg().setWarningText("Previous bet refused");
 					else  new Dialeg().setWarningText("Bet accepted");	
-					break;	
+					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
 					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
@@ -73,14 +67,15 @@ public class RouletteExecutor implements Runnable {
 					break;
 				case "InitRoulette":
 					InitRoulette resultat = ((InitRoulette) s);
+					number = resultat.getWinner();
 					mostragif();
-					String winner = "The winner number is... " + resultat.getWinner() + " !";
-					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					String winner = "The winner number is... " + number + " !";
 					Dialeg d = new Dialeg();
 					d.setWarningText(winner +"\nThanks for playing!");
-					manager.getServer().enviarTrama(new Disconnect());
-					System.exit(0);
-					break;
+					manager.getServer().enviarTrama(new GameOver(1));
+					game.reset();
+					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					return;
 				case "Seconds":
 					sec = ((Seconds) s).getSegons();
 					if(sec <= 45 && sec >= 0){	
@@ -96,7 +91,6 @@ public class RouletteExecutor implements Runnable {
 							}
 						}, 0, 1000);
 					}
-					
 					break;
 				default:
 					System.err.println("no se que m'ha arribat");
@@ -122,12 +116,8 @@ public class RouletteExecutor implements Runnable {
 		this.aposta = aposta;
 	}
 
-	public void close() {
-		active = false;
-	}
-
-	public synchronized Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
-		s = (Segment) objectIn.readObject();
+	public Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
+		s = (Segment) manager.getServer().obtenirTrama();
 		System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
@@ -139,4 +129,16 @@ public class RouletteExecutor implements Runnable {
 		game.insereixGif();
 		// get.enviarTrama(new GameOver());
 	}//Tancament del metode
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public boolean isActive(){
+		return active;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
 }//Tancament de la classe

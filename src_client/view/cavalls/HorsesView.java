@@ -29,7 +29,6 @@ import controller.Constants;
  */
 
 public class HorsesView extends GameView {
-	
 	private static final long serialVersionUID = 1L;
 	private Stadium jpStadium; //Hereta de Tapet
 	private GridLayout gridLayout;
@@ -56,6 +55,8 @@ public class HorsesView extends GameView {
 		jpStadium = new Stadium(width, height, Constants.PATH_TAPET);
 		jpStadium.setLayout(new BorderLayout());
 		add(jpStadium, BorderLayout.CENTER);
+		jbBet.putClientProperty("action", "BET_H");
+		jbPredict.putClientProperty("action", "EXIT_H");
 	}
 
 	/**
@@ -150,10 +151,8 @@ public class HorsesView extends GameView {
 	@Override
 	public void registerController(){
 		//registrar el frame
-		phv.setManager(getManager());
-		jbBet.putClientProperty("action", "BET_H");
-		jbExit.putClientProperty("action", "EXIT_H");
 		super.registerController();
+		phv.setManager(getManager());
 	}
 
 	public void enableBet(){
@@ -164,5 +163,13 @@ public class HorsesView extends GameView {
 		phv.setVisible(false);
 		jbBet.setEnabled(false);
 	}
-
+	
+	public void reset(){
+		removeAll();
+		initElements();
+		super.registerController();
+		createDaemonTime();
+		revalidate();
+		repaint();
+	}
 }

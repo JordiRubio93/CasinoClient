@@ -79,6 +79,11 @@ public class RouletteView extends GameView {
      * Metode que no retorna res i que s'encarrega de inicialitzar els elements.
      */
 	protected void initElements(){
+		super.initElements();
+		
+		jbBet.putClientProperty("action", "BET_R");
+		jbPredict.putClientProperty("action", "EXIT_R");
+		
 		americanRoulette = new AmericanRoulette();
 		jpFinestra = new JPanel(new BorderLayout());
 		jpEsquerra = new JPanel(new BorderLayout());
@@ -247,8 +252,6 @@ public class RouletteView extends GameView {
 			c.putClientProperty("action", "roulette");
 			c.addActionListener(getManager().getController());	
 		}
-		jbBet.putClientProperty("action", "BET_R");
-		jbExit.putClientProperty("action", "EXIT_R");
 		jbManca.addActionListener(getManager().getController());
 		jbPassa.addActionListener(getManager().getController());
 		jbSenar.addActionListener(getManager().getController());
@@ -260,4 +263,13 @@ public class RouletteView extends GameView {
 		jbPrimera.addActionListener(getManager().getController());
 		jbParell.addActionListener(getManager().getController());
 	}//Tancament del metode
+	
+	public void reset(){
+		removeAll();
+		initElements();
+		registerController();
+		createDaemonTime();	
+		revalidate();
+		repaint();
+	}
 }//Tancament de la classe

@@ -57,7 +57,7 @@ public abstract class GameView extends BaseJPanel {
 	protected TimerThread timer;
 	protected boolean isRuleta;
 	protected JButton jbBet;
-	protected JButton jbExit;
+	protected JButton jbPredict;
 	protected JPanel jpOptions;
 	protected JLabel jlCount;
 	protected JPanel jpApostaPropia;
@@ -91,10 +91,10 @@ public abstract class GameView extends BaseJPanel {
 		add(jpSuperior, BorderLayout.NORTH);
 		
 		//boton salir
-		jbExit = new JButton("Exit");
-		jbExit.setFont(Constants.plainFont);
-		jbExit.setBackground(Color.WHITE);
-		jbExit.setForeground(Constants.coolBlue);
+		jbPredict = new JButton("Predict");
+		jbPredict.setFont(Constants.plainFont);
+		jbPredict.setBackground(Color.WHITE);
+		jbPredict.setForeground(Constants.coolBlue);
 		
 		//boton Apostar
 		jbBet = new JButton("Bet!");
@@ -104,7 +104,7 @@ public abstract class GameView extends BaseJPanel {
 		
 		//barra Inferior (botones)
 		jpOptions = new JPanel(new GridLayout(1,2));
-		jpOptions.add(jbExit);
+		jpOptions.add(jbPredict);
 		jpOptions.add(jbBet);
 		
 		//label aposta
@@ -151,7 +151,7 @@ public abstract class GameView extends BaseJPanel {
 	
 	public void registerController(){
 		jbBet.addActionListener(getManager().getController());
-		jbExit.addActionListener(getManager().getController());
+		jbPredict.addActionListener(getManager().getController());
 	}
 	
 	/**
@@ -159,7 +159,6 @@ public abstract class GameView extends BaseJPanel {
 	 */
 	private void actualitzaTemps(String time){
 		jlTemps.setText(time);
-	
 	}
 	protected void createDaemonTime(){
 		Timer timer = new Timer();
@@ -197,4 +196,6 @@ public abstract class GameView extends BaseJPanel {
 		
 		jpList.add(jpCell, BorderLayout.CENTER);
 	}
+	
+	public abstract void reset();
 }
