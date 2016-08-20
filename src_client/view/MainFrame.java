@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import controller.Constants;
 import controller.Manager;
+import controller.WindowController;
 /**
  * 
  * <p>
@@ -42,7 +43,7 @@ public class MainFrame extends JFrame{
 		setLocationRelativeTo(null);
 		setTitle(Constants.PROJECT_NAME);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	public void showPanel(String cad){System.out.println(cad);
@@ -89,5 +90,9 @@ public class MainFrame extends JFrame{
 			return panels.get(0);
 		}
 		return null;
+	}
+	
+	public void registerController(WindowController wc){
+		this.addWindowListener(wc);
 	}
 }

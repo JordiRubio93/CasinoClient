@@ -57,7 +57,6 @@ public class MainButtonsController implements ActionListener {
 	 */
 	public MainButtonsController(Manager manager) {
 		this.manager = manager;
-
 	}//Tancament del constructor
 
 	@Override

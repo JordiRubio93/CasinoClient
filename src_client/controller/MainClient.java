@@ -38,6 +38,7 @@ public class MainClient {
 				new Thread(new MyMusic()).start();
 				
 				Manager manager = new Manager();
+				WindowController wc = new WindowController(manager);
 				//Si el servidor no hi es, no carrega y finilitza
 				try {
 					manager.checkServer();
@@ -47,6 +48,7 @@ public class MainClient {
 				}
 				SplashScreen splash = new SplashScreen();
 				MainFrame mainFrame = new MainFrame(splash.getPanels());
+				mainFrame.registerController(wc);
 				mainFrame.setManager(manager);
 				manager.setMainFrame(mainFrame);
 				new Timer().schedule(new TimerTask() {
