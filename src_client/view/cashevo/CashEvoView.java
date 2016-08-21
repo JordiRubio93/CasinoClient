@@ -115,4 +115,8 @@ public class CashEvoView extends BaseJPanel {
 		if(ranking) backButton.putClientProperty("action", "Back To Cash Evo");
 		else backButton.putClientProperty("action", "Home");
 	}
+
+	public void reset() {
+		chart.reset();
+	}
 }

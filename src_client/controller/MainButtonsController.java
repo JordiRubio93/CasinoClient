@@ -182,6 +182,7 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel("LoginWindow");
 			break;
 		case ("Home"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).reset();
 			manager.showPanel("MainWindow");
 			break;
 		case ("roulette"):
@@ -196,6 +197,7 @@ public class MainButtonsController implements ActionListener {
 			manager.showPanel(Constants.STATISTICS_VIEW_NAME);
 			break;
 		case ("Back To Cash Evo"):
+			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).reset();
 			manager.showPanel(Constants.CASH_RANKING_VIEW_NAME);
 			break;
 		case ("Top 5 Roulette"):
