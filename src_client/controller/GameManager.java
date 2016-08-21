@@ -51,6 +51,7 @@ public class GameManager {
 	private Thread filGif;
 	private Bet apostaRuleta, horseBet;
 	private Thread filGrafics;
+	private MyButton boton;
 
 	/**
 	 * Constructor per la grafica de la ruleta.
@@ -88,16 +89,16 @@ public class GameManager {
 	 * @param boton (boto al qual s'ha clicat per apostar)
 	 */
 	public void thisSlot(MyButton boton) {
+		this.boton = boton;
 		Dialeg dialeg = new Dialeg();
-		dialeg.setInputText("How much money you want to bet?");
-		if (dialeg.getAmount() != null && (dialeg.getAmount().isEmpty() || Float.parseFloat(dialeg.getAmount()) <= 0)) {
+		dialeg.setInputText("How much money do you want to bet?");
+		if (dialeg.getAmount() != null && (dialeg.getAmount().isEmpty() 
+				|| !dialeg.getAmount().matches("[-+]?\\d*\\.?\\d+")
+				|| Float.parseFloat(dialeg.getAmount()) <= 0)) {
 			dialeg.setWarningText("Enter a correct amount!");
-			((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
 		} else if (dialeg.getAmount() != null) {
 			String slot = boton.getText();
 			Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
-			System.out.println(rouletteExecutor.toString());
-			
 			rouletteExecutor.setAposta(bet);
 		}
 	}//Tancament del metode
@@ -117,6 +118,7 @@ public class GameManager {
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
+				((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 					
@@ -143,7 +145,7 @@ public class GameManager {
 	 */
 	public void thisHorse(){
 		HorsesView horses = (HorsesView) manager.getPanel(Constants.H_VIEW_NAME);
-		if (horses.getPhv().getAmount().isEmpty()
+		if (horses.getPhv().getAmount().isEmpty() || !horses.getPhv().getAmount().matches("[-+]?\\d*\\.?\\d+")
 				|| Float.parseFloat(horses.getPhv().getAmount()) <= 0) {
 			 new Dialeg().setWarningText("You must enter a positive amount!");
 		} else {

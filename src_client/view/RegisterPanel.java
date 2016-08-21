@@ -203,14 +203,13 @@ public class RegisterPanel extends BaseJPanel {
 		bG.add(maleButton);
 		buttonsPanel.setBackground(Color.BLACK);
 		buttonsPanel.add(maleButton);
-
 		femaleButton.setOpaque(false);
 		femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
 		femaleButton.setFont(Constants.plainFont);
 		femaleButton.setForeground(Color.WHITE);
-
 		bG.add(femaleButton);
 		buttonsPanel.add(femaleButton);
+		
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 7;

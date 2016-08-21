@@ -171,7 +171,6 @@ public abstract class GameView extends BaseJPanel {
 				}catch (Exception e){
 					e.printStackTrace();
 				}
-			
 			}
 		}, Constants.SPLASH_TIME, TimeUnit.SECONDS.toMillis(1));
 	}
@@ -181,7 +180,9 @@ public abstract class GameView extends BaseJPanel {
 		
 		JPanel jpCell = new JPanel(new BorderLayout());
 		JPanel jpInfo = new JPanel(new GridLayout(2,1));
-		JLabel jlAvatar = new JLabel(new ImageIcon(Constants.AVATAR));
+		JLabel jlAvatar = null;
+		if(user.getGender()) jlAvatar = new JLabel(new ImageIcon(Constants.AVATAR_MALE));
+		else jlAvatar = new JLabel(new ImageIcon(Constants.AVATAR_FEMALE));
 		JLabel jlUser = new JLabel("   " + user.getSurname() + " - " + bet.getAmount() + " €   ");
 		JLabel jlAposta = new JLabel("   " + bet.getSlot() + "   ");
 		

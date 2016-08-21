@@ -10,7 +10,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import controller.Constants;
 /**
  * 
  * <p>
@@ -42,6 +45,7 @@ public class MainWindow extends BaseJPanel {
 	private JButton statisticsButton;
 	private JButton configButton = new JButton(logout);
 	private ConfigPanel c;
+	private JLabel led = new JLabel("  •");
 	
 	public MainWindow(ConfigPanel c){
 		initElements();
@@ -108,6 +112,8 @@ public class MainWindow extends BaseJPanel {
 		panelTop.setLayout(new BorderLayout());
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(configButton, BorderLayout.EAST);
+		panelTop.add(led, BorderLayout.WEST);
+		led.setFont(Constants.ledFont);
 		
 		panelCenter.setLayout(new GridLayout(1, 4));
 		panelCenter.setOpaque(false);
@@ -139,5 +145,9 @@ public class MainWindow extends BaseJPanel {
 	
 	public ConfigPanel getLateralPanel(){
 		return c;
+	}
+	
+	public void setLEDColor(Color color){
+		led.setForeground(color);
 	}
 }

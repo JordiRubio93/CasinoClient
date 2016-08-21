@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class PublicUser implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String surname;
-	private Boolean gender; //male true false female
+	private boolean gender; //male true false female
 
-	public PublicUser(String surname, Boolean gender) {
+	public PublicUser(String surname, boolean gender) {
 		super();
 		this.surname = surname;
 		this.gender = gender;
@@ -18,10 +18,10 @@ public class PublicUser implements Serializable{
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Boolean getGender() {
+	public boolean getGender() {
 		return gender;
 	}
-	public void setGender(Boolean gender) {
+	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
 }

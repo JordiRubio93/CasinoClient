@@ -102,8 +102,8 @@ public class RouletteExecutor implements Runnable {
 					break;
 				}
 			}
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+		} catch (NullPointerException | ClassNotFoundException | IOException e) {
+			return;
 		}
 	}
 	
@@ -123,7 +123,7 @@ public class RouletteExecutor implements Runnable {
 
 	public Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
 		s = (Segment) manager.getServer().obtenirTrama();
-		System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
+		if(s!=null) System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
 

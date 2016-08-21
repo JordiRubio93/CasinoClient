@@ -12,7 +12,7 @@ public class User implements Serializable {
 	private Date register;
 	private Date lastLogin;
 	private Date birthday;
-	private Boolean gender; //male true false female
+	private boolean gender; //male true false female
 	
 	/**CREATE TABLE IF NOT EXISTS Clients (
 	ID_Client int not null auto_increment PRIMARY KEY,
@@ -25,10 +25,10 @@ public class User implements Serializable {
     Data_Naixement DATE,
     email varchar(50) unique,
 	sexe char
-)*/
+	)*/
 	
 	public User(String name, String surname, String password, double cash, String email, Date register, Date lastLogin,
-			Date birthday, Boolean gender) {
+			Date birthday, boolean gender) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -64,10 +64,10 @@ public class User implements Serializable {
 		return this.loginInfo.getPassword();
 	}	
 	
-	public Boolean getGender() {
+	public boolean getGender() {
 		return gender;
 	}
-	public void setGender(Boolean gender) {
+	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
 	public Date getRegister() {
@@ -87,9 +87,6 @@ public class User implements Serializable {
 	}
 	public void setCash(double cash) {
 		this.cash = cash;
-	}
-	public void addCash(double c) {
-		cash = cash + c;
 	}
 	public PublicUser getPublicUser(){
 		return new PublicUser(getSurname(),getGender());

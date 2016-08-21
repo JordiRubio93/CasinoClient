@@ -51,6 +51,7 @@ public class Manager {
 	private FileManager fileManager;
 	private boolean serverOn;
 	private LoginInfo loginSaved;
+	private LedController ledController;
 
 	/**
 	 * Constructor del Manager.
@@ -100,6 +101,7 @@ public class Manager {
 			try {
 				server = new ServerComunication(this, cf);
 				server.establirConnexio();
+				new Thread(ledController = new LedController((MainWindow) getPanel(Constants.MAIN_VIEW_NAME))).start();
 			} catch (IOException e) {
 				view.showError("Server not found");
 				System.exit(0);
@@ -223,6 +225,8 @@ public class Manager {
 				new Date(), rp.getBirthday(), rp.getSex());
 		Boolean valid = true;
 		System.out.println(registerInfo.toString());
+		
+		System.out.println(rp.getSex());
 
 		// comprova que les dades estiguin ok
 		if (!gameManager.comprovaName(registerInfo.getName()))
@@ -298,7 +302,7 @@ public class Manager {
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
 					new Dialeg().setWarningText("Money accepted!");
-					getGameManager().getUser().addCash(cash);
+					getGameManager().getUser().setCash(cash);
 				} else
 					new Dialeg().setWarningText("ERROR with PW");
 			}else{
@@ -311,6 +315,13 @@ public class Manager {
 	
 	public RowSelectionListener getRowListener(){
 		return rowListener;
+	}
+
+	public LedController getLedController() {
+		return ledController;
+	}
+	public void setLedController(LedController ledController) {
+		this.ledController = ledController;
 	}
 	
 }//Tancament de la classe

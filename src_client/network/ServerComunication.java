@@ -56,7 +56,7 @@ public class ServerComunication{
 		try {
 			return (Segment) objectIn.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			System.out.println("UI!");
 		}
 		return null;
 	}
@@ -72,8 +72,8 @@ public class ServerComunication{
 	 * Tanca la connexió amb el servidor
 	 * @throws IOException
 	 */
-	public void tancarConnexio() throws IOException {
-		objectOut.writeObject(new Disconnect());
+	public void tancarConnexio(boolean led) throws IOException {
+		objectOut.writeObject(new Disconnect(led));
 		sServer.close();
 	}
 

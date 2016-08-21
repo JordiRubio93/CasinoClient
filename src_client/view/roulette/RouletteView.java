@@ -240,8 +240,7 @@ public class RouletteView extends GameView {
      * 
      */
 	public void pintaBoto(MyButton jBoto) {
-		pintaBoto(jBoto);
-		jBoto.canviaEstat();
+		jBoto.setEnabled(false);
 		jBoto.setBackground(PUSHED);
 	}//Tancament del metode
 	

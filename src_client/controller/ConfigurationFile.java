@@ -26,7 +26,6 @@ public class ConfigurationFile {
 	private String IP_SDB;
 	private int PORT_Client;
 
-
 	public ConfigurationFile(String iP_SDB, int pORT_Client) {
 		IP_SDB = iP_SDB;
 		PORT_Client = pORT_Client;

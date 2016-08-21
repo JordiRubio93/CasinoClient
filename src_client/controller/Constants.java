@@ -37,7 +37,7 @@ public class Constants {
 	public static final String PROJECT_NAME = "LS Casino";
 	public static final String BET_LABEL = "Bets...";
 	public static final int SPLASH_TIME = 1969;
-	public static final User guest = new User("guest", null, null, 100000, null, null, null, null, null);
+	public static final User guest = new User("guest", null, null, 100000, null, null, null, null, false);
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1300;
 	public static final int MIN_BET = 10;
@@ -65,6 +65,7 @@ public class Constants {
 	public static final Color coolDarkGreen = new Color(0,100,0);
 	public static final Color coolSeaGreen = new Color(60,179,113);
 	public static final Color coolAquaGreen = new Color(102,205,170);
+	public static final Font ledFont = new Font("Calibri", Font.BOLD, 53);
 	public static final Font boldFont = new Font("Calibri", Font.BOLD, 24);
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
 	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
@@ -78,6 +79,7 @@ public class Constants {
 	public static final String CASINO = "Resources/casino.jpg";
 	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
 	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
-	public static final String AVATAR = "Resources/avatar.png";
+	public static final String AVATAR_MALE = "Resources/male.png";
+	public static final String AVATAR_FEMALE = "Resources/female.png";
 	public static final String[] TABLE_COLUMN_NAMES = {"First name", "Last name", "Money in account"};
 }
