@@ -16,7 +16,6 @@ import network.segment.Betting;
 import network.segment.Check;
 import network.segment.Segment;
 import view.Dialeg;
-import view.GameView;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.roulette.MyButton;
@@ -50,7 +49,7 @@ public class GameManager {
 	private HorsesExecutor horsesExecutor;
 	private RouletteExecutor rouletteExecutor;
 	private Thread filGif;
-	private Bet apostaRuleta;
+	private Bet apostaRuleta, horseBet;
 	private Thread filGrafics;
 
 	/**
@@ -118,7 +117,6 @@ public class GameManager {
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
-				((GameView) manager.getPanel(Constants.R_VIEW_NAME)).actualitzaLabelApostaPropia(rouletteExecutor.getAposta().getSlot());
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 					
@@ -152,11 +150,9 @@ public class GameManager {
 			horses.getPhv().obreDialeg();
 			if (horses.getPhv().getDialeg().getResult() == JOptionPane.OK_OPTION) {
 				String name = horses.getPhv().getHorseName();
-				Bet bet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
+				horseBet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
 				try {
-					manager.getServer().enviarTrama(new Betting(bet));
-					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).actualitzaLabelApostaPropia(name);
-					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).disableBet();
+					manager.getServer().enviarTrama(new Betting(horseBet));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -379,6 +375,10 @@ public class GameManager {
 	public Bet getApostaRuleta() {
 		return apostaRuleta;
 	}//Tancament del getter
+	
+	public Bet getApostaCavalls(){
+		return horseBet;
+	}
 
 	/**
 	 * Metode que no retorna res, rep un Boolean i s'encarrega d'executar els grafics.

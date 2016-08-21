@@ -216,8 +216,10 @@ public class RouletteView extends GameView {
 		jpCentral.removeAll();
 		jpFinestra.add(label);
 		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {}
+			Thread.sleep(7000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	    
 	}//Tancament del metode
 	

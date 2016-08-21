@@ -15,6 +15,7 @@ import network.segment.BJEnd;
 import network.segment.CashRanking;
 import network.segment.LogOut;
 import network.segment.Play;
+import network.segment.Running;
 import network.segment.Top5;
 import view.AddMoneyFrame;
 import view.Dialeg;
@@ -80,9 +81,14 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
 				try {
-					manager.showPanel(Constants.R_VIEW_NAME);
-					manager.getServer().enviarTrama(new Play("roulette"));
-					manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
+					manager.getServer().enviarTrama(new Running(false, 1));					
+					if(((Running)manager.getServer().obtenirTrama()).isRunning()){
+						manager.getServer().enviarTrama(new Play("roulette"));
+						manager.showPanel(Constants.R_VIEW_NAME);
+						manager.comenzarJoc("Play Roulette", manager.getPanel(Constants.R_VIEW_NAME));
+					}else{
+						new Dialeg().setWarningText("Try again later.");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -93,9 +99,14 @@ public class MainButtonsController implements ActionListener {
 				new Dialeg().setWarningText("You can't play, you're a guest.");
 			} else {
 				try {
-					manager.showPanel(Constants.H_VIEW_NAME);
-					manager.getServer().enviarTrama(new Play("horses"));
-					manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+					manager.getServer().enviarTrama(new Running(false, 2));
+					if(((Running)manager.getServer().obtenirTrama()).isRunning()){
+						manager.getServer().enviarTrama(new Play("horses"));
+						manager.showPanel(Constants.H_VIEW_NAME);
+						manager.comenzarJoc("Play Horses", manager.getPanel(Constants.H_VIEW_NAME));
+					}else{
+						new Dialeg().setWarningText("Try again later.");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

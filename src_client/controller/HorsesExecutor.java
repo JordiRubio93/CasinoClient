@@ -15,6 +15,7 @@ import network.segment.NotifyBet;
 import network.segment.Seconds;
 import network.segment.Segment;
 import view.Dialeg;
+import view.GameView;
 import view.cavalls.HorsesView;
 
 /**
@@ -59,10 +60,13 @@ public class HorsesExecutor implements Runnable {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
-					if (!((Check) s).isOk())
-						new Dialeg().setWarningText("Previous bet refused");
-					else
+					if (!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
+					else{
 						new Dialeg().setWarningText("Bet accepted");
+						((GameView) manager.getPanel(Constants.H_VIEW_NAME)).actualitzaLabelApostaPropia(
+								manager.getGameManager().getApostaCavalls().getSlot());
+						((GameView) manager.getPanel(Constants.H_VIEW_NAME)).disableBet();
+					}
 					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
@@ -71,15 +75,16 @@ public class HorsesExecutor implements Runnable {
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
 					break;
 				case "InitHorses":
+					((GameView) manager.getPanel(Constants.H_VIEW_NAME)).disableBet();
 					game.setCursa();
 					InitHorses ih = ((InitHorses) s);
 					horse = ih.getDades().get(getWinner(ih.getDades())).getName();
 					game.initHorses(ih.getDades());
 					corre(ih.getDades());
+					manager.getServer().enviarTrama(new GameOver(2));
 					String winner = "The winner horse is... " + horse.toUpperCase() + " !";
 					Dialeg d = new Dialeg();
 					d.setWarningText(winner +"\nThanks for playing!");
-					manager.getServer().enviarTrama(new GameOver(2));
 					game.reset();
 					ih.getDades().clear();
 					manager.showPanel(Constants.MAIN_VIEW_NAME);

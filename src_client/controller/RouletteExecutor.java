@@ -13,6 +13,7 @@ import network.segment.NotifyBet;
 import network.segment.Seconds;
 import network.segment.Segment;
 import view.Dialeg;
+import view.GameView;
 import view.roulette.RouletteView;
 
 /**
@@ -56,8 +57,11 @@ public class RouletteExecutor implements Runnable {
 			while (active) {
 				switch (obtenirInstruccio().getClass().getSimpleName()) {
 				case "Check":
-					if(!((Check) s).isOk()) new Dialeg().setWarningText("Previous bet refused");
-					else  new Dialeg().setWarningText("Bet accepted");	
+					if(!((Check) s).isOk()) new Dialeg().setWarningText("Bet refused");
+					else{
+						new Dialeg().setWarningText("Bet accepted");
+						((GameView) manager.getPanel(Constants.R_VIEW_NAME)).actualitzaLabelApostaPropia(aposta.getSlot());
+					}
 					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
@@ -66,13 +70,14 @@ public class RouletteExecutor implements Runnable {
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
 					break;
 				case "InitRoulette":
+					((GameView) manager.getPanel(Constants.R_VIEW_NAME)).disableBet();
 					InitRoulette resultat = ((InitRoulette) s);
 					number = resultat.getWinner();
 					mostragif();
+					manager.getServer().enviarTrama(new GameOver(1));
 					String winner = "The winner number is... " + number + " !";
 					Dialeg d = new Dialeg();
 					d.setWarningText(winner +"\nThanks for playing!");
-					manager.getServer().enviarTrama(new GameOver(1));
 					game.reset();
 					manager.showPanel(Constants.MAIN_VIEW_NAME);
 					return;
@@ -127,7 +132,6 @@ public class RouletteExecutor implements Runnable {
 	 */
 	private void mostragif() {
 		game.insereixGif();
-		// get.enviarTrama(new GameOver());
 	}//Tancament del metode
 	
 	public void setActive(boolean active) {
