@@ -61,6 +61,7 @@ public class RouletteExecutor implements Runnable {
 					else{
 						new Dialeg().setWarningText("Bet accepted");
 						((GameView) manager.getPanel(Constants.R_VIEW_NAME)).actualitzaLabelApostaPropia(aposta.getSlot());
+						((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(manager.getGameManager().getBoton());
 					}
 					break;
 				case "NotifyBet":

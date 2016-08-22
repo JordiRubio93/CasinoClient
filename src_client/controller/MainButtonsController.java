@@ -170,7 +170,6 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Log Out"):
 			if (!manager.getGameManager().isGuest()) {
-				manager.startServer();
 				manager.logout();
 				try {
 					manager.getServer().enviarTrama(new LogOut());
@@ -310,6 +309,7 @@ public class MainButtonsController implements ActionListener {
 			double diners = manager.getGameManager().getBlackjack().getCashAmount();
 			double guanys = 0;
 			if (diners > initBJMoney) guanys = diners - initBJMoney;
+			manager.getGameManager().getUser().setCash(diners);
 			
 			try {
 				if(!guest) manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));

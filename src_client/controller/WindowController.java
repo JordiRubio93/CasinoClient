@@ -16,9 +16,10 @@ public class WindowController extends WindowAdapter {
 		try {
 			manager.getLedController().getSC().tancarConnexio(true);
 			manager.getServer().tancarConnexio(false);
-			System.exit(0);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("No he pogut tancar la connexió... hi havia?");;
+		} finally {
+			System.exit(0);
 		}
 	}
 }

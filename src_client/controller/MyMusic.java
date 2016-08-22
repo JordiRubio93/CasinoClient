@@ -15,7 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class MyMusic implements LineListener, Runnable {
 	private boolean playCompleted;
-	private final static String audioFilePath = "Resources/LsCasino-Song.wav";
+	private final static String audioFilePath = "Resources/music.wav";
 
 	/**
 	 * Play a given audio file.

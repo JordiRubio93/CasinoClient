@@ -19,7 +19,6 @@ import view.Dialeg;
 import view.blackjack.BlackjackView;
 import view.cavalls.HorsesView;
 import view.roulette.MyButton;
-import view.roulette.RouletteView;
 import view.statistics.Graphics;
 
 /**
@@ -118,13 +117,15 @@ public class GameManager {
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
-				((RouletteView) manager.getPanel(Constants.R_VIEW_NAME)).pintaBoto(boton);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 					
 		}
 	}//Tancament del metode
-			
+	
+	public MyButton getBoton(){
+		return boton;
+	}
 	
 	//---------------------------Horses-------------------------------
 
