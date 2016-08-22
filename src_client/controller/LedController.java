@@ -14,7 +14,7 @@ public class LedController implements Runnable {
 	
 	public LedController(MainWindow view) {
 		this.view = view;
-		this.sc = new ServerComunication(null, new ConfigurationFile("localhost", 2012));
+		this.sc = new ServerComunication(null, new ConfigurationFile(Constants.IP, 2012));
 	}
 
 	@Override

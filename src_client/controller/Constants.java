@@ -45,7 +45,7 @@ public class Constants {
 	public static final int CARD_HEIGHT = 147;
 	public static final int DELAY = 300;
 	public static boolean apostaFeta;
-	public static final String IP = "http://kingpmi.asuscomm.com";
+	public static final String IP = "kingpmi.asuscomm.com";
 	public static final int PORT = 6969;
 	public static final String PATH_CARRILS = "Resources/carrils.jpg";
 	public static final String PATH_TAPET = "Resources/tapet.jpg";

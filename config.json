@@ -1,5 +1,5 @@
 { "configuration": {
-	"IP_SBD": "localhost",
+	"IP_SBD": "http://kingpmi.asuscomm.com",
 	"PORT_Client": "6969"
 	}
 }
