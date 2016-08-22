@@ -68,10 +68,12 @@ public class MainButtonsController implements ActionListener {
 			manager.login();
 			break;
 		case ("Try as guest"):
+			guest = true;
 			manager.startServer();
 			manager.getGameManager().setUser(Constants.guest);
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
 			((MainWindow) manager.getPanel("MainWindow")).getLateralPanel().setGuest(true);
+			((MainWindow) manager.getPanel("MainWindow")).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
 			break;
 		case ("Register"):
 			manager.register();
@@ -128,6 +130,11 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("Configuration"):
 			manager.lateralMainPanel(true);
+		
+			if(guest)
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
+			else
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
 			break;
 		case ("Minimize Panel"):
 			manager.lateralMainPanel(false);
@@ -158,6 +165,11 @@ public class MainButtonsController implements ActionListener {
 				af.dispose();
 				manager.addCash(af.getCash(),af.getPassword());
 			}
+		
+			if(guest)
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
+			else
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
 			break;
 		case ("User Evo"):
 			try {
@@ -172,7 +184,7 @@ public class MainButtonsController implements ActionListener {
 			if (!manager.getGameManager().isGuest()) {
 				manager.logout();
 				try {
-					manager.getServer().enviarTrama(new LogOut());
+					manager.getServer().enviarTrama(new LogOut(false));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -183,6 +195,11 @@ public class MainButtonsController implements ActionListener {
 		case ("Home"):
 			((CashEvoView) manager.getPanel(Constants.CASH_EVO_VIEW_NAME)).reset();
 			manager.showPanel("MainWindow");
+			
+			if(guest)
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
+			else
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
 			break;
 		case ("roulette"):
 			MyButton boton = ((MyButton) event.getSource());
@@ -311,6 +328,11 @@ public class MainButtonsController implements ActionListener {
 			if (diners > initBJMoney) guanys = diners - initBJMoney;
 			manager.getGameManager().getUser().setCash(diners);
 			
+			if(guest)
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
+			else
+				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
+				
 			try {
 				if(!guest) manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
 			} catch (IOException e1) {e1.printStackTrace();}
@@ -344,5 +366,9 @@ public class MainButtonsController implements ActionListener {
 		}
 
 	}//Tancament del metode
+	
+	public void setGuest(boolean guest){
+		this.guest = guest;
+	}
 	
 }//Tancament de la classe

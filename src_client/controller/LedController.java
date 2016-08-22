@@ -22,7 +22,7 @@ public class LedController implements Runnable {
 		try {
 			sc.establirConnexio();
 			
-			while(!sc.getSocket().isClosed()){
+			while(true){
 				sc.enviarTrama(new Running(false, 1));
 				running = ((Running)sc.obtenirTrama()).isRunning();
 				

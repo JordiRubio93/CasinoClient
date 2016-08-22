@@ -101,7 +101,6 @@ public class Manager {
 			try {
 				server = new ServerComunication(this, cf);
 				server.establirConnexio();
-				new Thread(ledController = new LedController((MainWindow) getPanel(Constants.MAIN_VIEW_NAME))).start();
 			} catch (IOException e) {
 				view.showError("Server not found");
 				System.exit(0);
@@ -162,6 +161,8 @@ public class Manager {
 				if (s instanceof AddUser) {
 					gameManager.setUser(((AddUser) s).getUser());
 					view.showPanel(Constants.MAIN_VIEW_NAME);
+					((MainWindow)this.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(gameManager.getUser(), false);
+					this.getController().setGuest(false);
 					if (((LoginWindow) view.getPanel(Constants.LOGIN_VIEW_NAME)).getRemember())
 						fileManager.saveLoginInfo(loginInfo);
 					else
@@ -170,8 +171,6 @@ public class Manager {
 					view.showError("Login Fail");
 					showPanel(Constants.LOGIN_VIEW_NAME);
 				}
-					
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -190,7 +189,7 @@ public class Manager {
 		} else p.showEmailError(false);
 		if (!gameManager.comprovaLoginPW(u.getPassword())) {
 			valid = false;
-			view.showError("Wrong pw");
+			view.showError("Wrong PW");
 			p.showPasswordError(true);
 		} else
 			p.showPasswordError(false);
@@ -247,6 +246,8 @@ public class Manager {
 				if (s instanceof AddUser) {
 					gameManager.setUser(((AddUser) s).getUser());
 					view.showPanel(Constants.MAIN_VIEW_NAME);
+					((MainWindow)this.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(gameManager.getUser(), false);
+					this.getController().setGuest(false);
 				} else {
 					view.showError("Failed to Register");
 				}
@@ -302,7 +303,7 @@ public class Manager {
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
 					new Dialeg().setWarningText("Money accepted!");
-					getGameManager().getUser().setCash(cash);
+					getGameManager().getUser().setCash(getGameManager().getUser().getCash() + cash);
 				} else
 					new Dialeg().setWarningText("ERROR with PW");
 			}else{

@@ -282,7 +282,7 @@ public class BarChart extends JPanel implements Runnable {
 		sleep = new Sleeper(this, 50);
 
 		//Per cada barra (5 o menys):
-		for (int i = 0; i < bars.size() && i <= 5; i++) {
+		for (int i = 0; i < bars.size() && i < 5; i++) {
 			Bar bar = bars.get(i);
 
 			double factor = (heightChart - 50) / highestValue(bars);

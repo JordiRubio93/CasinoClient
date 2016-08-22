@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +13,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.struct.user.User;
 import controller.Constants;
 /**
  * 
@@ -46,6 +49,10 @@ public class ConfigPanel extends BaseJPanel {
 	private JButton logOutButton = new JButton(logOut);
 	private JButton backButton;
 	private JPanel backButtonPanel = new JPanel();
+	private JPanel dataPanel;
+	private JLabel jlName, jlCash, jlLastLogin;
+	
+	private boolean guest;
 	
 	public ConfigPanel(){
 		initElements();
@@ -67,6 +74,24 @@ public class ConfigPanel extends BaseJPanel {
 			}
 			e.printStackTrace();
 		}
+		
+		dataPanel = new JPanel(new GridLayout(3,1));
+		jlName = new JLabel();
+		jlCash = new JLabel();
+		jlLastLogin = new JLabel();
+		dataPanel.add(jlName);
+		dataPanel.add(jlCash);
+		dataPanel.add(jlLastLogin);
+		jlName.setForeground(new Color(245,245,245));
+		jlCash.setForeground(new Color(220,220,220));
+		jlLastLogin.setForeground(new Color(220,220,220));
+		jlName.setFont(Constants.nameFont);
+		jlCash.setFont(Constants.cashFont);
+		jlLastLogin.setFont(Constants.lastLoginFont);
+		jlName.setHorizontalAlignment(JLabel.CENTER);
+		jlCash.setHorizontalAlignment(JLabel.CENTER);
+		jlLastLogin.setHorizontalAlignment(JLabel.CENTER);
+		dataPanel.setBackground(new Color(0,0,0,0));
 		
 		backButton = new JButton(new ImageIcon(img1));
 		backButton.setContentAreaFilled(false);
@@ -118,14 +143,17 @@ public class ConfigPanel extends BaseJPanel {
 		c.weighty = 200;
 		c.gridy = 1;
 		c.gridx = 1;
-		this.add(changePasswordButton, c);
+		this.add(dataPanel, c);
 		c.gridy = 2;
 		c.gridx = 1;
-		this.add(addMoneyButton, c);
+		this.add(changePasswordButton, c);
 		c.gridy = 3;
 		c.gridx = 1;
-		this.add(seeEvoButton, c);
+		this.add(addMoneyButton, c);
 		c.gridy = 4;
+		c.gridx = 1;
+		this.add(seeEvoButton, c);
+		c.gridy = 5;
 		c.gridx = 1;
 		this.add(logOutButton, c);
 	}
@@ -146,5 +174,17 @@ public class ConfigPanel extends BaseJPanel {
 		changePasswordButton.setEnabled(enabled);
 		addMoneyButton.setEnabled(enabled);
 		seeEvoButton.setEnabled(enabled);
+	}
+	
+	public void setLabels(String name, String cash, String lastLogin){
+		jlName.setText(name);
+		jlCash.setText(cash + " €");
+		if(!guest) jlLastLogin.setText("Last login - " + lastLogin);
+	}
+	
+	public void setLabels(User u, boolean guest){
+		this.guest = guest;
+		if(guest) this.setLabels("Guest", String.valueOf(u.getCash()), "");
+		else this.setLabels(u.getName() + " " + u.getSurname(), String.valueOf(u.getCash()), u.getLastLogin().toString());
 	}
 }

@@ -37,7 +37,7 @@ public class LineChart extends Tapet {
 		g.drawLine(0,55,1920,55);
 		
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("Serif", Font.BOLD, 40));
+		g.setFont(new Font("Cambria", Font.BOLD, 40));
 		g.drawString(name, 10, 40);
 		
 		g.setFont(new Font("Calibri", Font.BOLD, 25));

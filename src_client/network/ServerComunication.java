@@ -57,6 +57,7 @@ public class ServerComunication{
 			return (Segment) objectIn.readObject();
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("UI!");
+			e.printStackTrace();
 		}
 		return null;
 	}

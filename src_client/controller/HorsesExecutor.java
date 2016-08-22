@@ -16,6 +16,7 @@ import network.segment.Seconds;
 import network.segment.Segment;
 import view.Dialeg;
 import view.GameView;
+import view.MainWindow;
 import view.cavalls.HorsesView;
 
 /**
@@ -88,6 +89,11 @@ public class HorsesExecutor implements Runnable {
 					game.reset();
 					ih.getDades().clear();
 					manager.showPanel(Constants.MAIN_VIEW_NAME);
+					
+					if(manager.getGameManager().isGuest())
+						((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
+					else
+						((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
 					return;
 				case "Seconds":
 					sec = ((Seconds) s).getSegons();

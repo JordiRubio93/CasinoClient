@@ -45,7 +45,7 @@ public class Constants {
 	public static final int CARD_HEIGHT = 147;
 	public static final int DELAY = 300;
 	public static boolean apostaFeta;
-	public static final String IP = "localhost";
+	public static final String IP = "http://kingpmi.asuscomm.com";
 	public static final int PORT = 6969;
 	public static final String PATH_CARRILS = "Resources/carrils.jpg";
 	public static final String PATH_TAPET = "Resources/tapet.jpg";
@@ -70,6 +70,9 @@ public class Constants {
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
 	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
 	public static final Font italicFont = new Font("Calibri", Font.ITALIC, 20);
+	public static final Font nameFont = new Font("Cambria", Font.BOLD, 36);
+	public static final Font cashFont = new Font("Cambria", Font.ITALIC, 28);
+	public static final Font lastLoginFont = new Font("Cambria", Font.ITALIC, 24);
 	public static final Dimension errorIconDimension = new Dimension (48, 48);
 	public static final int GAME_HORSES = 2;
 	public static final int GAME_ROULETTE = 1;

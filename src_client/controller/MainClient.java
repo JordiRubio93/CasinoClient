@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import tools.excepcions.TCPException;
 import view.Dialeg;
 import view.MainFrame;
+import view.MainWindow;
 import view.SplashScreen;
 /**
  * 
@@ -59,6 +60,10 @@ public class MainClient {
 						splash.getTranslucentWindow().stop();
 			        }
 			    }, Constants.SPLASH_TIME);
+				
+				LedController ledController = new LedController((MainWindow) manager.getPanel(Constants.MAIN_VIEW_NAME));
+				new Thread(ledController).start();
+				manager.setLedController(ledController);
 			}
 		});
 	}//Tancament del main
