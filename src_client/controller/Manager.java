@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URL;
 import java.util.Date;
 
 import model.struct.user.LoginInfo;
@@ -71,7 +72,13 @@ public class Manager {
 	public void checkServer() throws TCPException {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
-			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
+
+			URL url = new URL(cf.getIP_SDB());
+			InetAddress address = InetAddress.getByName(url.getHost());
+			//cf.setIP_SDB(address.getHostAddress());
+			
+			//InetAddress address = InetAddress.getByName(cf.getIP_SDB());
+		
 			if (!address.isReachable(5000))
 				throw new TCPException("Server OFF");
 		} catch (IOException | FileException e) {
