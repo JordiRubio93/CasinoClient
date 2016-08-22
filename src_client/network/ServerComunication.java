@@ -42,8 +42,13 @@ public class ServerComunication{
 	 * Estableix connexió amb el servidor
 	 * @throws IOException
 	 */
-	public void establirConnexio() throws IOException {
-		sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
+	public void establirConnexio(boolean led) throws IOException {
+		if (led){
+			System.out.println("conectant a:"+ cf.getIP_SDB()+":"+cf.getPORT_LED());
+			sServer = new Socket(cf.getIP_SDB(), cf.getPORT_LED());
+		
+		}
+		else	sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
 		objectOut = new ObjectOutputStream(sServer.getOutputStream());
 		objectIn = new ObjectInputStream(sServer.getInputStream());
 	}

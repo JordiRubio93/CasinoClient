@@ -100,7 +100,7 @@ public class Manager {
 		if (!serverOn) {
 			try {
 				server = new ServerComunication(this, cf);
-				server.establirConnexio();
+				server.establirConnexio(Boolean.FALSE);
 			} catch (IOException e) {
 				view.showError("Server not found");
 				System.exit(0);
@@ -269,6 +269,16 @@ public class Manager {
 	 */
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
+	}
+	
+	
+
+	public ConfigurationFile getCf() {
+		return cf;
+	}
+
+	public void setCf(ConfigurationFile cf) {
+		this.cf = cf;
 	}
 
 	/**

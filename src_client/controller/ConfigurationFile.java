@@ -25,10 +25,12 @@ public class ConfigurationFile {
 	//Atributs de la classe
 	private String IP_SDB;
 	private int PORT_Client;
+	private int PORT_LED;
 
-	public ConfigurationFile(String iP_SDB, int pORT_Client) {
+	public ConfigurationFile(String iP_SDB, int pORT_Client, int pORT_LED) {
 		IP_SDB = iP_SDB;
 		PORT_Client = pORT_Client;
+		PORT_LED = pORT_LED;
 	}//Tancament del metode
 	
 	/**
@@ -60,6 +62,15 @@ public class ConfigurationFile {
 	}//Tancament del metode
 
 	
+	
+	public int getPORT_LED() {
+		return PORT_LED;
+	}
+
+	public void setPORT_LED(int pORT_LED) {
+		PORT_LED = pORT_LED;
+	}
+
 	public void isValidIPV4() throws FileException{
 		final String IPV4_REGEX = "(([0-1]?[0-9]{1,2}\\.)|(2[0-4][0-9]\\.)|(25[0-5]\\.)){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))";
 		Pattern IPV4_PATTERN = Pattern.compile(IPV4_REGEX);
@@ -70,6 +81,9 @@ public class ConfigurationFile {
 	public void isValidPort() throws FileException{
 		if (PORT_Client < 1001 || PORT_Client > 65535) {
 	        throw new FileException("Invalid client port: " + PORT_Client);
+	    }
+		if (PORT_LED < 1001 || PORT_LED > 65535) {
+	        throw new FileException("Invalid led port: " + PORT_LED);
 	    }
 	}//Tancament del metode
 }//Tancament de la classe

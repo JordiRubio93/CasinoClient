@@ -61,7 +61,7 @@ public class MainClient {
 			        }
 			    }, Constants.SPLASH_TIME);
 				
-				LedController ledController = new LedController((MainWindow) manager.getPanel(Constants.MAIN_VIEW_NAME));
+				LedController ledController = new LedController((MainWindow) manager.getPanel(Constants.MAIN_VIEW_NAME), manager.getCf());
 				new Thread(ledController).start();
 				manager.setLedController(ledController);
 			}

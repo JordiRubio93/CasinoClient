@@ -1,5 +1,6 @@
 { "configuration": {
 	"IP_SBD": "http://kingpmi.asuscomm.com",
+	"PORT_LED": "6970",
 	"PORT_Client": "6969"
 	}
 }

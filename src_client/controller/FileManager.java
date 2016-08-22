@@ -12,6 +12,10 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Base64;
 import java.util.LinkedList;
 
@@ -46,7 +50,7 @@ public class FileManager {
 	
 	//Atributs de la classe
 	private LinkedList<HorseData> hdList;
-	private final String[] param = { "IP_SBD", "PORT_Client" };
+	private final String[] param = { "IP_SBD", "PORT_Client", "PORT_LED" };
 	private final String user = "client.dat";
 	private final String horses = "horses.txt";
 	private Gson gson;
@@ -100,10 +104,16 @@ public class FileManager {
 
 	private void validarConfiguracio(ConfigurationFile cf) throws FileException {
 		cf.isValidPort();
-		if (!cf.getIP_SDB().toLowerCase().equals("localhost"))
+		try {
+			URL url = new URL(cf.getIP_SDB());
+			InetAddress address = InetAddress.getByName(url.getHost());
+			cf.setIP_SDB(address.getHostAddress());
+		} catch (UnknownHostException | MalformedURLException e) {
+			e.printStackTrace();
 			cf.isValidIPV4();
+		}
 	}
-
+	
 	public ConfigurationFile carregarConfiguracio(String rute) throws FileException {
 		try {
 			br = new BufferedReader(new FileReader(rute));
@@ -119,7 +129,7 @@ public class FileManager {
 				e.printStackTrace();
 			}
 		}
-		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt());
+		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt(), (objecte).get(param[2]).getAsInt());
 	}
 
 	/**
