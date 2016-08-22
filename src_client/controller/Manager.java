@@ -73,11 +73,11 @@ public class Manager {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
 
-			URL url = new URL(cf.getIP_SDB());
-			InetAddress address = InetAddress.getByName(url.getHost());
+			//URL url = new URL(cf.getIP_SDB());
+			//InetAddress address = InetAddress.getByName(url.getHost());
 			//cf.setIP_SDB(address.getHostAddress());
 			
-			//InetAddress address = InetAddress.getByName(cf.getIP_SDB());
+			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
 		
 			if (!address.isReachable(5000))
 				throw new TCPException("Server OFF");
