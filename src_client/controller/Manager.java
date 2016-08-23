@@ -327,7 +327,7 @@ public class Manager {
 					u.setLoginInfo(user.getLoginInfo());
 					getGameManager().setUser(u);
 				} else
-					new Dialeg().setWarningText("ERROR with PW");
+					new Dialeg().setWarningText("ERROR with PW or CASH");
 			}else{
 				System.err.println(s.getClass());
 			}
