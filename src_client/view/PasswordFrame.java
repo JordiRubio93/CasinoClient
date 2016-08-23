@@ -56,7 +56,7 @@ public class PasswordFrame extends JFrame {
 			
 			setLayout(new GridLayout(3, 1));
 			setBackground(Color.BLACK);
-			setSize(new Dimension(700, 200));
+			setSize(new Dimension(700, 150));
 			setLocationRelativeTo(null);
 			setTitle("CHANGE PASSWORD");
 			

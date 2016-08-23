@@ -60,7 +60,7 @@ public class ConfigPanel extends BaseJPanel {
 	
 	protected void initElements(){	
 		setLayout(new GridBagLayout());
-		setBackground(Constants.semiOpaqueBlack);
+		setBackground(Constants.coolDarkGray);
 		
 		BufferedImage img1 = null;
 		
@@ -91,7 +91,7 @@ public class ConfigPanel extends BaseJPanel {
 		jlName.setHorizontalAlignment(JLabel.CENTER);
 		jlCash.setHorizontalAlignment(JLabel.CENTER);
 		jlLastLogin.setHorizontalAlignment(JLabel.CENTER);
-		dataPanel.setBackground(new Color(0,0,0,0));
+		dataPanel.setBackground(Constants.coolDarkGray);
 		
 		backButton = new JButton(new ImageIcon(img1));
 		backButton.setContentAreaFilled(false);

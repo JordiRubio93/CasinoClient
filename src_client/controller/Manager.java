@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 import model.struct.user.LoginInfo;
@@ -72,16 +74,15 @@ public class Manager {
 	public void checkServer() throws TCPException {
 		try {
 			cf = (new FileManager()).obtenirConfiguracio(rutejson);
-
-			//URL url = new URL(cf.getIP_SDB());
-			//InetAddress address = InetAddress.getByName(url.getHost());
-			//cf.setIP_SDB(address.getHostAddress());
-			
-			InetAddress address = InetAddress.getByName(cf.getIP_SDB());
-		
-			if (!address.isReachable(5000))
-				throw new TCPException("Server OFF");
-		} catch (IOException | FileException e) {
+			URL url = new URL(cf.getIP_SDB());
+			InetAddress address = InetAddress.getByName(url.getHost());
+			if (!address.isReachable(5000)) throw new TCPException("Server OFF");
+		} catch (FileException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}//Tancament del metode
