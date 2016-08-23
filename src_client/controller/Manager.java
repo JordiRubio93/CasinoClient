@@ -16,6 +16,7 @@ import network.segment.ChangePassword;
 import network.segment.Check;
 import network.segment.LoginUser;
 import network.segment.Segment;
+import network.segment.UserWanted;
 import tools.excepcions.FileException;
 import tools.excepcions.TCPException;
 import view.BaseJPanel;
@@ -321,7 +322,10 @@ public class Manager {
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
 					new Dialeg().setWarningText("Money accepted!");
-					getGameManager().getUser().setCash(getGameManager().getUser().getCash() + cash);
+					getServer().enviarTrama(new UserWanted(null));
+					User u = ((UserWanted)getServer().obtenirTrama()).getUser();
+					u.setLoginInfo(user.getLoginInfo());
+					getGameManager().setUser(u);
 				} else
 					new Dialeg().setWarningText("ERROR with PW");
 			}else{

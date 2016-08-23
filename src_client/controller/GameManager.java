@@ -117,7 +117,6 @@ public class GameManager {
 		else{
 			try {
 				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
-				getUser().setCash(getUser().getCash() - rouletteExecutor.getAposta().getAmount());
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 					
@@ -157,7 +156,6 @@ public class GameManager {
 				horseBet = new Bet(Double.parseDouble(horses.getPhv().getAmount()), name);
 				try {
 					manager.getServer().enviarTrama(new Betting(horseBet));
-					getUser().setCash(getUser().getCash() - horseBet.getAmount());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

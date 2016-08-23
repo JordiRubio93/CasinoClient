@@ -11,12 +11,14 @@ import javax.swing.JButton;
 import model.Prediction;
 import model.RegisterValidator;
 import model.struct.user.HistoricPartides;
+import model.struct.user.User;
 import network.segment.BJEnd;
 import network.segment.CashRanking;
 import network.segment.LogOut;
 import network.segment.Play;
 import network.segment.Running;
 import network.segment.Top5;
+import network.segment.UserWanted;
 import view.AddMoneyFrame;
 import view.Dialeg;
 import view.MainWindow;
@@ -322,11 +324,19 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("EXIT_GAME"):
 			manager.showPanel(Constants.MAIN_VIEW_NAME);
-		
+			
 			double diners = manager.getGameManager().getBlackjack().getCashAmount();
 			double guanys = 0;
 			if (diners > initBJMoney) guanys = diners - initBJMoney;
-			manager.getGameManager().getUser().setCash(diners);
+			
+			try {
+				manager.getServer().enviarTrama(new UserWanted(null));
+				User u = ((UserWanted)manager.getServer().obtenirTrama()).getUser();
+				u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
+				manager.getGameManager().setUser(u);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			if(guest)
 				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);

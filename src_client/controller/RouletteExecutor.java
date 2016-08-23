@@ -6,12 +6,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import model.Bet;
+import model.struct.user.User;
 import network.segment.Check;
 import network.segment.GameOver;
 import network.segment.InitRoulette;
 import network.segment.NotifyBet;
 import network.segment.Seconds;
 import network.segment.Segment;
+import network.segment.UserWanted;
 import view.Dialeg;
 import view.GameView;
 import view.MainWindow;
@@ -82,8 +84,10 @@ public class RouletteExecutor implements Runnable {
 					d.setWarningText(winner +"\nThanks for playing!");
 					game.reset();
 					manager.showPanel(Constants.MAIN_VIEW_NAME);
-					manager.getGameManager().getUser().setCash(manager.getGameManager().getUser().getCash() + resultat.getGuanys());
-					
+					manager.getServer().enviarTrama(new UserWanted(null));
+					User u = ((UserWanted)manager.getServer().obtenirTrama()).getUser();
+					u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
+					manager.getGameManager().setUser(u);
 					if(manager.getGameManager().isGuest())
 						((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), true);
 					else
