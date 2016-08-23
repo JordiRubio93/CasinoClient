@@ -303,10 +303,10 @@ public class Manager {
 			Segment s = (Segment) server.obtenirTrama();
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
-					new Dialeg().setWarningText("PW accepted");
+					new Dialeg().setWarningText("PW accepted!");
 					getGameManager().setUser(user);
 				} else
-					new Dialeg().setWarningText("ERROR with PW");
+					new Dialeg().setWarningText("ERROR with PW!");
 			}
 		} catch (IOException e){ e.printStackTrace();}
 	}//Tancament del metode
@@ -327,7 +327,7 @@ public class Manager {
 					u.setLoginInfo(user.getLoginInfo());
 					getGameManager().setUser(u);
 				} else
-					new Dialeg().setWarningText("ERROR with PW or CASH");
+					new Dialeg().setWarningText("ERROR with PW or CASH!\nYour maximum cash is 100000");
 			}else{
 				System.err.println(s.getClass());
 			}
