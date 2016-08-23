@@ -330,6 +330,8 @@ public class MainButtonsController implements ActionListener {
 			if (diners > initBJMoney) guanys = diners - initBJMoney;
 			
 			try {
+				if(!guest) manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
+				
 				manager.getServer().enviarTrama(new UserWanted(null));
 				User u = ((UserWanted)manager.getServer().obtenirTrama()).getUser();
 				u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
@@ -343,9 +345,6 @@ public class MainButtonsController implements ActionListener {
 			else
 				((MainWindow)manager.getPanel(Constants.MAIN_VIEW_NAME)).getLateralPanel().setLabels(manager.getGameManager().getUser(), false);
 				
-			try {
-				if(!guest) manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
-			} catch (IOException e1) {e1.printStackTrace();}
 			break;
 		case ("BET_R"):
 			manager.getGameManager().sendRouletteBet();
