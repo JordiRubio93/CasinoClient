@@ -67,6 +67,7 @@ public class Constants {
 	public static final Font ledFont = new Font("Calibri", Font.BOLD, 53);
 	public static final Font boldFont = new Font("Calibri", Font.BOLD, 24);
 	public static final Font plainFont = new Font("Calibri", Font.PLAIN, 18);
+	public static final Font registerFont = new Font("Calibri", Font.BOLD, 20);
 	public static final Font cellFont = new Font("Calibri", Font.PLAIN, 20);
 	public static final Font italicFont = new Font("Calibri", Font.ITALIC, 20);
 	public static final Font nameFont = new Font("Cambria", Font.BOLD, 36);

@@ -26,13 +26,15 @@ import controller.Constants;
 public class RegisterValidator extends LoginValidator{
 	private final Pattern VALID_NAME_OR_SURNAME = Pattern.compile("[a-zA-Z]{3,20}",
 			Pattern.CASE_INSENSITIVE);
+	private final Pattern HAVE_NUMBER = Pattern.compile(".*\\d.*",
+			Pattern.CASE_INSENSITIVE);
 
 	public boolean validateName(String name) {
-		return VALID_NAME_OR_SURNAME.matcher(name).find() && !name.equals(Constants.guest.getName());
+		return VALID_NAME_OR_SURNAME.matcher(name).find() && !name.equals(Constants.guest.getName()) && !HAVE_NUMBER.matcher(name).find();
 	}
 
 	public Boolean validateAge(Date date) {	
-		System.out.println(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() );
+		System.out.println(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		return (Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now())).getYears()>=18 ;
 	}
 }

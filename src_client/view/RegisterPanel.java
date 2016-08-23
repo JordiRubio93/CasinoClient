@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -26,6 +24,7 @@ import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Constants;
+import controller.RegisterController;
 /**
  * 
  * <p>
@@ -46,14 +45,14 @@ import controller.Constants;
  */
 public class RegisterPanel extends BaseJPanel {
 	private final String main = "Don't have an account? Join us!";
-	private final String name = "Name:";
-	private final String surname = "Surname:";
-	private final String male = "Male:";
-	private final String female = "Female:";
-	private final String age = "Age:";
-	private final String email = "e-mail:";
-	private final String password = "Password:";
-	private final String password2 = "    Repeat password:    ";
+	private final String name = "Name";
+	private final String surname = "Surname";
+	private final String male = "Male";
+	private final String female = "Female";
+	private final String age = "Birthday";
+	private final String email = "e-mail";
+	private final String password = "Password";
+	private final String password2 = "    Repeat password     ";
 	private final String join = "Join us!";
 	private final String guest = "Try as guest";
 	private static final long serialVersionUID = 1L;
@@ -78,8 +77,11 @@ public class RegisterPanel extends BaseJPanel {
 	private JButton guestButton = new JButton(guest);
 	private JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
 	private DatePicker datePicker;
+	
+	private RegisterController controller;
 
 	public RegisterPanel() {
+		controller = new RegisterController(this);
 		initElements();
 	}
 
@@ -104,7 +106,7 @@ public class RegisterPanel extends BaseJPanel {
 		add(mainLabel, BorderLayout.NORTH);
 
 		// Dona valors al name label
-		nameLabel.setFont(Constants.plainFont);
+		nameLabel.setFont(Constants.registerFont);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setForeground(Color.WHITE);
 		nameLabel.setBackground(back);
@@ -118,7 +120,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(nameField, c);
 
 		// Dona valors al surname label
-		surnameLabel.setFont(Constants.plainFont);
+		surnameLabel.setFont(Constants.registerFont);
 		surnameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		surnameLabel.setForeground(Color.WHITE);
 		surnameLabel.setBackground(back);
@@ -131,7 +133,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(surnameField, c);
 
 		// Dona valors al age label
-		ageLabel.setFont(Constants.plainFont);
+		ageLabel.setFont(Constants.registerFont);
 		ageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ageLabel.setForeground(Color.WHITE);
 		ageLabel.setBackground(back);
@@ -139,7 +141,9 @@ public class RegisterPanel extends BaseJPanel {
 		// Dona valors al date label
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+		dateSettings.setColorBackgroundNavigateYearMonthButtons(Color.WHITE);
 		datePicker = new DatePicker(dateSettings);
+		datePicker.setBackground(Color.WHITE);
 		datePicker.setPreferredSize(preferredSize);
 		c.gridx = 0;
 		c.gridy = 3;
@@ -150,7 +154,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(datePicker, c);
 
 		// Dona valors al mail label
-		mailLabel.setFont(Constants.plainFont);
+		mailLabel.setFont(Constants.registerFont);
 		mailLabel.setForeground(Color.WHITE);
 		mailLabel.setBackground(back);
 		mailLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,7 +166,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(mailField, c);
 
 		// Dona valors al password label
-		passwordLabel.setFont(Constants.plainFont);
+		passwordLabel.setFont(Constants.registerFont);
 		passwordLabel.setForeground(Color.WHITE);
 		passwordLabel.setBackground(back);
 		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -174,7 +178,7 @@ public class RegisterPanel extends BaseJPanel {
 		mainPanel.add(passwordField, c);
 
 		// Dona valors al repeat password label
-		passwordLabel2.setFont(Constants.plainFont);
+		passwordLabel2.setFont(Constants.registerFont);
 		passwordLabel2.setForeground(Color.WHITE);
 		passwordLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordLabel2.setBackground(back);
@@ -184,29 +188,18 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 6;
 		mainPanel.add(passwordField2, c);
-		passwordField2.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-				super.keyReleased(e);
-				if (String.copyValueOf(passwordField.getPassword()).length() > 5
-						&& getPassword().equals(getPassword2()))
-					registerButton.setEnabled(true);
-				else
-					registerButton.setEnabled(false);
-			}
-		});
-
+		
 		// Dona valors als botons male - female
 		maleButton.setOpaque(false);
 		maleButton.setHorizontalAlignment(SwingConstants.CENTER);
-		maleButton.setFont(Constants.plainFont);
-		maleButton.setForeground(Color.WHITE);
+		maleButton.setFont(Constants.registerFont);
+		maleButton.setForeground(Color.BLACK);
 		bG.add(maleButton);
-		buttonsPanel.setBackground(Color.BLACK);
 		buttonsPanel.add(maleButton);
 		femaleButton.setOpaque(false);
 		femaleButton.setHorizontalAlignment(SwingConstants.CENTER);
-		femaleButton.setFont(Constants.plainFont);
-		femaleButton.setForeground(Color.WHITE);
+		femaleButton.setFont(Constants.registerFont);
+		femaleButton.setForeground(Color.BLACK);
 		bG.add(femaleButton);
 		buttonsPanel.add(femaleButton);
 		
@@ -283,6 +276,44 @@ public class RegisterPanel extends BaseJPanel {
 	public void registerController() {
 		guestButton.addActionListener(getManager().getController());
 		registerButton.addActionListener(getManager().getController());
+		passwordField.addKeyListener(controller);
+		passwordField2.addKeyListener(controller);
+		nameField.addKeyListener(controller);
+		surnameField.addKeyListener(controller);
+		mailField.addKeyListener(controller);
+	}
+	
+	public void setFieldBackground(JTextField jtf, boolean wrong){
+		if(wrong){
+			jtf.setBackground(Constants.coolRed);
+			jtf.setForeground(Color.WHITE);
+		}else{
+			jtf.setBackground(Color.WHITE);
+			jtf.setForeground(Color.BLACK);
+		}
+	}
+	
+	public void enableRegisterButton(boolean b){
+		registerButton.setEnabled(b);
 	}
 
+	public JTextField getNameField() {
+		return nameField;
+	}
+
+	public JTextField getSurnameField() {
+		return surnameField;
+	}
+
+	public JTextField getMailField() {
+		return mailField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public JPasswordField getPasswordField2() {
+		return passwordField2;
+	}	
 }
