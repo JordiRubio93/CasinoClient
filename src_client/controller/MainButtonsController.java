@@ -144,6 +144,7 @@ public class MainButtonsController implements ActionListener {
 		case ("Change Password"):
 			pf = new PasswordFrame(manager);
 			pf.setVisible(true);
+			manager.getView().setEnabled(false);
 			break;
 		case ("Go Change Password"):
 			RegisterValidator rv = new RegisterValidator();
@@ -152,19 +153,24 @@ public class MainButtonsController implements ActionListener {
 			} else {
 				pf.setVisible(false);
 				pf.dispose();
+				manager.getView().setEnabled(true);
+				manager.getView().setVisible(true);
 				manager.changePW(pf.getPassword());
 			}			
 			break;
 		case ("Add Money"):
 			af = new AddMoneyFrame(manager);
 			af.setVisible(true);
+			manager.getView().setEnabled(false);
 			break;
 		case ("Go Add Money"):
 			if (!(af.getCash() > 0)) {
-				new Dialeg().setWarningText("Wrong Amount");
+				new Dialeg().setWarningText("Wrong amount");
 			} else {
 				af.setVisible(false);
 				af.dispose();
+				manager.getView().setEnabled(true);
+				manager.getView().setVisible(true);
 				manager.addCash(af.getCash(),af.getPassword());
 			}
 		
@@ -371,7 +377,6 @@ public class MainButtonsController implements ActionListener {
 			break;
 		case ("STAND_BJ"):
 			manager.getGameManager().standBJ();
-			;
 			break;
 		default:
 			System.err.println(((JButton) event.getSource()).getToolTipText());
@@ -381,6 +386,14 @@ public class MainButtonsController implements ActionListener {
 	
 	public void setGuest(boolean guest){
 		this.guest = guest;
+	}
+	
+	public PasswordFrame getPf() {
+		return pf;
+	}
+
+	public AddMoneyFrame getAf() {
+		return af;
 	}
 	
 }//Tancament de la classe

@@ -46,6 +46,8 @@ public class AddMoneyFrame extends JFrame {
 		this.manager = manager;
 		initElements();
 		registerController();
+		setResizable(false);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 	
 	private void initElements(){
@@ -119,5 +121,6 @@ public class AddMoneyFrame extends JFrame {
 	
 	public void registerController() {
 		goButton.addActionListener(manager.getController());
+		this.addWindowListener(manager.getWindow());
 	}
 }

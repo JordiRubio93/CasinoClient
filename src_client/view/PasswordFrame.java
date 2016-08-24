@@ -45,6 +45,8 @@ public class PasswordFrame extends JFrame {
 			this.manager = manager;
 			initElements();
 			registerController();
+			setResizable(false);
+			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		}
 		
 		private void initElements(){
@@ -116,5 +118,6 @@ public class PasswordFrame extends JFrame {
 		
 		public void registerController() {
 			goButton.addActionListener(manager.getController());
+			this.addWindowListener(manager.getWindow());
 		}
 }

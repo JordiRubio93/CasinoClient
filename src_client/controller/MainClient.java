@@ -40,6 +40,7 @@ public class MainClient {
 				
 				Manager manager = new Manager();
 				WindowController wc = new WindowController(manager);
+				manager.setWindow(wc);
 				//Si el servidor no hi es, no carrega y finilitza
 				try {
 					manager.checkServer();

@@ -49,7 +49,7 @@ public class LoginInfo implements Serializable {
 				this.password = toSHA1(getPassword().getBytes("UTF-8"));
 				pwishashed();
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+				//manager.showMessage(e.getMessage());
 			}
 		}
 	}
@@ -62,7 +62,7 @@ public class LoginInfo implements Serializable {
 	}
 	//TODO MOVE
 	public String toSHA1(byte[] convertme) {
-	    MessageDigest md = null;
+	    //MessageDigest md = null;
 	    String digestStr = null;
 	    try {
 	    	MessageDigest digest = MessageDigest.getInstance("SHA-1");
@@ -72,7 +72,7 @@ public class LoginInfo implements Serializable {
 	       // md = MessageDigest.getInstance("SHA-1");
 	    }
 	    catch(NoSuchAlgorithmException e) {
-	        e.printStackTrace();
+	        
 	    } 
 	    return digestStr.toLowerCase();
 	}

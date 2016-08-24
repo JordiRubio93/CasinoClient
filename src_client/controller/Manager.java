@@ -56,6 +56,7 @@ public class Manager {
 	private boolean serverOn;
 	private LoginInfo loginSaved;
 	private LedController ledController;
+	private WindowController wc;
 
 	/**
 	 * Constructor del Manager.
@@ -340,11 +341,22 @@ public class Manager {
 		return rowListener;
 	}
 
+	public MainFrame getView(){
+		return view;
+	}
+	
 	public LedController getLedController() {
 		return ledController;
 	}
 	public void setLedController(LedController ledController) {
 		this.ledController = ledController;
+	}
+
+	public void setWindow(WindowController wc) {
+		this.wc = wc;
+	}
+	public WindowController getWindow(){
+		return wc;
 	}
 	
 }//Tancament de la classe

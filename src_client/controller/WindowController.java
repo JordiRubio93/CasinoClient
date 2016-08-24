@@ -13,13 +13,20 @@ public class WindowController extends WindowAdapter {
 	
 	@Override
 	public void windowClosing(WindowEvent event){
-		try {
-			manager.getServer().tancarConnexio(false);
-			manager.getLedController().getSC().tancarConnexio(true);
-		} catch (IOException e) {
-			System.err.println("No he pogut tancar la connexió... hi havia?");;
-		} finally {
-			System.exit(0);
+		if(event.getSource().equals(manager.getView())){
+			try {
+				manager.getServer().tancarConnexio(false);
+				manager.getLedController().getSC().tancarConnexio(true);
+			} catch (IOException e) {
+				System.err.println("No he pogut tancar la connexió... hi havia?");;
+			} finally {
+				System.exit(0);
+			}
+		}else{
+			event.getWindow().setVisible(false);
+			event.getWindow().dispose();
+			manager.getView().setEnabled(true);
+			manager.getView().setVisible(true);
 		}
 	}
 }
