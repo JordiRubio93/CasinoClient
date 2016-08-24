@@ -302,7 +302,10 @@ public class MainButtonsController implements ActionListener {
 				// Filtra les dades
 				for(int i = 0; i < data.size(); i++){
 					Object[] row = new Object[3];
-					System.arraycopy(data.get(i), 1, row, 0, 3);
+					System.arraycopy(data.get(i), 1, row, 0, 2);
+					String cad = "";
+					for(int j = 0; j < data.get(i)[3].toString().length()-2; j++) cad = cad + "*";
+					row[2] = new String(cad);
 					publicData.add(row);
 				}
 				// Passa les dades públiques
