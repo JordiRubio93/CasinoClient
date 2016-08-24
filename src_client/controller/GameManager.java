@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JOptionPane;
 
@@ -51,6 +52,7 @@ public class GameManager {
 	private Bet apostaRuleta, horseBet;
 	private Thread filGrafics;
 	private MyButton boton;
+	private AtomicBoolean bool;
 
 	/**
 	 * Constructor per la grafica de la ruleta.
@@ -59,6 +61,7 @@ public class GameManager {
 		this.manager = manager;
 		loginValidator = new LoginValidator();
 		rv = new RegisterValidator();
+		bool = new AtomicBoolean();
 	}//Tancament del constructor
 
 	/**
@@ -99,6 +102,7 @@ public class GameManager {
 			String slot = boton.getText();
 			Bet bet = new Bet(Double.parseDouble(dialeg.getAmount()), slot);
 			rouletteExecutor.setAposta(bet);
+			bool.set(true);
 		}
 	}//Tancament del metode
 	
@@ -115,11 +119,15 @@ public class GameManager {
 	public void sendRouletteBet() {
 		if (rouletteExecutor.getAposta() == null) new Dialeg().setWarningText("You must bet!");
 		else{
-			try {
-				manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 					
+			if(bool.compareAndSet(true, false)){
+				try {
+					manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else{
+				new Dialeg().setWarningText("You can't bet to the same number");
+			}
 		}
 	}//Tancament del metode
 	
