@@ -29,7 +29,6 @@ import controller.Constants;
  * 			La Salle - Universitat Ramon Llull. <br/>
  */
 
-
 public class Graphics extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton backButton = new JButton("Back");

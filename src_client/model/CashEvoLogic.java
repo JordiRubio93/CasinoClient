@@ -63,7 +63,7 @@ public class CashEvoLogic {
 	}
 	
 	public void setAltura(float h){
-		altura = h;
+		min = altura = h - 25;
 	}
 	
 	public static float getMax() {

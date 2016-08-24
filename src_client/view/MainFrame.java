@@ -46,7 +46,8 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
-	public void showPanel(String cad){System.out.println(cad);
+	public void showPanel(String cad){
+		System.out.println(cad);
 		cardLayout.show(getContentPane(), "view." + cad);
 		revalidate();
 	}

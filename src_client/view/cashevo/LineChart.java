@@ -51,7 +51,7 @@ public class LineChart extends Tapet {
 		g.drawString("Blackjack", 10, 155);
 		
 		g2.setStroke(new BasicStroke(3));
-		g.setFont(Constants.italicFont);
+		g.setFont(new Font("Calibri", Font.ITALIC, 16));
 		if(lines[4] || lines[0]){
 			g.setColor(Constants.coolRed);
 			for(int i = 0; i < punts.size() - 1; i++){
@@ -145,7 +145,7 @@ public class LineChart extends Tapet {
 				int x, y;
 				for(int i = 0; i < blackjack.size(); i++){
 					if(i == sBJ.size()-1){
-						x = (int)blackjack.get(i).getX() - sBJ.get(i).length() * 8 - 3;
+						x = (int)blackjack.get(i).getX() - sBJ.get(i).length() * 8 - 2;
 						y = (int)blackjack.get(i).getY() + 30;
 					}
 					else{
