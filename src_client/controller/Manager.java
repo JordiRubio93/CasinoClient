@@ -304,14 +304,14 @@ public class Manager {
 			Segment s = (Segment) server.obtenirTrama();
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
-					new Dialeg().setWarningText("PW accepted!, please log in other time");
+					new Dialeg().setWarningText("PW accepted!");
 					getGameManager().setUser(user);
+					fileManager.deleteUserData();
 				} else
 					new Dialeg().setWarningText("ERROR with PW!");
 			}
 		} catch (IOException e){ //e.printStackTrace();
-			}
-		
+		}
 	}//Tancament del metode
 
 	public void addCash(float cash, String password) {

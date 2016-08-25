@@ -149,26 +149,15 @@ public class MainButtonsController implements ActionListener {
 		case ("Go Change Password"):
 			RegisterValidator rv = new RegisterValidator();
 			if (!pf.getPassword().equals(pf.getPassword()) || !rv.validatePasswordFormat(pf.getPassword())) {
-				new Dialeg().setWarningText("wrong password");
+				new Dialeg().setWarningText("Wrong password");
 			} else {
 				pf.setVisible(false);
 				pf.dispose();
 				manager.getView().setEnabled(true);
 				manager.getView().setVisible(true);
 				manager.changePW(pf.getPassword());
-				if (!manager.getGameManager().isGuest()) {
-					manager.logout();
-					try {
-						manager.getServer().enviarTrama(new LogOut(false));
-					} catch (IOException e) {
-						//e.printStackTrace();
-					}
-				}
-				manager.lateralMainPanel(false);
-				manager.showPanel("LoginWindow");
 				break;
-				
-			}			
+			}
 			break;
 		case ("Add Money"):
 			af = new AddMoneyFrame(manager);
