@@ -39,7 +39,7 @@ public class HorseAnimation {
 			File fitxer = new File(s);
 			gif = ImageIO.read(fitxer);
 		}catch(IOException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class HorseAnimation {
 			File fitxer = new File(s);
 			gif = ImageIO.read(fitxer);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

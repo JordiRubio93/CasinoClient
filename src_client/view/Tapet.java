@@ -44,7 +44,7 @@ public class Tapet extends JPanel {
 			File fitxer = new File(ruta);
 			imatge = ImageIO.read(fitxer);
 		}catch(IOException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class Tapet extends JPanel {
 			imatge = ImageIO.read(fitxer);
 			this.repaint();
 		}catch (IOException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

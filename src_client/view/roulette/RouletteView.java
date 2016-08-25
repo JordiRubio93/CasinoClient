@@ -218,7 +218,7 @@ public class RouletteView extends GameView {
 		try {
 			Thread.sleep(7000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	    
 	}//Tancament del metode

@@ -56,13 +56,13 @@ public class MyMusic implements LineListener, Runnable {
 			audioClip.close();
 
 		} catch (UnsupportedAudioFileException ex) {
-			System.out.println("The specified audio file is not supported.");
+			//System.out.println("The specified audio file is not supported.");
 			ex.printStackTrace();
 		} catch (LineUnavailableException ex) {
-			System.out.println("Audio line for playing back is unavailable.");
+			//System.out.println("Audio line for playing back is unavailable.");
 			ex.printStackTrace();
 		} catch (IOException ex) {
-			System.out.println("Error playing the audio file.");
+			//System.out.println("Error playing the audio file.");
 			ex.printStackTrace();
 		}
 
@@ -76,11 +76,11 @@ public class MyMusic implements LineListener, Runnable {
 		LineEvent.Type type = event.getType();
 
 		if (type == LineEvent.Type.START) {
-			System.out.println("Playback started.");
+			//System.out.println("Playback started.");
 
 		} else if (type == LineEvent.Type.STOP) {
 			playCompleted = true;
-			System.out.println("Playback completed.");
+			//System.out.println("Playback completed.");
 		}
 	}
 

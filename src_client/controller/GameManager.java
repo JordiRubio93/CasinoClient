@@ -123,7 +123,7 @@ public class GameManager {
 				try {
 					manager.getServer().enviarTrama(new Betting(rouletteExecutor.getAposta()));
 				} catch (IOException e) {
-					e.printStackTrace();
+					////e.printStackTrace();
 				}
 			}else{
 				new Dialeg().setWarningText("You can't bet to the same number");

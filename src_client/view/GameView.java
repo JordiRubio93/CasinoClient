@@ -169,7 +169,7 @@ public abstract class GameView extends BaseJPanel {
 				try{
 					actualitzaTemps(dateFormat.format(Calendar.getInstance().getTime()));
 				}catch (Exception e){
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		}, Constants.SPLASH_TIME, TimeUnit.SECONDS.toMillis(1));

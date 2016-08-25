@@ -44,7 +44,7 @@ public class ServerComunication{
 	 */
 	public void establirConnexio(boolean led) throws IOException {
 		if (led){
-			System.out.println("conectant a:"+ cf.getIP_SDB()+":"+cf.getPORT_LED());
+			//System.out.println("conectant a:"+ cf.getIP_SDB()+":"+cf.getPORT_LED());
 			sServer = new Socket(cf.getIP_SDB(), cf.getPORT_LED());
 		
 		}
@@ -61,8 +61,8 @@ public class ServerComunication{
 		try {
 			return (Segment) objectIn.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			System.out.println("UI!");
-			e.printStackTrace();
+			//System.out.println("UI!");
+			//e.printStackTrace();
 		}
 		return null;
 	}

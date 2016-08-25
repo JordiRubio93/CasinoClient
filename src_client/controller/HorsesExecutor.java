@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -135,7 +134,7 @@ public class HorsesExecutor implements Runnable {
 
 	public Segment obtenirInstruccio() throws ClassNotFoundException, IOException {
 		s = (Segment) manager.getServer().obtenirTrama();
-		if(s!=null) System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
+		if(s!=null){} //System.out.println(Calendar.getInstance().getTime().toString() + " soc un " + s.getClass());
 		return s;
 	}
 	
@@ -156,7 +155,7 @@ public class HorsesExecutor implements Runnable {
 			try {
 				Thread.sleep(Constants.DELAY);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		// get.enviarTrama(new GameOver());

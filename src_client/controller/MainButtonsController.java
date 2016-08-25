@@ -64,7 +64,7 @@ public class MainButtonsController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
+		//System.out.println(((JButton) event.getSource()).getClientProperty("action").toString());
 		switch (((JButton) event.getSource()).getClientProperty("action").toString()) {
 		case ("Log in"):
 			manager.login();
@@ -94,7 +94,7 @@ public class MainButtonsController implements ActionListener {
 						new Dialeg().setWarningText("Try again later.");
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			break;
@@ -112,7 +112,7 @@ public class MainButtonsController implements ActionListener {
 						new Dialeg().setWarningText("Try again later.");
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			break;
@@ -124,7 +124,7 @@ public class MainButtonsController implements ActionListener {
 					manager.comenzarJoc("Play BlackJack", manager.getPanel(Constants.BJ_VIEW_NAME));
 					initBJMoney = manager.getGameManager().getBlackjack().getCashAmount();
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			break;
 		case ("Statistics"):
@@ -156,6 +156,18 @@ public class MainButtonsController implements ActionListener {
 				manager.getView().setEnabled(true);
 				manager.getView().setVisible(true);
 				manager.changePW(pf.getPassword());
+				if (!manager.getGameManager().isGuest()) {
+					manager.logout();
+					try {
+						manager.getServer().enviarTrama(new LogOut(false));
+					} catch (IOException e) {
+						//e.printStackTrace();
+					}
+				}
+				manager.lateralMainPanel(false);
+				manager.showPanel("LoginWindow");
+				break;
+				
 			}			
 			break;
 		case ("Add Money"):
@@ -185,7 +197,7 @@ public class MainButtonsController implements ActionListener {
 				ce.executaGrafic(manager, manager.getGameManager().getUser().getEmail(), manager.getGameManager().getUser().getName(), manager.getGameManager().getUser().getSurname());
 				ce.setBack(false);
 			} catch (IOException e2) {
-				e2.printStackTrace();
+				//e2.printStackTrace();
 			}
 			break;
 		case ("Log Out"):
@@ -194,7 +206,7 @@ public class MainButtonsController implements ActionListener {
 				try {
 					manager.getServer().enviarTrama(new LogOut(false));
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			manager.lateralMainPanel(false);
@@ -233,7 +245,7 @@ public class MainButtonsController implements ActionListener {
 					manager.getGameManager().executaGrafics(true);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			break;
 		case ("Top 5 Blackjack"):
@@ -245,7 +257,7 @@ public class MainButtonsController implements ActionListener {
 					manager.getGameManager().executaGrafics(true);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			break;
 		case ("Top 5 Horses"):
@@ -257,7 +269,7 @@ public class MainButtonsController implements ActionListener {
 					manager.getGameManager().executaGrafics(true);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			break;
 		case ("ALL BUTTON"):
@@ -346,7 +358,7 @@ public class MainButtonsController implements ActionListener {
 				u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
 				manager.getGameManager().setUser(u);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			if(guest)

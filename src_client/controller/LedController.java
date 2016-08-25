@@ -29,7 +29,7 @@ public class LedController implements Runnable {
 				Thread.sleep(500);
 			}
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	

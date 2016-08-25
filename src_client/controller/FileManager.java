@@ -96,7 +96,7 @@ public class FileManager {
 				if (fileIn != null)
 					fileIn.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return objecte;
@@ -109,7 +109,7 @@ public class FileManager {
 			InetAddress address = InetAddress.getByName(url.getHost());
 			cf.setIP_SDB(address.getHostAddress());
 		} catch (UnknownHostException | MalformedURLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			cf.isValidIPV4();
 		}
 	}
@@ -126,7 +126,7 @@ public class FileManager {
 			try {
 				br.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt(), (objecte).get(param[2]).getAsInt());
@@ -145,7 +145,7 @@ public class FileManager {
 				out = new ObjectOutputStream(fileOut);
 				serialize(li.toString(), out);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} finally {
 				try {
 					if (out != null)
@@ -153,7 +153,7 @@ public class FileManager {
 					if (fileOut != null)
 						fileOut.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		}
@@ -162,15 +162,15 @@ public class FileManager {
 	/**
 	 * Esborra el logueig de l'usuari de la memòria quan aquest decideix fer log out.
 	 */
-	public void logout() {
+	public void deleteUserData() {
 		try {
 			File file = new File(user);
-			if (file.delete())
-				System.out.println(file.getName() + " is deleted!");
-			else
-				System.out.println("Delete operation is failed.");
+			if (file.delete()){
+				////System.out.println(file.getName() + " is deleted!");
+			}else{}
+				////System.out.println("Delete operation is failed.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -213,7 +213,7 @@ public class FileManager {
 		try {
 			reader = new JsonReader(new FileReader(horses));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		JsonArray array = gson.fromJson(reader, JsonArray.class);
 

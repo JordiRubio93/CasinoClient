@@ -104,7 +104,7 @@ public class RegisterController implements KeyListener {
 				panel.enableRegisterButton(false);
 			}
 		}else{
-			System.out.println("WTF?");
+			//System.out.println("WTF?");
 		}
 	}
 

@@ -34,7 +34,7 @@ public class RegisterValidator extends LoginValidator{
 	}
 
 	public Boolean validateAge(Date date) {	
-		System.out.println(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		//System.out.println(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		return (Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now())).getYears()>=18 ;
 	}
 }

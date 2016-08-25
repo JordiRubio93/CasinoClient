@@ -80,12 +80,12 @@ public class Manager {
 			InetAddress address = InetAddress.getByName(url.getHost());
 			if (!address.isReachable(5000)) throw new TCPException("Server OFF");
 		} catch (FileException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (MalformedURLException e) {
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}//Tancament del metode
 
@@ -122,7 +122,7 @@ public class Manager {
 	 * Metode que no retorna res i que s'encarrega de fer el logout.
 	 */
 	public void logout() {
-		fileManager.logout();
+		fileManager.deleteUserData();
 	}//Tancament del metode
 
 	/**
@@ -182,7 +182,7 @@ public class Manager {
 					showPanel(Constants.LOGIN_VIEW_NAME);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		} else
 			view.showError("Login Fail");
@@ -233,9 +233,9 @@ public class Manager {
 		User registerInfo = new User(rp.getName(), rp.getSurname(), rp.getPassword(), 0.0, rp.getMail(), new Date(),
 				new Date(), rp.getBirthday(), rp.getSex());
 		Boolean valid = true;
-		System.out.println(registerInfo.toString());
+		//System.out.println(registerInfo.toString());
 		
-		System.out.println(rp.getSex());
+		//System.out.println(rp.getSex());
 
 		// comprova que les dades estiguin ok
 		if (!gameManager.comprovaName(registerInfo.getName()))
@@ -262,7 +262,7 @@ public class Manager {
 					view.showError("Failed to Register");
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		} else
 			view.showError("Register Fail");
@@ -304,12 +304,14 @@ public class Manager {
 			Segment s = (Segment) server.obtenirTrama();
 			if (s instanceof Check) {
 				if (((Check) s).isOk()) {
-					new Dialeg().setWarningText("PW accepted!");
+					new Dialeg().setWarningText("PW accepted!, please log in other time");
 					getGameManager().setUser(user);
 				} else
 					new Dialeg().setWarningText("ERROR with PW!");
 			}
-		} catch (IOException e){ e.printStackTrace();}
+		} catch (IOException e){ //e.printStackTrace();
+			}
+		
 	}//Tancament del metode
 
 	public void addCash(float cash, String password) {
@@ -333,7 +335,7 @@ public class Manager {
 				System.err.println(s.getClass());
 			}
 		} catch (IOException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}//Tancament del metode
 	

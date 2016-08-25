@@ -47,7 +47,7 @@ public class MainFrame extends JFrame{
 	}
 
 	public void showPanel(String cad){
-		System.out.println(cad);
+		//System.out.println(cad);
 		cardLayout.show(getContentPane(), "view." + cad);
 		revalidate();
 	}

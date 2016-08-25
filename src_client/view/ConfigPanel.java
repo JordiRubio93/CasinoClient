@@ -72,7 +72,7 @@ public class ConfigPanel extends BaseJPanel {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		dataPanel = new JPanel(new GridLayout(3,1));

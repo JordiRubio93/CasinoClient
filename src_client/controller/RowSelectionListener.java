@@ -32,7 +32,7 @@ public class RowSelectionListener implements ListSelectionListener {
 					ce.setBack(true);
 				}else new Dialeg().setWarningText("Access denied.\nYou're not this user...");
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
