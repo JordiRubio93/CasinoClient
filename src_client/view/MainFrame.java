@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package view;
 
 import java.awt.CardLayout;
@@ -8,69 +19,90 @@ import javax.swing.JOptionPane;
 
 import controller.Constants;
 import controller.Manager;
-import controller.WindowController;
+import controller.listeners.WindowController;
+
 /**
- * 
- * <p>
- * <b> Classe: MainFrame </b> <br/>
- * </p>
- * Finestra principal que contindr‡ tots els panells de l'aplicaciÛ
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaci√≥ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class MainFrame.
  */
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private CardLayout cardLayout;
 	private ArrayList<BaseJPanel> panels;
-	
-	public MainFrame(ArrayList<BaseJPanel> panels){
+
+	/**
+	 * Instantiates a new main frame.
+	 *
+	 * @param panels
+	 */
+	public MainFrame(ArrayList<BaseJPanel> panels) {
 		this.panels = panels;
 		propietats();
 		cardLayout = new CardLayout();
 		getContentPane().setLayout(cardLayout);
 		createCardLayout(panels);
 	}
-	
-	private void propietats(){
+
+	/**
+	 * (Estableix les propietats b‡siques de la finestra.)
+	 */
+	private void propietats() {
 		setLocationRelativeTo(null);
 		setTitle(Constants.PROJECT_NAME);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
-	public void showPanel(String cad){
-		//System.out.println(cad);
+	/**
+	 * Show panel.
+	 *
+	 * @param cad
+	 */
+	public void showPanel(String cad) {
+		// System.out.println(cad);
 		cardLayout.show(getContentPane(), "view." + cad);
 		revalidate();
 	}
-	
-	public void setManager(Manager manager){
-		for(BaseJPanel panel : panels){
+
+	/**
+	 * Sets manager.
+	 *
+	 * @param manager
+	 */
+	public void setManager(Manager manager) {
+		for (BaseJPanel panel : panels) {
 			panel.setManager(manager);
 			panel.registerController();
 		}
 	}
 
-	public void createCardLayout(ArrayList<BaseJPanel> panels){
-		for(BaseJPanel panel : panels){
+	/**
+	 * Creates card layout.
+	 *
+	 * @param panels
+	 */
+	public void createCardLayout(ArrayList<BaseJPanel> panels) {
+		for (BaseJPanel panel : panels) {
 			getContentPane().add(panel, panel.getClass().getName().toString());
 		}
 	}
-	
+
+	/**
+	 * Show error.
+	 *
+	 * @param string
+	 */
 	public void showError(String string) {
-		JOptionPane.showMessageDialog(this,string,"ERROR", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, string, "ERROR", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public BaseJPanel getPanel(String cad){
-		switch(cad){
+	/**
+	 * Gets panel.
+	 *
+	 * @param cad
+	 * @return the panel
+	 */
+	public BaseJPanel getPanel(String cad) {
+		switch (cad) {
 		case Constants.CASH_EVO_VIEW_NAME:
 			return panels.get(8);
 		case Constants.CASH_RANKING_VIEW_NAME:
@@ -92,8 +124,14 @@ public class MainFrame extends JFrame{
 		}
 		return null;
 	}
-	
-	public void registerController(WindowController wc){
+
+	/**
+	 * Register controller.
+	 * (Afegeix el controlador de finestra.)
+	 *
+	 * @param wc	
+	 */
+	public void registerController(WindowController wc) {
 		this.addWindowListener(wc);
 	}
 }

@@ -1,35 +1,28 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package view;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JWindow;
+
 /**
- * 
- * <p>
- * <b> Classe: TranslucentWindow </b> <br/>
- * </p>
- * 
- * Finestra translúcida a on es fica la pantalla de Splash
- * 
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class TranslucentWindow.
+ * (Es tracta de la finestra del Splash Screen, i és un fil d'execució a part.)
  */
 public class TranslucentWindow extends JWindow implements Runnable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -43,29 +36,12 @@ public class TranslucentWindow extends JWindow implements Runnable {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
-
 	}
 
+	/**
+	 * Stop.
+	 */
 	public void stop() {
 		dispose();
-	}
-
-	public class TranslucentPane extends JPanel {
-		private static final long serialVersionUID = 1L;
-
-		public TranslucentPane() {
-			setOpaque(false);
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D) g.create();
-			g2d.setComposite(AlphaComposite.SrcOver.derive(0.05f));
-			g2d.setColor(getBackground());
-			g2d.fillRect(0, 0, getWidth(), getHeight());
-
-		}
-
 	}
 }

@@ -1,4 +1,15 @@
-package view.cavalls;
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
+package view.horses;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,39 +27,31 @@ import view.GameView;
 import controller.Constants;
 
 /**
- * Classe que hereta de GameView, com RouletteView
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaci√≥ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
+ * The Class HorsesView.
+ * (Classe encarregada de la vista de la cursa de cavalls.)
  */
-
 public class HorsesView extends GameView {
 	private static final long serialVersionUID = 1L;
-	private Stadium jpStadium; //Hereta de Tapet
+	private Stadium jpStadium; // Hereta de Tapet
 	private GridLayout gridLayout;
 	private JPanel jpCarrils;
-	private LinkedList<HorseAnimation> list; //Animacions per l'sprite
-	private Point[] coord; //Coordenades xy segons el cavall corresponent
-	private PickHorseView phv; //Vista per escollir el cavall pel qual apostes
-	
+	private LinkedList<HorseAnimation> list; // Animacions per l'sprite
+	private Point[] coord; // Coordenades xy segons el cavall corresponent
+	private PickHorseView phv; // Vista per escollir el cavall pel qual apostes
+
 	/**
-	 * Constructor
-	 * @param phv: Vista per escollir el cavall pel qual apostes
+	 * Instantiates a new horses view.
+	 *
+	 * @param phv
 	 */
-	public HorsesView(PickHorseView phv){
+	public HorsesView(PickHorseView phv) {
 		initElements();
-		createDaemonTime(); //Crea el control de temps per la cursa
+		createDaemonTime(); // Crea el control de temps per la cursa
 		this.phv = phv;
 	}
 
 	/**
-	 * Inicialitza la vista, incloent GameView (super)
+	 * (Inicialitza els elements del panell.)
 	 */
 	protected void initElements() {
 		super.initElements();
@@ -60,7 +63,7 @@ public class HorsesView extends GameView {
 	}
 
 	/**
-	 * Col∑loca els carrils
+	 * (Estableix la cursa a lloc abans de que comenci.)
 	 */
 	public void setCursa() {
 		jpStadium.setImatge(Constants.PATH_CARRILS);
@@ -68,32 +71,38 @@ public class HorsesView extends GameView {
 		gridLayout = new GridLayout(Constants.nHorses, 1);
 		gridLayout.setVgap(-80);
 		jpCarrils = new JPanel(gridLayout);
-		for(int i = 0; i < Constants.nHorses; i++){
+		for (int i = 0; i < Constants.nHorses; i++) {
 			JLabel jlPos = new JLabel("   " + String.valueOf(Constants.nHorses - i) + "  ");
 			jlPos.setHorizontalAlignment(JLabel.LEFT);
 			jlPos.setFont(new Font("Serif", Font.BOLD, 34));
 			jlPos.setForeground(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 			jpCarrils.add(jlPos);
 		}
-		jpCarrils.setBackground(new Color(0,0,0,0));
+		jpCarrils.setBackground(new Color(0, 0, 0, 0));
 		jpStadium.add(jpCarrils, BorderLayout.WEST);
 		add(jpStadium, BorderLayout.CENTER);
 		showCursa(true);
 	}
-	
-	public void showCursa(boolean show){
+
+	/**
+	 * (Mostra o oculta els carrils.)
+	 *
+	 * @param show
+	 */
+	public void showCursa(boolean show) {
 		jpCarrils.setVisible(show);
 	}
-	
+
 	/**
-	 * Inicialitza els cavalls
-	 * @param dades: llista de HorseData, que sÛn les dades lÚgiques/oficials/no-gr‡fiques/no-visuals/internes dels cavalls
+	 * (Inicialitza els cavalls per a la cursa.)
+	 *
+	 * @param dades
 	 */
-	public void initHorses(LinkedList<HorseData> dades){
+	public void initHorses(LinkedList<HorseData> dades) {
 		list = new LinkedList<HorseAnimation>();
 		coord = new Point[12];
-		//A partir de les dades requerides, calcula la nova posiciÛ
-		for(int i = 0; i < Constants.nHorses; i++){
+		// A partir de les dades requerides, calcula la nova posiciÛ
+		for (int i = 0; i < Constants.nHorses; i++) {
 			list.add(new HorseAnimation(dades.get(i).getColor(), i));
 			coord[i] = new Point(Calcul.calculaX(dades.get(i).getSegons(), true), Calcul.calculaY(i));
 		}
@@ -102,19 +111,23 @@ public class HorsesView extends GameView {
 		jpStadium.setReady(true);
 		jpStadium.repaint();
 	}
-	
+
 	/**
-	 * Fa cÛrrer els cavalls
-	 * @param i: Ìndex pel cavall
-	 * @param x: coordenada x pel cavall en q¸estiÛ
-	 * @param y: coordenada y pel cavall en q¸estiÛ
+	 * (Anima i trasllada els cavalls: fa que corrin.)
+	 *
+	 * @param i
+	 * @param x
+	 * @param y
 	 */
-	public void runHorses(int i, int x, int y){
-		jpStadium.getList().get(i).run(); //Mou els cavalls en sÌ, les seves potes, els anima
-		jpStadium.setCoord(x, y, i); //Trasllada els cavalls de posiciÛ perquË avancin
+	public void runHorses(int i, int x, int y) {
+		jpStadium.getList().get(i).run(); // Mou els cavalls en sÌ, les seves potes, els anima
+		jpStadium.setCoord(x, y, i); // Trasllada els cavalls de posiciÛ perquË avancin
 	}
-	
-	public void setCounter(){
+
+	/**
+	 * (Inicialitza l'etiqueta del compte enrere.)
+	 */
+	public void setCounter() {
 		jlCount = new JLabel("...");
 		jlCount.setHorizontalAlignment(JLabel.CENTER);
 		jlCount.setVerticalAlignment(JLabel.CENTER);
@@ -123,48 +136,80 @@ public class HorsesView extends GameView {
 		jlCount.setBackground(Color.RED);
 		jpStadium.add(jlCount, BorderLayout.CENTER);
 	}
-	
-	public void showCounter(boolean show){
+
+	/**
+	 * (Mostra o oculta l'etiqueta del compte enrere.)
+	 *
+	 * @param show
+	 */
+	public void showCounter(boolean show) {
 		jlCount.setVisible(show);
 	}
-	
-	public void actualitzaCounter(int num){
+
+	/**
+	 * (Actualitza l'etiqueta del compte enrere.)
+	 *
+	 * @param num
+	 */
+	public void actualitzaCounter(int num) {
 		jlCount.setText(String.valueOf(num));
 	}
-	
-	public void paintRed(boolean flag){
+
+	/**
+	 * (Pinta la pantalla en vermell en els ˙ltims segons abans de la cursa.)
+	 *
+	 * @param
+	 */
+	public void paintRed(boolean flag) {
 		jlCount.setOpaque(flag);
 	}
-	
+
+	/**
+	 * Show this window.
+	 */
 	public void showPhv() {
 		phv.clean();
 		phv.setVisible(true);
 	}
-	
+
+	/**
+	 * Gets phv.
+	 *
+	 * @return phv
+	 */
 	public PickHorseView getPhv() {
 		return phv;
 	}
 
 	/**
-	 * Assigna els controladors pels botons
+	 * @see view.GameView#registerController()
 	 */
 	@Override
-	public void registerController(){
-		//registrar el frame
+	public void registerController() {
+		// registrar el frame
 		super.registerController();
 		phv.setManager(getManager());
 	}
 
-	public void enableBet(){
+	/**
+	 * Enable bet.
+	 */
+	public void enableBet() {
 		jbBet.setEnabled(true);
 	}
-	
+
+	/**
+	 * @see view.GameView#disableBet()
+	 */
 	public void disableBet() {
 		phv.setVisible(false);
 		jbBet.setEnabled(false);
 	}
-	
-	public void reset(){
+
+	/**
+	 * (Reinicia la vista.)
+	 */
+	public void reset() {
 		removeAll();
 		initElements();
 		super.registerController();

@@ -1,26 +1,27 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import model.struct.roulette.Casella;
+
 /**
- * 
- * <p>
- * <b> Classe: AmericanRoulette </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaci√≥ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class AmericanRoulette.
+ * (ContÈ les dades pels botons de la ruleta.)
  */
 public class AmericanRoulette {
-	//Atributs de la classe
+	// Atributs de la classe
 	String[] num_casella = { "3", "6", "9", "12", "15", "18", "21", "24", "27", "30", "33", "36", "2", "5", "8", "11",
 			"14", "17", "20", "23", "26", "29", "32", "35", "1", "4", "7", "10", "13", "16", "19", "22", "25", "28",
 			"31", "34" };
@@ -32,50 +33,70 @@ public class AmericanRoulette {
 	private final int rows = 3;
 	private final int column = 12;
 	private final int totalNumbers = (rows * column);
-	private ArrayList<Casella> caselles;
+	private static ArrayList<Casella> caselles;
 
 	/**
-	 * Constructor per la grafica de la ruleta.
+	 * Instantiates a new american roulette.
 	 */
 	public AmericanRoulette() {
 		setCaselles();
-	}//Tancament del constructor
+	}// Tancament del constructor
 
 	/**
-	 * Setter de Caselles.
+	 * Sets caselles.
+	 *
+	 * @param caselles
 	 */
 	public void setCaselles(String[] caselles) {
 		this.num_casella = caselles;
-	}//Tancament del setter
+	}// Tancament del setter
 
 	/**
-	 * Getter de ColorCaselles.
+	 * Gets color caselles.
+	 *
+	 * @return the color caselles
 	 */
 	public Boolean[] getColorCaselles() {
 		return color_caselles;
-	}//Tancament del getter
+	}// Tancament del getter
 
 	/**
-	 * Setter de ColorCaselles.
+	 * Sets color caselles.
+	 *
+	 * @param color caselles
 	 */
 	public void setColorCaselles(Boolean[] color_caselles) {
 		this.color_caselles = color_caselles;
-	}//Tancament del setter
+	}// Tancament del setter
 
 	/**
-	 * Setter de Caselles.
+	 * Sets caselles.
 	 */
 	public void setCaselles() {
 		caselles = new ArrayList<model.struct.roulette.Casella>();
 		for (int i = 0; i < totalNumbers; i++) {
 			caselles.add(new model.struct.roulette.Casella(Integer.parseInt(num_casella[i]), color_caselles[i]));
 		}
-	}//Tancament del setter
-	
+	}// Tancament del setter
+
 	/**
-	 * Getter de Caselles.
+	 * Gets caselles.
+	 *
+	 * @return caselles
 	 */
 	public ArrayList<Casella> getCaselles() {
 		return caselles;
-	}//Tancament del getter
-}//Tancament de la classe
+	}// Tancament del getter
+
+	/**
+	 * (ObtÈ el color d'una casella determinada.)
+	 * 
+	 * @param num
+	 * @return color
+	 */
+	public static Color getColorCasella(int num){
+		int index = 0;
+		for(index = 0; caselles.get(index).getNumero() != num && index < caselles.size(); index++);
+		return caselles.get(index).getColor(true);
+	}
+}// Tancament de la classe

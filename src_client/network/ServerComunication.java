@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package network;
 
 import java.io.IOException;
@@ -11,22 +22,10 @@ import controller.ConfigurationFile;
 import controller.Manager;
 
 /**
- * 
- * <p>
- * <b> Classe: ServerComunication </b> <br/>
- * </p>
- * Classe encarregada d'establir i gestionar la comunicació amb el servidor
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class ServerComunication.
+ * (Gestiona les lectures i escriptures amb el servidor.)
  */
-public class ServerComunication{
+public class ServerComunication {
 	private Socket sServer;
 	private ObjectOutputStream objectOut;
 	private ObjectInputStream objectIn;
@@ -34,48 +33,64 @@ public class ServerComunication{
 	private ConfigurationFile cf;
 	private Segment s;
 
+	/**
+	 * Instantiates a new server comunication.
+	 *
+	 * @param manager
+	 * @param cf
+	 */
 	public ServerComunication(Manager manager, ConfigurationFile cf) {
 		this.setManager(manager);
 		this.cf = cf;
 	}
+
 	/**
-	 * Estableix connexió amb el servidor
+	 * (Obre la connexió amb el servidor.)
+	 *
+	 * @param led
 	 * @throws IOException
 	 */
 	public void establirConnexio(boolean led) throws IOException {
-		if (led){
-			//System.out.println("conectant a:"+ cf.getIP_SDB()+":"+cf.getPORT_LED());
+		if (led) {
+			// System.out.println("conectant a:"+
+			// cf.getIP_SDB()+":"+cf.getPORT_LED());
 			sServer = new Socket(cf.getIP_SDB(), cf.getPORT_LED());
-		
-		}
-		else	sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
+
+		} else
+			sServer = new Socket(cf.getIP_SDB(), cf.getPORT_Client());
 		objectOut = new ObjectOutputStream(sServer.getOutputStream());
 		objectIn = new ObjectInputStream(sServer.getInputStream());
 	}
-	
+
 	/**
-	 * Obte objecte llegit
-	 * @return objectIn.readObject()
+	 * (Llegeix la trama del servidor.)
+	 *
+	 * @return segment
 	 */
 	public Segment obtenirTrama() {
 		try {
 			return (Segment) objectIn.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			//System.out.println("UI!");
-			//e.printStackTrace();
+			// System.out.println("UI!");
+			// e.printStackTrace();
 		}
 		return null;
 	}
 
 	/**
-	 * envia un objecte
+	 * (Escriu la trama al servidor.)
+	 *
+	 * @param s
+	 * @throws IOException
 	 */
 	public void enviarTrama(Segment s) throws IOException {
 		objectOut.writeObject(s);
 	}
 
 	/**
-	 * Tanca la connexió amb el servidor
+	 * (Tanca la connexió amb el servidor.)
+	 *
+	 * @param led
 	 * @throws IOException
 	 */
 	public void tancarConnexio(boolean led) throws IOException {
@@ -83,32 +98,62 @@ public class ServerComunication{
 		sServer.close();
 	}
 
+	/**
+	 * Gets socket.
+	 *
+	 * @return socket
+	 */
 	public Socket getSocket() {
 		return sServer;
 	}
 
+	/**
+	 * (Obté la instrucció retornant el nom de la classe.)
+	 *
+	 * @return string
+	 */
 	public String obtenirInstruccio() {
 		try {
 			s = (Segment) objectIn.readObject();
 			return (s.getClass().getSimpleName());
 		} catch (ClassNotFoundException | IOException e) {
-	
+
 		}
 		return null;
 	}
 
+	/**
+	 * Gets manager.
+	 *
+	 * @return manager
+	 */
 	public Manager getManager() {
 		return manager;
 	}
 
+	/**
+	 * Sets manager.
+	 *
+	 * @param manager
+	 */
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
 
+	/**
+	 * Gets objectIn.
+	 *
+	 * @return objectIn
+	 */
 	public ObjectInputStream getObjectIn() {
 		return objectIn;
 	}
 
+	/**
+	 * Gets objectOut.
+	 *
+	 * @return objectOut
+	 */
 	public ObjectOutputStream getObjectOut() {
 		return objectOut;
 	}

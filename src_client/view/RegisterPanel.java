@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package view;
 
 import java.awt.BorderLayout;
@@ -24,24 +35,11 @@ import com.github.lgooddatepicker.datepicker.DatePicker;
 import com.github.lgooddatepicker.datepicker.DatePickerSettings;
 
 import controller.Constants;
-import controller.RegisterController;
+import controller.listeners.RegisterController;
+
 /**
- * 
- * <p>
- * <b> Classe: RegisterPanel </b> <br/>
- * </p>
- * 
- * Panell lateral de dintre del panell de logueig, contÈ la informaciÛ del registre
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaci√≥ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class RegisterPanel.
+ * (Panell lateral pertanyent al registre d'usuaris.)
  */
 public class RegisterPanel extends BaseJPanel {
 	private final String main = "Don't have an account? Join us!";
@@ -77,9 +75,12 @@ public class RegisterPanel extends BaseJPanel {
 	private JButton guestButton = new JButton(guest);
 	private JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
 	private DatePicker datePicker;
-	
+
 	private RegisterController controller;
 
+	/**
+	 * Instantiates a new register panel.
+	 */
 	public RegisterPanel() {
 		controller = new RegisterController(this);
 		initElements();
@@ -188,7 +189,7 @@ public class RegisterPanel extends BaseJPanel {
 		c.gridx = 1;
 		c.gridy = 6;
 		mainPanel.add(passwordField2, c);
-		
+
 		// Dona valors als botons male - female
 		maleButton.setOpaque(false);
 		maleButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -202,7 +203,7 @@ public class RegisterPanel extends BaseJPanel {
 		femaleButton.setForeground(Color.BLACK);
 		bG.add(femaleButton);
 		buttonsPanel.add(femaleButton);
-		
+
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 7;
@@ -239,34 +240,74 @@ public class RegisterPanel extends BaseJPanel {
 		add(mainPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Gets name.
+	 *
+	 * @return name
+	 */
 	public String getName() {
 		return nameField.getText();
 	}
 
+	/**
+	 * Gets surname.
+	 *
+	 * @return surname
+	 */
 	public String getSurname() {
 		return surnameField.getText();
 	}
 
+	/**
+	 * Gets sex.
+	 *
+	 * @return sex
+	 */
 	public Boolean getSex() {
 		return maleButton.isSelected();
 	}
 
+	/**
+	 * Checks if button 'female' is on.
+	 *
+	 * @return boolean
+	 */
 	public Boolean isFemaleButtonOn() {
 		return femaleButton.isSelected();
 	}
 
+	/**
+	 * Gets mail.
+	 *
+	 * @return mail
+	 */
 	public String getMail() {
 		return mailField.getText();
 	}
 
+	/**
+	 * Gets password.
+	 *
+	 * @return password
+	 */
 	public String getPassword() {
 		return String.copyValueOf(passwordField.getPassword());
 	}
 
+	/**
+	 * Gets password 2.
+	 *
+	 * @return password 2
+	 */
 	public String getPassword2() {
 		return String.copyValueOf(passwordField2.getPassword());
 	}
 
+	/**
+	 * Gets birthday.
+	 *
+	 * @return birthday
+	 */
 	public Date getBirthday() {
 		Instant instant = datePicker.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
 		return Date.from(instant);
@@ -282,38 +323,75 @@ public class RegisterPanel extends BaseJPanel {
 		surnameField.addKeyListener(controller);
 		mailField.addKeyListener(controller);
 	}
-	
-	public void setFieldBackground(JTextField jtf, boolean wrong){
-		if(wrong){
+
+	/**
+	 * Sets field background.
+	 * (Coloreja el fons dels camps.)
+	 *
+	 * @param jtf
+	 * @param wrong
+	 */
+	public void setFieldBackground(JTextField jtf, boolean wrong) {
+		if (wrong) {
 			jtf.setBackground(Constants.coolRed);
 			jtf.setForeground(Color.WHITE);
-		}else{
+		} else {
 			jtf.setBackground(Color.WHITE);
 			jtf.setForeground(Color.BLACK);
 		}
 	}
-	
-	public void enableRegisterButton(boolean b){
+
+	/**
+	 * Enable register button.
+	 *
+	 * @param b
+	 */
+	public void enableRegisterButton(boolean b) {
 		registerButton.setEnabled(b);
 	}
 
+	/**
+	 * Gets name field.
+	 *
+	 * @return name field
+	 */
 	public JTextField getNameField() {
 		return nameField;
 	}
 
+	/**
+	 * Gets surname field.
+	 *
+	 * @return surname field
+	 */
 	public JTextField getSurnameField() {
 		return surnameField;
 	}
 
+	/**
+	 * Gets mail field.
+	 *
+	 * @return mail field
+	 */
 	public JTextField getMailField() {
 		return mailField;
 	}
 
+	/**
+	 * Gets password field.
+	 *
+	 * @return password field
+	 */
 	public JPasswordField getPasswordField() {
 		return passwordField;
 	}
 
+	/**
+	 * Gets password field 2.
+	 *
+	 * @return password field 2
+	 */
 	public JPasswordField getPasswordField2() {
 		return passwordField2;
-	}	
+	}
 }

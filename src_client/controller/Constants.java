@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package controller;
 
 import java.awt.Color;
@@ -7,22 +18,8 @@ import java.awt.Font;
 import model.struct.user.User;
 
 /**
- * 
- * <p>
- * <b> Classe: Constants </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Valés - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubió - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programació orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class Constants.
  */
-
 public class Constants {
 	public static final String LOGIN_VIEW_NAME = "LoginWindow";
 	public static final String MAIN_VIEW_NAME = "MainWindow";
@@ -32,7 +29,7 @@ public class Constants {
 	public static final String GRAPHICS_VIEW_NAME = "statistics.Graphics";
 	public static final String BJ_VIEW_NAME = "blackjack.BlackjackView";
 	public static final String R_VIEW_NAME = "roulette.RouletteView";
-	public static final String H_VIEW_NAME = "cavalls.HorsesView";
+	public static final String H_VIEW_NAME = "horses.HorsesView";
 	public static final String CASH_EVO_VIEW_NAME = "cashevo.CashEvoView";
 	public static final String PROJECT_NAME = "LS Casino";
 	public static final String BET_LABEL = "Bets...";

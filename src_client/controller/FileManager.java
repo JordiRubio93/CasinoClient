@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package controller;
 
 import java.io.BufferedReader;
@@ -31,24 +42,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 /**
- * 
- * <p>
- * <b> Classe: FileManager </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class FileManager.
  */
 public class FileManager {
-	
-	//Atributs de la classe
+
+	// Atributs de la classe
 	private LinkedList<HorseData> hdList;
 	private final String[] param = { "IP_SBD", "PORT_Client", "PORT_LED" };
 	private final String user = "client.dat";
@@ -59,20 +57,28 @@ public class FileManager {
 	private ConfigurationFile cf = null;
 
 	/**
-	 * Constructor per la grafica de la ruleta.
+	 * Instantiates a new file manager.
 	 */
 	public FileManager() {
 		gson = new GsonBuilder().create();
-	}//Tancament del metode
+	}// Tancament del metode
 
+	/**
+	 * (Obté el fitxer de configuració i el valida.)
+	 *
+	 * @param rute
+	 * @return configurationFile
+	 * @throws FileException
+	 */
 	public ConfigurationFile obtenirConfiguracio(String rute) throws FileException {
 		validarConfiguracio(cf = carregarConfiguracio(rute));
 		return cf;
 	}
 
 	/**
-	 * Carrega les dades de l'usuari recordat al fitxer.
-	 * @return objecte LoginInfo
+	 * (Carrega les dades d'inici de sessió de l'usuari, del "Remember".)
+	 *
+	 * @return loginInfo
 	 */
 	public LoginInfo carregarDades() {
 		// Obtenemos los datos!
@@ -96,12 +102,18 @@ public class FileManager {
 				if (fileIn != null)
 					fileIn.close();
 			} catch (IOException e) {
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 		return objecte;
 	}
 
+	/**
+	 * (Valida el fitxer de configuració.)
+	 *
+	 * @param cf
+	 * @throws FileException
+	 */
 	private void validarConfiguracio(ConfigurationFile cf) throws FileException {
 		cf.isValidPort();
 		try {
@@ -109,11 +121,18 @@ public class FileManager {
 			InetAddress address = InetAddress.getByName(url.getHost());
 			cf.setIP_SDB(address.getHostAddress());
 		} catch (UnknownHostException | MalformedURLException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			cf.isValidIPV4();
 		}
 	}
-	
+
+	/**
+	 * (Carrega el fitxer de configuració.)
+	 *
+	 * @param rute
+	 * @return configurationFile
+	 * @throws FileExceptionç
+	 */
 	public ConfigurationFile carregarConfiguracio(String rute) throws FileException {
 		try {
 			br = new BufferedReader(new FileReader(rute));
@@ -126,15 +145,18 @@ public class FileManager {
 			try {
 				br.close();
 			} catch (IOException e) {
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
-		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt(), (objecte).get(param[2]).getAsInt());
+		return new ConfigurationFile((objecte).get(param[0]).getAsString(), (objecte).get(param[1]).getAsInt(),
+				(objecte).get(param[2]).getAsInt());
 	}
 
 	/**
-	 * Guarda les dades de l'usuari que decideix que el programa recordi.
-	 * @param li (Objecte LoginInfo)
+	 * (Guarda la informació d'inici de l'usuari.)
+	 *
+	 * @param li
+	 *            the li
 	 */
 	public void saveLoginInfo(LoginInfo li) {
 		if (!li.getEmail().equals("")) {
@@ -145,7 +167,7 @@ public class FileManager {
 				out = new ObjectOutputStream(fileOut);
 				serialize(li.toString(), out);
 			} catch (IOException e) {
-				//e.printStackTrace();
+				// e.printStackTrace();
 			} finally {
 				try {
 					if (out != null)
@@ -153,27 +175,34 @@ public class FileManager {
 					if (fileOut != null)
 						fileOut.close();
 				} catch (IOException e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 		}
 	}
 
 	/**
-	 * Esborra el logueig de l'usuari de la memòria quan aquest decideix fer log out.
+	 * (Elimina el fitxer 'client.dat', que conté la informació d'inici de l'usuari.)
 	 */
 	public void deleteUserData() {
 		try {
 			File file = new File(user);
-			if (file.delete()){
-				////System.out.println(file.getName() + " is deleted!");
-			}else{}
-				////System.out.println("Delete operation is failed.");
+			if (file.delete()) {
+				//// System.out.println(file.getName() + " is deleted!");
+			} else {
+			}
+			//// System.out.println("Delete operation is failed.");
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Serialitza el fitxer.
+	 *
+	 * @param str
+	 * @param outputStream
+	 */
 	public void serialize(String str, OutputStream outputStream) {
 		try {
 			OutputStream wrappedOS = Base64.getEncoder().wrap(outputStream);
@@ -182,6 +211,12 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Deserialitza el fitxer.
+	 *
+	 * @param inputStream
+	 * @return string
+	 */
 	public String deserialize(InputStream inputStream) {
 		try {
 
@@ -202,10 +237,12 @@ public class FileManager {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Metode que retorna una LinkedList de HorseData.
-	 * @return hdList (Llista de HorseData)
+	 * Gets horsesList.
+	 * (Obté la llista de cavalls del fitxer 'horses.txt'.)
+	 *
+	 * @return horsesList
 	 */
 	public LinkedList<HorseData> getHorsesList() {
 		JsonReader reader = null;
@@ -213,7 +250,7 @@ public class FileManager {
 		try {
 			reader = new JsonReader(new FileReader(horses));
 		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		JsonArray array = gson.fromJson(reader, JsonArray.class);
 
@@ -221,16 +258,22 @@ public class FileManager {
 		for (JsonElement element : array) {
 			String name = element.getAsJsonObject().get("name").getAsString();
 			String color = element.getAsJsonObject().get("color").getAsString();
-			HorseData hd = new HorseData(name, color, index); 
-			// TODO treure  aixo de aqui
+			HorseData hd = new HorseData(name, color, index);
+			// TODO treure aixo de aqui
 			hdList.add(hd);
 			index++;
 		}
 		return hdList;
-	}//Tancament del metode
+	}// Tancament del metode
 
+	/**
+	 * Gets list.
+	 *
+	 * @return list
+	 */
 	public LinkedList<HorseData> getList() {
-		if (hdList==null) hdList = getHorsesList();
+		if (hdList == null)
+			hdList = getHorsesList();
 		return hdList;
 	}
 }

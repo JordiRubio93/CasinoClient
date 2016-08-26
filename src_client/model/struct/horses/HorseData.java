@@ -1,57 +1,112 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package model.struct.horses;
 
 import java.io.Serializable;
 
+
 /**
- * @version 1.0 19/05/2016
- * @author  Pol Valés - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marín - ls31308@salleurl.edu <br/>
- * 			Jordi Rubió - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programació orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
+ * The Class HorseData.
+ * (Conté les dades de cada cavall.)
  */
-public class HorseData implements Serializable{
+public class HorseData implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String color;
 	private int dorsal;
 	private int segons;
-	
+
 	/**
-	 * Constructor
-	 * @param name: nom identificador del cavall
-	 * @param color: color que correspondrà al sprite
-	 * @param dorsal: un altre identificador únic
+	 * Instantiates a new horse data.
+	 *
+	 * @param name
+	 * @param color
+	 * @param dorsal
 	 */
 	public HorseData(String name, String color, int dorsal) {
 		this.name = name;
 		this.color = color;
 		this.dorsal = dorsal;
 	}
-	
+
+	/**
+	 * Gets name.
+	 *
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
+
+	/**
+	 * Sets name.
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * Gets color.
+	 *
+	 * @return color
+	 */
 	public String getColor() {
 		return color;
 	}
+
+	/**
+	 * Sets color.
+	 *
+	 * @param color
+	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
+
+	/**
+	 * Gets dorsal.
+	 *
+	 * @return dorsal
+	 */
 	public int getDorsal() {
 		return dorsal;
 	}
+
+	/**
+	 * Sets dorsal.
+	 *
+	 * @param dorsal
+	 */
 	public void setDorsal(int dorsal) {
 		this.dorsal = dorsal;
 	}
+
+	/**
+	 * Gets segons.
+	 *
+	 * @return segons
+	 */
 	public int getSegons() {
 		return segons;
 	}
+
+	/**
+	 * Sets segons.
+	 * (Indica la velocitat del cavall.)
+	 *
+	 * @param segonsç
+	 */
 	public void setSegons(int segons) {
 		this.segons = segons;
 	}

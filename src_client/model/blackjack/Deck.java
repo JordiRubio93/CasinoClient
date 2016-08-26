@@ -1,58 +1,54 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package model.blackjack;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * 
- * <p>
- * <b> Classe: Deck </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Valés - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubió - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programació orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class Deck.
+ * (Part l�gica referent a la baralla de cartes del blackjack.)
  */
-
 public class Deck {
 	private Integer[] deck;
 	private int cardPointer;
-	
+
 	/**
-	 * Constructor de la classe deck, on es crea un array amb les 52 cartes.
+	 * Instantiates a new deck.
 	 */
-	
 	public Deck() {
 		deck = new Integer[52];
 		for (int i = 0; i < deck.length; i++) {
 			deck[i] = i + 1;
-		}	
+		}
 		cardPointer = 0;
 	}
-	
+
 	/**
-	 * Funcio que s'encarrega de barallar la baralla aleatoriament.
+	 * Shuffle deck.
 	 */
-	
 	public void shuffleDeck() {
 		Collections.shuffle(Arrays.asList(deck));
 		cardPointer = 0;
-	} 
-	
+	}
+
 	/**
-	 * Funcio que s'encarrega de treure la seguent carta de la baralla.
-	 * @return Retorna el numero identificatiu de la seguent carta.
+	 * Next card.
+	 *
+	 * @return int
 	 */
-	
 	public int nextCard() {
 		int cardNumber = deck[cardPointer];
-		cardPointer ++;
+		cardPointer++;
 		return cardNumber;
 	}
 }

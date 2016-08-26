@@ -1,14 +1,12 @@
 /**
- * Panell de la GUI referent als gr‡fics de taula
- *
- * @version 1.0 19/05/2016
- * @author  Pol Val√©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubi√≥ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaci√≥ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
  */
 
 package view.statistics;
@@ -28,7 +26,11 @@ import view.BaseJPanel;
 import view.Tapet;
 import controller.Constants;
 
-public class CashRankingWindow extends BaseJPanel{
+/**
+ * The Class CashRankingWindow.
+ * (Panell que mostra la taula amb el r‡nquing de monedes.)
+ */
+public class CashRankingWindow extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton backButton = new JButton("Back");
 	private JPanel panelTop = new JPanel();
@@ -36,90 +38,124 @@ public class CashRankingWindow extends BaseJPanel{
 	private JTable table;
 	private JScrollPane scrollPane;
 	private Tapet panel;
-	
+
 	private ArrayList<Object[]> data = new ArrayList<Object[]>();
-	
-	public CashRankingWindow(){
+
+	/**
+	 * Instantiates a new cash ranking window.
+	 */
+	public CashRankingWindow() {
 		super();
 		initElements();
 	}
-	
-	public CashRankingWindow(ArrayList<Object[]> data){
+
+	/**
+	 * Instantiates a new cash ranking window.
+	 *
+	 * @param data
+	 */
+	public CashRankingWindow(ArrayList<Object[]> data) {
 		this.data = data;
 		initElements();
 	}
-	
-	public JScrollPane getSPane(){
+
+	/**
+	 * Gets scroll pane.
+	 *
+	 * @return scroll pane
+	 */
+	public JScrollPane getSPane() {
 		return scrollPane;
 	}
-	
+
+	/**
+	 * Afegeix els controladors/listeners necessaris: el de botons i el de selecciÛ de files.)
+	 */
 	@Override
 	public void registerController() {
 		backButton.addActionListener(getManager().getController());
 		table.getSelectionModel().addListSelectionListener(getManager().getRowListener());
 	}
 
-	public void setData(ArrayList<Object[]> data){
+	/**
+	 * Sets data.
+	 *
+	 * @param data
+	 */
+	public void setData(ArrayList<Object[]> data) {
 		this.data = data;
 		initTable();
 		configTable();
 		repaint();
 	}
-	
+
 	@Override
 	protected void initElements() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		int w = (int) dim.getWidth();
 		int h = (int) dim.getHeight();
-		
+
 		setLayout(new BorderLayout());
-		
+
 		backButton.setFont(Constants.boldFont);
 		backButton.setBackground(Constants.coolGreen);
 		backButton.setContentAreaFilled(true);
 		backButton.setBorderPainted(false);
 		backButton.putClientProperty("action", "Back Cash Evo");
-		backButton.setPreferredSize(new Dimension((int)(width * 0.18), (int)(height * 0.06)));
-		
+		backButton.setPreferredSize(new Dimension((int) (width * 0.18), (int) (height * 0.06)));
+
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(backButton, 0);
 
 		add(panelTop, BorderLayout.NORTH);
-		
+
 		table = new JTable();
 		scrollPane = new JScrollPane(table);
-		
+
 		panel = new Tapet(w, h, Constants.PATH_WALL);
 		panel.setLayout(new BorderLayout());
 		panel.add(scrollPane, BorderLayout.NORTH);
-		
+
 		add(panel, BorderLayout.CENTER);
 	}
-	
-	public void initTable(){
+
+	/**
+	 * Initializes table.
+	 */
+	public void initTable() {
 		model = new MyTableModel(Constants.TABLE_COLUMN_NAMES, data);
-		
+
 		table.setModel(model);
 	}
-	
-	public void configTable (){
+
+	/**
+	 * Configures table.
+	 */
+	public void configTable() {
 		table.getTableHeader().setFont(Constants.boldFont);
 		table.setFont(Constants.plainFont);
-		table.setRowHeight(30);		
-		
+		table.setRowHeight(30);
+
 		ColorRenderer renderer = new ColorRenderer();
-		
-		for(int i = 0; i < data.size(); i++){
-			for(int j = 0; j < 3; j++){
+
+		for (int i = 0; i < data.size(); i++) {
+			for (int j = 0; j < 3; j++) {
 				table.setDefaultRenderer(Object.class, renderer);
 			}
 		}
-		
+
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 	}
-	
-	public int getSelectedData(){
-		if(table.getSelectionModel().getValueIsAdjusting()) return table.getSelectedRow();
-		else return -1;
+
+	/**
+	 * Gets selected data.
+	 *
+	 * @return selected data
+	 */
+	public int getSelectedData() {
+		if (table.getSelectionModel().getValueIsAdjusting())
+			return table.getSelectedRow();
+		else
+			return -1;
 	}
 }

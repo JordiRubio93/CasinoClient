@@ -1,3 +1,8 @@
+
+
+
+
+
 package view;
 
 import java.awt.BorderLayout;
@@ -18,23 +23,11 @@ import javax.swing.JPanel;
 
 import model.struct.user.User;
 import controller.Constants;
+
 /**
- * 
- * <p>
- * <b> Classe: ConfigPanel </b> <br/>
- * </p>
- * 
- * Panell de configuració d'usuari, trobat com a panell lateral de la finestra principal
- * 
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class ConfigPanel.
+ * (A part de contenir la informació necessària d'usuari en la part superior, regula les accions que pot dur a terme:
+ * canviar la contrasenya, afegir monedes al seu compte, veure la seva evolució de saldo i, finalment, fer logout.)
  */
 public class ConfigPanel extends BaseJPanel {
 	private static String changePassword = "Change password";
@@ -42,7 +35,7 @@ public class ConfigPanel extends BaseJPanel {
 	private static String seeEvo = "See cash evolution";
 	private static String logOut = "Log Out";
 	private static final long serialVersionUID = 1L;
-	
+
 	private JButton changePasswordButton = new JButton(changePassword);
 	private JButton addMoneyButton = new JButton(addMoney);
 	private JButton seeEvoButton = new JButton(seeEvo);
@@ -51,19 +44,25 @@ public class ConfigPanel extends BaseJPanel {
 	private JPanel backButtonPanel = new JPanel();
 	private JPanel dataPanel;
 	private JLabel jlName, jlCash, jlLastLogin;
-	
+
 	private boolean guest;
-	
-	public ConfigPanel(){
+
+	/**
+	 * Instantiates a new config panel.
+	 */
+	public ConfigPanel() {
 		initElements();
 	}
-	
-	protected void initElements(){	
+
+	/**
+	 * (Inicialitza els elements del panell lateral.)
+	 */
+	protected void initElements() {
 		setLayout(new GridBagLayout());
 		setBackground(Constants.coolDarkGray);
-		
+
 		BufferedImage img1 = null;
-		
+
 		try {
 			img1 = ImageIO.read(new File("Resources/rightArrow.png"));
 		} catch (IOException e) {
@@ -72,19 +71,19 @@ public class ConfigPanel extends BaseJPanel {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
-		dataPanel = new JPanel(new GridLayout(3,1));
+
+		dataPanel = new JPanel(new GridLayout(3, 1));
 		jlName = new JLabel();
 		jlCash = new JLabel();
 		jlLastLogin = new JLabel();
 		dataPanel.add(jlName);
 		dataPanel.add(jlCash);
 		dataPanel.add(jlLastLogin);
-		jlName.setForeground(new Color(245,245,245));
-		jlCash.setForeground(new Color(220,220,220));
-		jlLastLogin.setForeground(new Color(220,220,220));
+		jlName.setForeground(new Color(245, 245, 245));
+		jlCash.setForeground(new Color(220, 220, 220));
+		jlLastLogin.setForeground(new Color(220, 220, 220));
 		jlName.setFont(Constants.nameFont);
 		jlCash.setFont(Constants.cashFont);
 		jlLastLogin.setFont(Constants.lastLoginFont);
@@ -92,48 +91,48 @@ public class ConfigPanel extends BaseJPanel {
 		jlCash.setHorizontalAlignment(JLabel.CENTER);
 		jlLastLogin.setHorizontalAlignment(JLabel.CENTER);
 		dataPanel.setBackground(Constants.coolDarkGray);
-		
+
 		backButton = new JButton(new ImageIcon(img1));
 		backButton.setContentAreaFilled(false);
 		backButton.setBorderPainted(false);
 		backButton.putClientProperty("action", "Minimize Panel");
-		
+
 		backButtonPanel.setLayout(new BorderLayout());
 		backButtonPanel.setBackground(Color.BLACK);
 		backButtonPanel.add(backButton, BorderLayout.WEST);
-		
+
 		changePasswordButton.setFont(Constants.boldFont);
 		changePasswordButton.setForeground(Color.WHITE);
 		changePasswordButton.setBackground(Constants.coolGray);
 		changePasswordButton.setContentAreaFilled(true);
 		changePasswordButton.setBorderPainted(false);
 		changePasswordButton.putClientProperty("action", "Change Password");
-		changePasswordButton.setPreferredSize(new Dimension((int)(width * 0.2), (int)(height * 0.06)));
-		
+		changePasswordButton.setPreferredSize(new Dimension((int) (width * 0.2), (int) (height * 0.06)));
+
 		addMoneyButton.setFont(Constants.boldFont);
 		addMoneyButton.setForeground(Color.WHITE);
 		addMoneyButton.setBackground(Constants.coolGray);
 		addMoneyButton.setContentAreaFilled(true);
 		addMoneyButton.setBorderPainted(false);
 		addMoneyButton.putClientProperty("action", "Add Money");
-		addMoneyButton.setPreferredSize(new Dimension((int)(width * 0.2), (int)(height * 0.06)));
-		
+		addMoneyButton.setPreferredSize(new Dimension((int) (width * 0.2), (int) (height * 0.06)));
+
 		seeEvoButton.setFont(Constants.boldFont);
 		seeEvoButton.setForeground(Color.WHITE);
 		seeEvoButton.setBackground(Constants.coolGray);
 		seeEvoButton.setContentAreaFilled(true);
 		seeEvoButton.setBorderPainted(false);
 		seeEvoButton.putClientProperty("action", "User Evo");
-		seeEvoButton.setPreferredSize(new Dimension((int)(width * 0.2), (int)(height * 0.06)));
-		
+		seeEvoButton.setPreferredSize(new Dimension((int) (width * 0.2), (int) (height * 0.06)));
+
 		logOutButton.setFont(Constants.boldFont);
 		logOutButton.setForeground(Color.WHITE);
 		logOutButton.setBackground(Constants.coolGreen);
 		logOutButton.setContentAreaFilled(true);
 		logOutButton.setBorderPainted(false);
 		logOutButton.putClientProperty("action", "Log Out");
-		logOutButton.setPreferredSize(new Dimension((int)(width * 0.2), (int)(height * 0.06)));
-		
+		logOutButton.setPreferredSize(new Dimension((int) (width * 0.2), (int) (height * 0.06)));
+
 		// Crea constraint
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -157,34 +156,68 @@ public class ConfigPanel extends BaseJPanel {
 		c.gridx = 1;
 		this.add(logOutButton, c);
 	}
-	
-	public void registerController(){
+
+	/**
+	 * (Agrega listeners.)
+	 */
+	public void registerController() {
 		changePasswordButton.addActionListener(getManager().getController());
 		addMoneyButton.addActionListener(getManager().getController());
 		seeEvoButton.addActionListener(getManager().getController());
 		logOutButton.addActionListener(getManager().getController());
 		backButton.addActionListener(getManager().getController());
 	}
-	
-	public void setGuest(boolean guest){
-		if(guest) setButtonsEnabled(false);
+
+	/**
+	 * Sets guest.
+	 *
+	 * @param guest
+	 */
+	public void setGuest(boolean guest) {
+		if (guest)
+			setButtonsEnabled(false);
 	}
-	
-	public void setButtonsEnabled(boolean enabled){
+
+	/**
+	 * Sets buttons enabled.
+	 * (Habilita o inhabilita alguns botons del panell.)
+	 *
+	 * @param enabled
+	 */
+	public void setButtonsEnabled(boolean enabled) {
 		changePasswordButton.setEnabled(enabled);
 		addMoneyButton.setEnabled(enabled);
 		seeEvoButton.setEnabled(enabled);
 	}
-	
-	public void setLabels(String name, String cash, String lastLogin){
+
+	/**
+	 * Sets labels.
+	 * (Col·loca valors a les etiquetes d'informació d'usuari: el nom, el saldo i la data de l'últim login, per assumptes de seguretat.)
+	 *
+	 * @param name
+	 * @param cash
+	 * @param lastLogin
+	 */
+	public void setLabels(String name, String cash, String lastLogin) {
 		jlName.setText(name);
 		jlCash.setText(cash + " €");
-		if(!guest) jlLastLogin.setText("Last login - " + lastLogin);
+		if (!guest)
+			jlLastLogin.setText("Last login - " + lastLogin);
 	}
-	
-	public void setLabels(User u, boolean guest){
+
+	/**
+	 * Sets labels.
+	 * (Col·loca valors a les etiquetes d'informació d'usuari: el nom, el saldo i la data de l'últim login, per assumptes de seguretat.)
+	 *
+	 * @param u
+	 * @param guest
+	 */
+	public void setLabels(User u, boolean guest) {
 		this.guest = guest;
-		if(guest) this.setLabels("Guest", String.valueOf(u.getCash()), "");
-		else this.setLabels(u.getName() + " " + u.getSurname(), String.valueOf(u.getCash()), u.getLastLogin().toString());
+		if (guest)
+			this.setLabels("Guest", String.valueOf(u.getCash()), "");
+		else
+			this.setLabels(u.getName() + " " + u.getSurname(), String.valueOf(u.getCash()),
+					u.getLastLogin().toString());
 	}
 }

@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package view.statistics;
 
 import java.awt.Color;
@@ -21,16 +32,9 @@ import model.Utilities;
 import controller.Constants;
 
 /**
- * @version 1.0 19/05/2016
- * @author Pol ValÃ©s - ls30599@salleurl.edu <br/>
- *         Diego Bellino - ls30741@salleurl.edu <br/>
- *         Enric Marin - ls31308@salleurl.edu <br/>
- *         Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- *         David Estepa - ls30622@salleurl.edu <br/>
- *         Disseny i programaciÃ³ orientats a objectes. <br/>
- *         La Salle - Universitat Ramon Llull. <br/>
+ * The Class BarChart.
+ * (Representa el gràfic de barres.)
  */
-
 public class BarChart extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 
@@ -76,8 +80,8 @@ public class BarChart extends JPanel implements Runnable {
 	private Sleeper sleep;
 
 	/**
-	 * Constructor
-	 * 
+	 * Instantiates a new bar chart.
+	 *
 	 * @param bars
 	 * @param yAxis
 	 * @param game
@@ -92,7 +96,6 @@ public class BarChart extends JPanel implements Runnable {
 		width = (int) r.getWidth();
 		height = (int) r.getHeight() - 100;
 
-
 		title = title + " - " + game;
 
 		currentBarHeight = new int[5];
@@ -101,6 +104,7 @@ public class BarChart extends JPanel implements Runnable {
 			y[i] = topOffset + height - (topOffset + bottomOffset);
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
 		try {
 			File fitxer = new File(Constants.BG);
@@ -127,9 +131,9 @@ public class BarChart extends JPanel implements Runnable {
 		g.drawLine(leftOffset, heightChart + topOffset, leftOffset + widthChart, heightChart + topOffset);
 
 		if (this.yAxis.getPrimaryIncrements() != 0)
-			drawTick(heightChart, 100, g, Color.WHITE, majorTickWidth);		
-		//Dibuixa allò corresponent
-		
+			drawTick(heightChart, 100, g, Color.WHITE, majorTickWidth);
+		// Dibuixa allò corresponent
+
 		drawYLabels(heightChart, this.yAxis.getPrimaryIncrements(), g, Color.WHITE);
 
 		drawBars(heightChart, widthChart, g);
@@ -138,20 +142,20 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Dibuixa les "ralletes" per l'eix de les Y's
+	 * Draw ticks.
+	 *
 	 * @param heightChart
 	 * @param increment
 	 * @param g
 	 * @param c
 	 * @param tickWidth
 	 */
-	
 	private void drawTick(int heightChart, int increment, Graphics g, Color c, int tickWidth) {
 		int incrementNo = 11;
 
 		double factor = (heightChart - 50) / highestValue(bars);
-		
-		int incrementInPixel = (int) ((highestValue(bars)/10) * factor);
+
+		int incrementInPixel = (int) ((highestValue(bars) / 10) * factor);
 
 		g.setColor(c);
 
@@ -162,20 +166,20 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Dibuixa els valors que apareixen en l'eix Y
+	 * (Dibuixa els valors Y de l'eix d'ordenades.)
+	 *
 	 * @param heightChart
 	 * @param increment
 	 * @param g
 	 * @param c
 	 */
 	private void drawYLabels(int heightChart, int increment, Graphics g, Color c) {
-		//Sempre sortiran 10 labels
+		// Sempre sortiran 10 labels
 		int incrementNo = 11;
 
 		double factor = (heightChart - 50) / highestValue(bars);
-		
 
-		int incrementInPixel = (int) ((highestValue(bars)/10) * factor);
+		int incrementInPixel = (int) ((highestValue(bars) / 10) * factor);
 
 		g.setColor(c);
 		FontMetrics fm = getFontMetrics(yCatFont);
@@ -183,7 +187,7 @@ public class BarChart extends JPanel implements Runnable {
 		for (int i = 0; i < incrementNo; i++) {
 			int fromTop = heightChart + topOffset - (i * incrementInPixel);
 
-			String yLabel = "" + (i * highestValue(bars)/10);
+			String yLabel = "" + (i * highestValue(bars) / 10);
 
 			int widthStr = fm.stringWidth(yLabel);
 			int heightStr = fm.getHeight();
@@ -193,16 +197,17 @@ public class BarChart extends JPanel implements Runnable {
 					fromTop + (heightStr / 2));
 		}
 	}
-	
+
 	/**
-	 * Troba el valor màxim de l'array bars
+	 * (Troba el valor màxim.)
+	 *
 	 * @param bars
-	 * @return el màxim valor de l'array bars
+	 * @return double
 	 */
-	private double highestValue(ArrayList<Bar> bars){
+	private double highestValue(ArrayList<Bar> bars) {
 		double max = 0;
-		for(int i = 0; i < bars.size(); i++){
-			if(bars.get(i).getValue() > max){
+		for (int i = 0; i < bars.size(); i++) {
+			if (bars.get(i).getValue() > max) {
 				max = bars.get(i).getValue();
 			}
 		}
@@ -210,7 +215,8 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Dibuixa les barres. En realitat les inicialitza, ja que les dibuixa amb alçada 0, perquè després creixin
+	 * (Estableix les barres.)
+	 *
 	 * @param heightChart
 	 * @param widthChart
 	 * @param g
@@ -245,6 +251,13 @@ public class BarChart extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * (Dibuixa els noms dels campions del Top 5.)
+	 *
+	 * @param heightChart
+	 * @param widthChart
+	 * @param g
+	 */
 	private void drawLabels(int heightChart, int widthChart, Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 
@@ -265,7 +278,7 @@ public class BarChart extends JPanel implements Runnable {
 		g2d.setFont(xFont);
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		g2d.setFont(titleFont);
 		int titleX = (leftOffset + rightOffset + widthChart) / 2 - titleStringWidth / 2;
 		int titleY = topOffset / 2 + titleStringHeight / 2;
@@ -274,14 +287,14 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Dibuixa les barres animades creixent
+	 * (Redibuixa les barres cada cop que s'obre el panell.)
 	 */
 	public void redrawBars() {
 		int[] scaledBarHeight = new int[5];
 		int heightChart = (height - (topOffset + bottomOffset));
 		sleep = new Sleeper(this, 50);
 
-		//Per cada barra (5 o menys):
+		// Per cada barra (5 o menys):
 		for (int i = 0; i < bars.size() && i < 5; i++) {
 			Bar bar = bars.get(i);
 
@@ -292,7 +305,7 @@ public class BarChart extends JPanel implements Runnable {
 			int amount = 10;
 
 			currentBarHeight[i] = 0;
-			//Fa que creixi:
+			// Fa que creixi:
 			while (currentBarHeight[i] < scaledBarHeight[i] && !sleep.isInterrupted()) {
 				y[i] -= amount;
 				currentBarHeight[i] += amount;
@@ -306,7 +319,7 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Executa la classe com a Runnable per poder pintar les barres correctament
+	 * @see java.lang.Runnable#run()
 	 */
 	@Override
 	public synchronized void run() {
@@ -314,7 +327,7 @@ public class BarChart extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Atura el pintatge de les barres, suprimint tot allò que pugui interferir negativament
+	 * Stop.
 	 */
 	public synchronized void stop() {
 		bars.clear();

@@ -1,4 +1,15 @@
-package controller;
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
+package controller.listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +24,16 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * The Class MyMusic.
+ * (Fil d'execució independent que reprodueix la música de fons.)
+ */
 public class MyMusic implements LineListener, Runnable {
 	private boolean playCompleted;
 	private final static String audioFilePath = "Resources/music.wav";
-
+	
 	/**
-	 * Play a given audio file.
-	 * 
-	 * @param audioFilePath
-	 *            Path of the audio file.
+	 * Play.
 	 */
 	public void play() {
 		File audioFile = new File(audioFilePath);
@@ -68,9 +80,6 @@ public class MyMusic implements LineListener, Runnable {
 
 	}
 
-	/**
-	 * Listens to the START and STOP events of the audio line.
-	 */
 	@Override
 	public void update(LineEvent event) {
 		LineEvent.Type type = event.getType();

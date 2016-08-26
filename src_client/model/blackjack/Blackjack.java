@@ -1,38 +1,35 @@
-package model.blackjack;
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
 
+package model.blackjack;
 
 import model.struct.user.User;
 import controller.Constants;
 
 /**
- * 
- * <p>
- * <b> Classe: Blackjack </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Valés - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubió - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programació orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class Blackjack.
+ * (Part l�gica referent a la partida del blackjack.)
  */
-
 public class Blackjack {
 	private Deck deck;
 	private Player player;
 	private Dealer dealer;
 	private int cardAce;
 	private boolean okBet;
-	
-	/**
-	 * Constructor del model del blackjack
-	 * @param u Serveix per determinar els diners del player.
-	 */
 
+	/**
+	 * Instantiates a new blackjack.
+	 *
+	 * @param u
+	 */
 	public Blackjack(User u) {
 		okBet = false;
 		deck = new Deck();
@@ -40,21 +37,20 @@ public class Blackjack {
 		player = new Player(u.getCash());
 		dealer = new Dealer();
 	}
-	
+
 	/**
-	 * Funcio que mira que l'aposta feta pel player sigui valida.
-	 * @param bet Cantitat apostada pel player.
-	 * @return Retorna un boolea que indica si l'aposta es correcta o no.
+	 * (Diu si pot apostar.)
+	 *
+	 * @param bet
+	 * @return true, if successful
 	 */
-	
 	public boolean canBet(double bet) {
 		return (bet >= Constants.MIN_BET && bet <= getCashAmount());
 	}
-	
+
 	/**
-	 * Metode que s'encarrega de barallar la baralla i posar els comptadors a 0 per començar un nou joc.
+	 * (Inicia una nova partida.)
 	 */
-	
 	public void newGame() {
 		// Barallem la baralla i tornem a posar els comptadors de player i
 		// dealer a 0
@@ -62,78 +58,87 @@ public class Blackjack {
 		player.resetPlayer();
 		dealer.resetDealer();
 	}
-	
+
 	/**
-	 * Funcio encarregada de donar una carta a player o dealer.
-	 * @param destination A qui va dirigida la carta (player(1) o dealer(2)).
-	 * @return Retorna l'identificador de la carta.
+	 * (Entrega una carta.)
+	 *
+	 * @param destination
+	 * @return int
 	 */
-
-
 	public int giveCard(int destination) {
 		int cardValue = deck.nextCard();
 		if (destination == 2) {
 			cardAce = 0;
 		}
 		if (cardValue == 1 || cardValue == 14 || cardValue == 27 || cardValue == 40) {
-			cardAce = cardAce+1;
+			cardAce = cardAce + 1;
 		}
 		if (destination == 1) {
 			player.addValue(cardValue);
 			if (player.getCardCount() > 21 && cardAce != 0) {
 				player.adjustCardCount();
-				cardAce = cardAce-1;
+				cardAce = cardAce - 1;
 			}
 		} else {
 			dealer.addValue(cardValue);
 			if (dealer.getCardCount() > 21 && cardAce != 0) {
 				dealer.adjustCardCount();
-				cardAce = cardAce-1 ;
+				cardAce = cardAce - 1;
 			}
 		}
 		return cardValue;
 	}
-	
+
 	/**
-	 * Funcio que determina si el player/dealer poden demanar mes cartes.
-	 * @param player Destinacio de qui vols determinar si pot rebre mes cartes.
-	 * @param more Boolea que determina si pots demanar mes cartes o no.
-	 * @param num Numero maxim de comptador del player.
-	 * @return Boolea que determina si pot demanar mes cartes o no.
+	 * (Fa un recompte de cartes.)
+	 *
+	 * @param player
+	 * @param more
+	 * @param num
+	 * @return the count
 	 */
-	
 	public boolean getCount(int player, boolean more, int num) {
 		if (more)
 			return ((getCardCount(player) > num));
 		return ((getCardCount(player) < num));
 	}
 
+	/**
+	 * Checks if is ok bet.
+	 *
+	 * @return true, if is ok bet
+	 */
 	public boolean isOkBet() {
 		return okBet;
 	}
 
+	/**
+	 * Sets ok bet.
+	 *
+	 * @param okBet
+	 */
 	public void setOkBet(boolean okBet) {
 		this.okBet = okBet;
 	}
-	
+
 	/**
-	 * Funcio que determina si sumar o restar la cantitat de diners apostada.
-	 * @param win Boolean que determina si el player ha guanyat o ha perdut.
+	 * (Quan el jugador es planta, anuncia la vict�ria o la derrota.)
+	 *
+	 * @param win
 	 */
-	
 	public void stand(boolean win) {
 		if (win)
 			playerWins();
 		else
 			playerLoses();
 	}
-	
-	/**
-	 * Funcio que s'encarrega de retornar el comptador de cartes.
-	 * @param receiver De qui vols el compte.
-	 * @return Valor del comptador de cartes.
-	 */
 
+	/**
+	 * Gets card count.
+	 *
+	 * @param receiver
+	 * @return card count
+	 */
 	public int getCardCount(int receiver) {
 		if (receiver == 1) {
 			return player.getCardCount();
@@ -141,44 +146,51 @@ public class Blackjack {
 			return dealer.getCardCount();
 		}
 	}
-	
+
+	/**
+	 * Gets cash amount.
+	 *
+	 * @return cash amount
+	 */
 	public double getCashAmount() {
 		return player.getCash();
 	}
 
+	/**
+	 * Sets cash amount.
+	 *
+	 * @param cash
+	 */
 	public void setCashAmount(int cash) {
 		player.setCash(cash);
 	}
-	
-	/**
-	 * Afegeix la aposta feta pel player.
-	 * @param bet Cantitat de diners que ha apostat el player.
-	 */
 
+	/**
+	 * Adds bet.
+	 *
+	 * @param bet
+	 */
 	public void addBet(double bet) {
 		player.setBet(bet);
 	}
-	
-	/**
-	 * Resta la cantitat de diners apostada en cas que el player perdi.
-	 */
 
+	/**
+	 * Player loses.
+	 */
 	public void playerLoses() {
 		player.setCash(player.getCash() - player.getBet());
 	}
-	
-	/**
-	 * Suma la cantitat de diners apostada en cas que el player guanyi.
-	 */
 
+	/**
+	 * Player wins.
+	 */
 	public void playerWins() {
 		player.setCash(player.getCash() + player.getBet());
 	}
-	
-	/**
-	 * Suma la cantitat de diners multiplicada per 1.5 en cas que el player tregui blackjack.
-	 */
 
+	/**
+	 * Player blackjack.
+	 */
 	public void playerBlackjack() {
 		player.setCash(player.getCash() + (3 * player.getBet()) / 2);
 	}

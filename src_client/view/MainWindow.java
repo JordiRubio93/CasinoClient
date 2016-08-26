@@ -1,3 +1,14 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package view;
 
 import java.awt.BorderLayout;
@@ -14,28 +25,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Constants;
+
 /**
- * 
- * <p>
- * <b> Classe: MainWindow </b> <br/>
- * </p>
- * 
- * Finestra principal de l'aplicació, conté els botons per als jocs i estadístiques
- * 
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class MainWindow.
  */
 public class MainWindow extends BaseJPanel {
 	private static final long serialVersionUID = 1L;
 	private final String logout = "Log Out";
-	
+
 	private Tapet background;
 	private JPanel panelTop = new JPanel();
 	private JPanel panelCenter = new JPanel();
@@ -46,24 +43,32 @@ public class MainWindow extends BaseJPanel {
 	private JButton configButton = new JButton(logout);
 	private ConfigPanel c;
 	private JLabel led = new JLabel("  •");
-	
-	public MainWindow(ConfigPanel c){
+
+	/**
+	 * Instantiates a new main window.
+	 *
+	 * @param c
+	 */
+	public MainWindow(ConfigPanel c) {
 		initElements();
 		this.c = c;
 		add(c, BorderLayout.EAST);
 		lateralPanel(false);
 	}
-	
-	protected void initElements(){
+
+	/**
+	 * Inicialitza els elements.
+	 */
+	protected void initElements() {
 		setLayout(new BorderLayout());
 		setBackground(Color.GRAY);
-		
+
 		BufferedImage img1 = null;
 		BufferedImage img2 = null;
 		BufferedImage img3 = null;
 		BufferedImage img4 = null;
 		BufferedImage img5 = null;
-		
+
 		try {
 			img1 = ImageIO.read(new File("Resources/roulette.png"));
 			img2 = ImageIO.read(new File("Resources/horses.png"));
@@ -82,54 +87,54 @@ public class MainWindow extends BaseJPanel {
 				e1.printStackTrace();
 			}
 		}
-		
+
 		rouletteButton = new JButton();
-		rouletteButton.setIcon(new ImageIcon (img1));
+		rouletteButton.setIcon(new ImageIcon(img1));
 		rouletteButton.putClientProperty("action", "Play Roulette");
 		rouletteButton.setContentAreaFilled(false);
 		rouletteButton.setBorderPainted(false);
-		
-		horseButton = new JButton(new ImageIcon (img2));
+
+		horseButton = new JButton(new ImageIcon(img2));
 		horseButton.putClientProperty("action", "Play Horses");
 		horseButton.setContentAreaFilled(false);
 		horseButton.setBorderPainted(false);
-		
-		blackjackButton = new JButton(new ImageIcon (img3));
+
+		blackjackButton = new JButton(new ImageIcon(img3));
 		blackjackButton.putClientProperty("action", "Play BlackJack");
 		blackjackButton.setContentAreaFilled(false);
 		blackjackButton.setBorderPainted(false);
-		
-		statisticsButton = new JButton(new ImageIcon (img4));
+
+		statisticsButton = new JButton(new ImageIcon(img4));
 		statisticsButton.putClientProperty("action", "Statistics");
 		statisticsButton.setContentAreaFilled(false);
 		statisticsButton.setBorderPainted(false);
-		
-		configButton = new JButton(new ImageIcon (img5));
+
+		configButton = new JButton(new ImageIcon(img5));
 		configButton.putClientProperty("action", "Configuration");
 		configButton.setContentAreaFilled(false);
 		configButton.setBorderPainted(false);
-		
+
 		panelTop.setLayout(new BorderLayout());
 		panelTop.setBackground(Color.BLACK);
 		panelTop.add(configButton, BorderLayout.EAST);
 		panelTop.add(led, BorderLayout.WEST);
 		led.setFont(Constants.ledFont);
-		
+
 		panelCenter.setLayout(new GridLayout(1, 4));
 		panelCenter.setOpaque(false);
 		panelCenter.add(rouletteButton);
 		panelCenter.add(horseButton);
 		panelCenter.add(blackjackButton);
 		panelCenter.add(statisticsButton);
-		
+
 		background = new Tapet(width, height, "resources/fondoMain.jpg");
 		background.setLayout(new BorderLayout());
 		background.add(panelTop, BorderLayout.NORTH);
 		background.add(panelCenter, BorderLayout.CENTER);
 		add(background, BorderLayout.CENTER);
 	}
-	
-	public void registerController(){
+
+	public void registerController() {
 		rouletteButton.addActionListener(getManager().getController());
 		blackjackButton.addActionListener(getManager().getController());
 		horseButton.addActionListener(getManager().getController());
@@ -139,15 +144,32 @@ public class MainWindow extends BaseJPanel {
 		c.registerController();
 	}
 
+	/**
+	 * Lateral panel.
+	 * (Mostra i oculta el panell lateral de configuració.)
+	 *
+	 * @param open
+	 */
 	public void lateralPanel(boolean open) {
 		c.setVisible(open);
 	}
-	
-	public ConfigPanel getLateralPanel(){
+
+	/**
+	 * Gets lateral panel.
+	 *
+	 * @return lateral panel
+	 */
+	public ConfigPanel getLateralPanel() {
 		return c;
 	}
-	
-	public void setLEDColor(Color color){
+
+	/**
+	 * Sets LED color.
+	 * (Canvia el color del LED d'estat de les partides.)
+	 *
+	 * @param color
+	 */
+	public void setLEDColor(Color color) {
 		led.setForeground(color);
 	}
 }

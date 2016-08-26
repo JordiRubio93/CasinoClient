@@ -1,26 +1,40 @@
-package model;
 /**
- * 
- * <p>
- * <b> Classe: Calcul </b> <br/>
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol Valés - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi Rubió - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programació orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
+package model;
+
+/**
+ * The Class Calcul.
+ * (Calcula les posicions dels cavalls.)
  */
 public class Calcul {
-	public static int calculaY(int i){
-		return i*80 - 2;
+
+	/**
+	 * Calcula Y.
+	 *
+	 * @param i
+	 * @return int
+	 */
+	public static int calculaY(int i) {
+		return i * 80 - 2;
 	}
-	
-	public static int calculaX(int sec, boolean ct){
-		return (sec+10)*5;
+
+	/**
+	 * Calcula X.
+	 *
+	 * @param sec
+	 * @param ct
+	 * @return int
+	 */
+	public static int calculaX(int sec, boolean ct) {
+		return (sec + 10) * 5;
 	}
 }

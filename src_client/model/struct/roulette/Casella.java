@@ -1,105 +1,133 @@
+/**
+ * @author
+ * Pol Vales - ls30599@salleurl.edu
+ * Enric Marin - ls31308@salleurl.edu
+ * Diego Bellino - ls30741@salleurl.edu
+ * Jordi Rubio - ls31289@salleurl.edu
+ * David Estepa - ls30622@salleurl.edu
+ * DPO2 (Disseny i programacio orientats a objectes)
+ * La Salle, Universitat Ramon Llull
+ */
+
 package model.struct.roulette;
 
 import java.awt.Color;
+
 /**
- * 
- * <p>
- * <b> Classe: Casella </b> <br/>
- * Implementa la classe casella de la ruleta.
- * </p>
- * 
- * @version 1.0 19/05/2016
- * @author  Pol ValÃ©s - ls30599@salleurl.edu <br/>
- * 			Diego Bellino - ls30741@salleurl.edu <br/>
- * 			Enric Marin - ls31308@salleurl.edu <br/>
- * 			Jordi RubiÃ³ - ls31289@salleurl.edu <br/>
- * 			David Estepa - ls30622@salleurl.edu <br/>
- * 			Disseny i programaciÃ³ orientats a objectes. <br/>
- * 			La Salle - Universitat Ramon Llull. <br/>
- * 
+ * The Class Casella.
  */
 public class Casella {
-	//Atributs de la classe
+	// Atributs de la classe
 	private int numero;
 	private boolean color;
-	
+
 	/**
-	 * Getter de Numero.
+	 * Gets número.
+	 *
+	 * @return número
 	 */
 	public int getNumero() {
 		return numero;
-	}//Tancament del getter
+	}// Tancament del getter
+
 	/**
-	 * Getter de Color.
+	 * Gets color.
+	 *
+	 * @return color
 	 */
-	public Color getColor() {
-		if (color) return (new Color(139, 0, 0)); 
-		else return (new Color(010, 010, 010)); 
-	}//Tancament del getter
-	
+	public Color getColor(boolean dialog) {
+		if(dialog){
+			if(numero == 0) return new Color(152,251,152);
+			else if(color) return new Color(255,99,71);
+			else return new Color(169,169,169);
+		}else{
+			if (color) return (new Color(139, 0, 0));
+			else return (new Color(010, 010, 010));
+		}
+	}// Tancament del getter
+
 	/**
-	 * Constructor de casella.
+	 * Instantiates a new casella.
+	 *
+	 * @param numero
+	 * @param color
 	 */
 	public Casella(int numero, boolean color) {
 		super();
 		this.numero = numero;
 		this.color = color;
-		
-	}//Tancament del constructor
-	
+
+	}// Tancament del constructor
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar si el numero es parell o no.
-	 * @return numero%2==0
+	 * Checks if is parell.
+	 *
+	 * @return true, if is parell
 	 */
-	public boolean isParell(){
-		return numero%2==0;
-	}//Tancament del metode
-	
+	public boolean isParell() {
+		return numero % 2 == 0;
+	}// Tancament del metode
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar el color de la casella (true vermell, false negre).
-	 * @return color
+	 * Checks if is vermell.
+	 *
+	 * @return true, if is vermell
 	 */
-	public boolean isVermell(){
+	public boolean isVermell() {
 		return color;
 	}
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar el color de la casella (true vermell, false negre).
-	 * @return color
+	 * Checks if is negre.
+	 *
+	 * @return true, if is negre
 	 */
-	public boolean isNegre(){
+	public boolean isNegre() {
 		return color;
-	}//Tancament del metode
+	}// Tancament del metode
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar si el numero es senar o no.
-	 * @return numero%2!=0
+	 * Checks if is senar.
+	 *
+	 * @return true, if is senar
 	 */
-	public boolean isSenar(){
-		return numero%2!=0;
-	}//Tancament del metode
+	public boolean isSenar() {
+		return numero % 2 != 0;
+	}// Tancament del metode
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar si el numero es manca.
-	 * @return numero<=18
+	 * Checks if is manca.
+	 *
+	 * @return true, if is manca
 	 */
-	public boolean isManca(){
-		return numero<=18;
-	}//Tancament del metode
+	public boolean isManca() {
+		return numero <= 18;
+	}// Tancament del metode
+
 	/**
-	 * Metode que retorna un boolean i que s'encarrega d'indicar si el numero es passa.
-	 * @return numero >18
+	 * Checks if is pasa.
+	 *
+	 * @return true, if is pasa
 	 */
-	public boolean isPasa(){
-		return numero>18;
-	}//Tancament del metode
+	public boolean isPasa() {
+		return numero > 18;
+	}// Tancament del metode
+
 	/**
-	 * Metode que retorna un int i que s'encarrega d'indicar la dotzena del numero.
+	 * (Retorna a la dotzena que pertany.)
+	 *
 	 * @return int
 	 */
-	public int Dotzena(){
-		if (numero>0 && numero <= 12) return 1;
-		if (numero>12 && numero <= 24) return 2;
-		if (numero>24 && numero <= 36) return 3;
-		if (numero == 0) return 0;
-		
+	public int Dotzena() {
+		if (numero > 0 && numero <= 12)
+			return 1;
+		if (numero > 12 && numero <= 24)
+			return 2;
+		if (numero > 24 && numero <= 36)
+			return 3;
+		if (numero == 0)
+			return 0;
+
 		return (-1);
-	}//Tancament del metode
-}//Tancament de la classe
+	}// Tancament del metode
+}// Tancament de la classe
