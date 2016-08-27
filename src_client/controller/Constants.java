@@ -21,6 +21,7 @@ import model.struct.user.User;
  * The Class Constants.
  */
 public class Constants {
+	public static final String ICON = "Resources/icon.png";
 	public static final String LOGIN_VIEW_NAME = "LoginWindow";
 	public static final String MAIN_VIEW_NAME = "MainWindow";
 	public static final String GAME_VIEW_NAME = "Gameview";
@@ -45,7 +46,6 @@ public class Constants {
 	public static final int PORT = 6969;
 	public static final String PATH_CARRILS = "Resources/carrils.jpg";
 	public static final String PATH_TAPET = "Resources/tapet.jpg";
-	public static final String PATH_CASINO = "Resources/casino.jpg";
 	public static final String PATH_BLACKJACK = "Resources/blackjack.jpg";
 	public static final String PATH_WALL = "Resources/metal_texture.jpg";
 	public static final int nHorses = 12;
@@ -78,8 +78,10 @@ public class Constants {
 	public static final String BG = "Resources/fondoMain.jpg";
 	public static final String CASINO = "Resources/casino.jpg";
 	public static final String PATH_SPLASH = "Resources/splashscreen.gif";
-	public static final String PATH_GIF_SPLASH = "Resources/token.gif";
 	public static final String AVATAR_MALE = "Resources/male.png";
 	public static final String AVATAR_FEMALE = "Resources/female.png";
 	public static final String[] TABLE_COLUMN_NAMES = {"First name", "Last name", "Money in account"};
+	public static final String MUSIC = "Resources/music.wav";
+	public static final String CONFIG = "config.json";
+	public static final String HORSES = "horses.txt";
 }

@@ -358,13 +358,13 @@ public class MainButtonsController implements ActionListener {
 				guanys = diners - initBJMoney;
 
 			try {
-				if (!guest)
+				if (!guest){
 					manager.getServer().enviarTrama(new BJEnd((float) guanys, (float) diners));
-
-				manager.getServer().enviarTrama(new UserWanted(null));
-				User u = ((UserWanted) manager.getServer().obtenirTrama()).getUser();
-				u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
-				manager.getGameManager().setUser(u);
+					manager.getServer().enviarTrama(new UserWanted(null));
+					User u = ((UserWanted) manager.getServer().obtenirTrama()).getUser();
+					u.setLoginInfo(manager.getGameManager().getUser().getLoginInfo());
+					manager.getGameManager().setUser(u);
+				}
 			} catch (IOException e) {
 				// e.printStackTrace();
 			}

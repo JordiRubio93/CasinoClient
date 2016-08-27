@@ -47,7 +47,6 @@ import view.RegisterPanel;
  */
 public class Manager {
 	// Atributs de la classe
-	private final String rutejson = "config.json";
 	private ServerComunication server;
 	private MainButtonsController controller;
 	private RowSelectionListener rowListener;
@@ -81,7 +80,7 @@ public class Manager {
 	 */
 	public void checkServer() throws TCPException {
 		try {
-			cf = (new FileManager()).obtenirConfiguracio(rutejson);
+			cf = (new FileManager()).obtenirConfiguracio(Constants.CONFIG);
 			URL url = new URL(cf.getIP_SDB());
 			InetAddress address = InetAddress.getByName(url.getHost());
 			if (!address.isReachable(5000))
@@ -245,7 +244,7 @@ public class Manager {
 		Boolean valid = true;
 		if (!gameManager.comprovaLoginMail(u.getEmail())) {
 			valid = false;
-			view.showError("Wrong mail");
+			view.showError("Wrong e-mail");
 			p.showEmailError(true);
 		} else
 			p.showEmailError(false);
@@ -404,9 +403,8 @@ public class Manager {
 	 */
 	public void addCash(float cash, String password) {
 		try {
-
 			User user = new User(getGameManager().getUser().getName(), password);
-			user.setLoginInfo(new LoginInfo(user.getEmail(), password));
+			user.setLoginInfo(new LoginInfo(getGameManager().getUser().getEmail(), password));
 			user.encryptPassword();
 			server.enviarTrama(new AddCash(cash, user.getPassword()));
 			Segment s = (Segment) server.obtenirTrama();
