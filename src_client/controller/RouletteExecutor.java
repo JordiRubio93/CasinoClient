@@ -81,9 +81,6 @@ public class RouletteExecutor implements Runnable {
 					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
-					System.err
-							.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname() + " ha apostat"
-									+ aposta.getAposta().getAmount() + " al numero " + aposta.getAposta().getAmount());
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
 					break;
 				case "InitRoulette":
@@ -125,9 +122,7 @@ public class RouletteExecutor implements Runnable {
 						}, 0, 1000);
 					}
 					break;
-				default:
-					System.err.println("no se que m'ha arribat");
-					break;
+				
 				}
 			}
 		} catch (NullPointerException | ClassNotFoundException | IOException e) {

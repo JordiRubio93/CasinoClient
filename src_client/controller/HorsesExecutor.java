@@ -82,8 +82,6 @@ public class HorsesExecutor implements Runnable {
 					break;
 				case "NotifyBet":
 					NotifyBet aposta = ((NotifyBet) s);
-					System.err.println("Agreguem al panell lateral " + aposta.getPublicUser().getSurname()
-							+ " ha apostat " + aposta.getAposta().getAmount() + " a " + aposta.getAposta().getAmount());
 					game.addAtList(aposta.getPublicUser(), aposta.getAposta());
 					break;
 				case "InitHorses":
@@ -135,12 +133,9 @@ public class HorsesExecutor implements Runnable {
 							}
 						}, 0, 1000);
 					}
-					break;
-				default:
-					System.err.println("pero esto que co�o es?");
-					break;
-				}
+				break;
 			}
+				}
 		} catch (NullPointerException | ClassNotFoundException | IOException e) {
 			return;
 		}

@@ -76,7 +76,7 @@ public class MainWindow extends BaseJPanel {
 			img4 = ImageIO.read(new File("Resources/statistics.png"));
 			img5 = ImageIO.read(new File("Resources/userConfiguration.png"));
 		} catch (IOException e) {
-			System.err.println("Error al carregar, intentant carregar imatge per defecte");
+			//System.err.println("Error al carregar, intentant carregar imatge per defecte");
 			try {
 				img1 = ImageIO.read(new File("Resources/default-image.jpg"));
 				img2 = ImageIO.read(new File("Resources/default-image.jpg"));

@@ -400,10 +400,7 @@ public class MainButtonsController implements ActionListener {
 		case ("STAND_BJ"):
 			manager.getGameManager().standBJ();
 			break;
-		default:
-			System.err.println(((JButton) event.getSource()).getToolTipText());
 		}
-
 	}// Tancament del metode
 
 	/**

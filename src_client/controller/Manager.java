@@ -418,7 +418,7 @@ public class Manager {
 				} else
 					new Dialeg().setWarningText("ERROR with PW or CASH!\nYour maximum cash is 100000");
 			} else {
-				System.err.println(s.getClass());
+				//System.err.println(s.getClass());
 			}
 		} catch (IOException e) {
 			// e.printStackTrace();
